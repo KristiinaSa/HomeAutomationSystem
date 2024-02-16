@@ -1,0 +1,22 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.header-item {
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .header-item.home-icon {
+    display: none;
+  }
+
+  .header-item.plus-icon {
+    font-size: 2.5rem;
+  }
+}
