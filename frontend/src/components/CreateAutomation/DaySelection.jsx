@@ -1,6 +1,6 @@
-import styles from "./DaySelection.module.css";
+import styles from "./CreateAutomation.module.css";
 
-export const DaySelection = ({ selectedDays, setSelectedDays }) => {
+const DaySelection = ({ selectedDays, setSelectedDays }) => {
   const handleCheckboxChange = (event) => {
     setSelectedDays({
       ...selectedDays,
@@ -30,3 +30,5 @@ export const DaySelection = ({ selectedDays, setSelectedDays }) => {
     </>
   );
 };
+
+export default DaySelection;
