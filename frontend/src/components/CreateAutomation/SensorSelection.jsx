@@ -12,11 +12,18 @@ const SensorSelection = ({ sensors, selectedSensors, setSelectedSensors }) => {
     );
   };
 
+  const availableSensors = sensors.filter(
+    (sensor) => !selectedSensors.some((selected) => selected.id === sensor.id)
+  );
+
   return (
     <div>
       <p>Sensors</p>
       <select onChange={handleSensorChange}>
-        {sensors.map((sensor) => (
+        <option value="" disabled selected>
+          Select a sensor
+        </option>
+        {availableSensors.map((sensor) => (
           <option key={sensor.id} value={sensor.id}>
             {sensor.name}
           </option>
