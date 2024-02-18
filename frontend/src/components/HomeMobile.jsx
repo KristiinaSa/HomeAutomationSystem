@@ -29,17 +29,18 @@ const HomeMobile = () => {
       <div className="categories-container">
         <h1>Home</h1>
         <h2>Categories</h2>
-        <div className="card-container">
-          {categories.map((category) => (
-            <TestCard
-              key={category.id}
-              title={category.title}
-              icon={category.icon}
-              count={category.count}
-            />
-          ))}
-        </div>
       </div>
+      <div className="card-container">
+        {categories.map((category) => (
+          <TestCard
+            key={category.id}
+            title={category.title}
+            icon={category.icon}
+            count={category.count}
+          />
+        ))}
+      </div>
+
       <div className="rooms-container">
         <h2>Rooms</h2>
         {rooms.map((room) => (
