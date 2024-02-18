@@ -27,3 +27,28 @@
 }
 
 }
+
+@media screen and (min-width: 769px) {
+    .navbar-mobile {
+      flex-direction: column;
+      font-size: 1.3rem;
+      height: 100vh;
+      width: 20%;
+      position: fixed;
+      top: 0;
+      bottom: unset;
+      padding: 1rem;
+      background-color: #2E2B6AB2;
+      color:#E2E2E2;
+    }
+  
+    .navbar-mobile_item {
+      flex-direction: column;
+      align-items: center;
+      margin: 1rem 0;
+    }
+
+    .navbar-mobile_item > :first-child {
+        margin-right: 0.5rem;
+      }
+  }
