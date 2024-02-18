@@ -21,7 +21,7 @@ const SensorSelection = ({ sensors, selectedSensors, setSelectedSensors }) => {
       <p>Sensors</p>
       <select onChange={handleSensorChange}>
         <option value="" disabled selected>
-          Select a sensor
+          Select sensors
         </option>
         {availableSensors.map((sensor) => (
           <option key={sensor.id} value={sensor.id}>
