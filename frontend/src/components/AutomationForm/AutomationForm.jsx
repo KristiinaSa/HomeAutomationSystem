@@ -1,49 +1,54 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AutomationsContext } from "../../context/AutomationsContext";
 
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
 import SensorSelection from "./SensorSelection";
 
 import { dummySensors } from "../../dummyData/dummySensor";
+import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
 export const AutomationForm = () => {
-  const { id: urlId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { automations } = useContext(AutomationsContext);
-  console.log(automations);
-  const id = Number(urlId);
 
-  const automation = automations.find((automation) => automation.id === id);
-  console.log("MAUTION", automation.selectedDays);
-
-  const [time, setTime] = useState(automation?.time || "");
-  const [selectedDays, setSelectedDays] = useState(
-    automation?.weekdays || {
-      monday: false,
-      tuesday: false,
-      wednesday: false,
-      thursday: false,
-      friday: false,
-      saturday: false,
-      sunday: false,
-    }
-  );
-
-  const [sensors, setSensors] = useState([]);
-  const [selectedSensors, setSelectedSensors] = useState(
-    automation?.selectedSensors || []
-  );
+  const [automation, setAutomation] = useState(null);
+  const [isLoading, setIsLoading] = useState(!!id);
 
   useEffect(() => {
-    const fetchSensors = async () => {
-      setTimeout(() => {
-        setSensors(dummySensors);
-      }, 1000);
+    const fetchAutomation = async () => {
+      const foundAutomation = dummyAutomations.find(
+        (automation) => automation.id == id
+      );
+      setAutomation(foundAutomation);
+      setIsLoading(false);
     };
-    fetchSensors();
-  }, []);
+    if (id) {
+      fetchAutomation();
+    } else {
+      setIsLoading(false);
+    }
+  }, [id]);
+
+  const [time, setTime] = useState("");
+  const [selectedDays, setSelectedDays] = useState({
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+  });
+  const [selectedSensors, setSelectedSensors] = useState([]);
+
+  useEffect(() => {
+    if (automation) {
+      setTime(automation.time);
+      setSelectedDays(automation.weekdays);
+      setSelectedSensors(automation.devices);
+    }
+  }, [automation]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -58,7 +63,7 @@ export const AutomationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <p>Time</p>
       <TimeSelection time={time} setTime={setTime} />
       <DaySelection
@@ -66,13 +71,17 @@ export const AutomationForm = () => {
         setSelectedDays={setSelectedDays}
       />
       <SensorSelection
-        sensors={sensors}
+        sensors={dummySensors}
         selectedSensors={selectedSensors}
         setSelectedSensors={setSelectedSensors}
       />
-      <button type="submit">
-        {automation ? "Update Automation" : "Create New Automation"}
+      <button onClick={handleSubmit} disabled={isLoading}>
+        {isLoading
+          ? "Loading..."
+          : automation
+          ? "Update Automation"
+          : "Create New Automation"}
       </button>
-    </form>
+    </div>
   );
 };
