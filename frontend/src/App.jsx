@@ -3,17 +3,21 @@ import NavbarMobile from "./components/NavbarMobile";
 import Header from "./components/Header";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CreateAutomation } from "./components/CreateAutomation/CreateAutomation";
-import { Automations } from "./components/AutomationPage/Automations";
+import { AutomationForm } from "./components/AutomationForm/AutomationForm";
+import { Automations } from "./components/Automations/Automations";
+import { AutomationsProvider } from "./context/AutomationsContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<CreateAutomation />} />
-        <Route path="/automations" element={<Automations />} />
-      </Routes>
-    </Router>
+    <AutomationsProvider>
+      <Router>
+        <Routes>
+          <Route path="/automations" element={<Automations />} />
+          <Route path="/automations/new" element={<AutomationForm />} />
+          <Route path="/automations/edit/:id" element={<AutomationForm />} />
+        </Routes>
+      </Router>
+    </AutomationsProvider>
   );
 }
 
