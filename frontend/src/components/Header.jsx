@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,7 +22,7 @@ const MenuItem = ({ icon, text, onClick }) => {
   return (
     <div className="menu-item" onClick={onClick}>
       <FontAwesomeIcon icon={icon} />
-      <span class="hover-underline-animation">{text}</span>
+      <span className="hover-underline-animation">{text}</span>
     </div>
   );
 };

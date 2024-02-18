@@ -1,0 +1,85 @@
+
+
+@media (max-width: 768px) {
+  .navbar-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-mobile {
+    display: none;
+  }
+
+  .logo {
+    color: var(--navbar-active-text-color);
+    font-size: 1.6rem;
+  }
+
+.navbar-desktop {
+    flex-direction: column;
+    min-height: 100vh;
+    width: 20%;
+    position: fixed;
+    top: 0;
+    bottom: unset;
+    padding: 1rem;
+    background-color: #2E2B6AB2;
+    color: var(--navbar-inactive-text-color);
+  }
+
+.navbar-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .navbar-main_item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .navbar-main_item svg + p {
+    margin-left: 10px; 
+  }
+
+  .navbar-categories-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .navbar-category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navbar-category svg + p {
+    margin-left: 10px;
+  }
+
+  .navbar-rooms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+    .navbar-room {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navbar-room svg + p {
+        margin-left: 10px;
+    }
+}
