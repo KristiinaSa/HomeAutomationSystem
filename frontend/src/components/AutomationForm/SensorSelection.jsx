@@ -1,5 +1,10 @@
+import { useState } from "react";
+
 const SensorSelection = ({ sensors, selectedSensors, setSelectedSensors }) => {
+  const [selectedSensorId, setSelectedSensorId] = useState("");
+
   const handleSensorChange = (event) => {
+    setSelectedSensorId(event.target.value);
     const selectedSensor = sensors.find(
       (sensor) => sensor.id === Number(event.target.value)
     );
@@ -10,6 +15,9 @@ const SensorSelection = ({ sensors, selectedSensors, setSelectedSensors }) => {
     setSelectedSensors(
       selectedSensors.filter((sensor) => sensor.id !== sensorToRemove.id)
     );
+    if (sensorToRemove.id === Number(selectedSensorId)) {
+      setSelectedSensorId("");
+    }
   };
 
   const availableSensors = sensors.filter(
@@ -19,24 +27,32 @@ const SensorSelection = ({ sensors, selectedSensors, setSelectedSensors }) => {
   return (
     <div>
       <p>Sensors</p>
-      <select onChange={handleSensorChange}>
-        <option value="" disabled selected>
-          Select sensors
-        </option>
-        {availableSensors.map((sensor) => (
-          <option key={sensor.id} value={sensor.id}>
-            {sensor.name}
+      {availableSensors.length > 0 ? (
+        <select value={selectedSensorId} onChange={handleSensorChange}>
+          <option value="" disabled>
+            Select sensors
           </option>
-        ))}
-      </select>
-      <ul>
-        {selectedSensors.map((sensor, index) => (
-          <li key={index}>
-            {sensor.name}
-            <button onClick={() => handleRemoveSensor(sensor)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+          {availableSensors.map((sensor) => (
+            <option key={sensor.id} value={sensor.id}>
+              {sensor.name}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <p>No sensors available</p>
+      )}
+      {selectedSensors.length > 0 ? (
+        <ul>
+          {selectedSensors.map((sensor, index) => (
+            <li key={index}>
+              {sensor.name}
+              <button onClick={() => handleRemoveSensor(sensor)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No sensors selected</p>
+      )}
     </div>
   );
 };
