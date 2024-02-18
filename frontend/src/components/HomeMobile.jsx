@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { CategoriesContext } from "../CategoriesContext";
+import { RoomContext } from "../RoomContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
-import TestRoom from "./TestRoom";
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import Room from "./Room";
+// import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
-  const [categories, setCategories] = useState([]);
-  const [rooms, setRooms] = useState([]);
+  const {categories} = useContext(CategoriesContext);
+  const {rooms} = useContext(RoomContext);
 
-  useEffect(() => {
-    setCategories([{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }]);
-    setRooms([
-      {
-        id: 1,
-        name: "Living room",
-        cards: [{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }],
-      },
-      {
-        id: 2,
-        name: "Bedroom",
-        cards: [{ id: 2, title: "Lights", icon: faLightbulb, count: 1 }],
-      },
-    ]);
-  }, []);
+  // useEffect(() => {
+  //   setCategories([{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }]);
+  //   setRooms([
+  //     {
+  //       id: 1,
+  //       name: "Living room",
+  //       cards: [{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }],
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Bedroom",
+  //       cards: [{ id: 2, title: "Lights", icon: faLightbulb, count: 1 }],
+  //     },
+  //   ]);
+  // }, []);
 
   return (
     <>
@@ -45,7 +47,7 @@ const HomeMobile = () => {
         <h2>Rooms</h2>
         {rooms.map((room) => (
           <div key={room.id}>
-            <TestRoom name={room.name} />
+            <Room name={room.name} />
             <div className="card-container">
               {room.cards &&
                 room.cards.map((card) => (
