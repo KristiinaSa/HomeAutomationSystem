@@ -9,7 +9,7 @@ import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
 import styles from "./CreateAutomation.module.css";
 
-const SensorAutomationForm = () => {
+const SensorAutomationForm = ({ handleSubmit }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -47,19 +47,13 @@ const SensorAutomationForm = () => {
     }
   }, [automation]);
 
-  const handleSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     const selectedSensor = dummySensors.find(
       (sensor) => sensor.id === selectedSensorId
     );
     const data = { selectedSensor, value, selectedDevices, action, isDisabled };
-    if (id) {
-      console.log("Updating automation", id);
-    } else {
-      console.log("Creating new automation");
-    }
-    console.log(data);
-    navigate("/automations");
+    handleSubmit(data, id);
   };
 
   const isButtonDisabled = () => {
@@ -72,7 +66,7 @@ const SensorAutomationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       <label>
         Sensor:
         <select

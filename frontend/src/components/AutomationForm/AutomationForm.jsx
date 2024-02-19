@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import TimerAutomationForm from "./TimerAutomationForm";
 import SensorAutomationForm from "./SensorAutomationForm";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
@@ -8,6 +8,7 @@ export const AutomationForm = () => {
   const { id } = useParams();
   const [automation, setAutomation] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const automation = dummyAutomations.find((item) => item.id == id);
@@ -16,6 +17,16 @@ export const AutomationForm = () => {
       setIsDisabled(automation.isDisabled);
     }
   }, [id]);
+
+  const handleSubmit = async (data, id) => {
+    if (id) {
+      console.log("Updating automation", id);
+    } else {
+      console.log("Creating new automation");
+    }
+    console.log(data);
+    navigate("/automations");
+  };
 
   return (
     <div>
@@ -47,9 +58,9 @@ export const AutomationForm = () => {
       )}
 
       {automation && automation.automationType === "timer" ? (
-        <TimerAutomationForm id={id} />
+        <TimerAutomationForm id={id} handleSubmit={handleSubmit} />
       ) : (
-        <SensorAutomationForm id={id} />
+        <SensorAutomationForm id={id} handleSubmit={handleSubmit} />
       )}
     </div>
   );

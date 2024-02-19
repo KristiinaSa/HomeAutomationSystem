@@ -11,7 +11,7 @@ import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
 import styles from "./CreateAutomation.module.css";
 
-const TimerAutomationForm = () => {
+const TimerAutomationForm = ({ handleSubmit }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -55,16 +55,15 @@ const TimerAutomationForm = () => {
     }
   }, [automation]);
 
-  const handleSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    const data = { selectedDays, time, selectedSensors, isDisabled };
-    if (id) {
-      console.log("Updating automation", id);
-    } else {
-      console.log("Creating new automation");
-    }
-    console.log(data);
-    navigate("/automations");
+    const data = {
+      selectedDays,
+      time,
+      selectedSensors,
+      isDisabled,
+    };
+    handleSubmit(data, id);
   };
 
   const handleCheckboxChange = (event) => {
@@ -101,7 +100,7 @@ const TimerAutomationForm = () => {
         handleCheckboxChange={handleCheckboxChange}
       />
       <button
-        onClick={handleSubmit}
+        onClick={onSubmit}
         disabled={isButtonDisabled()}
         style={
           isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
