@@ -1,5 +1,17 @@
 export const dummySensors = [
-  { id: 1, name: "Temperature Sensor" },
-  { id: 2, name: "Humidity Sensor" },
-  { id: 3, name: "Pressure Sensor" },
+  {
+    id: 1,
+    name: "Bathroom Light",
+    type: "light",
+  },
+  {
+    id: 2,
+    name: "Bedroom Light",
+    type: "light",
+  },
+  {
+    id: 3,
+    name: "Kitchen Light",
+    type: "light",
+  },
 ];

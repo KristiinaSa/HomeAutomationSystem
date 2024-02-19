@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
-import SensorSelection from "./SensorSelection";
+import DeviceSelection from "./DeviceSelection";
 
 import { dummySensors } from "../../dummyData/dummySensor";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
@@ -70,10 +70,10 @@ export const AutomationForm = () => {
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
-      <SensorSelection
-        sensors={dummySensors}
-        selectedSensors={selectedSensors}
-        setSelectedSensors={setSelectedSensors}
+      <DeviceSelection
+        devices={dummySensors}
+        selectedDevices={selectedSensors}
+        setSelectedDevices={setSelectedSensors}
       />
       <button onClick={handleSubmit} disabled={isLoading}>
         {isLoading

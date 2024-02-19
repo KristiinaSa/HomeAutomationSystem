@@ -15,7 +15,8 @@ export const AutomationCard = ({ automation }) => {
   };
 
   const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-  const allDays = [...weekdays, "saturday", "sunday"];
+  const weekends = ["saturday", "sunday"];
+  const allDays = [...weekdays, ...weekends];
 
   let activeDays = automation.weekdays
     ? Object.entries(automation.weekdays)
@@ -33,6 +34,11 @@ export const AutomationCard = ({ automation }) => {
     activeDays.every((day) => weekdays.includes(day))
   ) {
     activeDays = ["Weekdays"];
+  } else if (
+    activeDays.length === weekends.length &&
+    activeDays.every((day) => weekends.includes(day))
+  ) {
+    activeDays = ["Weekends"];
   } else {
     activeDays = activeDays.map((day) => dayAbbreviations[day]);
   }

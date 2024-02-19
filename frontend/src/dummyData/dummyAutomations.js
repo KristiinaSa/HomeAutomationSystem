@@ -5,12 +5,12 @@ export const dummyAutomations = [
     time: "12:00",
     weekdays: {
       monday: false,
-      tuesday: true,
+      tuesday: false,
       wednesday: false,
       thursday: false,
-      friday: true,
-      saturday: false,
-      sunday: false,
+      friday: false,
+      saturday: true,
+      sunday: true,
     },
 
     devices: [
@@ -49,6 +49,33 @@ export const dummyAutomations = [
       {
         id: 3,
         name: "Kitchen Light",
+        type: "light",
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "Automation 4",
+    time: "20:00",
+    weekdays: {
+      monday: true,
+      tuesday: true,
+      wednesday: false,
+      thursday: true,
+      friday: true,
+      saturday: false,
+      sunday: false,
+    },
+
+    devices: [
+      {
+        id: 4,
+        name: "Bathroom Light",
+        type: "light",
+      },
+      {
+        id: 5,
+        name: "Bedroom Light",
         type: "light",
       },
     ],
