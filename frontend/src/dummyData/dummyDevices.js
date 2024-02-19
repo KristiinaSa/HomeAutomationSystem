@@ -1,4 +1,4 @@
-export const dummySensors = [
+export const dummyDevices = [
   {
     id: 1,
     name: "Bathroom Light",

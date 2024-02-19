@@ -1,12 +1,13 @@
 import { useState } from "react";
 import DeviceSelection from "./DeviceSelection";
-import { dummySensors } from "../../dummyData/dummySensor";
+import { dummySensors } from "../../dummyData/dummySensors"; // Import dummySensors
+import { dummyDevices } from "../../dummyData/dummyDevices"; // Import dummyDevices
 
 const SensorAutomationForm = () => {
-  const [selectedSensor, setSelectedSensor] = useState(null);
+  const [selectedSensor, setSelectedSensor] = useState("");
   const [value, setValue] = useState(0);
   const [selectedDevices, setSelectedDevices] = useState([]);
-  const [action, setAction] = useState(""); // 'Turn on' or 'Turn off'
+  const [action, setAction] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,7 +45,7 @@ const SensorAutomationForm = () => {
       </label>
 
       <DeviceSelection
-        devices={dummySensors}
+        devices={dummyDevices}
         selectedDevices={selectedDevices}
         setSelectedDevices={setSelectedDevices}
       />

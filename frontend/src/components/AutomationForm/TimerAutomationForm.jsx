@@ -5,7 +5,7 @@ import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
 
-import { dummySensors } from "../../dummyData/dummySensor";
+import { dummyDevices } from "../../dummyData/dummyDevices";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
 import styles from "./CreateAutomation.module.css";
@@ -79,7 +79,7 @@ const TimerAutomationForm = () => {
         setSelectedDays={setSelectedDays}
       />
       <DeviceSelection
-        devices={dummySensors}
+        devices={dummyDevices}
         selectedDevices={selectedSensors}
         setSelectedDevices={setSelectedSensors}
       />
