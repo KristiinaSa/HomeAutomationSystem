@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const AutomationCard = ({ automation }) => {
+export const TimerAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
 
