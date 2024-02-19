@@ -8,6 +8,8 @@ import DeviceSelection from "./DeviceSelection";
 import { dummySensors } from "../../dummyData/dummySensor";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
+import styles from "./CreateAutomation.module.css";
+
 export const AutomationForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -62,6 +64,12 @@ export const AutomationForm = () => {
     navigate("/automations");
   };
 
+  const isButtonDisabled = () => {
+    const noDaysSelected = !Object.values(selectedDays).some(Boolean);
+    const noSensorsSelected = selectedSensors.length === 0;
+    return isLoading || !time || noDaysSelected || noSensorsSelected;
+  };
+
   return (
     <div>
       <p>Time</p>
@@ -75,7 +83,13 @@ export const AutomationForm = () => {
         selectedDevices={selectedSensors}
         setSelectedDevices={setSelectedSensors}
       />
-      <button onClick={handleSubmit} disabled={isLoading}>
+      <button
+        onClick={handleSubmit}
+        disabled={isButtonDisabled()}
+        style={
+          isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
+        }
+      >
         {isLoading
           ? "Loading..."
           : automation

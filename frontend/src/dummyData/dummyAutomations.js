@@ -69,12 +69,12 @@ export const dummyAutomations = [
 
     devices: [
       {
-        id: 4,
+        id: 1,
         name: "Bathroom Light",
         type: "light",
       },
       {
-        id: 5,
+        id: 2,
         name: "Bedroom Light",
         type: "light",
       },
@@ -82,7 +82,7 @@ export const dummyAutomations = [
   },
   {
     id: 3,
-    name: "Automation 3",
+    name: "Automation 4",
     time: "20:00",
     weekdays: {
       monday: true,
@@ -96,12 +96,12 @@ export const dummyAutomations = [
 
     devices: [
       {
-        id: 4,
+        id: 1,
         name: "Bathroom Light",
         type: "light",
       },
       {
-        id: 5,
+        id: 2,
         name: "Bedroom Light",
         type: "light",
       },
