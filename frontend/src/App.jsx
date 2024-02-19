@@ -6,6 +6,10 @@ import Header from "./components/Header";
 import HomeMobile from "./components/HomeMobile";
 import NavbarDesktop from "./components/NavbarDesktop";
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AutomationForm } from "./components/AutomationForm/AutomationForm";
+import { Automations } from "./components/Automations/Automations";
+
 function App() {
   return (
     <>
