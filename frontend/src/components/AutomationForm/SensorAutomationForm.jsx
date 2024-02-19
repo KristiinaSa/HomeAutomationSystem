@@ -15,6 +15,7 @@ const SensorAutomationForm = () => {
 
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     const fetchAutomation = async () => {
@@ -41,11 +42,8 @@ const SensorAutomationForm = () => {
       setSelectedSensorId(automation.sensor[0].id);
       setValue(automation.sensorValue);
       setSelectedDevices(automation.devices);
-      setAction(
-        automation.actionType.toLowerCase() === "Turn on"
-          ? "Turn on"
-          : "Turn off"
-      );
+      setAction(automation.actionType === "Turn on" ? "Turn on" : "Turn off");
+      setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
 
@@ -54,7 +52,7 @@ const SensorAutomationForm = () => {
     const selectedSensor = dummySensors.find(
       (sensor) => sensor.id === selectedSensorId
     );
-    const data = { selectedSensor, value, selectedDevices, action };
+    const data = { selectedSensor, value, selectedDevices, action, isDisabled };
     if (id) {
       console.log("Updating automation", id);
     } else {

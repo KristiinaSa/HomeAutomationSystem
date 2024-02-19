@@ -7,10 +7,14 @@ import { dummyAutomations } from "../../dummyData/dummyAutomations";
 export const AutomationForm = () => {
   const { id } = useParams();
   const [automation, setAutomation] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     const automation = dummyAutomations.find((item) => item.id == id);
     setAutomation(automation);
+    if (automation) {
+      setIsDisabled(automation.isDisabled);
+    }
   }, [id]);
 
   return (
@@ -41,15 +45,6 @@ export const AutomationForm = () => {
           </button>
         </>
       )}
-
-      <label>
-        <input
-          type="checkbox"
-          checked={automation ? automation.isDisabled : false}
-          disabled
-        />
-        Disabled Checkbox
-      </label>
 
       {automation && automation.automationType === "timer" ? (
         <TimerAutomationForm id={id} />

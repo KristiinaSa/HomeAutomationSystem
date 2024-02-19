@@ -12,16 +12,13 @@ import { Automations } from "./components/Automations/Automations";
 
 function App() {
   return (
-    <>
-      <CategoriesProvider>
-        <RoomProvider>
-          <Header />
-          <NavbarDesktop />
-          <HomeMobile />
-          <NavbarMobile />
-        </RoomProvider>
-      </CategoriesProvider>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/automations" element={<Automations />} />
+        <Route path="/automations/new" element={<AutomationForm />} />
+        <Route path="/automations/edit/:id" element={<AutomationForm />} />
+      </Routes>
+    </Router>
   );
 }
 

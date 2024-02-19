@@ -3,7 +3,7 @@ export const dummyAutomations = [
     id: 1,
     name: "Automation 1",
     time: "12:00",
-    isDisabled: false,
+    isDisabled: true,
     automationType: "timer",
     weekdays: {
       monday: false,
@@ -115,7 +115,7 @@ export const dummyAutomations = [
     id: 5,
     name: "Automation 5",
     time: "20:00",
-    isDisabled: Math.random() < 0.5,
+    isDisabled: true,
     automationType: "sensor",
     sensorValue: 20,
     actionType: "Turn on",

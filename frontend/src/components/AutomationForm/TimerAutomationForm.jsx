@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
+import { DisableCheckbox } from "./DisableCheckbox";
 
 import { dummyDevices } from "../../dummyData/dummyDevices";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
@@ -16,6 +17,7 @@ const TimerAutomationForm = () => {
 
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     const fetchAutomation = async () => {
@@ -49,12 +51,13 @@ const TimerAutomationForm = () => {
       setTime(automation.time);
       setSelectedDays(automation.weekdays);
       setSelectedSensors(automation.devices);
+      setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = { selectedDays, time, selectedSensors };
+    const data = { selectedDays, time, selectedSensors, isDisabled };
     if (id) {
       console.log("Updating automation", id);
     } else {
@@ -62,6 +65,15 @@ const TimerAutomationForm = () => {
     }
     console.log(data);
     navigate("/automations");
+  };
+
+  const handleCheckboxChange = (event) => {
+    if (automation) {
+      setAutomation({
+        ...automation,
+        isDisabled: event.target.checked,
+      });
+    }
   };
 
   const isButtonDisabled = () => {
@@ -82,6 +94,11 @@ const TimerAutomationForm = () => {
         devices={dummyDevices}
         selectedDevices={selectedSensors}
         setSelectedDevices={setSelectedSensors}
+      />
+      <DisableCheckbox
+        automation={automation}
+        isDisabled={automation?.isDisabled || false}
+        handleCheckboxChange={handleCheckboxChange}
       />
       <button
         onClick={handleSubmit}
