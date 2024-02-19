@@ -1,0 +1,11 @@
+.room-header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.room-header > * {
+    margin-right: 0.5rem;
+}
