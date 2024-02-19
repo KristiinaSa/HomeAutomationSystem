@@ -117,8 +117,9 @@ export const dummyAutomations = [
     time: "20:00",
     isDisabled: Math.random() < 0.5,
     automationType: "sensor",
-    actionType: "turnOn",
-    sensors: [
+    sensorValue: 20,
+    actionType: "Turn on",
+    sensor: [
       {
         id: 1,
         name: "Temperature",

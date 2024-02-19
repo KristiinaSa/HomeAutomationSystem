@@ -1,22 +1,23 @@
+import { useNavigate } from "react-router-dom";
+
 export const SensorAutomationCard = ({ automation }) => {
+  const navigate = useNavigate();
+  const numDevices = automation.devices ? automation.devices.length : 0;
+  const numSensors = automation.sensors ? automation.sensors.length : 0;
+
+  const handleEdit = () => {
+    navigate(`/automations/edit/${automation.id}`);
+  };
+
   return (
-    <div>
+    <div key={automation.id}>
       <h2>{automation.name}</h2>
+      <p>{numDevices} devices</p>
+      <p>{numSensors} sensors</p>
       <p>Time: {automation.time}</p>
       <p>Disabled: {automation.isDisabled ? "Yes" : "No"}</p>
       <p>Action: {automation.actionType}</p>
-      <h3>Sensors:</h3>
-      {automation.sensors.map((sensor) => (
-        <p key={sensor.id}>
-          {sensor.name} ({sensor.type})
-        </p>
-      ))}
-      <h3>Devices:</h3>
-      {automation.devices.map((device) => (
-        <p key={device.id}>
-          {device.name} ({device.type})
-        </p>
-      ))}
+      <button onClick={handleEdit}>Edit</button>
     </div>
   );
 };
