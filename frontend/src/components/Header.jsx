@@ -22,7 +22,7 @@ const MenuItem = ({ icon, text, onClick }) => {
   return (
     <div className="menu-item" onClick={onClick}>
       <FontAwesomeIcon icon={icon} />
-      <span class="hover-underline-animation">{text}</span>
+      <span className="hover-underline-animation">{text}</span>
     </div>
   );
 };
