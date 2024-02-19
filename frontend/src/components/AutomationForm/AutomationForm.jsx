@@ -7,15 +7,11 @@ import { dummyAutomations } from "../../dummyData/dummyAutomations";
 export const AutomationForm = () => {
   const { id } = useParams();
   const [automation, setAutomation] = useState(null);
-  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const automation = dummyAutomations.find((item) => item.id == id);
     setAutomation(automation);
-    if (automation) {
-      setIsDisabled(automation.isDisabled);
-    }
   }, [id]);
 
   const handleSubmit = async (data, id) => {

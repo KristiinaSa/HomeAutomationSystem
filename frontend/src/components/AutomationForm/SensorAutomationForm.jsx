@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import DeviceSelection from "./DeviceSelection";
 
@@ -7,11 +7,8 @@ import { dummySensors } from "../../dummyData/dummySensors";
 import { dummyDevices } from "../../dummyData/dummyDevices";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
-import styles from "./CreateAutomation.module.css";
-
 const SensorAutomationForm = ({ handleSubmit }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
@@ -70,8 +67,8 @@ const SensorAutomationForm = ({ handleSubmit }) => {
       <label>
         Sensor:
         <select
-          value={selectedSensorId} // Changed from selectedSensor to selectedSensorId
-          onChange={(e) => setSelectedSensorId(e.target.value)} // Changed from setSelectedSensor to setSelectedSensorId
+          value={selectedSensorId}
+          onChange={(e) => setSelectedSensorId(e.target.value)}
         >
           <option value="">Select a sensor</option>
           {dummySensors.map((sensor) => (

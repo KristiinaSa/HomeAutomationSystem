@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
@@ -13,7 +13,6 @@ import styles from "./CreateAutomation.module.css";
 
 const TimerAutomationForm = ({ handleSubmit }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
