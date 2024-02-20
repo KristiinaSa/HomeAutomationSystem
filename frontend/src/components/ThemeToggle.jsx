@@ -1,18 +1,31 @@
-import styles from "./ThemeToggle.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { ThemeContext } from "../ThemeContext";
 import { useContext } from "react";
+import styles from "./ThemeToggle.module.css";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <label className={styles.switchContainer}>
+    <label className={styles.switch}>
       <input
         type="checkbox"
         checked={theme === "dark"}
         onChange={toggleTheme}
       />
-      <span className={`${styles.switch} ${styles.round}`}></span>
+      <div className={styles.slider}>
+        <div
+          className={`${styles.circle} ${theme === "dark" ? styles.move : ""}`}
+        >
+          <FontAwesomeIcon
+            icon={theme === "dark" ? faMoon : faSun}
+            className={`${styles.icon} ${
+              theme === "dark" ? styles.moon : styles.sun
+            }`}
+          />
+        </div>
+      </div>
     </label>
   );
 };

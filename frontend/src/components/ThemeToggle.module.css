@@ -1,17 +1,17 @@
-.switchContainer {
+.switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
 
-.switchContainer input {
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.switch {
+.slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -20,9 +20,10 @@
   bottom: 0;
   background-color: #ccc;
   transition: .4s;
+  border-radius: 34px;
 }
 
-.switch:before {
+.circle {
   position: absolute;
   content: "";
   height: 26px;
@@ -31,25 +32,76 @@
   bottom: 4px;
   background-color: white;
   transition: .4s;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.switchContainer input:checked+.switch {
+input:checked+.slider {
   background-color: #2196F3;
 }
 
-.switchContainer input:focus+.switch {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-.switchContainer input:checked+.switch:before {
-  background-color: #f00;
+.move {
   transform: translateX(26px);
 }
 
-.round {
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
   border-radius: 34px;
 }
 
-.round:before {
+.circle {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input:checked+.slider {
+  background-color: #2196F3;
+}
+
+.move {
+  transform: translateX(26px);
+}
+
+.icon {
+  position: relative;
+}
+
+.sun {
+  color: black;
+}
+
+.moon {
+  color: black;
 }
