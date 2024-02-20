@@ -32,7 +32,7 @@ export const AutomationForm = () => {
 
   return (
     <div>
-      {!id && !automation.automationType && (
+      {!id && automation && !automation.automationType && (
         <>
           <button
             onClick={() =>
