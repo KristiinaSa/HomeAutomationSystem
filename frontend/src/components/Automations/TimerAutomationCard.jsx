@@ -1,43 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Automations.module.css";
-
-const getActiveDays = (
-  automation,
-  dayAbbreviations,
-  weekdays,
-  weekends,
-  allDays
-) => {
-  let activeDays = automation.weekdays
-    ? Object.entries(automation.weekdays)
-        .filter(([day, isActive]) => isActive)
-        .map(([day]) => day)
-    : [];
-
-  if (
-    activeDays.length === allDays.length &&
-    activeDays.every((day) => allDays.includes(day))
-  ) {
-    activeDays = ["Everyday"];
-  } else if (
-    activeDays.length === weekdays.length &&
-    activeDays.every((day) => weekdays.includes(day))
-  ) {
-    activeDays = ["Weekdays"];
-  } else if (
-    activeDays.length === weekends.length &&
-    activeDays.every((day) => weekends.includes(day))
-  ) {
-    activeDays = ["Weekends"];
-  } else {
-    activeDays = activeDays.map((day) => dayAbbreviations[day]);
-  }
-
-  return activeDays;
-};
 
 export const TimerAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
@@ -75,13 +39,48 @@ export const TimerAutomationCard = ({ automation }) => {
       <p>{numDevices} accessories</p>
       <p>{automation.time}</p>
       <p>{activeDays.join(", ")}</p>
-      <button
+      <a
         onClick={handleEdit}
         aria-label="Edit"
         className={styles["edit-button"]}
       >
-        <FontAwesomeIcon icon={faChevronRight} />
-      </button>
+        <FontAwesomeIcon icon="fa-solid fa-chevron-right" size="xl" />
+      </a>
     </div>
   );
+};
+
+const getActiveDays = (
+  automation,
+  dayAbbreviations,
+  weekdays,
+  weekends,
+  allDays
+) => {
+  let activeDays = automation.weekdays
+    ? Object.entries(automation.weekdays)
+        .filter(([day, isActive]) => isActive)
+        .map(([day]) => day)
+    : [];
+
+  if (
+    activeDays.length === allDays.length &&
+    activeDays.every((day) => allDays.includes(day))
+  ) {
+    activeDays = ["Everyday"];
+  } else if (
+    activeDays.length === weekdays.length &&
+    activeDays.every((day) => weekdays.includes(day))
+  ) {
+    activeDays = ["Weekdays"];
+  } else if (
+    activeDays.length === weekends.length &&
+    activeDays.every((day) => weekends.includes(day))
+  ) {
+    activeDays = ["Weekends"];
+  } else {
+    activeDays = activeDays.map((day) => dayAbbreviations[day]);
+  }
+
+  return activeDays;
 };

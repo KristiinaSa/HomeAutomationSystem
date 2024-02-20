@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-
 import styles from "./Automations.module.css";
 
 export const SensorAutomationCard = ({ automation }) => {
@@ -20,13 +19,13 @@ export const SensorAutomationCard = ({ automation }) => {
       <p>Time: {automation.time}</p>
       <p>Disabled: {automation.isDisabled ? "Yes" : "No"}</p>
       <p>Action: {automation.actionType}</p>
-      <button
+      <a
         onClick={handleEdit}
         aria-label="Edit"
         className={styles["edit-button"]}
       >
-        <FontAwesomeIcon icon={faChevronRight} />
-      </button>
+        <FontAwesomeIcon icon="fa-solid fa-chevron-right" size="xl" />
+      </a>
     </div>
   );
 };
