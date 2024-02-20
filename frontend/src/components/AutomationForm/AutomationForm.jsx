@@ -1,24 +1,60 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import TimerAutomationForm from "./TimerAutomationForm";
 import SensorAutomationForm from "./SensorAutomationForm";
 import styles from "./CreateAutomation.module.css";
 
+import { dummyAutomations } from "../../dummyData/dummyAutomations";
+
+
 export const AutomationForm = () => {
   const { id } = useParams();
-  const [mode, setMode] = useState("timer"); // 'timer' or 'sensor'
+  const [automation, setAutomation] = useState(null);
+
+  useEffect(() => {
+    const automation = dummyAutomations.find((item) => item.id == id);
+    setAutomation(automation);
+  }, [id]);
 
   return (
     <div className={styles.formContainer}>
       {!id && (
         <>
-          <button onClick={() => setMode("timer")}>Timer Mode</button>
-          <button onClick={() => setMode("sensor")}>Sensor Mode</button>
+          <button
+            onClick={() =>
+              setAutomation({
+                ...automation,
+                automationType: "timer",
+                isDisabled: automation ? automation.isDisabled : false,
+              })
+            }
+          >
+            Timer Mode
+          </button>
+          <button
+            onClick={() =>
+              setAutomation({
+                ...automation,
+                automationType: "sensor",
+                isDisabled: automation ? automation.isDisabled : false,
+              })
+            }
+          >
+            Sensor Mode
+          </button>
         </>
       )}
 
-      {mode === "timer" ? (
+      <label>
+        <input
+          type="checkbox"
+          checked={automation ? automation.isDisabled : false}
+          disabled
+        />
+        Disabled Checkbox
+      </label>
+
+      {automation && automation.automationType === "timer" ? (
         <TimerAutomationForm id={id} />
       ) : (
         <SensorAutomationForm id={id} />

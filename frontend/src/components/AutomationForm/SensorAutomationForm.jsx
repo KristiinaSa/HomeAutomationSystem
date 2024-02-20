@@ -1,18 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import DeviceSelection from "./DeviceSelection";
-import { dummySensors } from "../../dummyData/dummySensors"; // Import dummySensors
-import { dummyDevices } from "../../dummyData/dummyDevices"; // Import dummyDevices
+
+import { dummySensors } from "../../dummyData/dummySensors";
+import { dummyDevices } from "../../dummyData/dummyDevices";
+import { dummyAutomations } from "../../dummyData/dummyAutomations";
+
+import styles from "./CreateAutomation.module.css";
 
 const SensorAutomationForm = () => {
-  const [selectedSensor, setSelectedSensor] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [automation, setAutomation] = useState(null);
+  const [isLoading, setIsLoading] = useState(!!id);
+
+  useEffect(() => {
+    const fetchAutomation = async () => {
+      const foundAutomation = dummyAutomations.find(
+        (automation) => automation.id == id
+      );
+      setAutomation(foundAutomation);
+      setIsLoading(false);
+    };
+    if (id) {
+      fetchAutomation();
+    } else {
+      setIsLoading(false);
+    }
+  }, [id]);
+
+  const [selectedSensorId, setSelectedSensorId] = useState("");
   const [value, setValue] = useState(0);
   const [selectedDevices, setSelectedDevices] = useState([]);
   const [action, setAction] = useState("");
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    if (automation) {
+      setSelectedSensorId(automation.sensor[0].id);
+      setValue(automation.sensorValue);
+      setSelectedDevices(automation.devices);
+      setAction(
+        automation.actionType.toLowerCase() === "Turn on"
+          ? "Turn on"
+          : "Turn off"
+      );
+    }
+  }, [automation]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const selectedSensor = dummySensors.find(
+      (sensor) => sensor.id === selectedSensorId
+    );
     const data = { selectedSensor, value, selectedDevices, action };
+    if (id) {
+      console.log("Updating automation", id);
+    } else {
+      console.log("Creating new automation");
+    }
     console.log(data);
+    navigate("/automations");
+  };
+
+  const isButtonDisabled = () => {
+    const noSensorSelected = !selectedSensorId;
+    const noDevicesSelected = selectedDevices.length === 0;
+    const noActionSelected = !action;
+    return (
+      isLoading || noSensorSelected || noDevicesSelected || noActionSelected
+    );
   };
 
   return (
@@ -20,8 +78,8 @@ const SensorAutomationForm = () => {
       <label>
         Sensor:
         <select
-          value={selectedSensor}
-          onChange={(e) => setSelectedSensor(e.target.value)}
+          value={selectedSensorId} // Changed from selectedSensor to selectedSensorId
+          onChange={(e) => setSelectedSensorId(e.target.value)} // Changed from setSelectedSensor to setSelectedSensorId
         >
           <option value="">Select a sensor</option>
           {dummySensors.map((sensor) => (
@@ -59,7 +117,13 @@ const SensorAutomationForm = () => {
         </select>
       </label>
 
-      <button type="submit">Create Automation</button>
+      <button type="submit" disabled={isButtonDisabled()}>
+        {isLoading
+          ? "Loading..."
+          : automation
+          ? "Update Automation"
+          : "Create New Automation"}
+      </button>
     </form>
   );
 };

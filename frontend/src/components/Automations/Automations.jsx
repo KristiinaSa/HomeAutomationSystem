@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
-import { AutomationCard } from "./AutomationCard";
+import { TimerAutomationCard } from "./TimerAutomationCard";
+import { SensorAutomationCard } from "./SensorAutomationCard";
 import { Link } from "react-router-dom";
 import styles from "./Automation.module.css";
 
@@ -15,9 +16,13 @@ export const Automations = () => {
 
   return (
     <div className={styles.automationContainer}>
-      {automations.map((automation) => (
-        <AutomationCard key={automation.id} automation={automation} />
-      ))}
+      {automations.map((automation) =>
+        automation.automationType === "timer" ? (
+          <TimerAutomationCard key={automation.id} automation={automation} />
+        ) : (
+          <SensorAutomationCard key={automation.id} automation={automation} />
+        )
+      )}
       <Link to="/automations/new">
         <button>Create New Automation</button>
       </Link>
