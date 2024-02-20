@@ -1,23 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
-export const TimerAutomationCard = ({ automation }) => {
-  const navigate = useNavigate();
-  const numDevices = automation.devices ? automation.devices.length : 0;
-
-  const dayAbbreviations = {
-    monday: "Mon",
-    tuesday: "Tue",
-    wednesday: "Wed",
-    thursday: "Thu",
-    friday: "Fri",
-    saturday: "Sat",
-    sunday: "Sun",
-  };
-
-  const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-  const weekends = ["saturday", "sunday"];
-  const allDays = [...weekdays, ...weekends];
-
+const getActiveDays = (
+  automation,
+  dayAbbreviations,
+  weekdays,
+  weekends,
+  allDays
+) => {
   let activeDays = automation.weekdays
     ? Object.entries(automation.weekdays)
         .filter(([day, isActive]) => isActive)
@@ -42,6 +31,35 @@ export const TimerAutomationCard = ({ automation }) => {
   } else {
     activeDays = activeDays.map((day) => dayAbbreviations[day]);
   }
+
+  return activeDays;
+};
+
+export const TimerAutomationCard = ({ automation }) => {
+  const navigate = useNavigate();
+  const numDevices = automation.devices ? automation.devices.length : 0;
+
+  const dayAbbreviations = {
+    monday: "Mon",
+    tuesday: "Tue",
+    wednesday: "Wed",
+    thursday: "Thu",
+    friday: "Fri",
+    saturday: "Sat",
+    sunday: "Sun",
+  };
+
+  const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+  const weekends = ["saturday", "sunday"];
+  const allDays = [...weekdays, ...weekends];
+
+  const activeDays = getActiveDays(
+    automation,
+    dayAbbreviations,
+    weekdays,
+    weekends,
+    allDays
+  );
 
   const handleEdit = () => {
     navigate(`/automations/edit/${automation.id}`);

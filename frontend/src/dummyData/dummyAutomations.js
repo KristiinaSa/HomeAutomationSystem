@@ -119,13 +119,12 @@ export const dummyAutomations = [
     automationType: "sensor",
     sensorValue: 20,
     actionType: "Turn on",
-    sensor: [
-      {
-        id: 1,
-        name: "Temperature",
-        type: "temperature",
-      },
-    ],
+    sensor: {
+      id: 1,
+      name: "Temperature",
+      type: "temperature",
+    },
+
     devices: [
       {
         id: 1,

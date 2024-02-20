@@ -36,7 +36,7 @@ const SensorAutomationForm = ({ handleSubmit }) => {
 
   useEffect(() => {
     if (automation) {
-      setSelectedSensorId(automation.sensor[0].id);
+      setSelectedSensorId(automation.sensor.id);
       setValue(automation.sensorValue);
       setSelectedDevices(automation.devices);
       setAction(automation.actionType === "Turn on" ? "Turn on" : "Turn off");
