@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
+import styles from "./Automations.module.css";
 
 export const SensorAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
-  console.log(automation.sensor);
 
   const handleEdit = () => {
     navigate(`/automations/edit/${automation.id}`);
@@ -17,7 +20,13 @@ export const SensorAutomationCard = ({ automation }) => {
       <p>Time: {automation.time}</p>
       <p>Disabled: {automation.isDisabled ? "Yes" : "No"}</p>
       <p>Action: {automation.actionType}</p>
-      <button onClick={handleEdit}>Edit</button>
+      <button
+        onClick={handleEdit}
+        aria-label="Edit"
+        className={styles["edit-button"]}
+      >
+        <FontAwesomeIcon icon={faChevronRight} />
+      </button>
     </div>
   );
 };

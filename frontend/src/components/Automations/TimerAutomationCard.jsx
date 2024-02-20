@@ -1,4 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
+import styles from "./Automations.module.css";
 
 const getActiveDays = (
   automation,
@@ -71,7 +75,13 @@ export const TimerAutomationCard = ({ automation }) => {
       <p>{numDevices} accessories</p>
       <p>{automation.time}</p>
       <p>{activeDays.join(", ")}</p>
-      <button onClick={handleEdit}>Edit</button>
+      <button
+        onClick={handleEdit}
+        aria-label="Edit"
+        className={styles["edit-button"]}
+      >
+        <FontAwesomeIcon icon={faChevronRight} />
+      </button>
     </div>
   );
 };

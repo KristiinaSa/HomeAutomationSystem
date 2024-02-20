@@ -6,12 +6,14 @@ import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
 export const AutomationForm = () => {
   const { id } = useParams();
-  const [automation, setAutomation] = useState(null);
+  const [automation, setAutomation] = useState({});
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const automation = dummyAutomations.find((item) => item.id == id);
     setAutomation(automation);
+    setLoading(false);
   }, [id]);
 
   const handleSubmit = async (data, id) => {
@@ -24,9 +26,13 @@ export const AutomationForm = () => {
     navigate("/automations");
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      {!id && (
+      {!id && !automation.automationType && (
         <>
           <button
             onClick={() =>
