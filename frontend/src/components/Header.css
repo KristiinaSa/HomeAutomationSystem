@@ -27,7 +27,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #f6f6f6;
+  background-color: var(--component-box-color);
   border-radius: 5px;
   padding: 1rem;
   width: 200px;
