@@ -4,6 +4,8 @@ import { TimerAutomationCard } from "./TimerAutomationCard";
 import { SensorAutomationCard } from "./SensorAutomationCard";
 import { Link } from "react-router-dom";
 
+import DarkLightToggle from "../DarkLightToggle";
+
 export const Automations = () => {
   const [automations, setAutomations] = useState([]);
 
@@ -15,6 +17,7 @@ export const Automations = () => {
 
   return (
     <div>
+      <DarkLightToggle />
       {automations.map((automation) =>
         automation.automationType === "timer" ? (
           <TimerAutomationCard key={automation.id} automation={automation} />
