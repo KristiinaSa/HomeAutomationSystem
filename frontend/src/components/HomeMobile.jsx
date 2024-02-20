@@ -4,27 +4,10 @@ import { RoomContext } from "../RoomContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
-// import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
   const {categories} = useContext(CategoriesContext);
   const {rooms} = useContext(RoomContext);
-
-  // useEffect(() => {
-  //   setCategories([{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }]);
-  //   setRooms([
-  //     {
-  //       id: 1,
-  //       name: "Living room",
-  //       cards: [{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }],
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Bedroom",
-  //       cards: [{ id: 2, title: "Lights", icon: faLightbulb, count: 1 }],
-  //     },
-  //   ]);
-  // }, []);
 
   return (
     <>
