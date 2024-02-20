@@ -8,11 +8,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 import SettingsPage from "./pages/SettingsPage";
+import { ThemeProvider } from "./ThemeContext";
 
 function App() {
  
   return (
     <>
+    <ThemeProvider>
       <CategoriesProvider>
         <RoomProvider>
         <Router>
@@ -28,6 +30,7 @@ function App() {
         </Router>
         </RoomProvider>
       </CategoriesProvider>
+    </ThemeProvider>
     </>
   );
 }

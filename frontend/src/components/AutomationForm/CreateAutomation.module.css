@@ -22,7 +22,7 @@
 }
 
 .selected {
-  background: #AD7386;
+  background: var(--day-circle-active-color);
   color: var(--component-box-color);
 }
 
