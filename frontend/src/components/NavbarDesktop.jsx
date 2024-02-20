@@ -10,27 +10,25 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import "./NavbarDesktop.css";
 
 const NavbarDesktop = () => {
-  const { categories} = useContext(CategoriesContext);
+  const { categories } = useContext(CategoriesContext);
   const { rooms } = useContext(RoomContext);
 
   return (
     <div className="navbar-desktop">
       <h2 className="logo">Smart Home Mate</h2>
       <div className="navbar-main">
- 
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faHome} />
-            <p>Home</p>
-          </div>
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faTachometerAlt} />
-            <p>Automation</p>
-          </div>
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faCog} />
-            <p>Settings</p>
-          </div>
-               
+        <div className="navbar-main_item">
+          <FontAwesomeIcon icon={faHome} />
+          <p>Home</p>
+        </div>
+        <div className="navbar-main_item">
+          <FontAwesomeIcon icon={faTachometerAlt} />
+          <p>Automation</p>
+        </div>
+        <div className="navbar-main_item">
+          <FontAwesomeIcon icon={faCog} />
+          <p>Settings</p>
+        </div>
       </div>
       <div className="navbar-categories-container">
         <h3>Categories</h3>
