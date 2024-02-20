@@ -11,19 +11,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 
-import { DarkLightProvider } from "./contexts/DarkLightProvider";
-
 function App() {
   return (
-    <DarkLightProvider>
-      <Router>
-        <Routes>
-          <Route path="/automations" element={<Automations />} />
-          <Route path="/automations/new" element={<AutomationForm />} />
-          <Route path="/automations/edit/:id" element={<AutomationForm />} />
-        </Routes>
-      </Router>
-    </DarkLightProvider>
+    <Router>
+      <Routes>
+        <Route path="/automations" element={<Automations />} />
+        <Route path="/automations/new" element={<AutomationForm />} />
+        <Route path="/automations/edit/:id" element={<AutomationForm />} />
+      </Routes>
+    </Router>
   );
 }
 
