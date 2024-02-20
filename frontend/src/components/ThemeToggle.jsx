@@ -16,7 +16,11 @@ const ThemeToggle = () => {
       />
       <div className={styles.slider}>
         <div
-          className={`${styles.circle} ${theme === "dark" ? styles.move : ""}`}
+          className={`${styles.circle} ${
+            theme === "dark"
+              ? styles["circle-dark"] + " " + styles.move
+              : styles["circle-light"]
+          }`}
         >
           <FontAwesomeIcon
             icon={theme === "dark" ? faMoon : faSun}
