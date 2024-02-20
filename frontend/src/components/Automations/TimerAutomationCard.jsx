@@ -58,9 +58,15 @@ const getActiveDays = (
   allDays
 ) => {
   let activeDays = automation.weekdays
-    ? Object.entries(automation.weekdays)
-        .filter(([day, isActive]) => isActive)
-        .map(([day]) => day)
+    ? Object.entries(automation.weekdays).reduce(
+        (activeDays, [day, isActive]) => {
+          if (isActive) {
+            activeDays.push(day);
+          }
+          return activeDays;
+        },
+        []
+      )
     : [];
 
   if (
