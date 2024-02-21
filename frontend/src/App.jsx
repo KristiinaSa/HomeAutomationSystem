@@ -1,4 +1,5 @@
 import "./App.css";
+import "./util/icons";
 import { CategoriesProvider } from "./CategoriesContext";
 import { RoomProvider } from "./RoomContext";
 import Layout from "./pages/Layout";
@@ -11,7 +12,6 @@ import SettingsPage from "./pages/SettingsPage";
 import { ThemeProvider } from "./ThemeContext";
 
 function App() {
- 
   return (
     <>
     <ThemeProvider>

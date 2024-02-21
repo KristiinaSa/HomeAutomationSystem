@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import styles from "./Automations.module.css";
 
 export const TimerAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
@@ -18,10 +21,52 @@ export const TimerAutomationCard = ({ automation }) => {
   const weekends = ["saturday", "sunday"];
   const allDays = [...weekdays, ...weekends];
 
+  const activeDays = getActiveDays(
+    automation,
+    dayAbbreviations,
+    weekdays,
+    weekends,
+    allDays
+  );
+
+  const handleEdit = () => {
+    navigate(`/automations/edit/${automation.id}`);
+  };
+
+  return (
+    <div key={automation.id}>
+      <h2>{automation.name}</h2>
+      <p>{numDevices} accessories</p>
+      <p>{automation.time}</p>
+      <p>{activeDays.join(", ")}</p>
+      <a
+        onClick={handleEdit}
+        aria-label="Edit"
+        className={styles["edit-button"]}
+      >
+        <FontAwesomeIcon icon="fa-solid fa-chevron-right" size="xl" />
+      </a>
+    </div>
+  );
+};
+
+const getActiveDays = (
+  automation,
+  dayAbbreviations,
+  weekdays,
+  weekends,
+  allDays
+) => {
   let activeDays = automation.weekdays
-    ? Object.entries(automation.weekdays)
-        .filter(([day, isActive]) => isActive)
-        .map(([day]) => day)
+    ? Object.entries(automation.weekdays).reduce(
+        (activeDays, [day, isActive]) => {
+          if (isActive) {
+            activeDays.push(day);
+          }
+          return activeDays;
+        },
+        []
+      )
     : [];
 
   if (
@@ -43,17 +88,5 @@ export const TimerAutomationCard = ({ automation }) => {
     activeDays = activeDays.map((day) => dayAbbreviations[day]);
   }
 
-  const handleEdit = () => {
-    navigate(`/automations/edit/${automation.id}`);
-  };
-
-  return (
-    <div key={automation.id}>
-      <h2>{automation.name}</h2>
-      <p>{numDevices} accessories</p>
-      <p>{automation.time}</p>
-      <p>{activeDays.join(", ")}</p>
-      <button onClick={handleEdit}>Edit</button>
-    </div>
-  );
+  return activeDays;
 };

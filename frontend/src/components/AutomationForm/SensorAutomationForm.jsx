@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import DeviceSelection from "./DeviceSelection";
 
@@ -7,14 +7,13 @@ import { dummySensors } from "../../dummyData/dummySensors";
 import { dummyDevices } from "../../dummyData/dummyDevices";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
-import styles from "./CreateAutomation.module.css";
-
-const SensorAutomationForm = () => {
+const SensorAutomationForm = ({ handleSubmit }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const fetchAutomation = async () => {
@@ -38,30 +37,29 @@ const SensorAutomationForm = () => {
 
   useEffect(() => {
     if (automation) {
-      setSelectedSensorId(automation.sensor[0].id);
+      setName(automation.name);
+      setSelectedSensorId(automation.sensor.id);
       setValue(automation.sensorValue);
       setSelectedDevices(automation.devices);
-      setAction(
-        automation.actionType.toLowerCase() === "Turn on"
-          ? "Turn on"
-          : "Turn off"
-      );
+      setAction(automation.actionType === "Turn on" ? "Turn on" : "Turn off");
+      setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
 
-  const handleSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     const selectedSensor = dummySensors.find(
       (sensor) => sensor.id === selectedSensorId
     );
-    const data = { selectedSensor, value, selectedDevices, action };
-    if (id) {
-      console.log("Updating automation", id);
-    } else {
-      console.log("Creating new automation");
-    }
-    console.log(data);
-    navigate("/automations");
+    const data = {
+      name,
+      selectedSensor,
+      value,
+      selectedDevices,
+      action,
+      isDisabled,
+    };
+    handleSubmit(data, id);
   };
 
   const isButtonDisabled = () => {
@@ -69,17 +67,30 @@ const SensorAutomationForm = () => {
     const noDevicesSelected = selectedDevices.length === 0;
     const noActionSelected = !action;
     return (
-      isLoading || noSensorSelected || noDevicesSelected || noActionSelected
+      isLoading ||
+      noSensorSelected ||
+      noDevicesSelected ||
+      noActionSelected ||
+      !name
     );
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
+      <label>
+        Name:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />{" "}
+      </label>
+
       <label>
         Sensor:
         <select
-          value={selectedSensorId} // Changed from selectedSensor to selectedSensorId
-          onChange={(e) => setSelectedSensorId(e.target.value)} // Changed from setSelectedSensor to setSelectedSensorId
+          value={selectedSensorId}
+          onChange={(e) => setSelectedSensorId(e.target.value)}
         >
           <option value="">Select a sensor</option>
           {dummySensors.map((sensor) => (
