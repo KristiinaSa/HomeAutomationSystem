@@ -17,6 +17,7 @@ const TimerAutomationForm = ({ handleSubmit }) => {
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const fetchAutomation = async () => {
@@ -47,6 +48,7 @@ const TimerAutomationForm = ({ handleSubmit }) => {
 
   useEffect(() => {
     if (automation) {
+      setName(automation.name);
       setTime(automation.time);
       setSelectedDays(automation.weekdays);
       setSelectedSensors(automation.devices);
@@ -57,6 +59,7 @@ const TimerAutomationForm = ({ handleSubmit }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     const data = {
+      name,
       selectedDays,
       time,
       selectedSensors,
@@ -77,11 +80,17 @@ const TimerAutomationForm = ({ handleSubmit }) => {
   const isButtonDisabled = () => {
     const noDaysSelected = !Object.values(selectedDays).some(Boolean);
     const noSensorsSelected = selectedSensors.length === 0;
-    return isLoading || !time || noDaysSelected || noSensorsSelected;
+    return isLoading || !time || noDaysSelected || noSensorsSelected || !name;
   };
 
   return (
     <div>
+      <p>Name</p>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />{" "}
       <p>Time</p>
       <TimeSelection time={time} setTime={setTime} />
       <DaySelection

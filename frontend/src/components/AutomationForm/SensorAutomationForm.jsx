@@ -13,6 +13,7 @@ const SensorAutomationForm = ({ handleSubmit }) => {
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const fetchAutomation = async () => {
@@ -36,6 +37,7 @@ const SensorAutomationForm = ({ handleSubmit }) => {
 
   useEffect(() => {
     if (automation) {
+      setName(automation.name);
       setSelectedSensorId(automation.sensor.id);
       setValue(automation.sensorValue);
       setSelectedDevices(automation.devices);
@@ -49,7 +51,14 @@ const SensorAutomationForm = ({ handleSubmit }) => {
     const selectedSensor = dummySensors.find(
       (sensor) => sensor.id === selectedSensorId
     );
-    const data = { selectedSensor, value, selectedDevices, action, isDisabled };
+    const data = {
+      name,
+      selectedSensor,
+      value,
+      selectedDevices,
+      action,
+      isDisabled,
+    };
     handleSubmit(data, id);
   };
 
@@ -58,12 +67,25 @@ const SensorAutomationForm = ({ handleSubmit }) => {
     const noDevicesSelected = selectedDevices.length === 0;
     const noActionSelected = !action;
     return (
-      isLoading || noSensorSelected || noDevicesSelected || noActionSelected
+      isLoading ||
+      noSensorSelected ||
+      noDevicesSelected ||
+      noActionSelected ||
+      !name
     );
   };
 
   return (
     <form onSubmit={onSubmit}>
+      <label>
+        Name:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />{" "}
+      </label>
+
       <label>
         Sensor:
         <select
