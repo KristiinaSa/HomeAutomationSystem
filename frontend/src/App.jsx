@@ -9,6 +9,7 @@ import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 import SettingsPage from "./pages/SettingsPage";
 import { ThemeProvider } from "./ThemeContext";
+import {RegistrationForm} from "./components/RegistrationForm";
 
 function App() {
  
@@ -25,6 +26,7 @@ function App() {
               <Route path="automations/new" element={<AutomationForm />} />
               <Route path="/automations/edit/:id" element={<AutomationForm />} />
               <Route path='/settings' element={<SettingsPage />} />
+              <Route path='/register' element={<RegistrationForm />} />
             </Route>
           </Routes>
         </Router>
