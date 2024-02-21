@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { dummyUsers } from "../dummyData/dummyUsers";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Users.css";
 
 const Users = () => {
@@ -20,15 +20,24 @@ const Users = () => {
               <div className="circle-and-info">
                 <div className="user-initials">{initials}</div>
                 <div className="user-name">
-                  <h4>{user.name}</h4>
-                  <p>{user.role}</p>
+                  <h4>
+                    {user.name} <span>{user.role}</span>
+                  </h4>
+                  <p>{user.email}</p>
                 </div>
               </div>
-              <FontAwesomeIcon icon={faChevronRight} className="user-icon"/>
+              <div className="user-actions">
+                <FontAwesomeIcon icon={faEdit} className="user-icon" />
+                <FontAwesomeIcon icon={faTrash} className="user-icon" />
+              </div>
             </div>
           );
         })}
       </div>
+      <button className="invite-button">
+        <FontAwesomeIcon icon={faPlus} />
+        Invite people
+      </button>
     </div>
   );
 };

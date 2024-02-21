@@ -51,9 +51,42 @@
     margin: 0;
   }
 
+  .user-name span {
+    color: var(--tertiary-text-color-mobile);
+    font-weight: 400;
+  }
+
   .user-name p {
     margin: 0;
     color: var(--tertiary-text-color-mobile);
+  }
+
+  .user-icon {
+    padding-right: 10px;
+    color: var(--secondary-text-color-mobile);
+  }
+
+  .invite-button {
+    background-color: var(--component-box-color);
+    color: var(--primary-text-color-mobile);
+    border-radius: 15px;
+    border: var(--primary-text-color-mobile) 1px solid;
+    padding: 10px 20px;
+    margin: 20px 0;
+    cursor: pointer;
+    width: 70%;
+    min-width: 300px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+  }
+
+  .invite-button svg {
+    margin-right: 10px;
+  }
+
+  .invite-button:hover {
+    background-color: var(--tertiary-text-color-mobile);
+    border: none;
   }
 
   @media screen and (max-width: 768px) {
