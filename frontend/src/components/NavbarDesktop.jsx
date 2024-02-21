@@ -6,44 +6,39 @@ import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import "./NavbarDesktop.css";
 
 const NavbarDesktop = () => {
-  const { categories} = useContext(CategoriesContext);
+  const { categories } = useContext(CategoriesContext);
   const { rooms } = useContext(RoomContext);
 
   return (
     <div className="navbar-desktop">
       <h2 className="logo">Smart Home Mate</h2>
       <div className="navbar-main">
- 
-      <Link to="/">
+        <NavLink to="/" className={({ isActive}) => 
+      isActive ? "active" : "navbar-link"}>
           <div className="navbar-main_item">
-            
             <FontAwesomeIcon icon={faHome} />
             <p>Home</p>
-            
           </div>
-          </Link>
-          <Link to="/automations">
+        </NavLink>
+        <NavLink to="/automations" className={({ isActive}) => 
+      isActive ? "active" : "navbar-link"}>
           <div className="navbar-main_item">
-           
             <FontAwesomeIcon icon={faTachometerAlt} />
             <p>Automation</p>
-            
           </div>
-          </Link>
-          <Link to="/settings">
+        </NavLink>
+        <NavLink to="/settings" className={({ isActive}) => 
+      isActive ? "active" : "navbar-link"}>
           <div className="navbar-main_item">
-            
             <FontAwesomeIcon icon={faCog} />
             <p>Settings</p>
-            
           </div>
-          </Link>
-               
+        </NavLink>
       </div>
       <div className="navbar-categories-container">
         <h3>Categories</h3>
