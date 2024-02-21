@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import TimerAutomationForm from "./TimerAutomationForm";
 import SensorAutomationForm from "./SensorAutomationForm";
+import styles from "./CreateAutomation.module.css";
+
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
+
 
 export const AutomationForm = () => {
   const { id } = useParams();
@@ -31,7 +34,7 @@ export const AutomationForm = () => {
   }
 
   return (
-    <div>
+    <div className={styles.formContainer}>
       {!id && automation && !automation.automationType && (
         <>
           <button

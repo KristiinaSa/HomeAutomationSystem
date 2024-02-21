@@ -24,7 +24,7 @@
     top: 0;
     bottom: unset;
     padding: 1rem;
-    background-color: #2E2B6AB2;
+    background-color: var(--navbar-desktop-background-color);
     color: var(--navbar-inactive-text-color);
   }
 

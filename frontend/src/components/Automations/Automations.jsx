@@ -3,6 +3,7 @@ import { dummyAutomations } from "../../dummyData/dummyAutomations";
 import { TimerAutomationCard } from "./TimerAutomationCard";
 import { SensorAutomationCard } from "./SensorAutomationCard";
 import { Link } from "react-router-dom";
+import styles from "./Automation.module.css";
 
 export const Automations = () => {
   const [automations, setAutomations] = useState([]);
@@ -14,7 +15,7 @@ export const Automations = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.automationContainer}>
       {automations.map((automation) =>
         automation.automationType === "timer" ? (
           <TimerAutomationCard key={automation.id} automation={automation} />
