@@ -3,6 +3,12 @@
     flex-direction: column;
     align-items: flex-start;
     margin-left: 25%;
-    padding: 1rem;
-    
+    padding: 1rem;  
+}
+
+@media (max-width: 768px) {
+    .automationContainer {
+        margin-left: 0;
+        padding: 20px 0 0 30px;
+    }
 }
