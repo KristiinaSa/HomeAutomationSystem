@@ -56,6 +56,93 @@
     color: var(--tertiary-text-color-mobile);
   }
 
+  .user-role {
+    color: var(--tertiary-text-color-mobile);
+    font-weight: 400;
+    padding-left: 15px;
+  }
+
+  .role-choicebox {
+    border-radius: 10px;
+    margin-left: 10px;
+    font-family: 'Poppins', sans-serif;
+    border: var(--secondary-text-color-mobile) 1px solid;
+    width: 100px;
+  }
+
+  .edit {
+    color: var(--secondary-text-color-mobile);
+    padding-right: 15px;
+    cursor: pointer;
+  }
+
+  .delete {
+    color: var(--error-message-color);
+    cursor: pointer;
+  }
+
+  .invite {
+    display: flex;
+    padding: 0 35px;
+    margin: 20px 0;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .invite svg {
+    margin-right: 30px;
+    font-size: 26px;
+  }
+
+  .invite:hover {
+    color: var(--secondary-text-color-mobile);
+  }
+
+  .invite-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    width: 90%;
+
+  }
+
+  .invite-input {
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    margin-right: 20px;
+    width: 70%;
+    box-shadow: 1px 1px 5px 0 rgba(147, 147, 147, 0.1);
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--input-background-color);
+  }
+
+  .invite-sent {
+    padding: 10px 20px;
+  }
+
+  .invite-button {
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #e2e2e2;
+    background-color: #6A618B;
+    margin-right: 15px;
+  }
+
+  .cancel-button {
+    cursor: pointer;
+    border: #6A618B 1px solid;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-text-color-mobile);
+    background-color: var(--component-box-color);
+  }
+
   @media screen and (max-width: 768px) {
     .users-box {
       width: 90%;
