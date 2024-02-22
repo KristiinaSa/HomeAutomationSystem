@@ -13,6 +13,7 @@
     --light-bulb-on-color: #FFC700;
     --day-circle-active-color: #AD7386;
     --error-message-color: #D12F44;
+    --input-background-color: #FFFFFF;
 }
 
 /* Dark theme variables */
@@ -28,4 +29,5 @@
     --light-bulb-on-color: #FFD53F;
     --day-circle-active-color: #C28196;
     --error-message-color: #d15061;
+    --input-background-color: #F6F6F6;
 }

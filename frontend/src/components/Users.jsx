@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { dummyUsers } from "../dummyData/dummyUsers";
 import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,9 @@ import "./Users.css";
 const Users = () => {
   const [persons, setPersons] = useState(dummyUsers);
   const [editingId, setEditingId] = useState(null);
+  const [showInvite, setShowInvite] = useState(false);
+  const [inviteSent, setInviteSent] = useState(false);
+  const { register, handleSubmit, formState: {errors, isSubmitted}, reset } = useForm();
 
   const deletePerson = (id) => {
     const newPersons = persons.filter((person) => person.id !== id);
@@ -25,6 +29,22 @@ const Users = () => {
     setEditingId(null);
   };
 
+ const invitePerson = (user) => {
+    console.log("Invitation sent to:", user.email);
+    reset();
+    setShowInvite(false);
+    setInviteSent(true);
+  }
+
+  useEffect(() => {
+    if (inviteSent) {
+      setTimeout(() => {
+        setInviteSent(false);
+      }, 3000);
+      return () => clearTimeout();
+    }
+  }, [inviteSent])
+ 
   return (
     <div className="users-container">
       <h2>Users</h2>
@@ -74,10 +94,45 @@ const Users = () => {
             </div>
           );
         })}
-        <div className="invite-button">
-          <FontAwesomeIcon icon={faPlus} />
-          Invite people
-        </div>
+        {showInvite ? (
+            <form onSubmit={handleSubmit(invitePerson)} className="invite-form">
+               
+                <input
+                {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: "Invalid email address"
+                    }
+                })}
+                
+                type="email"
+                placeholder="Enter email"
+                className="invite-input"
+                />
+                {isSubmitted && errors.email && <p className="error-message">{errors.email.message}</p>}
+             
+                <button type="submit" className="invite-button">Send</button>
+                <button type="button" className="cancel-button" onClick={() => setShowInvite(false)}>Cancel</button>
+            </form>
+            ) : (
+                inviteSent ? (
+                    <p className="invite-sent">Invitation sent!</p>
+                    
+                ) : (
+                    <div
+                    className="invite"
+                    onClick={() => setShowInvite(true)}
+                >
+                    <FontAwesomeIcon icon={faPlus} />
+                    Invite people
+                </div>
+                )
+
+                  
+                
+           
+        ) }
       </div>
     </div>
   );
