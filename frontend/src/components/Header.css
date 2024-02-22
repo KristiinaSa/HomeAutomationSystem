@@ -37,6 +37,7 @@
   padding: 1rem;
   width: 200px;
   animation: fadeIn 0.5s ease-out;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
 }
 
 .menu-item {
