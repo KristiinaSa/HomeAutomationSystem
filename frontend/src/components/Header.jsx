@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,13 +29,31 @@ const MenuItem = ({ icon, text, onClick }) => {
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const node = useRef();
+
+  const handleClickOutside = (e) => {
+    if (node.current.contains(e.target)) {
+      return;
+    }
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="header">
-      <NavLink to="/" className="header-item home-icon">
-        <div className="header-item home-icon">
-          <FontAwesomeIcon icon={faHome} className="header-icon" />
-        </div>
-      </NavLink>
+    <div className="header" ref={node}>
+      <div className="header-item home-icon">
+        <FontAwesomeIcon icon={faHome} className="header-icon" />
+      </div>
       <div className="header-item">
         <div className="plus-icon" onClick={() => setIsOpen(!isOpen)}>
           <FontAwesomeIcon

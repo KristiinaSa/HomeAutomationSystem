@@ -1,17 +1,27 @@
-const express = require("express");
+import express from "express";
+
+// Middleware imports
+import cors from "cors";
+import morgan from "morgan";
+import errorHandler from "./middleware/errorHandler.js";
+import notFoundHandler from "./middleware/notFoundHandler.js";
+
+// Route imports
+import apiV1Router from "./routes/v1/apiV1Routes.js";
+
 const app = express();
-const port = process.env.PORT || 3000;
 
-const automationRouter = require("./routes/automationRoutes");
-const userRouter = require("./routes/userRoutes");
-const roomRouter = require("./routes/roomRoutes");
-const accessoryRouter = require("./routes/accessoryRoutes");
+app.use(express.json());
+app.use(cors());
+app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "short"));
 
-app.use("/automation", automationRouter);
-app.use("/users", userRouter);
-app.use("/rooms", roomRouter);
-app.use("/accessories", accessoryRouter);
-
-app.listen(port, () => {
-  console.log("Server is running on port " + port);
+app.get("/", (req, res) => {
+  res.send("It Works!");
 });
+
+app.use("/api/v1", apiV1Router);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+export default app;
