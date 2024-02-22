@@ -12,6 +12,11 @@
   margin-left: 10px;
 }
 
+.header-item.home-icon {
+  color: var(--primary-text-color-mobile);
+  text-decoration: none;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
