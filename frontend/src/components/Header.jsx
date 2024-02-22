@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,9 +32,11 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="header">
-      <div className="header-item home-icon">
-        <FontAwesomeIcon icon={faHome} className="header-icon" />
-      </div>
+      <NavLink to="/" className="header-item home-icon">
+        <div className="header-item home-icon">
+          <FontAwesomeIcon icon={faHome} className="header-icon" />
+        </div>
+      </NavLink>
       <div className="header-item">
         <div className="plus-icon" onClick={() => setIsOpen(!isOpen)}>
           <FontAwesomeIcon

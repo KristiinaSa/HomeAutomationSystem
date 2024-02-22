@@ -32,3 +32,13 @@
         display: none;
     }
   }
+
+.active {
+    color: var(--navbar-active-text-color);
+    text-decoration: none;
+}
+
+.navbar-link {
+    color: var(--navbar-inactive-text-color);
+    text-decoration: none;
+}
