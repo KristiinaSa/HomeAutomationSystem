@@ -9,28 +9,33 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 import SettingsPage from "./pages/SettingsPage";
+import LoginPage from "./pages/LoginPage";
 import { ThemeProvider } from "./ThemeContext";
 
 function App() {
   return (
     <>
-    <ThemeProvider>
-      <CategoriesProvider>
-        <RoomProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomeMobile />} />
-              <Route path="automations" element={<Automations />} />
-              <Route path="automations/new" element={<AutomationForm />} />
-              <Route path="/automations/edit/:id" element={<AutomationForm />} />
-              <Route path='/settings' element={<SettingsPage />} />
-            </Route>
-          </Routes>
-        </Router>
-        </RoomProvider>
-      </CategoriesProvider>
-    </ThemeProvider>
+      <ThemeProvider>
+        <CategoriesProvider>
+          <RoomProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<HomeMobile />} />
+                  <Route path="automations" element={<Automations />} />
+                  <Route path="automations/new" element={<AutomationForm />} />
+                  <Route
+                    path="/automations/edit/:id"
+                    element={<AutomationForm />}
+                  />
+                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                </Route>
+              </Routes>
+            </Router>
+          </RoomProvider>
+        </CategoriesProvider>
+      </ThemeProvider>
     </>
   );
 }
