@@ -17,6 +17,10 @@
   text-decoration: none;
 }
 
+.header-item.home-icon, .plus-icon {
+  cursor: pointer;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -47,13 +51,12 @@
   padding: 5px 0;
 }
 
-.menu-item:hover {
+.menu-item .hover-underline-animation {
+  color: var(--primary-text-color-mobile);
+  text-decoration: none;
   cursor: pointer;
 }
 
-.header-item:hover {
-  cursor: pointer;
-}
 
 .hover-underline-animation {
   display: inline-block;
