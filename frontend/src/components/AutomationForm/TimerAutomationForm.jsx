@@ -84,13 +84,13 @@ const TimerAutomationForm = ({ handleSubmit }) => {
   };
 
   return (
-    <div>
+    <div className={styles.verticalLayout}>
       <p>Name</p>
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-      />{" "}
+      />
       <p>Time</p>
       <TimeSelection time={time} setTime={setTime} />
       <DaySelection

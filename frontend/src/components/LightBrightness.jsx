@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-function LightBrightness() {
+const LightBrightness = () => {
   const [value, setValue] = useState(0);
   const timeoutRef = useRef(null);
 
@@ -29,6 +29,6 @@ function LightBrightness() {
       onChange={handleChange}
     />
   );
-}
+};
 
 export default LightBrightness;
