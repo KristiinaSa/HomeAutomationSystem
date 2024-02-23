@@ -12,6 +12,7 @@ import {
   faSignIn,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-router-dom";
 
 const isLoggedIn = false;
 
@@ -64,9 +65,9 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
-      <div className="header-item home-icon">
+      <NavLink to="/" className="header-item home-icon">
         <FontAwesomeIcon icon={faHome} className="header-icon" />
-      </div>
+      </NavLink>
       <div className="header-item">
         <div className="plus-icon" onClick={() => setIsOpen(!isOpen)}>
           <FontAwesomeIcon
