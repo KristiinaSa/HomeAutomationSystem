@@ -7,7 +7,7 @@ import errorHandler from "./middleware/errorHandler.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
 
 // Route imports
-import apiV1Router from "./routes/v1/apiV1Routes.js";
+import apiV1Router from "./routes/v1/apiV1Router.js";
 
 const app = express();
 

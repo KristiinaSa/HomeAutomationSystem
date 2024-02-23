@@ -1,16 +1,22 @@
 import express from "express";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Automation");
-});
+import {
+  getAutomations,
+  getAutomation,
+  addAutomation,
+  editAutomation,
+  deleteAutomation,
+} from "../../controllers/automationController.js";
 
-router.get("/add-automation", (req, res) => {
-  res.send("Add Automation");
-});
+router.get("/", getAutomations);
 
-router.get("/delete-automation", (req, res) => {
-  res.send("Delete Automation");
-});
+router.get("/:id", getAutomation);
+
+router.post("/", addAutomation);
+
+router.put("/:id", editAutomation);
+
+router.delete("/:id", deleteAutomation);
 
 export default router;
