@@ -71,7 +71,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #575757;
+  background-color: var(--primary-text-color-mobile);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
