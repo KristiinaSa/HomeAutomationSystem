@@ -17,6 +17,7 @@
   text-decoration: none;
 }
 
+
 .header-item.home-icon, .plus-icon {
   cursor: pointer;
 }
@@ -40,8 +41,18 @@
   border-radius: 5px;
   padding: 1rem;
   width: 200px;
-  animation: fadeIn 0.5s ease-out;
   box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  transition: opacity 0.5s, transform 0.5s, visibility 0s 0.5s;
+  opacity: 0;
+  transform: translateY(-20px);
+  visibility: hidden;
+}
+
+.overflow-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition: opacity 0.5s, transform 0.5s, visibility 0s;
 }
 
 .menu-item {
@@ -89,6 +100,7 @@
   .header-item.home-icon {
     display: none;
   }
+
   .plus-icon {
     font-size: 2rem;
   }

@@ -9,7 +9,7 @@ const DaySelection = ({ selectedDays, setSelectedDays }) => {
   };
 
   return (
-    <>
+    <div className={styles.horizontalLayout}>
       {Object.keys(selectedDays).map((day) => (
         <label
           key={day}
@@ -27,7 +27,7 @@ const DaySelection = ({ selectedDays, setSelectedDays }) => {
           {day.charAt(0).toUpperCase()}{" "}
         </label>
       ))}
-    </>
+    </div>
   );
 };
 
