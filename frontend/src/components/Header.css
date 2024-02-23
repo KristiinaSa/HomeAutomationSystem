@@ -17,6 +17,22 @@
   text-decoration: none;
 }
 
+
+.header-item.home-icon, .plus-icon {
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .overflow-menu {
   position: absolute;
   top: 100%;
@@ -46,13 +62,12 @@
   padding: 5px 0;
 }
 
-.menu-item:hover {
+.menu-item .hover-underline-animation {
+  color: var(--primary-text-color-mobile);
+  text-decoration: none;
   cursor: pointer;
 }
 
-.header-item:hover {
-  cursor: pointer;
-}
 
 .hover-underline-animation {
   display: inline-block;
@@ -67,7 +82,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #575757;
+  background-color: var(--primary-text-color-mobile);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }

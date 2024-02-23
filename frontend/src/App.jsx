@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 import SettingsPage from "./pages/SettingsPage";
+import LoginPage from "./pages/LoginPage";
 import { ThemeProvider } from "./ThemeContext";
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
                     element={<AutomationForm />}
                   />
                   <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+
                 </Route>
               </Routes>
             </Router>

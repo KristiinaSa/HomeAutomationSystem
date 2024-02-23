@@ -9,20 +9,33 @@ import {
   faTachometerAlt,
   faArrowCircleRight,
   faUser,
+  faSignIn,
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
+
+const isLoggedIn = false;
 
 const menuItems = [
   { icon: faLightbulb, text: "Add accessory", onClick: () => {} },
-  { icon: faTachometerAlt, text: "Add automation", onClick: () => {} },
+  { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
   { icon: faArrowCircleRight, text: "Add room", onClick: () => {} },
   { icon: faUser, text: "Add users", onClick: () => {} },
+  isLoggedIn
+    ? { icon: faSignOut, text: "Log out", path: "/logout" }
+    : { icon: faSignIn, text: "Log in", path: "/login" },
 ];
 
-const MenuItem = ({ icon, text, onClick }) => {
+const MenuItem = ({ icon, text, path }) => {
   return (
-    <div className="menu-item" onClick={onClick}>
+    <div className="menu-item">
       <FontAwesomeIcon icon={icon} />
-      <span className="hover-underline-animation">{text}</span>
+      {path ? (
+        <NavLink to={path} className="hover-underline-animation">
+          {text}
+        </NavLink>
+      ) : (
+        <span className="hover-underline-animation">{text}</span>
+      )}
     </div>
   );
 };
