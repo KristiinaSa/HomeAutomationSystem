@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
+import {
+  deleteAutomation,
+  getAutomation,
+  updateAutomation,
+  addAutomation,
+} from "../../services/automationServices";
+
 import TimerAutomationForm from "./TimerAutomationForm";
 import SensorAutomationForm from "./SensorAutomationForm";
+
 import styles from "./CreateAutomation.module.css";
-
-import { dummyAutomations } from "../../dummyData/dummyAutomations";
-
 
 export const AutomationForm = () => {
   const { id } = useParams();
@@ -14,19 +20,37 @@ export const AutomationForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const automation = dummyAutomations.find((item) => item.id == id);
-    setAutomation(automation);
-    setLoading(false);
+    const fetchAutomation = async () => {
+      try {
+        const automation = await getAutomation(id);
+        setAutomation(automation);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchAutomation();
   }, [id]);
 
   const handleSubmit = async (data, id) => {
     if (id) {
-      console.log("Updating automation", id);
+      console.log("Updating automation");
+      await updateAutomation(id, data);
     } else {
       console.log("Creating new automation");
+      await addAutomation(data);
     }
     console.log(data);
     navigate("/automations");
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteAutomation(id);
+      navigate("/automations");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   if (loading) {
@@ -63,9 +87,19 @@ export const AutomationForm = () => {
       )}
 
       {automation && automation.automationType === "timer" ? (
-        <TimerAutomationForm id={id} handleSubmit={handleSubmit} />
+        <TimerAutomationForm
+          id={id}
+          handleSubmit={handleSubmit}
+          handleDelete={handleDelete}
+          automation={automation}
+        />
       ) : (
-        <SensorAutomationForm id={id} handleSubmit={handleSubmit} />
+        <SensorAutomationForm
+          id={id}
+          handleSubmit={handleSubmit}
+          handleDelete={handleDelete}
+          automation={automation}
+        />
       )}
     </div>
   );

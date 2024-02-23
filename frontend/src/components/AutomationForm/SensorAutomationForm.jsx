@@ -1,78 +1,54 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import DeviceSelection from "./DeviceSelection";
+import { DisableCheckbox } from "./DisableCheckbox";
 
 import { dummySensors } from "../../dummyData/dummySensors";
 import { dummyDevices } from "../../dummyData/dummyDevices";
-import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
-const SensorAutomationForm = ({ handleSubmit }) => {
-  const { id } = useParams();
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-  const [automation, setAutomation] = useState(null);
-  const [isLoading, setIsLoading] = useState(!!id);
+const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [name, setName] = useState("");
-
-  useEffect(() => {
-    const fetchAutomation = async () => {
-      const foundAutomation = dummyAutomations.find(
-        (automation) => automation.id == id
-      );
-      setAutomation(foundAutomation);
-      setIsLoading(false);
-    };
-    if (id) {
-      fetchAutomation();
-    } else {
-      setIsLoading(false);
-    }
-  }, [id]);
-
-  const [selectedSensorId, setSelectedSensorId] = useState("");
+  const [sensorId, setSensorId] = useState("");
   const [value, setValue] = useState(0);
-  const [selectedDevices, setSelectedDevices] = useState([]);
+  const [devices, setDevices] = useState([]);
   const [action, setAction] = useState("");
 
   useEffect(() => {
     if (automation) {
       setName(automation.name);
-      setSelectedSensorId(automation.sensor.id);
-      setValue(automation.sensorValue);
-      setSelectedDevices(automation.devices);
-      setAction(automation.actionType === "Turn on" ? "Turn on" : "Turn off");
+      setSensorId(automation.sensor.id);
+      setValue(automation.value);
+      setDevices(automation.devices || []);
+      setAction(automation.type === "Turn on" ? "Turn on" : "Turn off");
       setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const selectedSensor = dummySensors.find(
-      (sensor) => sensor.id === selectedSensorId
-    );
+    const sensor = dummySensors.find((sensor) => sensor.id == sensorId);
+
     const data = {
       name,
-      selectedSensor,
+      sensor,
       value,
-      selectedDevices,
+      devices,
       action,
       isDisabled,
+      type: automation ? automation.type : "sensor",
     };
-    handleSubmit(data, id);
+    handleSubmit(data, automation?.id);
   };
 
   const isButtonDisabled = () => {
-    const noSensorSelected = !selectedSensorId;
-    const noDevicesSelected = selectedDevices.length === 0;
+    const noSensorSelected = !sensorId;
+    const noDevicesSelected = devices.length === 0;
     const noActionSelected = !action;
-    return (
-      isLoading ||
-      noSensorSelected ||
-      noDevicesSelected ||
-      noActionSelected ||
-      !name
-    );
+    return noSensorSelected || noDevicesSelected || noActionSelected || !name;
   };
 
   return (
@@ -88,10 +64,7 @@ const SensorAutomationForm = ({ handleSubmit }) => {
 
       <label>
         Sensor:
-        <select
-          value={selectedSensorId}
-          onChange={(e) => setSelectedSensorId(e.target.value)}
-        >
+        <select value={sensorId} onChange={(e) => setSensorId(e.target.value)}>
           <option value="">Select a sensor</option>
           {dummySensors.map((sensor) => (
             <option key={sensor.id} value={sensor.id}>
@@ -115,8 +88,8 @@ const SensorAutomationForm = ({ handleSubmit }) => {
 
       <DeviceSelection
         devices={dummyDevices}
-        selectedDevices={selectedDevices}
-        setSelectedDevices={setSelectedDevices}
+        selectedDevices={devices}
+        setSelectedDevices={setDevices}
       />
 
       <label>
@@ -128,13 +101,25 @@ const SensorAutomationForm = ({ handleSubmit }) => {
         </select>
       </label>
 
+      <DisableCheckbox
+        automation={automation}
+        isDisabled={isDisabled}
+        handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
+      />
+
       <button type="submit" disabled={isButtonDisabled()}>
-        {isLoading
-          ? "Loading..."
-          : automation
-          ? "Update Automation"
-          : "Create New Automation"}
+        {automation ? "Update Automation" : "Create New Automation"}
       </button>
+
+      {automation && (
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() => handleDelete(automation.id)}
+          role="button"
+          aria-label="Delete"
+          style={{ cursor: "pointer" }}
+        />
+      )}
     </form>
   );
 };

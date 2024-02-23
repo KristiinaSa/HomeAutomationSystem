@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
@@ -7,33 +6,15 @@ import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
 import { dummyDevices } from "../../dummyData/dummyDevices";
-import { dummyAutomations } from "../../dummyData/dummyAutomations";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./CreateAutomation.module.css";
 
-const TimerAutomationForm = ({ handleSubmit }) => {
-  const { id } = useParams();
-
-  const [automation, setAutomation] = useState(null);
-  const [isLoading, setIsLoading] = useState(!!id);
+const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [name, setName] = useState("");
-
-  useEffect(() => {
-    const fetchAutomation = async () => {
-      const foundAutomation = dummyAutomations.find(
-        (automation) => automation.id == id
-      );
-      setAutomation(foundAutomation);
-      setIsLoading(false);
-    };
-    if (id) {
-      fetchAutomation();
-    } else {
-      setIsLoading(false);
-    }
-  }, [id]);
-
   const [time, setTime] = useState("");
   const [selectedDays, setSelectedDays] = useState({
     monday: false,
@@ -64,23 +45,15 @@ const TimerAutomationForm = ({ handleSubmit }) => {
       time,
       selectedSensors,
       isDisabled,
+      type: automation ? automation.type : "timer",
     };
-    handleSubmit(data, id);
-  };
-
-  const handleCheckboxChange = (event) => {
-    if (automation) {
-      setAutomation({
-        ...automation,
-        isDisabled: event.target.checked,
-      });
-    }
+    handleSubmit(data, automation?.id);
   };
 
   const isButtonDisabled = () => {
     const noDaysSelected = !Object.values(selectedDays).some(Boolean);
     const noSensorsSelected = selectedSensors.length === 0;
-    return isLoading || !time || noDaysSelected || noSensorsSelected || !name;
+    return !time || noDaysSelected || noSensorsSelected || !name;
   };
 
   return (
@@ -104,8 +77,8 @@ const TimerAutomationForm = ({ handleSubmit }) => {
       />
       <DisableCheckbox
         automation={automation}
-        isDisabled={automation?.isDisabled || false}
-        handleCheckboxChange={handleCheckboxChange}
+        isDisabled={isDisabled}
+        handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
       />
       <button
         onClick={onSubmit}
@@ -114,12 +87,17 @@ const TimerAutomationForm = ({ handleSubmit }) => {
           isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
         }
       >
-        {isLoading
-          ? "Loading..."
-          : automation
-          ? "Update Automation"
-          : "Create New Automation"}
+        {automation ? "Update Automation" : "Create New Automation"}
       </button>
+      {automation && (
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() => handleDelete(automation.id)}
+          role="button"
+          aria-label="Delete"
+          style={{ cursor: "pointer" }}
+        />
+      )}
     </div>
   );
 };

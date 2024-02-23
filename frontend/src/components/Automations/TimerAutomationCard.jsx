@@ -36,7 +36,7 @@ export const TimerAutomationCard = ({ automation }) => {
   return (
     <div key={automation.id}>
       <h2>{automation.name}</h2>
-      <p>{numDevices} accessories</p>
+      <p>{automation.isDisabled ? "Disabled" : `${numDevices} accessories`}</p>
       <p>{automation.time}</p>
       <p>{activeDays.join(", ")}</p>
       <a

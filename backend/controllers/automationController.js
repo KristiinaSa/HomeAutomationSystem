@@ -24,7 +24,7 @@ const addAutomation = async (req, res) => {
 
 const editAutomation = async (req, res) => {
   const id = req.params.id;
-  const automationIndex = automationModel.findIndex((a) => a.id === id);
+  const automationIndex = automationModel.findIndex((a) => a.id == id);
 
   if (automationIndex === -1) {
     res.status(404).send({ message: "Automation not found" });
@@ -43,7 +43,7 @@ const editAutomation = async (req, res) => {
 
 const deleteAutomation = async (req, res) => {
   const id = req.params.id;
-  const automationIndex = automationModel.findIndex((a) => a.id === id);
+  const automationIndex = automationModel.findIndex((a) => a.id == id);
 
   if (automationIndex === -1) {
     res.status(404).send({ message: "Automation not found" });

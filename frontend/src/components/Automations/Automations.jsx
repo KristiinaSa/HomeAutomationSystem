@@ -1,17 +1,26 @@
 import { useState, useEffect } from "react";
-import { dummyAutomations } from "../../dummyData/dummyAutomations";
+import { Link } from "react-router-dom";
+
+import { getAutomations } from "../../services/automationServices";
+
 import { TimerAutomationCard } from "./TimerAutomationCard";
 import { SensorAutomationCard } from "./SensorAutomationCard";
-import { Link } from "react-router-dom";
+
 import styles from "./Automation.module.css";
 
 export const Automations = () => {
   const [automations, setAutomations] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setAutomations(dummyAutomations);
-    }, 1000);
+    const fetchAutomations = async () => {
+      try {
+        const data = await getAutomations();
+        setAutomations(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchAutomations();
   }, []);
 
   return (
