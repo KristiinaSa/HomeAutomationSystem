@@ -6,8 +6,8 @@ class Setting extends Model {}
 Setting.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    language: DataTypes.STRING,
-    using_darkmode: DataTypes.INTEGER,
+    language: { type: DataTypes.STRING, defaultValue: "English" },
+    using_darkmode: { type: DataTypes.BOOLEAN, defaultValue: 0 },
     user_id: DataTypes.INTEGER,
   },
   { sequelize, modelName: "setting" }

@@ -7,9 +7,12 @@ Sensor.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     sensor_type: DataTypes.STRING,
-    value: DataTypes.STRING,
+    value: { type: DataTypes.STRING, defaultValue: "0" },
     data_type: DataTypes.STRING,
-    role_access: DataTypes.ENUM("owner", "admin", "resident"),
+    role_access: {
+      type: DataTypes.ENUM("owner", "admin", "resident"),
+      defaultValue: "owner",
+    },
     room_id: DataTypes.INTEGER,
     system_id: DataTypes.INTEGER,
   },

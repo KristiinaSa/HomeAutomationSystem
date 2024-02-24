@@ -10,7 +10,7 @@ System.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    name: DataTypes.STRING,
+    name: { type: DataTypes.STRING, defaultValue: "Home" },
   },
   { sequelize, modelName: "system" }
 );
