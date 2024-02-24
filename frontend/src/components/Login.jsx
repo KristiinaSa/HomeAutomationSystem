@@ -1,13 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { AuthContext } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const emailRef = useRef();
   const errorRef = useRef();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -17,11 +22,44 @@ const Login = () => {
     setErrorMessage("");
   }, [email, password]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (loginSuccess) {
+      setTimeout(() => {
+        setIsLoggedIn(true);
+        navigate("/");
+        setLoginSuccess(false);
+      }, 3000);
+    }
+  }, [loginSuccess, navigate, setIsLoggedIn]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setErrorMessage("Please fill in all the fields");
       return;
+    }
+
+    const response = await fetch("http://localhost:3000/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      setLoginSuccess(true);
+    } else {
+      const errorData = await response.json();
+      setErrorMessage(errorData.message);
     }
   };
 
@@ -58,6 +96,7 @@ const Login = () => {
           className="login-submit-button"
           type="submit"
           onClick={handleSubmit}
+          disabled={loginSuccess}
         >
           LOG IN
         </button>
@@ -68,6 +107,11 @@ const Login = () => {
         >
           {errorMessage}
         </p>
+        {loginSuccess && (
+          <p aria-live="assertive">
+            Log in succesfull! Redirecting to home page...
+          </p>
+        )}
       </form>
     </div>
   );
