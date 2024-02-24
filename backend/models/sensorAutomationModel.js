@@ -1,9 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/sequelizeConnector.js";
 
-import Device from "./deviceModel.js";
-import Sensor from "./sensorModel.js";
-
 class SensorAutomation extends Model {}
 
 SensorAutomation.init(
