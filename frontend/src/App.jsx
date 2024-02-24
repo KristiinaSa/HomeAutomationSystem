@@ -1,4 +1,5 @@
 import "./App.css";
+import "./util/icons";
 import { CategoriesProvider } from "./CategoriesContext";
 import { RoomProvider } from "./RoomContext";
 import Layout from "./pages/Layout";
@@ -8,31 +9,35 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 import SettingsPage from "./pages/SettingsPage";
+import LoginPage from "./pages/LoginPage";
 import { ThemeProvider } from "./ThemeContext";
 import {RegistrationForm} from "./components/RegistrationForm";
 
 function App() {
- 
   return (
     <>
-    <ThemeProvider>
-      <CategoriesProvider>
-        <RoomProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomeMobile />} />
-              <Route path="automations" element={<Automations />} />
-              <Route path="automations/new" element={<AutomationForm />} />
-              <Route path="/automations/edit/:id" element={<AutomationForm />} />
-              <Route path='/settings' element={<SettingsPage />} />
-              <Route path='/register' element={<RegistrationForm />} />
-            </Route>
-          </Routes>
-        </Router>
-        </RoomProvider>
-      </CategoriesProvider>
-    </ThemeProvider>
+      <ThemeProvider>
+        <CategoriesProvider>
+          <RoomProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<HomeMobile />} />
+                  <Route path="automations" element={<Automations />} />
+                  <Route path="automations/new" element={<AutomationForm />} />
+                  <Route
+                    path="/automations/edit/:id"
+                    element={<AutomationForm />}
+                  />
+                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+
+                </Route>
+              </Routes>
+            </Router>
+          </RoomProvider>
+        </CategoriesProvider>
+      </ThemeProvider>
     </>
   );
 }

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import styles from "./CreateAutomation.module.css";
 
 const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
@@ -25,10 +28,14 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
   );
 
   return (
-    <div>
+    <div className={styles.verticalLayout}>
       <p>Devices</p>
       {availableDevices.length > 0 ? (
-        <select value={selectedDeviceId} onChange={handleDeviceChange}>
+        <select
+          value={selectedDeviceId}
+          onChange={handleDeviceChange}
+          className={styles.selectBox}
+        >
           <option value="" disabled>
             Select devices
           </option>
@@ -42,11 +49,16 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
         <p>No devices available</p>
       )}
       {selectedDevices.length > 0 ? (
-        <ul>
+        <ul className={styles.deviceList}>
           {selectedDevices.map((device, index) => (
-            <li key={index}>
+            <li key={index} className={styles.centerContent}>
               {device.name}
-              <button onClick={() => handleRemoveDevice(device)}>Remove</button>
+              <button
+                className={styles.removeButton}
+                onClick={() => handleRemoveDevice(device)}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
             </li>
           ))}
         </ul>

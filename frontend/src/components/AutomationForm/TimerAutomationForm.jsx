@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
+import { DisableCheckbox } from "./DisableCheckbox";
 
 import { dummyDevices } from "../../dummyData/dummyDevices";
 import { dummyAutomations } from "../../dummyData/dummyAutomations";
 
 import styles from "./CreateAutomation.module.css";
 
-const TimerAutomationForm = () => {
+const TimerAutomationForm = ({ handleSubmit }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [automation, setAutomation] = useState(null);
   const [isLoading, setIsLoading] = useState(!!id);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const fetchAutomation = async () => {
@@ -46,32 +48,49 @@ const TimerAutomationForm = () => {
 
   useEffect(() => {
     if (automation) {
+      setName(automation.name);
       setTime(automation.time);
       setSelectedDays(automation.weekdays);
       setSelectedSensors(automation.devices);
+      setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
 
-  const handleSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    const data = { selectedDays, time, selectedSensors };
-    if (id) {
-      console.log("Updating automation", id);
-    } else {
-      console.log("Creating new automation");
+    const data = {
+      name,
+      selectedDays,
+      time,
+      selectedSensors,
+      isDisabled,
+    };
+    handleSubmit(data, id);
+  };
+
+  const handleCheckboxChange = (event) => {
+    if (automation) {
+      setAutomation({
+        ...automation,
+        isDisabled: event.target.checked,
+      });
     }
-    console.log(data);
-    navigate("/automations");
   };
 
   const isButtonDisabled = () => {
     const noDaysSelected = !Object.values(selectedDays).some(Boolean);
     const noSensorsSelected = selectedSensors.length === 0;
-    return isLoading || !time || noDaysSelected || noSensorsSelected;
+    return isLoading || !time || noDaysSelected || noSensorsSelected || !name;
   };
 
   return (
-    <div>
+    <div className={styles.verticalLayout}>
+      <p>Name</p>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
       <p>Time</p>
       <TimeSelection time={time} setTime={setTime} />
       <DaySelection
@@ -83,8 +102,13 @@ const TimerAutomationForm = () => {
         selectedDevices={selectedSensors}
         setSelectedDevices={setSelectedSensors}
       />
+      <DisableCheckbox
+        automation={automation}
+        isDisabled={automation?.isDisabled || false}
+        handleCheckboxChange={handleCheckboxChange}
+      />
       <button
-        onClick={handleSubmit}
+        onClick={onSubmit}
         disabled={isButtonDisabled()}
         style={
           isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
