@@ -6,9 +6,7 @@ const checkAutomations = async () => {
   const now = new Date();
 
   const currentDayIndex = now.getDay() || 7;
-  console.log(currentDayIndex);
   const currentDayBit = 1 << (currentDayIndex - 1);
-  console.log(currentDayBit);
   const currentHours = now.getHours().toString().padStart(2, "0");
   const currentMinutes = now.getMinutes().toString().padStart(2, "0");
   const currentTime = `${currentHours}:${currentMinutes}`;

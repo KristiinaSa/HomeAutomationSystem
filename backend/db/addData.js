@@ -1,4 +1,5 @@
 // Adds some basic data to the database for testing purposes
+import "./associations.js";
 
 import System from "../models/systemModel.js";
 import Room from "../models/roomModel.js";
@@ -37,20 +38,20 @@ async function addTestData() {
 
   const devices = await Device.bulkCreate([
     {
-      device_name: "Table Lamp",
-      device_type: "Light",
-      device_model: "BOB-LED",
-      sensor_value: "on",
+      name: "Table Lamp",
+      type: "Light",
+      model: "BOB-LED",
+      value: "on",
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
       room_id: room.id,
     },
     {
-      device_name: "Ceiling Lamp",
-      device_type: "Light",
-      device_model: "DAN-LED",
-      sensor_value: "off",
+      name: "Ceiling Lamp",
+      type: "Light",
+      model: "DAN-LED",
+      value: "off",
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
@@ -60,7 +61,6 @@ async function addTestData() {
 
   const timeAutomations = await TimeAutomation.bulkCreate([
     {
-      device_id: devices[0].id,
       name: "Test Automation 1",
       is_active: true,
       weekdays: 127,
@@ -68,7 +68,6 @@ async function addTestData() {
       action: "on",
     },
     {
-      device_id: devices[1].id,
       name: "Test Automation 2",
       is_active: true,
       weekdays: 127,
@@ -76,6 +75,9 @@ async function addTestData() {
       action: "off",
     },
   ]);
+
+  await timeAutomations[0].addDevices(devices);
+  await timeAutomations[1].addDevices(devices);
 }
 
 addTestData();
