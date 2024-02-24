@@ -1,4 +1,5 @@
 import automationModel from "../dummyModels/automationModel.js";
+import { sqlQuery } from "../db/dbConnector.js";
 
 const checkAutomations = () => {
   const now = new Date();

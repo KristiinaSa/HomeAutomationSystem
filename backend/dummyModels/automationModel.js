@@ -116,7 +116,7 @@ export const automationModel = [
     name: "Automation 5",
     isDisabled: true,
     type: "sensor",
-    sensorValue: 20,
+    value: 20,
     action: "Turn on",
     sensor: {
       id: 1,
