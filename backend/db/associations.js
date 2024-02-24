@@ -35,3 +35,5 @@ UsageHistory.belongsToMany(User, { through: "user_usage_history" });
 
 User.belongsTo(System, { foreignKey: "system_id" });
 User.belongsToMany(UsageHistory, { through: "user_usage_history" });
+
+System.hasMany(Room, { foreignKey: "system_id" });

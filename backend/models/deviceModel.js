@@ -6,6 +6,7 @@ class Device extends Model {}
 Device.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    device_name: DataTypes.STRING,
     device_type: DataTypes.STRING,
     device_model: DataTypes.STRING,
     sensor_value: DataTypes.STRING,

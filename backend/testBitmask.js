@@ -1,13 +1,13 @@
 import { weekdaysToBitmask, bitmaskToWeekdays } from "./controllers/helpers.js";
 
 const weekdays = {
-  monday: true,
-  tuesday: true,
+  monday: false,
+  tuesday: false,
   wednesday: false,
-  thursday: true,
-  friday: true,
-  saturday: false,
-  sunday: false,
+  thursday: false,
+  friday: false,
+  saturday: true,
+  sunday: true,
 };
 
 console.log(weekdaysToBitmask(weekdays)); // 62

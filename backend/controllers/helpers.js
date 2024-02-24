@@ -1,12 +1,12 @@
 export function weekdaysToBitmask(weekdays) {
   const days = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
     "sunday",
+    "saturday",
+    "friday",
+    "thursday",
+    "wednesday",
+    "tuesday",
+    "monday",
   ];
   let bitmask = 0;
 
@@ -15,18 +15,18 @@ export function weekdaysToBitmask(weekdays) {
     bitmask |= weekdays[day] ? 1 : 0;
   }
 
-  return bitmask.toString(2).padStart(days.length, "0");
+  return bitmask;
 }
 
 export function bitmaskToWeekdays(bitmask) {
   const days = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
     "sunday",
+    "saturday",
+    "friday",
+    "thursday",
+    "wednesday",
+    "tuesday",
+    "monday",
   ];
   let weekdays = {};
 

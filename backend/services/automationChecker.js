@@ -1,24 +1,32 @@
-import automationModel from "../dummyModels/automationModel.js";
-import { sqlQuery } from "../db/dbConnector.js";
+import Sequelize from "sequelize";
+import TimeAutomation from "../models/timeAutomationModel.js";
+import { Op } from "sequelize";
 
-const checkAutomations = () => {
+const checkAutomations = async () => {
   const now = new Date();
 
-  const currentDay = new Intl.DateTimeFormat("en-US", { weekday: "long" })
-    .format(now)
-    .toLowerCase();
+  const currentDayIndex = now.getDay() || 7;
+  console.log(currentDayIndex);
+  const currentDayBit = 1 << (currentDayIndex - 1);
+  console.log(currentDayBit);
   const currentHours = now.getHours().toString().padStart(2, "0");
   const currentMinutes = now.getMinutes().toString().padStart(2, "0");
   const currentTime = `${currentHours}:${currentMinutes}`;
 
-  console.log(`Checking automations on a ${currentDay} at ${currentTime}`);
+  console.log(`Checking automations on a ${currentDayIndex} at ${currentTime}`);
 
-  automationModel.forEach((automation) => {
-    if (automation.type === "timer" && !automation.isDisabled) {
-      if (automation.time === currentTime && automation.weekdays[currentDay]) {
-        console.log(`Running automation: ${automation.name}`);
-      }
-    }
+  const automations = await TimeAutomation.findAll({
+    where: {
+      time: currentTime,
+      is_active: true,
+      [Op.and]: [Sequelize.literal(`weekdays & ${currentDayBit} != 0`)],
+    },
+  });
+
+  console.log(automations);
+
+  automations.forEach((automation) => {
+    console.log(`Running automation: ${automation.name}`);
   });
 };
 
