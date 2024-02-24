@@ -13,11 +13,11 @@ import {
   faSignIn,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const MenuItem = ({ icon, text, path }) => {
+const MenuItem = ({ icon, text, path, onClick }) => {
   return (
-    <div className="menu-item">
+    <div className="menu-item" onClick={onClick}>
       <FontAwesomeIcon icon={icon} />
       {path ? (
         <NavLink to={path} className="hover-underline-animation">
@@ -34,14 +34,51 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:3000/api/v1/login/logout", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (response.ok) {
+      navigate("/login");
+      logout();
+    } else {
+      console.error("Logout failed");
+    }
+  };
 
   const menuItems = [
-    { icon: faLightbulb, text: "Add accessory", onClick: () => {} },
+    {
+      icon: faLightbulb,
+      text: "Add accessory",
+      onClick: () => {
+        console.log("Add accessory clicked");
+      },
+    },
     { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
-    { icon: faArrowCircleRight, text: "Add room", onClick: () => {} },
-    { icon: faUser, text: "Add users", onClick: () => {} },
+    {
+      icon: faArrowCircleRight,
+      text: "Add room",
+      onClick: () => {
+        console.log("Add room clicked");
+      },
+    },
+    {
+      icon: faUser,
+      text: "Add users",
+      onClick: () => {
+        console.log("Add users clicked");
+      },
+    },
     isLoggedIn
-      ? { icon: faSignOut, text: "Log out", path: "/logout" }
+      ? { icon: faSignOut, text: "Log out", onClick: handleLogout }
       : { icon: faSignIn, text: "Log in", path: "/login" },
   ];
 
