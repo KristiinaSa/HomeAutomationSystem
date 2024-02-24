@@ -13,7 +13,7 @@ const checkAutomations = () => {
   console.log(`Checking automations on a ${currentDay} at ${currentTime}`);
 
   automationModel.forEach((automation) => {
-    if (automation.automationType === "timer" && !automation.isDisabled) {
+    if (automation.type === "timer" && !automation.isDisabled) {
       if (automation.time === currentTime && automation.weekdays[currentDay]) {
         console.log(`Running automation: ${automation.name}`);
       }

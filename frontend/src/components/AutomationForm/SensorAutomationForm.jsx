@@ -40,6 +40,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       isDisabled,
       type: automation ? automation.type : "sensor",
     };
+    console.log(data);
     handleSubmit(data, automation?.id);
   };
 

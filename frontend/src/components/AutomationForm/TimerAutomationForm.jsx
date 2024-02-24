@@ -25,14 +25,14 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
     saturday: false,
     sunday: false,
   });
-  const [selectedSensors, setSelectedSensors] = useState([]);
+  const [devices, setDevices] = useState([]);
 
   useEffect(() => {
     if (automation) {
       setName(automation.name);
       setTime(automation.time);
       setSelectedDays(automation.weekdays);
-      setSelectedSensors(automation.devices);
+      setDevices(automation.devices);
       setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
@@ -41,19 +41,20 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
     event.preventDefault();
     const data = {
       name,
-      selectedDays,
+      weekdays: selectedDays,
       time,
-      selectedSensors,
+      devices,
       isDisabled,
       type: automation ? automation.type : "timer",
     };
+    console.log(data);
     handleSubmit(data, automation?.id);
   };
 
   const isButtonDisabled = () => {
     const noDaysSelected = !Object.values(selectedDays).some(Boolean);
-    const noSensorsSelected = selectedSensors.length === 0;
-    return !time || noDaysSelected || noSensorsSelected || !name;
+    const noDevicesSelected = devices.length === 0;
+    return !time || noDaysSelected || noDevicesSelected || !name;
   };
 
   return (
@@ -72,8 +73,8 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       />
       <DeviceSelection
         devices={dummyDevices}
-        selectedDevices={selectedSensors}
-        setSelectedDevices={setSelectedSensors}
+        selectedDevices={devices}
+        setSelectedDevices={setDevices}
       />
       <DisableCheckbox
         automation={automation}

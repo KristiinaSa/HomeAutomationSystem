@@ -4,7 +4,7 @@ export const automationModel = [
     name: "Automation 1",
     time: "14:00",
     isDisabled: false,
-    automationType: "timer",
+    type: "timer",
     weekdays: {
       monday: false,
       tuesday: false,
@@ -37,7 +37,7 @@ export const automationModel = [
     name: "Automation 2",
     time: "18:00",
     isDisabled: Math.random() < 0.5,
-    automationType: "timer",
+    type: "timer",
     weekdays: {
       monday: true,
       tuesday: true,
@@ -60,7 +60,7 @@ export const automationModel = [
     name: "Automation 3",
     time: "20:00",
     isDisabled: Math.random() < 0.5,
-    automationType: "timer",
+    type: "timer",
     weekdays: {
       monday: true,
       tuesday: true,
@@ -88,7 +88,7 @@ export const automationModel = [
     name: "Automation 4",
     time: "20:00",
     isDisabled: Math.random() < 0.5,
-    automationType: "timer",
+    type: "timer",
     weekdays: {
       monday: true,
       tuesday: true,
@@ -115,7 +115,7 @@ export const automationModel = [
     id: 5,
     name: "Automation 5",
     isDisabled: true,
-    automationType: "sensor",
+    type: "sensor",
     sensorValue: 20,
     action: "Turn on",
     sensor: {

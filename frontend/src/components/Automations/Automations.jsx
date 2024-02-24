@@ -16,6 +16,7 @@ export const Automations = () => {
       try {
         const data = await getAutomations();
         setAutomations(data);
+        console.log(data);
       } catch (err) {
         console.error(err);
       }
@@ -26,7 +27,7 @@ export const Automations = () => {
   return (
     <div className={styles.automationContainer}>
       {automations.map((automation) =>
-        automation.automationType === "timer" ? (
+        automation.type === "timer" ? (
           <TimerAutomationCard key={automation.id} automation={automation} />
         ) : (
           <SensorAutomationCard key={automation.id} automation={automation} />

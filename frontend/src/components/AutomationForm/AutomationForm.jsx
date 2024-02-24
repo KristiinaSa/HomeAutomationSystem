@@ -15,13 +15,15 @@ import styles from "./CreateAutomation.module.css";
 
 export const AutomationForm = () => {
   const { id } = useParams();
-  const [automation, setAutomation] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [automation, setAutomation] = useState();
+  const [loading, setLoading] = useState(false);
+  const [formType, setFormType] = useState("timer"); // Default to timer form
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAutomation = async () => {
       try {
+        setLoading(true);
         const automation = await getAutomation(id);
         setAutomation(automation);
         setLoading(false);
@@ -29,7 +31,9 @@ export const AutomationForm = () => {
         console.error(err);
       }
     };
-    fetchAutomation();
+    if (id) {
+      fetchAutomation();
+    }
   }, [id]);
 
   const handleSubmit = async (data, id) => {
@@ -59,34 +63,30 @@ export const AutomationForm = () => {
 
   return (
     <div className={styles.formContainer}>
-      {!id && automation && !automation.automationType && (
+      {!id && (
         <>
-          <button
-            onClick={() =>
-              setAutomation({
-                ...automation,
-                automationType: "timer",
-                isDisabled: automation ? automation.isDisabled : false,
-              })
-            }
-          >
-            Timer Mode
-          </button>
-          <button
-            onClick={() =>
-              setAutomation({
-                ...automation,
-                automationType: "sensor",
-                isDisabled: automation ? automation.isDisabled : false,
-              })
-            }
-          >
-            Sensor Mode
-          </button>
+          <button onClick={() => setFormType("timer")}>Timer Mode</button>
+          <button onClick={() => setFormType("sensor")}>Sensor Mode</button>
         </>
       )}
 
-      {automation && automation.automationType === "timer" ? (
+      {automation ? (
+        automation.type === "timer" ? (
+          <TimerAutomationForm
+            id={id}
+            handleSubmit={handleSubmit}
+            handleDelete={handleDelete}
+            automation={automation}
+          />
+        ) : (
+          <SensorAutomationForm
+            id={id}
+            handleSubmit={handleSubmit}
+            handleDelete={handleDelete}
+            automation={automation}
+          />
+        )
+      ) : formType === "timer" ? (
         <TimerAutomationForm
           id={id}
           handleSubmit={handleSubmit}
