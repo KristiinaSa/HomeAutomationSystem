@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const emailRef = useRef();
   const errorRef = useRef();
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -18,6 +21,22 @@ const Login = () => {
   useEffect(() => {
     setErrorMessage("");
   }, [email, password]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (loginSuccess) {
+      setTimeout(() => {
+        setIsLoggedIn(true);
+        navigate("/");
+        setLoginSuccess(false);
+      }, 3000);
+    }
+  }, [loginSuccess, navigate, setIsLoggedIn]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,8 +56,7 @@ const Login = () => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      console.log("Login successful!");
-      setIsLoggedIn(true);
+      setLoginSuccess(true);
     } else {
       const errorData = await response.json();
       setErrorMessage(errorData.message);
@@ -78,6 +96,7 @@ const Login = () => {
           className="login-submit-button"
           type="submit"
           onClick={handleSubmit}
+          disabled={loginSuccess}
         >
           LOG IN
         </button>
@@ -88,6 +107,11 @@ const Login = () => {
         >
           {errorMessage}
         </p>
+        {loginSuccess && (
+          <p aria-live="assertive">
+            Log in succesfull! Redirecting to home page...
+          </p>
+        )}
       </form>
     </div>
   );
