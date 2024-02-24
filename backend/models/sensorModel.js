@@ -13,7 +13,7 @@ Sensor.init(
     sensor_type: DataTypes.STRING,
     value: DataTypes.STRING,
     data_type: DataTypes.STRING,
-    role_access: DataTypes.ENUM("admin", "user", "guest"),
+    role_access: DataTypes.ENUM("owner", "admin", "resident"),
     room_id: DataTypes.INTEGER,
     system_id: DataTypes.INTEGER,
   },

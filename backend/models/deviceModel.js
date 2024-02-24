@@ -16,7 +16,7 @@ Device.init(
     device_model: DataTypes.STRING,
     sensor_value: DataTypes.STRING,
     data_type: DataTypes.STRING,
-    role_access: DataTypes.ENUM("admin", "user", "guest"),
+    role_access: DataTypes.ENUM("owner", "admin", "resident"),
     system_id: DataTypes.INTEGER,
     room_id: DataTypes.INTEGER,
   },

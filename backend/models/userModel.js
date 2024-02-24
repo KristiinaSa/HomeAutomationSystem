@@ -10,7 +10,7 @@ User.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
-    role: DataTypes.ENUM("admin", "user", "guest"),
+    role: DataTypes.ENUM("owner", "admin", "resident"),
     password: DataTypes.STRING,
     email: { type: DataTypes.STRING, unique: true },
     is_registered: DataTypes.INTEGER,
