@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { AuthContext } from "../AuthContext";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,18 +14,6 @@ import {
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
-
-const isLoggedIn = false;
-
-const menuItems = [
-  { icon: faLightbulb, text: "Add accessory", onClick: () => {} },
-  { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
-  { icon: faArrowCircleRight, text: "Add room", onClick: () => {} },
-  { icon: faUser, text: "Add users", onClick: () => {} },
-  isLoggedIn
-    ? { icon: faSignOut, text: "Log out", path: "/logout" }
-    : { icon: faSignIn, text: "Log in", path: "/login" },
-];
 
 const MenuItem = ({ icon, text, path }) => {
   return (
@@ -44,6 +33,17 @@ const MenuItem = ({ icon, text, path }) => {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  const menuItems = [
+    { icon: faLightbulb, text: "Add accessory", onClick: () => {} },
+    { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
+    { icon: faArrowCircleRight, text: "Add room", onClick: () => {} },
+    { icon: faUser, text: "Add users", onClick: () => {} },
+    isLoggedIn
+      ? { icon: faSignOut, text: "Log out", path: "/logout" }
+      : { icon: faSignIn, text: "Log in", path: "/login" },
+  ];
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {
