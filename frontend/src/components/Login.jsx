@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import { AuthContext } from "../AuthContext";
 import "./Login.css";
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
 
   const emailRef = useRef();
   const errorRef = useRef();
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -36,6 +38,7 @@ const Login = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token);
       console.log("Login successful!");
+      setIsLoggedIn(true);
     } else {
       const errorData = await response.json();
       setErrorMessage(errorData.message);
