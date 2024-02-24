@@ -2,8 +2,8 @@ export const automationModel = [
   {
     id: 1,
     name: "Automation 1",
-    time: "12:00",
-    isDisabled: true,
+    time: "11:55",
+    isDisabled: false,
     automationType: "timer",
     weekdays: {
       monday: false,
