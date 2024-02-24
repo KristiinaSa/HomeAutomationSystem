@@ -4,6 +4,40 @@
 // Use the GLOBAL IMPORT STYLE defined in FontAwesome's documentation to import the icons.
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faHome,
+  faPlus,
+  faTimes,
+  faLightbulb,
+  faTachometerAlt,
+  faArrowCircleRight,
+  faUser,
+  faSignIn,
+  faSignOut,
+  faCog,
+  faSun,
+  faMoon,
+  faEdit,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faChevronRight);
+library.add(
+  faChevronRight,
+  faHome,
+  faPlus,
+  faTimes,
+  faLightbulb,
+  faTachometerAlt,
+  faArrowCircleRight,
+  faUser,
+  faSignIn,
+  faSignOut,
+  faCog,
+  faSun,
+  faMoon,
+  faEdit,
+  faTrash,
+  faXmark
+);

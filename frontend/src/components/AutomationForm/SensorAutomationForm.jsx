@@ -7,7 +7,6 @@ import { dummySensors } from "../../dummyData/dummySensors";
 import { dummyDevices } from "../../dummyData/dummyDevices";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -113,7 +112,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
 
       {automation && (
         <FontAwesomeIcon
-          icon={faTrash}
+          icon={"fa-solid fa-trash"}
           onClick={() => handleDelete(automation.id)}
           role="button"
           aria-label="Delete"
