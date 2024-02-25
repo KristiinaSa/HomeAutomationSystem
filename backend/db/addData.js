@@ -17,22 +17,27 @@ async function addTestData() {
     name: "Test Room",
   });
 
-  const sensors = await Promise.all([
-    room.createSensor({
-      sensor_type: "Temperature",
-      value: "23",
-      data_type: "double",
-      role_access: "owner",
-      system_id: system.id,
-    }),
-    room.createSensor({
-      sensor_type: "Humidity",
-      value: "38",
-      data_type: "int",
-      role_access: "owner",
-      system_id: system.id,
-    }),
-  ]);
+  const sensor1 = await room.createSensor({
+    name: "Temperature Sensor 1",
+    value: "23",
+    data_type: "double",
+    role_access: "owner",
+    system_id: system.id,
+  });
+
+  const sensor2 = await room.createSensor({
+    name: "Humidity Sensor 2",
+    value: "38",
+    data_type: "int",
+    role_access: "owner",
+    system_id: system.id,
+  });
+
+  const valueType = await ValueType.create({ type: "Temperature", unit: "°C" });
+  const valueType2 = await ValueType.create({ type: "Humidity", unit: "%" });
+
+  await sensor1.addValueType(valueType);
+  await sensor2.addValueType(valueType2);
 
   const devices = await Promise.all([
     room.createDevice({
@@ -72,8 +77,8 @@ async function addTestData() {
     },
   ]);
 
-  await timeAutomations[0].addDevices(devices);
-  await timeAutomations[1].addDevices(devices);
+  await timeAutomations[0].addDevice(devices);
+  await timeAutomations[1].addDevice(devices);
 
   const user = await system.createUser({
     name: "test",

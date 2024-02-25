@@ -11,7 +11,7 @@ SensorAutomation.init(
     threshold_type: DataTypes.STRING,
     action: DataTypes.STRING,
   },
-  { sequelize, modelName: "sensor_automation" }
+  { sequelize, modelName: "sensorAutomation" }
 );
 
 export default SensorAutomation;

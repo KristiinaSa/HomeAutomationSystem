@@ -10,7 +10,7 @@ SensorHistory.init(
     sensor_value: DataTypes.STRING,
     data_type: DataTypes.STRING,
   },
-  { sequelize, modelName: "sensor_history" }
+  { sequelize, modelName: "sensorHistory" }
 );
 
 export default SensorHistory;

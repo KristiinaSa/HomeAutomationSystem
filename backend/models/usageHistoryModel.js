@@ -10,7 +10,7 @@ UsageHistory.init(
     sensor_value: DataTypes.STRING,
     data_type: DataTypes.STRING,
   },
-  { sequelize, modelName: "usage_history" }
+  { sequelize, modelName: "usageHistory" }
 );
 
 export default UsageHistory;

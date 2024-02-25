@@ -12,7 +12,7 @@ TimeAutomation.init(
     time: DataTypes.STRING,
     type: { type: DataTypes.STRING, defaultValue: "timer" },
   },
-  { sequelize, modelName: "time_automation" }
+  { sequelize, modelName: "timeAutomation" }
 );
 
 export default TimeAutomation;

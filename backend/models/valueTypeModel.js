@@ -9,7 +9,7 @@ ValueType.init(
     type: DataTypes.STRING,
     unit: DataTypes.STRING,
   },
-  { sequelize, modelName: "value_type" }
+  { sequelize, modelName: "valueType" }
 );
 
 export default ValueType;
