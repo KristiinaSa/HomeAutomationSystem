@@ -4,11 +4,41 @@ import "../db/associations.js";
 import { bitmaskToWeekdays, weekdaysToBitmask } from "./helpers.js";
 
 import TimeAutomation from "../models/timeAutomationModel.js";
+import SensorAutomation from "../models/sensorAutomationModel.js";
 import Device from "../models/deviceModel.js";
 
 const getAutomations = async (req, res, next) => {
   try {
-    res.send(automationModel);
+    let timeAutomations = await TimeAutomation.findAll({
+      attributes: ["id", "name", "weekdays", "time", "active", "type"],
+      include: {
+        model: Device,
+        attributes: ["id", "name", "type"],
+        through: { attributes: [] },
+      },
+    });
+    let sensorAutomations = await SensorAutomation.findAll({
+      attributes: ["id", "active"],
+      include: {
+        model: Device,
+        attributes: ["id", "name", "type"],
+        through: { attributes: [] },
+      },
+    });
+
+    timeAutomations = timeAutomations.map((automation) => {
+      automation.weekdays = bitmaskToWeekdays(automation.weekdays);
+      return automation;
+    });
+
+    sensorAutomations = sensorAutomations.map((automation) => ({
+      ...automation.toJSON(),
+      type: "sensor",
+    }));
+
+    const automations = [...timeAutomations, ...sensorAutomations];
+
+    res.send(automations);
   } catch (err) {
     next(err);
   }
@@ -30,7 +60,7 @@ const getAutomation = async (req, res, next) => {
 const getTimerAutomation = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const timerAutomations = await TimeAutomation.findAll({
+    const timerAutomation = await TimeAutomation.findOne({
       where: {
         id: id,
       },
@@ -42,12 +72,12 @@ const getTimerAutomation = async (req, res, next) => {
       attributes: ["id", "weekdays", "time", "active"],
     });
 
-    timerAutomations.forEach((automation) => {
-      automation.weekdays = bitmaskToWeekdays(automation.weekdays);
-    });
-
-    console.log(timerAutomations);
-    res.send(timerAutomations);
+    if (timerAutomation) {
+      timerAutomation.weekdays = bitmaskToWeekdays(timerAutomation.weekdays);
+      timerAutomation.type = "timer";
+    }
+    console.log(timerAutomation);
+    res.send(timerAutomation);
   } catch (err) {
     next(err);
   }
@@ -106,6 +136,35 @@ const editAutomation = async (req, res, next) => {
   }
 };
 
+const editTimerAutomation = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const { devices, weekdays, ...automationData } = req.body;
+    const automation = await TimeAutomation.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!automation) {
+      throw new Error("Automation not found");
+    }
+
+    await automation.update({
+      ...automationData,
+      weekdays: weekdaysToBitmask(weekdays),
+    });
+
+    if (devices && devices.length > 0) {
+      await automation.setDevices(devices.map((device) => device.id));
+    }
+
+    res.send(automation);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const deleteAutomation = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -123,6 +182,25 @@ const deleteAutomation = async (req, res, next) => {
   }
 };
 
+const deleteTimerAutomation = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const automation = await TimeAutomation.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!automation) {
+      throw new Error("Automation not found");
+    }
+    await automation.destroy();
+    res.send(automation);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export {
   getAutomations,
   getAutomation,
@@ -131,4 +209,6 @@ export {
   deleteAutomation,
   getTimerAutomation,
   addTimerAutomation,
+  editTimerAutomation,
+  deleteTimerAutomation,
 };

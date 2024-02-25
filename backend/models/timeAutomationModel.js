@@ -10,6 +10,7 @@ TimeAutomation.init(
     active: DataTypes.BOOLEAN,
     weekdays: DataTypes.INTEGER,
     time: DataTypes.STRING,
+    type: { type: DataTypes.STRING, defaultValue: "timer" },
   },
   { sequelize, modelName: "time_automation" }
 );
