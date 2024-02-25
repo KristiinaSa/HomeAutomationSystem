@@ -1,12 +1,12 @@
 export function weekdaysToBitmask(weekdays) {
   const days = [
-    "sunday",
-    "saturday",
-    "friday",
-    "thursday",
-    "wednesday",
-    "tuesday",
     "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
   ];
   let bitmask = 0;
 

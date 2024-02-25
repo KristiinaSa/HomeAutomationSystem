@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import automationModel from "../dummyModels/automationModel.js";
 import "../db/associations.js";
-import { bitmaskToWeekdays } from "./helpers.js";
+import { bitmaskToWeekdays, weekdaysToBitmask } from "./helpers.js";
 
 import TimeAutomation from "../models/timeAutomationModel.js";
 import Device from "../models/deviceModel.js";
@@ -39,7 +39,7 @@ const getTimerAutomation = async (req, res, next) => {
         attributes: ["id", "name", "type"],
         through: { attributes: [] },
       },
-      attributes: ["id", "weekdays", "time", "is_active"],
+      attributes: ["id", "weekdays", "time", "active"],
     });
 
     timerAutomations.forEach((automation) => {
@@ -62,6 +62,22 @@ const addAutomation = async (req, res, next) => {
     };
 
     automationModel.push(newAutomation);
+    res.send(newAutomation);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const addTimerAutomation = async (req, res, next) => {
+  try {
+    const { devices, weekdays, ...automationData } = req.body;
+    const newAutomation = await TimeAutomation.create({
+      ...automationData,
+      weekdays: weekdaysToBitmask(weekdays),
+    });
+    if (devices && devices.length > 0) {
+      await newAutomation.addDevices(devices.map((device) => device.id));
+    }
     res.send(newAutomation);
   } catch (err) {
     next(err);
@@ -114,4 +130,5 @@ export {
   editAutomation,
   deleteAutomation,
   getTimerAutomation,
+  addTimerAutomation,
 };

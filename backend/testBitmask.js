@@ -11,4 +11,4 @@ const weekdays = {
 };
 
 console.log(weekdaysToBitmask(weekdays)); // 62
-console.log(bitmaskToWeekdays("1101100"));
+console.log(bitmaskToWeekdays(parseInt("1000001", 2)));

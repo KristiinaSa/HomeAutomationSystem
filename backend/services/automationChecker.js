@@ -16,7 +16,7 @@ const checkAutomations = async () => {
   const automations = await TimeAutomation.findAll({
     where: {
       time: currentTime,
-      is_active: true,
+      active: true,
       [Op.and]: [Sequelize.literal(`weekdays & ${currentDayBit} != 0`)],
     },
   });

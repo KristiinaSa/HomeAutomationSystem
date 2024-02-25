@@ -8,6 +8,7 @@ import {
   editAutomation,
   deleteAutomation,
   getTimerAutomation,
+  addTimerAutomation,
 } from "../../controllers/automationController.js";
 
 router.get("/", getAutomations);
@@ -16,7 +17,7 @@ router.get("/:id", getAutomation);
 
 // Timer-based automation
 router.get("/timer/:id", getTimerAutomation);
-router.post("/timer", addAutomation);
+router.post("/timer", addTimerAutomation);
 router.put("/timer/:id", editAutomation);
 router.delete("/timer/:id", deleteAutomation);
 

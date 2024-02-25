@@ -7,7 +7,7 @@ TimeAutomation.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
-    is_active: DataTypes.BOOLEAN,
+    active: DataTypes.BOOLEAN,
     weekdays: DataTypes.INTEGER,
     time: DataTypes.STRING,
   },
