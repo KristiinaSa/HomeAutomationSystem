@@ -15,8 +15,6 @@ Device.init(
       type: DataTypes.ENUM("owner", "admin", "resident"),
       defaultValue: "owner",
     },
-    system_id: DataTypes.INTEGER,
-    room_id: DataTypes.INTEGER,
   },
   { sequelize, modelName: "device" }
 );

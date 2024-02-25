@@ -1,6 +1,8 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/sequelizeConnector.js";
 
+import Settings from "./settingModel.js";
+
 class User extends Model {}
 
 User.init(
@@ -10,10 +12,15 @@ User.init(
     role: DataTypes.ENUM("owner", "admin", "resident"),
     password: DataTypes.STRING,
     email: { type: DataTypes.STRING, unique: true },
-    is_registered: DataTypes.INTEGER,
-    system_id: DataTypes.INTEGER,
+    is_registered: { type: DataTypes.BOOLEAN, defaultValue: 0 },
   },
   { sequelize, modelName: "user" }
 );
+
+User.afterCreate(async (user, options) => {
+  await Settings.create({
+    user_id: user.id,
+  });
+});
 
 export default User;

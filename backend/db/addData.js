@@ -6,38 +6,36 @@ import Room from "../models/roomModel.js";
 import Sensor from "../models/sensorModel.js";
 import Device from "../models/deviceModel.js";
 import TimeAutomation from "../models/timeAutomationModel.js";
+import ValueType from "../models/valueTypeModel.js";
 
 async function addTestData() {
   const system = await System.create({
     name: "Test System",
   });
 
-  const room = await Room.create({
+  const room = await system.createRoom({
     name: "Test Room",
-    system_id: system.id,
   });
 
-  const sensors = await Sensor.bulkCreate([
-    {
+  const sensors = await Promise.all([
+    room.createSensor({
       sensor_type: "Temperature",
       value: "23",
       data_type: "double",
       role_access: "owner",
-      room_id: room.id,
       system_id: system.id,
-    },
-    {
+    }),
+    room.createSensor({
       sensor_type: "Humidity",
       value: "38",
       data_type: "int",
       role_access: "owner",
-      room_id: room.id,
       system_id: system.id,
-    },
+    }),
   ]);
 
-  const devices = await Device.bulkCreate([
-    {
+  const devices = await Promise.all([
+    room.createDevice({
       name: "Table Lamp",
       type: "Light",
       model: "BOB-LED",
@@ -45,9 +43,8 @@ async function addTestData() {
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
-      room_id: room.id,
-    },
-    {
+    }),
+    room.createDevice({
       name: "Ceiling Lamp",
       type: "Light",
       model: "DAN-LED",
@@ -55,8 +52,7 @@ async function addTestData() {
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
-      room_id: room.id,
-    },
+    }),
   ]);
 
   const timeAutomations = await TimeAutomation.bulkCreate([
@@ -78,6 +74,13 @@ async function addTestData() {
 
   await timeAutomations[0].addDevices(devices);
   await timeAutomations[1].addDevices(devices);
+
+  const user = await system.createUser({
+    name: "test",
+    email: "test@example.com",
+    password: "password",
+    role: "owner",
+  });
 }
 
 addTestData();

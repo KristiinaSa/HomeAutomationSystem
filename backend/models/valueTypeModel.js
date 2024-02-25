@@ -1,14 +1,15 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db/sequelizeConnector.js";
 
-class Room extends Model {}
+class ValueType extends Model {}
 
-Room.init(
+ValueType.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: DataTypes.STRING,
+    type: DataTypes.STRING,
+    unit: DataTypes.STRING,
   },
-  { sequelize, modelName: "room" }
+  { sequelize, modelName: "value_type" }
 );
 
-export default Room;
+export default ValueType;

@@ -10,7 +10,6 @@ SensorAutomation.init(
     active: DataTypes.BOOLEAN,
     threshold_type: DataTypes.STRING,
     action: DataTypes.STRING,
-    sensor_id: DataTypes.INTEGER,
   },
   { sequelize, modelName: "sensor_automation" }
 );

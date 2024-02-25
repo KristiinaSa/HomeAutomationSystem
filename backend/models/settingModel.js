@@ -8,7 +8,6 @@ Setting.init(
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     language: { type: DataTypes.STRING, defaultValue: "English" },
     using_darkmode: { type: DataTypes.BOOLEAN, defaultValue: 0 },
-    user_id: DataTypes.INTEGER,
   },
   { sequelize, modelName: "setting" }
 );
