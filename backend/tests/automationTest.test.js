@@ -42,10 +42,6 @@ beforeAll(async () => {
   });
 });
 
-afterAll(async () => {
-  await sequelize.close();
-});
-
 describe("GET /api/v1/automations", () => {
   it("should return all automations", async () => {
     const response = await request(app).get("/api/v1/automations");
@@ -53,4 +49,8 @@ describe("GET /api/v1/automations", () => {
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBe(1);
   });
+});
+
+afterAll(async () => {
+  await sequelize.close();
 });
