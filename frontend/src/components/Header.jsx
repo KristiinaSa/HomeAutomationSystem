@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../AuthContext";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,7 +15,6 @@ import {
   faSignIn,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
-import { NavLink, useNavigate } from "react-router-dom";
 
 const MenuItem = ({ icon, text, path, onClick }) => {
   return (

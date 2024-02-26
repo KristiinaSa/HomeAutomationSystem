@@ -8,7 +8,7 @@ import roomRouter from "./roomRoutes.js";
 import accessoryRouter from "./accessoryRoutes.js";
 import router from "./loginRoutes.js";
 
-apiV1Router.use("/automation", automationRouter);
+apiV1Router.use("/automations", automationRouter);
 apiV1Router.use("/users", userRouter);
 apiV1Router.use("/rooms", roomRouter);
 apiV1Router.use("/accessories", accessoryRouter);

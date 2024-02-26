@@ -14,10 +14,8 @@ export const SensorAutomationCard = ({ automation }) => {
     <div key={automation.id}>
       <h2>{automation.name}</h2>
       <p>{automation.sensor.name} sensor</p>
-      <p>{numDevices} devices</p>
-      <p>Time: {automation.time}</p>
-      <p>Disabled: {automation.isDisabled ? "Yes" : "No"}</p>
-      <p>Action: {automation.actionType}</p>
+      <p>{automation.isDisabled ? "Disabled" : `${numDevices} accessories`}</p>
+      <p>Action: {automation.action}</p>
       <a
         onClick={handleEdit}
         aria-label="Edit"
