@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useRef, useEffect, useContext } from "react";
+import { AuthContext } from "../AuthContext";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,21 +16,9 @@ import {
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 
-const isLoggedIn = false;
-
-const menuItems = [
-  { icon: faLightbulb, text: "Add accessory", onClick: () => {} },
-  { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
-  { icon: faArrowCircleRight, text: "Add room", onClick: () => {} },
-  { icon: faUser, text: "Add users", onClick: () => {} },
-  isLoggedIn
-    ? { icon: faSignOut, text: "Log out", path: "/logout" }
-    : { icon: faSignIn, text: "Log in", path: "/login" },
-];
-
-const MenuItem = ({ icon, text, path }) => {
+const MenuItem = ({ icon, text, path, onClick }) => {
   return (
-    <div className="menu-item">
+    <div className="menu-item" onClick={onClick}>
       <FontAwesomeIcon icon={icon} />
       {path ? (
         <NavLink to={path} className="hover-underline-animation">
@@ -45,6 +34,54 @@ const MenuItem = ({ icon, text, path }) => {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:3000/api/v1/login/logout", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (response.ok) {
+      navigate("/login");
+      logout();
+    } else {
+      console.error("Logout failed");
+    }
+  };
+
+  const menuItems = [
+    {
+      icon: faLightbulb,
+      text: "Add accessory",
+      onClick: () => {
+        console.log("Add accessory clicked");
+      },
+    },
+    { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
+    {
+      icon: faArrowCircleRight,
+      text: "Add room",
+      onClick: () => {
+        console.log("Add room clicked");
+      },
+    },
+    {
+      icon: faUser,
+      text: "Add users",
+      onClick: () => {
+        console.log("Add users clicked");
+      },
+    },
+    isLoggedIn
+      ? { icon: faSignOut, text: "Log out", onClick: handleLogout }
+      : { icon: faSignIn, text: "Log in", path: "/login" },
+  ];
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {
@@ -66,9 +103,9 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
-      <div className="header-item home-icon">
+      <NavLink to="/" className="header-item home-icon">
         <FontAwesomeIcon icon={faHome} className="header-icon" />
-      </div>
+      </NavLink>
       <div className="header-item">
         <div className="plus-icon" onClick={() => setIsOpen(!isOpen)}>
           <FontAwesomeIcon

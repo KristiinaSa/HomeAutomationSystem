@@ -67,6 +67,7 @@ async function addTestData() {
       weekdays: 127,
       time: "10:00",
       action: "on",
+      system_id: system.id,
     },
     {
       name: "Test Automation 2",
@@ -74,6 +75,7 @@ async function addTestData() {
       weekdays: 127,
       time: "22:00",
       action: "off",
+      system_id: system.id,
     },
   ]);
 
