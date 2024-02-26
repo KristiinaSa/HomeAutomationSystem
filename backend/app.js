@@ -21,12 +21,14 @@ app.use("/api/v1", apiV1Router);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-cron.schedule("* * * * *", () => {
-  try {
-    checkAutomations();
-  } catch (error) {
-    console.error("Error running automation:", error);
-  }
-});
+if (process.env.RUN_CRON_JOB !== "false") {
+  cron.schedule("* * * * *", () => {
+    try {
+      checkAutomations();
+    } catch (error) {
+      console.error("Error running automation:", error);
+    }
+  });
+}
 
 export default app;
