@@ -1,7 +1,8 @@
 import request from "supertest";
 import app from "../app.js";
 
-import sequelize from "../db/sequelizeTestConnector.js";
+import getSequelize from "../db/db.js";
+const sequelize = getSequelize();
 import "../db/associations.js";
 
 import System from "../models/systemModel.js";
@@ -44,6 +45,10 @@ beforeAll(async () => {
   });
 });
 
+afterAll(async () => {
+  await sequelize.close();
+});
+
 describe("GET /api/v1/automations", () => {
   it("should return all automations", async () => {
     const response = await request(app).get("/api/v1/automations");
@@ -51,8 +56,4 @@ describe("GET /api/v1/automations", () => {
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBe(1);
   });
-});
-
-afterAll(async () => {
-  await sequelize.close();
 });
