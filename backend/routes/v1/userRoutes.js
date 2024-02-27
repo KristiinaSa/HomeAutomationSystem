@@ -5,8 +5,8 @@ router.get("/", (req, res) => {
   res.send("User");
 });
 
-router.get("/change-password", (req, res) => {
-  res.send("Change Password");
+router.get("/invite", (req, res) => {
+  res.send("Invite User");
 });
 
 router.get("/delete-user", (req, res) => {
