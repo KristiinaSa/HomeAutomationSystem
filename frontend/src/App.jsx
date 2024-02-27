@@ -37,6 +37,7 @@ function App() {
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegistrationPage />} />
+                  </Route>
                 </Routes>
               </Router>
             </RoomProvider>
