@@ -11,6 +11,7 @@ import {
   faUser,
   faSignIn,
   faSignOut,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 
@@ -24,6 +25,7 @@ const menuItems = [
   isLoggedIn
     ? { icon: faSignOut, text: "Log out", path: "/logout" }
     : { icon: faSignIn, text: "Log in", path: "/login" },
+  { icon: faAddressBook, text: "Register", path: "/register" },
 ];
 
 const MenuItem = ({ icon, text, path }) => {
