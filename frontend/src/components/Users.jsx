@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { dummyUsers } from "../dummyData/dummyUsers";
+// import { dummyUsers } from "../dummyData/dummyUsers";
 import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { deleteUser, inviteUser, getAllUsers } from "../services/userServices";
 import "./Users.css";
 
 const Users = () => {
-  const [persons, setPersons] = useState(dummyUsers);
+  const [persons, setPersons] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [showInvite, setShowInvite] = useState(false);
   const [inviteSent, setInviteSent] = useState(false);
   const { register, handleSubmit, formState: {errors, isSubmitted}, reset } = useForm();
+
+  useEffect(() => {
+    const  fetchUsers = async () => {
+      try {
+        const users = await getAllUsers();
+        setPersons(users);
+        console.log(users);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUsers();
+  }, []);
+
 
   const deletePerson = (id) => {
     const newPersons = persons.filter((person) => person.id !== id);
@@ -50,12 +65,15 @@ const Users = () => {
       <h2>Users</h2>
       <div className="users-box">
         {persons.map((user) => {
-          const initials = user.name
-            .split(" ")
-            .slice(0, 2)
-            .map((namePart) => namePart[0])
-            .join("")
-            .toUpperCase();
+          let initials = '';
+          if (user.name) {
+            initials = user.name
+              .split(" ")
+              .slice(0, 2)
+              .map((namePart) => namePart[0])
+              .join("")
+              .toUpperCase();
+          }
           return (
             <div key={user.id} className="user-info">
               <div className="circle-and-info">
