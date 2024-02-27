@@ -1,7 +1,9 @@
 import request from "supertest";
 import app from "../app.js";
-import sequelize from "../db/sequelizeConnector.js";
+
+import sequelize from "../db/sequelizeTestConnector.js";
 import "../db/associations.js";
+
 import System from "../models/systemModel.js";
 import TimeAutomation from "../models/timeAutomationModel.js";
 
