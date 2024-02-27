@@ -19,9 +19,36 @@ export const getAutomation = async (id) => {
   }
 };
 
+export const getTimerAutomation = async (id) => {
+  try {
+    const response = await axios.get(`${baseUrl}/timer/${id}`);
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};
+
 export const addAutomation = async (data) => {
   try {
     const response = await axios.post(baseUrl, data);
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};
+
+export const addTimerAutomation = async (data) => {
+  try {
+    const response = await axios.post(`${baseUrl}/timer`, data);
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};
+
+export const updateTimerAutomation = async (id, data) => {
+  try {
+    const response = await axios.put(`${baseUrl}/timer/${id}`, data);
     return response.data;
   } catch (err) {
     throw new Error(err.response.data);

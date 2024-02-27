@@ -69,7 +69,7 @@ const getTimerAutomation = async (req, res, next) => {
         attributes: ["id", "name", "type"],
         through: { attributes: [] },
       },
-      attributes: ["id", "weekdays", "time", "active"],
+      attributes: ["id", "weekdays", "time", "active", "name"],
     });
 
     if (timerAutomation) {
@@ -99,6 +99,7 @@ const addAutomation = async (req, res, next) => {
 };
 
 const addTimerAutomation = async (req, res, next) => {
+  console.log(req.body);
   try {
     const { devices, weekdays, ...automationData } = req.body;
     const newAutomation = await TimeAutomation.create({

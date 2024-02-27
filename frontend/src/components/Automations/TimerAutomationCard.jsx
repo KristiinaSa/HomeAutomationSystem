@@ -30,7 +30,9 @@ export const TimerAutomationCard = ({ automation }) => {
   );
 
   const handleEdit = () => {
-    navigate(`/automations/edit/${automation.id}`);
+    navigate(`/automations/edit/${automation.id}`, {
+      state: { automationType: "timer" },
+    });
   };
 
   return (

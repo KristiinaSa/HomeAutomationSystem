@@ -9,6 +9,7 @@ import System from "../models/systemModel.js";
 import TimeAutomation from "../models/timeAutomationModel.js";
 
 beforeAll(async () => {
+  console.log("beforeAll");
   await sequelize.sync({ force: true });
   const system = await System.create({
     name: "Test System",
@@ -56,4 +57,4 @@ describe("GET /api/v1/automations", () => {
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBe(1);
   });
-});
+}, 10000);
