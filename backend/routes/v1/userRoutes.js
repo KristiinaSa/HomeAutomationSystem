@@ -1,16 +1,11 @@
+import {deleteUser, getAllUsers, inviteUser} from "../../controllers/userController.js";
 import express from "express";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("User");
-});
+router.get("/", getAllUsers);
 
-router.get("/invite", (req, res) => {
-  res.send("Invite User");
-});
+router.post("/invite-user", inviteUser);
 
-router.get("/delete-user", (req, res) => {
-  res.send("Delete User");
-});
+router.delete("/delete-user/:id", deleteUser);
 
 export default router;
