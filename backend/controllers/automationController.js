@@ -17,6 +17,8 @@ const getAutomations = async (req, res, next) => {
         through: { attributes: [] },
       },
     });
+    console.log("timeAutomations:", timeAutomations); // Add this line
+
     let sensorAutomations = await SensorAutomation.findAll({
       attributes: ["id", "active"],
       include: {
@@ -25,10 +27,12 @@ const getAutomations = async (req, res, next) => {
         through: { attributes: [] },
       },
     });
+    console.log("sensorAutomations:", sensorAutomations); // Add this line
 
     timeAutomations = timeAutomations.map((automation) => {
-      automation.weekdays = bitmaskToWeekdays(automation.weekdays);
-      return automation;
+      const automationData = automation.toJSON();
+      automationData.weekdays = bitmaskToWeekdays(automationData.weekdays);
+      return automationData;
     });
 
     sensorAutomations = sensorAutomations.map((automation) => ({
@@ -37,6 +41,7 @@ const getAutomations = async (req, res, next) => {
     }));
 
     const automations = [...timeAutomations, ...sensorAutomations];
+    console.log("automations:", automations); // Add this line
 
     res.send(automations);
   } catch (err) {
@@ -205,11 +210,11 @@ const deleteTimerAutomation = async (req, res, next) => {
 module.exports = {
   getAutomations,
   getAutomation,
-  addAutomation,
-  editAutomation,
-  deleteAutomation,
   getTimerAutomation,
+  addAutomation,
   addTimerAutomation,
+  editAutomation,
   editTimerAutomation,
+  deleteAutomation,
   deleteTimerAutomation,
 };
