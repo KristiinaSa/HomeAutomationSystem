@@ -1,16 +1,13 @@
+import {deleteUser, getAllUsers, inviteUser, changeRole} from "../../controllers/userController.js";
 import express from "express";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("User");
-});
+router.get("/", getAllUsers);
 
-router.get("/change-password", (req, res) => {
-  res.send("Change Password");
-});
+router.post("/invite-user", inviteUser);
 
-router.get("/delete-user", (req, res) => {
-  res.send("Delete User");
-});
+router.delete("/delete-user/:id", deleteUser);
+
+router.patch("/change-role/:id", changeRole);
 
 export default router;
