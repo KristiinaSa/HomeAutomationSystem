@@ -11,13 +11,18 @@ const getAllUsers = async () => {
 }
 
 const deleteUser = async (id) => {
-  try {
-    const response = await axios.delete(`${baseUrl}/${id}`);
-    return response.data;
-  } catch (err) {
-    throw new Error(err.response.data);
-  }
-}
+    try {
+      const response = await axios.delete(`${baseUrl}/delete-user/${id}`);
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        throw new Error(`Request failed with status code ${response.status}`);
+      }
+    } catch (err) {
+      console.error('Error deleting user:', err.message);
+      throw err;
+    }
+  };
 
 const inviteUser = async (email) => {
   try {
@@ -28,4 +33,18 @@ const inviteUser = async (email) => {
   }
 }
 
-export { getAllUsers, deleteUser, inviteUser }
+const changeRole = async (id, role) => {
+    try {
+      const response = await axios.patch(`${baseUrl}/change-role/${id}`, { role });
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        throw new Error(`Request failed with status code ${response.status}`);
+      }
+    } catch (err) {
+      console.error('Error changing role:', err.message);
+      throw err;
+    }
+  };
+
+export { getAllUsers, deleteUser, inviteUser, changeRole}
