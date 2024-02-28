@@ -2,19 +2,7 @@ pipeline {
     agent any 
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'npm install'
-                    } else {
-                        bat 'npm install'
-                    }
-                }
-            }
-        }
-
-        stage('Frontend Tests') {
+        stage('Frontend, Install Dependencies & Run Tests') {
             steps {
                 dir('frontend') { 
                     script {
@@ -30,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Backend Tests') {
+        stage('Backend, Install Dependencies & Run Tests') {
             steps {
                 dir('backend') {
                     script {
