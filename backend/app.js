@@ -1,14 +1,14 @@
-import express from "express";
+const express = require("express");
 
-import cors from "cors";
-import morgan from "morgan";
-import cron from "node-cron";
-import errorHandler from "./middleware/errorHandler.js";
-import notFoundHandler from "./middleware/notFoundHandler.js";
+const cors = require("cors");
+const morgan = require("morgan");
+const cron = require("node-cron");
+const errorHandler = require("./middleware/errorHandler.js");
+const notFoundHandler = require("./middleware/notFoundHandler.js");
 
-import apiV1Router from "./routes/v1/apiV1Router.js";
+const apiV1Router = require("./routes/v1/apiV1Router.js");
 
-import checkAutomations from "./services/automationChecker.js";
+const checkAutomations = require("./services/automationChecker.js");
 
 const app = express();
 
@@ -31,4 +31,4 @@ if (process.env.RUN_CRON_JOB !== "false") {
   });
 }
 
-export default app;
+module.exports = app;

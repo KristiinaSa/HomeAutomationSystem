@@ -1,5 +1,5 @@
-import { Model, DataTypes } from "sequelize";
-import getSequelize from "../db/db.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
 
 const sequelize = getSequelize();
 
@@ -15,4 +15,4 @@ UsageHistory.init(
   { sequelize, modelName: "usageHistory" }
 );
 
-export default UsageHistory;
+module.exports = UsageHistory;

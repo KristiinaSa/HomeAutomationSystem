@@ -1,7 +1,7 @@
-import "../db/associations.js";
+require("../db/associations.js");
 
-import Device from "../models/deviceModel.js";
-import Sensor from "../models/sensorModel.js";
+const Device = require("../models/deviceModel.js");
+const Sensor = require("../models/sensorModel.js");
 
 // Gets all devices and sensors from the database
 const getAllAccessories = async (req, res, next) => {
@@ -14,4 +14,4 @@ const getAllAccessories = async (req, res, next) => {
   }
 };
 
-export { getDevices };
+module.exports = { getAllAccessories };

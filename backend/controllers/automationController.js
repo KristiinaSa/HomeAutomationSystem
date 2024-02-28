@@ -1,11 +1,11 @@
-import { v4 as uuidv4 } from "uuid";
-import automationModel from "../dummyModels/automationModel.js";
-import "../db/associations.js";
-import { bitmaskToWeekdays, weekdaysToBitmask } from "./helpers.js";
+const { v4: uuidv4 } = require("uuid");
+const automationModel = require("../dummyModels/automationModel.js");
+require("../db/associations.js");
+const { bitmaskToWeekdays, weekdaysToBitmask } = require("./helpers.js");
 
-import TimeAutomation from "../models/timeAutomationModel.js";
-import SensorAutomation from "../models/sensorAutomationModel.js";
-import Device from "../models/deviceModel.js";
+const TimeAutomation = require("../models/timeAutomationModel.js");
+const SensorAutomation = require("../models/sensorAutomationModel.js");
+const Device = require("../models/deviceModel.js");
 
 const getAutomations = async (req, res, next) => {
   try {
@@ -202,7 +202,7 @@ const deleteTimerAutomation = async (req, res, next) => {
   }
 };
 
-export {
+module.exports = {
   getAutomations,
   getAutomation,
   addAutomation,

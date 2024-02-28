@@ -1,5 +1,5 @@
-import { Model, DataTypes } from "sequelize";
-import getSequelize from "../db/db.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
 
 const sequelize = getSequelize();
 
@@ -15,4 +15,4 @@ SensorHistory.init(
   { sequelize, modelName: "sensorHistory" }
 );
 
-export default SensorHistory;
+module.exports = SensorHistory;

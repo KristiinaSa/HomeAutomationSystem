@@ -1,5 +1,5 @@
-import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
+const { Sequelize } = require("sequelize");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -18,4 +18,4 @@ const sequelize = new Sequelize(
 //   .sync({ alter: true })
 //   .then(() => console.log("Database & tables created!"));
 
-export default sequelize;
+module.exports = sequelize;

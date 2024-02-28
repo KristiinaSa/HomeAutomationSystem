@@ -1,10 +1,12 @@
-import sequelizeConnector from "./sequelizeConnector.js";
-import sequelizeTestConnector from "./sequelizeTestConnector.js";
+const sequelizeConnector = require("./sequelizeConnector.js");
+const sequelizeTestConnector = require("./sequelizeTestConnector.js");
 
-export default function getSequelize() {
+function getSequelize() {
   if (process.env.NODE_ENV === "test") {
     return sequelizeTestConnector;
   } else {
     return sequelizeConnector;
   }
 }
+
+module.exports = getSequelize;

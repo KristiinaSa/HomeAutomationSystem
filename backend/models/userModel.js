@@ -1,9 +1,9 @@
-import { Model, DataTypes } from "sequelize";
-import getSequelize from "../db/db.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
 
 const sequelize = getSequelize();
 
-import Settings from "./settingModel.js";
+const Settings = require("./settingModel.js");
 
 class User extends Model {}
 
@@ -25,4 +25,4 @@ User.afterCreate(async (user, options) => {
   });
 });
 
-export default User;
+module.exports = User;

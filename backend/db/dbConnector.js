@@ -1,6 +1,5 @@
-import mariadb from "mariadb";
-
-import dotenv from "dotenv";
+const mariadb = require("mariadb");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -25,4 +24,4 @@ async function sqlQuery(sql, params) {
   }
 }
 
-export { pool, sqlQuery };
+module.exports = { pool, sqlQuery };

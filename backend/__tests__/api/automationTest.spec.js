@@ -1,15 +1,14 @@
-import request from "supertest";
-import app from "../app.js";
+const request = require("supertest");
+const app = require("../../app.js");
 
-import getSequelize from "../db/db.js";
+const getSequelize = require("../../db/db.js");
 const sequelize = getSequelize();
-import "../db/associations.js";
+require("../../db/associations.js");
 
-import System from "../models/systemModel.js";
-import TimeAutomation from "../models/timeAutomationModel.js";
+const System = require("../../models/systemModel.js");
+const TimeAutomation = require("../../models/timeAutomationModel.js");
 
 beforeAll(async () => {
-  console.log("beforeAll");
   await sequelize.sync({ force: true });
   const system = await System.create({
     name: "Test System",

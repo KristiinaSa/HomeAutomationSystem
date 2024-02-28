@@ -1,15 +1,15 @@
-import sequelize from "./sequelizeConnector.js";
-import "./associations.js";
+const sequelize = require("./sequelizeConnector.js");
+require("./associations.js");
 
-import Device from "../models/deviceModel.js";
-import Room from "../models/roomModel.js";
-import SensorAutomation from "../models/sensorAutomationModel.js";
-import SensorHistory from "../models/sensorHistoryModel.js";
-import Sensor from "../models/sensorModel.js";
-import Setting from "../models/settingModel.js";
-import System from "../models/systemModel.js";
-import TimeAutomation from "../models/timeAutomationModel.js";
-import User from "../models/userModel.js";
+const Device = require("../models/deviceModel.js");
+const Room = require("../models/roomModel.js");
+const SensorAutomation = require("../models/sensorAutomationModel.js");
+const SensorHistory = require("../models/sensorHistoryModel.js");
+const Sensor = require("../models/sensorModel.js");
+const Setting = require("../models/settingModel.js");
+const System = require("../models/systemModel.js");
+const TimeAutomation = require("../models/timeAutomationModel.js");
+const User = require("../models/userModel.js");
 
 sequelize
   .sync({ force: false })

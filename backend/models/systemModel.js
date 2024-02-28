@@ -1,5 +1,5 @@
-import { Model, DataTypes } from "sequelize";
-import getSequelize from "../db/db.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
 
 const sequelize = getSequelize();
 
@@ -17,4 +17,4 @@ System.init(
   { sequelize, modelName: "system" }
 );
 
-export default System;
+module.exports = System;

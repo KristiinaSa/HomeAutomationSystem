@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=test RUN_CRON_JOB=false node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "cross-env NODE_ENV=test RUN_CRON_JOB=false jest"
   },
   "author": "",
   "license": "ISC",

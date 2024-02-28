@@ -1,4 +1,4 @@
-export const automationModel = [
+const automationModel = [
   {
     id: 1,
     name: "Automation 1",
@@ -139,4 +139,4 @@ export const automationModel = [
   },
 ];
 
-export default automationModel;
+module.exports = automationModel;
