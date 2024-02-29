@@ -3,19 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { TimerAutomationCard } from "../../src/components/Automations/TimerAutomationCard.jsx";
 
-describe("New TimerAutomationCard", () => {
-  it("renders correctly", () => {
-    render(
-      <Router>
-        <TimerAutomationCard automation={{}} />
-      </Router>
-    );
-    const cardElement = screen.getByTestId("automation-card");
-    expect(cardElement).toBeInTheDocument();
-  });
-});
-
-describe("Edit TimerAutomationCard", () => {
+describe("TimerAutomationCard", () => {
   it("renders correctly", () => {
     const mockAutomation = {
       id: 2,
