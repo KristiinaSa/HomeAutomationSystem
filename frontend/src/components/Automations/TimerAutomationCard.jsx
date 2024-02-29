@@ -36,15 +36,18 @@ export const TimerAutomationCard = ({ automation }) => {
   };
 
   return (
-    <div key={automation.id}>
-      <h2>{automation.name}</h2>
-      <p>{automation.isDisabled ? "Disabled" : `${numDevices} accessories`}</p>
-      <p>{automation.time}</p>
-      <p>{activeDays.join(", ")}</p>
+    <div key={"timer-" + automation.id} data-testid="automation-card">
+      <h2 data-testid="automation-name">{automation.name}</h2>
+      <p data-testid="automation-status">
+        {automation.isDisabled ? "Disabled" : `${numDevices} accessories`}
+      </p>
+      <p data-testid="automation-time">{automation.time}</p>
+      <p data-testid="automation-active-days">{activeDays.join(", ")}</p>
       <a
         onClick={handleEdit}
         aria-label="Edit"
         className={styles["edit-button"]}
+        data-testid="edit-button"
       >
         <FontAwesomeIcon icon="fa-solid fa-chevron-right" size="xl" />
       </a>
