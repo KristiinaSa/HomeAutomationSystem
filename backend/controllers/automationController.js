@@ -77,11 +77,14 @@ const getTimerAutomation = async (req, res, next) => {
       attributes: ["id", "weekdays", "time", "active", "name"],
     });
 
-    if (timerAutomation) {
-      timerAutomation.weekdays = bitmaskToWeekdays(timerAutomation.weekdays);
-      timerAutomation.type = "timer";
+    if (!timerAutomation) {
+      const err = new Error("Automation not found");
+      err.status = 404;
+      throw err;
     }
-    console.log(timerAutomation);
+
+    timerAutomation.weekdays = bitmaskToWeekdays(timerAutomation.weekdays);
+    timerAutomation.type = "timer";
     res.send(timerAutomation);
   } catch (err) {
     next(err);
@@ -104,16 +107,28 @@ const addAutomation = async (req, res, next) => {
 };
 
 const addTimerAutomation = async (req, res, next) => {
-  console.log(req.body);
   try {
     const { devices, weekdays, ...automationData } = req.body;
+    if (
+      !automationData.name ||
+      !weekdays ||
+      !automationData.time ||
+      automationData.active === undefined
+    ) {
+      const err = new Error("Missing required fields");
+      err.status = 400;
+      throw err;
+    }
+
     const newAutomation = await TimeAutomation.create({
       ...automationData,
       weekdays: weekdaysToBitmask(weekdays),
     });
+
     if (devices && devices.length > 0) {
       await newAutomation.addDevices(devices.map((device) => device.id));
     }
+
     res.send(newAutomation);
   } catch (err) {
     next(err);
@@ -153,7 +168,20 @@ const editTimerAutomation = async (req, res, next) => {
     });
 
     if (!automation) {
-      throw new Error("Automation not found");
+      const err = new Error("Automation not found");
+      err.status = 404;
+      throw err;
+    }
+
+    if (
+      !automationData.name ||
+      !weekdays ||
+      !automationData.time ||
+      automationData.active === undefined
+    ) {
+      const err = new Error("Missing required fields");
+      err.status = 400;
+      throw err;
     }
 
     await automation.update({
@@ -198,8 +226,11 @@ const deleteTimerAutomation = async (req, res, next) => {
     });
 
     if (!automation) {
-      throw new Error("Automation not found");
+      const err = new Error("Automation not found");
+      err.status = 404;
+      throw err;
     }
+
     await automation.destroy();
     res.send(automation);
   } catch (err) {
