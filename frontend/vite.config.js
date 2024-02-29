@@ -1,20 +1,22 @@
-import { defineConfig } from "vite";
+/* eslint-env node */
+
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
-import dotenv from "dotenv";
 
-dotenv.config();
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      "/api": `http://localhost:${process.env.VITE_PROXY_PORT || 3000}`,
+  return {
+    plugins: [react()],
+    server: {
+      proxy: {
+        "/api": `http://localhost:${env.VITE_PROXY_PORT || 3000}`,
+      },
     },
-  },
-  test: {
-    globals: true,
-    environment: "jsdom",
-    setupFiles: "setupTests.js",
-  },
+    test: {
+      globals: true,
+      environment: "jsdom",
+      setupFiles: "setupTests.js",
+    },
+  };
 });
