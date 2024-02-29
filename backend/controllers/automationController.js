@@ -108,14 +108,20 @@ const addAutomation = async (req, res, next) => {
 
 const addTimerAutomation = async (req, res, next) => {
   try {
+    console.log(req.body);
     const { devices, weekdays, ...automationData } = req.body;
-    if (
-      !automationData.name ||
-      !weekdays ||
-      !automationData.time ||
-      automationData.active === undefined
-    ) {
-      const err = new Error("Missing required fields");
+    const requiredFields = ["name", "time", "active"];
+
+    requiredFields.forEach((field) => {
+      if (automationData[field] === undefined) {
+        const err = new Error(`Missing required field: ${field}`);
+        err.status = 400;
+        throw err;
+      }
+    });
+
+    if (!weekdays) {
+      const err = new Error("Missing required field: weekdays");
       err.status = 400;
       throw err;
     }
@@ -123,6 +129,7 @@ const addTimerAutomation = async (req, res, next) => {
     const newAutomation = await TimeAutomation.create({
       ...automationData,
       weekdays: weekdaysToBitmask(weekdays),
+      system_id: 1,
     });
 
     if (devices && devices.length > 0) {

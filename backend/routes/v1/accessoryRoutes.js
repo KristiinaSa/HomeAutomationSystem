@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Accessory");
-});
+const {
+  getAllAccessories,
+  getAllDevices,
+} = require("../../controllers/accessoryController.js");
+
+router.get("/", getAllAccessories);
+
+router.get("/devices", getAllDevices);
 
 router.get("/add-accessory", (req, res) => {
   res.send("Add Accessory");

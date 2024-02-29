@@ -4,7 +4,7 @@ import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
 import { dummySensors } from "../../dummyData/dummySensors";
-import { dummyDevices } from "../../dummyData/dummyDevices";
+import { getDevices } from "../../services/accessoryServices";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -26,6 +26,14 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       setIsDisabled(automation.isDisabled);
     }
   }, [automation]);
+
+  useEffect(() => {
+    const fetchDevices = async () => {
+      const devices = await getDevices();
+      setDevices(devices);
+    };
+    fetchDevices();
+  }, []);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -87,7 +95,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </label>
 
       <DeviceSelection
-        devices={dummyDevices}
+        devices={devices}
         selectedDevices={devices}
         setSelectedDevices={setDevices}
       />

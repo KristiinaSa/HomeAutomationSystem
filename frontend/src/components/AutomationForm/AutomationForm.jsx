@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import {
-  deleteAutomation,
+  deleteTimerAutomation,
   updateTimerAutomation,
   addTimerAutomation,
   getTimerAutomation,
@@ -49,6 +49,7 @@ export const AutomationForm = () => {
     } else {
       if (data.type === "timer") {
         console.log("Creating new automation");
+        console.log(data);
         await addTimerAutomation(data);
       }
     }
@@ -58,7 +59,7 @@ export const AutomationForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteAutomation(id);
+      await deleteTimerAutomation(id);
       navigate("/automations");
     } catch (err) {
       console.error(err);

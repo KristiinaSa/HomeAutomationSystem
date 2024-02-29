@@ -5,7 +5,7 @@ import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
-import { dummyDevices } from "../../dummyData/dummyDevices";
+import { getDevices } from "../../services/accessoryServices";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +26,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
     sunday: false,
   });
   const [devices, setDevices] = useState([]);
+  const [availableDevices, setAvailableDevices] = useState([]);
 
   useEffect(() => {
     if (automation) {
@@ -37,6 +38,15 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
     }
   }, [automation]);
 
+  useEffect(() => {
+    const fetchDevices = async () => {
+      const devices = await getDevices();
+      setAvailableDevices(devices);
+      console.log(devices);
+    };
+    fetchDevices();
+  }, []);
+
   const onSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -44,7 +54,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       weekdays: selectedDays,
       time,
       devices,
-      isDisabled,
+      active: isDisabled,
       type: automation ? automation.type : "timer",
     };
     console.log(data);
@@ -72,7 +82,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         setSelectedDays={setSelectedDays}
       />
       <DeviceSelection
-        devices={dummyDevices}
+        devices={availableDevices}
         selectedDevices={devices}
         setSelectedDevices={setDevices}
       />
