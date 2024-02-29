@@ -1,6 +1,6 @@
 # HomeAutomationSystem
 
-## .env
+## .env for BACKEND
 
 ```
 PORT=
@@ -11,4 +11,10 @@ DB_PASSWORD=
 TEST_DB_NAME=homeautomation_test
 TEST_DB_USER=
 TEST_DB_PASSWORD=
+```
+
+### .env for FRONTEND
+
+```
+VITE_PROXY_PORT=3001
 ```
