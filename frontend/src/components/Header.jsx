@@ -14,6 +14,7 @@ import {
   faUser,
   faSignIn,
   faSignOut,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ icon, text, path, onClick }) => {
@@ -81,6 +82,7 @@ const Header = () => {
     isLoggedIn
       ? { icon: faSignOut, text: "Log out", onClick: handleLogout }
       : { icon: faSignIn, text: "Log in", path: "/login" },
+    !isLoggedIn && { icon: faAddressBook, text: "Register", path: "/register" },
   ];
 
   const handleClickOutside = (e) => {

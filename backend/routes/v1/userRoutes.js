@@ -1,16 +1,15 @@
+const userController = require("../../controllers/userController.js");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("User");
-});
+const { deleteUser, getAllUsers, inviteUser, changeRole } = userController;
 
-router.get("/change-password", (req, res) => {
-  res.send("Change Password");
-});
+router.get("/", getAllUsers);
 
-router.get("/delete-user", (req, res) => {
-  res.send("Delete User");
-});
+router.post("/invite-user", inviteUser);
+
+router.delete("/delete-user/:id", deleteUser);
+
+router.patch("/change-role/:id", changeRole);
 
 module.exports = router;

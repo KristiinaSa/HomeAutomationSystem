@@ -100,6 +100,9 @@ const Login = () => {
         >
           LOG IN
         </button>
+        <p className="login-register-router">
+          Don't have an account? <a href="/register">Register</a>
+        </p>
         <p
           ref={errorRef}
           className={errorMessage ? "error-messagge" : "off-screen"}

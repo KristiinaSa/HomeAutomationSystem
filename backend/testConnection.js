@@ -1,4 +1,5 @@
-import { sqlQuery } from "./db/dbConnector.js";
+const dbConnector = require("./db/dbConnector.js");
+const { sqlQuery } = dbConnector;
 
 async function testConnection() {
   console.log("Testing database connection...");
