@@ -1,4 +1,4 @@
-import { weekdaysToBitmask, bitmaskToWeekdays } from "./controllers/helpers.js";
+const helpers = require("./controllers/helpers.js");
 
 const weekdays = {
   monday: false,

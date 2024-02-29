@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class ValueType extends Model {}
 
@@ -12,4 +14,4 @@ ValueType.init(
   { sequelize, modelName: "valueType" }
 );
 
-export default ValueType;
+module.exports = ValueType;

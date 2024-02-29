@@ -1,11 +1,11 @@
-import { v4 as uuidv4 } from "uuid";
-import automationModel from "../dummyModels/automationModel.js";
-import "../db/associations.js";
-import { bitmaskToWeekdays, weekdaysToBitmask } from "./helpers.js";
+const { v4: uuidv4 } = require("uuid");
+const automationModel = require("../dummyModels/automationModel.js");
+require("../db/associations.js");
+const { bitmaskToWeekdays, weekdaysToBitmask } = require("./helpers.js");
 
-import TimeAutomation from "../models/timeAutomationModel.js";
-import SensorAutomation from "../models/sensorAutomationModel.js";
-import Device from "../models/deviceModel.js";
+const TimeAutomation = require("../models/timeAutomationModel.js");
+const SensorAutomation = require("../models/sensorAutomationModel.js");
+const Device = require("../models/deviceModel.js");
 
 const getAutomations = async (req, res, next) => {
   try {
@@ -17,6 +17,8 @@ const getAutomations = async (req, res, next) => {
         through: { attributes: [] },
       },
     });
+    console.log("timeAutomations:", timeAutomations); // Add this line
+
     let sensorAutomations = await SensorAutomation.findAll({
       attributes: ["id", "active"],
       include: {
@@ -25,10 +27,12 @@ const getAutomations = async (req, res, next) => {
         through: { attributes: [] },
       },
     });
+    console.log("sensorAutomations:", sensorAutomations); // Add this line
 
     timeAutomations = timeAutomations.map((automation) => {
-      automation.weekdays = bitmaskToWeekdays(automation.weekdays);
-      return automation;
+      const automationData = automation.toJSON();
+      automationData.weekdays = bitmaskToWeekdays(automationData.weekdays);
+      return automationData;
     });
 
     sensorAutomations = sensorAutomations.map((automation) => ({
@@ -37,6 +41,7 @@ const getAutomations = async (req, res, next) => {
     }));
 
     const automations = [...timeAutomations, ...sensorAutomations];
+    console.log("automations:", automations); // Add this line
 
     res.send(automations);
   } catch (err) {
@@ -69,7 +74,7 @@ const getTimerAutomation = async (req, res, next) => {
         attributes: ["id", "name", "type"],
         through: { attributes: [] },
       },
-      attributes: ["id", "weekdays", "time", "active"],
+      attributes: ["id", "weekdays", "time", "active", "name"],
     });
 
     if (timerAutomation) {
@@ -99,6 +104,7 @@ const addAutomation = async (req, res, next) => {
 };
 
 const addTimerAutomation = async (req, res, next) => {
+  console.log(req.body);
   try {
     const { devices, weekdays, ...automationData } = req.body;
     const newAutomation = await TimeAutomation.create({
@@ -201,14 +207,14 @@ const deleteTimerAutomation = async (req, res, next) => {
   }
 };
 
-export {
+module.exports = {
   getAutomations,
   getAutomation,
-  addAutomation,
-  editAutomation,
-  deleteAutomation,
   getTimerAutomation,
+  addAutomation,
   addTimerAutomation,
+  editAutomation,
   editTimerAutomation,
+  deleteAutomation,
   deleteTimerAutomation,
 };

@@ -1,11 +1,11 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { loginDummyData } from "../dummyData/loginDummyData.js";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const { loginDummyData } = require("../dummyData/loginDummyData.js");
 
 dotenv.config();
 
-export const login = (req, res) => {
+const login = (req, res) => {
   const { email, password } = req.body;
 
   if (
@@ -25,7 +25,7 @@ export const login = (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
+const logout = (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
 
   if (token) {
@@ -45,3 +45,5 @@ export const logout = (req, res) => {
     res.status(401).json({ message: "No token provided" });
   }
 };
+
+module.exports = { login, logout };

@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import {
+const {
   getAutomations,
   getAutomation,
   addAutomation,
@@ -11,7 +11,7 @@ import {
   addTimerAutomation,
   editTimerAutomation,
   deleteTimerAutomation,
-} from "../../controllers/automationController.js";
+} = require("../../controllers/automationController.js");
 
 router.get("/", getAutomations);
 
@@ -35,4 +35,4 @@ router.put("/:id", editAutomation);
 
 router.delete("/:id", deleteAutomation);
 
-export default router;
+module.exports = router;

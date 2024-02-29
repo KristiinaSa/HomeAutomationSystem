@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class TimeAutomation extends Model {}
 
@@ -15,4 +17,4 @@ TimeAutomation.init(
   { sequelize, modelName: "timeAutomation" }
 );
 
-export default TimeAutomation;
+module.exports = TimeAutomation;

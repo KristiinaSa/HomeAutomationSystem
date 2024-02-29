@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class SensorAutomation extends Model {}
 
@@ -14,4 +16,4 @@ SensorAutomation.init(
   { sequelize, modelName: "sensorAutomation" }
 );
 
-export default SensorAutomation;
+module.exports = SensorAutomation;

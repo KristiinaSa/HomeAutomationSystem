@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class Room extends Model {}
 
@@ -11,4 +13,4 @@ Room.init(
   { sequelize, modelName: "room" }
 );
 
-export default Room;
+module.exports = Room;

@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class SensorHistory extends Model {}
 
@@ -13,4 +15,4 @@ SensorHistory.init(
   { sequelize, modelName: "sensorHistory" }
 );
 
-export default SensorHistory;
+module.exports = SensorHistory;

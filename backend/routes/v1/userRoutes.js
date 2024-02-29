@@ -1,6 +1,8 @@
-import {deleteUser, getAllUsers, inviteUser, changeRole} from "../../controllers/userController.js";
-import express from "express";
+const userController = require("../../controllers/userController.js");
+const express = require("express");
 const router = express.Router();
+
+const { deleteUser, getAllUsers, inviteUser, changeRole } = userController;
 
 router.get("/", getAllUsers);
 
@@ -10,4 +12,4 @@ router.delete("/delete-user/:id", deleteUser);
 
 router.patch("/change-role/:id", changeRole);
 
-export default router;
+module.exports = router;

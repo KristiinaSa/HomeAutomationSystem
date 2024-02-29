@@ -1,6 +1,6 @@
-import Sequelize from "sequelize";
-import TimeAutomation from "../models/timeAutomationModel.js";
-import { Op } from "sequelize";
+const Sequelize = require("sequelize");
+const TimeAutomation = require("../models/timeAutomationModel.js");
+const { Op } = require("sequelize");
 
 const checkAutomations = async () => {
   const now = new Date();
@@ -28,4 +28,4 @@ const checkAutomations = async () => {
   });
 };
 
-export default checkAutomations;
+module.exports = checkAutomations;

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import {
   deleteAutomation,
-  getAutomation,
-  updateAutomation,
-  addAutomation,
+  updateTimerAutomation,
+  addTimerAutomation,
+  getTimerAutomation,
 } from "../../services/automationServices";
 
 import TimerAutomationForm from "./TimerAutomationForm";
@@ -15,18 +15,22 @@ import styles from "./CreateAutomation.module.css";
 
 export const AutomationForm = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const automationType = location.state ? location.state.automationType : null; // PAYING FOR BAD DESIGN DECISIONS WITH THIS
   const [automation, setAutomation] = useState();
   const [loading, setLoading] = useState(false);
-  const [formType, setFormType] = useState("timer"); // Default to timer form
+  const [formType, setFormType] = useState("timer");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAutomation = async () => {
       try {
-        setLoading(true);
-        const automation = await getAutomation(id);
-        setAutomation(automation);
-        setLoading(false);
+        if (automationType === "timer") {
+          setLoading(true);
+          const automation = await getTimerAutomation(id);
+          setAutomation(automation);
+          setLoading(false);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -34,15 +38,19 @@ export const AutomationForm = () => {
     if (id) {
       fetchAutomation();
     }
-  }, [id]);
+  }, [id, automationType]);
 
   const handleSubmit = async (data, id) => {
     if (id) {
-      console.log("Updating automation");
-      await updateAutomation(id, data);
+      if (data.type === "timer") {
+        await updateTimerAutomation(id, data);
+        console.log("Updating timer-based automation");
+      }
     } else {
-      console.log("Creating new automation");
-      await addAutomation(data);
+      if (data.type === "timer") {
+        console.log("Creating new automation");
+        await addTimerAutomation(data);
+      }
     }
     console.log(data);
     navigate("/automations");

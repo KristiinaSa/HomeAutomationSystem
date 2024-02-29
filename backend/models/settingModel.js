@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class Setting extends Model {}
 
@@ -12,4 +14,4 @@ Setting.init(
   { sequelize, modelName: "setting" }
 );
 
-export default Setting;
+module.exports = Setting;

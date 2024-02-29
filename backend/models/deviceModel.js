@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class Device extends Model {}
 
@@ -19,4 +21,4 @@ Device.init(
   { sequelize, modelName: "device" }
 );
 
-export default Device;
+module.exports = Device;

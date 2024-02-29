@@ -1,5 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db/sequelizeConnector.js";
+const { Model, DataTypes } = require("sequelize");
+const getSequelize = require("../db/db.js");
+
+const sequelize = getSequelize();
 
 class UsageHistory extends Model {}
 
@@ -13,4 +15,4 @@ UsageHistory.init(
   { sequelize, modelName: "usageHistory" }
 );
 
-export default UsageHistory;
+module.exports = UsageHistory;

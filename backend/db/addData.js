@@ -1,12 +1,12 @@
 // Adds some basic data to the database for testing purposes
-import "./associations.js";
+require("./associations.js");
 
-import System from "../models/systemModel.js";
-import Room from "../models/roomModel.js";
-import Sensor from "../models/sensorModel.js";
-import Device from "../models/deviceModel.js";
-import TimeAutomation from "../models/timeAutomationModel.js";
-import ValueType from "../models/valueTypeModel.js";
+const System = require("../models/systemModel.js");
+const Room = require("../models/roomModel.js");
+const Sensor = require("../models/sensorModel.js");
+const Device = require("../models/deviceModel.js");
+const TimeAutomation = require("../models/timeAutomationModel.js");
+const ValueType = require("../models/valueTypeModel.js");
 
 async function addTestData() {
   const system = await System.create({
@@ -88,6 +88,8 @@ async function addTestData() {
     password: "password",
     role: "owner",
   });
+
+  console.log("Test data added successfully");
 }
 
 addTestData();

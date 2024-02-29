@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+const User = require("../models/userModel.js");
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -56,4 +56,4 @@ const changeRole = async (req, res) => {
   }
 };
 
-export { deleteUser, getAllUsers, inviteUser, changeRole };
+module.exports = { deleteUser, getAllUsers, inviteUser, changeRole };

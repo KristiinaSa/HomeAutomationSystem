@@ -1,4 +1,4 @@
-export function weekdaysToBitmask(weekdays) {
+function weekdaysToBitmask(weekdays) {
   const days = [
     "monday",
     "tuesday",
@@ -18,7 +18,7 @@ export function weekdaysToBitmask(weekdays) {
   return bitmask;
 }
 
-export function bitmaskToWeekdays(bitmask) {
+function bitmaskToWeekdays(bitmask) {
   return {
     monday: !!(bitmask & 0b1000000),
     tuesday: !!(bitmask & 0b0100000),
@@ -29,3 +29,5 @@ export function bitmaskToWeekdays(bitmask) {
     sunday: !!(bitmask & 0b0000001),
   };
 }
+
+module.exports = { weekdaysToBitmask, bitmaskToWeekdays };
