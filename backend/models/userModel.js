@@ -11,7 +11,12 @@ User.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
-    role: DataTypes.ENUM("owner", "admin", "resident"),
+    role: DataTypes.ENUM(
+      "owner",
+      "admin",
+      "resident",
+      (defaultValue = "resident")
+    ),
     password: DataTypes.STRING,
     email: { type: DataTypes.STRING, unique: true },
     is_registered: { type: DataTypes.BOOLEAN, defaultValue: 0 },
