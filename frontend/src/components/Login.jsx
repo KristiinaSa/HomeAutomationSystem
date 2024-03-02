@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Login.css";
 
 const Login = () => {
@@ -45,21 +46,22 @@ const Login = () => {
       return;
     }
 
-    const response = await fetch("http://localhost:3000/api/v1/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await axios.post("http://localhost:3000/api/v1/login", {
+        email,
+        password,
+      });
 
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", response.data.token);
       setLoginSuccess(true);
-    } else {
-      const errorData = await response.json();
-      setErrorMessage(errorData.message);
+    } catch (error) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+      } else if (error.request) {
+        setErrorMessage("No response from server. Please try again later.");
+      } else {
+        setErrorMessage(error.message);
+      }
     }
   };
 
