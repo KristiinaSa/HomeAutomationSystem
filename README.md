@@ -29,7 +29,7 @@ VITE_PROXY_PORT=
 
 2. **Create Tables**:
 
-- Run the following command while in your backend folder:
+- Run the following command while in your __backend folder__:
   - `node db/createTables.js`
 - Verify that the tables were created correctly in the 'homeautomation' database.
 
