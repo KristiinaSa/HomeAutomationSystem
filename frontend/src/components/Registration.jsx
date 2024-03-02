@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useState, useRef } from "react";
 import "./Registration.css";
 
@@ -14,6 +15,25 @@ const Registration = () => {
     if (!email || !password) {
       setErrorMessage("Please fill in all the fields");
       return;
+    }
+
+    try {
+      const response = axios.post(
+        "http://localhost:3000/api/v1/login/register",
+        {
+          name: username,
+          email,
+          password,
+        }
+      );
+    } catch (error) {
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+      } else if (error.request) {
+        setErrorMessage("No response from server. Please try again later.");
+      } else {
+        setErrorMessage(error.message);
+      }
     }
   };
 
