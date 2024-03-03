@@ -29,4 +29,16 @@ const getAllDevices = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllAccessories, getAllDevices };
+const getAllSensors = async (req, res, next) => {
+  try {
+    const sensors = await Sensor.findAll({
+      attributes: ["id", "name", "value"],
+    });
+    console.log("sensors:", sensors);
+    res.send(sensors);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getAllAccessories, getAllDevices, getAllSensors };

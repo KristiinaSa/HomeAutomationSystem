@@ -9,6 +9,7 @@ const TimeAutomation = require("../models/timeAutomationModel.js");
 const User = require("../models/userModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
 const ValueType = require("../models/valueTypeModel.js");
+const CurrentValue = require("../models/currentValueModel.js");
 
 Device.belongsTo(System, { foreignKey: "system_id" });
 Device.belongsTo(Room, { foreignKey: "room_id" });
@@ -29,7 +30,18 @@ Sensor.belongsTo(Room, { foreignKey: "room_id" });
 Sensor.belongsTo(System, { foreignKey: "system_id" });
 Sensor.hasMany(SensorHistory, { foreignKey: "sensor_id" });
 Sensor.hasMany(SensorAutomation, { foreignKey: "sensor_id" });
-Sensor.belongsToMany(ValueType, { through: "sensor_value_type" });
+Sensor.hasMany(CurrentValue, { foreignKey: "sensor_id" });
+
+Sensor.belongsToMany(ValueType, {
+  through: CurrentValue,
+  foreignKey: "sensor_id",
+});
+ValueType.belongsToMany(Sensor, {
+  through: CurrentValue,
+  foreignKey: "value_type_id",
+});
+CurrentValue.belongsTo(Sensor, { foreignKey: "sensor_id" });
+CurrentValue.belongsTo(ValueType, { foreignKey: "value_type_id" });
 
 Setting.belongsTo(User, { foreignKey: "user_id" });
 
@@ -48,5 +60,3 @@ System.hasMany(Sensor, { foreignKey: "system_id" });
 System.hasMany(Device, { foreignKey: "system_id" });
 System.hasMany(User, { foreignKey: "system_id" });
 System.hasMany(TimeAutomation, { foreignKey: "system_id" });
-
-ValueType.belongsToMany(Sensor, { through: "sensor_value_type" });

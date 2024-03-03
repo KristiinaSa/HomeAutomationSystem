@@ -3,16 +3,14 @@ const getSequelize = require("../db/db.js");
 
 const sequelize = getSequelize();
 
-class ValueType extends Model {}
+class CurrentValue extends Model {}
 
-ValueType.init(
+CurrentValue.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    type: DataTypes.STRING,
-    unit: DataTypes.STRING,
-    data_type: DataTypes.STRING,
+    value: { type: DataTypes.STRING, defaultValue: "0" },
   },
-  { sequelize, modelName: "valueType" }
+  { sequelize, modelName: "currentvalue" }
 );
 
-module.exports = ValueType;
+module.exports = CurrentValue;

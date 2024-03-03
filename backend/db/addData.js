@@ -7,6 +7,7 @@ const Sensor = require("../models/sensorModel.js");
 const Device = require("../models/deviceModel.js");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const ValueType = require("../models/valueTypeModel.js");
+const CurrentValue = require("../models/currentValueModel.js");
 
 async function addTestData() {
   const system = await System.create({
@@ -19,22 +20,26 @@ async function addTestData() {
 
   const sensor1 = await room.createSensor({
     name: "Temperature Sensor 1",
-    value: "23",
-    data_type: "double",
     role_access: "owner",
     system_id: system.id,
   });
 
   const sensor2 = await room.createSensor({
     name: "Humidity Sensor 2",
-    value: "38",
-    data_type: "int",
     role_access: "owner",
     system_id: system.id,
   });
 
-  const valueType = await ValueType.create({ type: "Temperature", unit: "°C" });
-  const valueType2 = await ValueType.create({ type: "Humidity", unit: "%" });
+  const valueType = await ValueType.create({
+    type: "Temperature",
+    unit: "°C",
+    data_type: "double",
+  });
+  const valueType2 = await ValueType.create({
+    type: "Humidity",
+    unit: "%",
+    data_type: "int",
+  });
 
   await sensor1.addValueType(valueType);
   await sensor2.addValueType(valueType2);
