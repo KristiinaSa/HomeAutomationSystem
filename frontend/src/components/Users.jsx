@@ -41,7 +41,6 @@ const Users = () => {
 
   const deletePerson = async (id) => {
     try {
-      console.log("Deleting user with id:", id);
       await deleteUser(id);
       setUpdate(true);
     } catch (error) {
@@ -55,10 +54,6 @@ const Users = () => {
   };
 
   const updateRole = async (id, role) => {
-    console.log(
-      "hfghfg",
-      persons.find((user) => user.id === editingId)
-    );
     if (role === persons.find((user) => user.id === editingId).role) {
       setEditingId(null);
       return;
@@ -66,7 +61,6 @@ const Users = () => {
     try {
       await changeRole(id, role);
       setEditingId(null);
-      console.log("in updateRole");
       setUpdate(true);
     } catch (error) {
       console.log("Failed to update role:", error.message);
@@ -74,10 +68,8 @@ const Users = () => {
   };
 
   const invitePerson = async (email) => {
-    console.log("Inviting user with email:", email);
     try {
       await inviteUser(email);
-    console.log("Invitation sent to:", email);
     reset();
     setShowInvite(false);
     setInviteSent(true);
@@ -152,12 +144,14 @@ const Users = () => {
               <div className="user-actions">
                 <FontAwesomeIcon
                   icon={faEdit}
-                  className="user-icon, edit"
+                  className="edit"
+                  data-testid={`edit-${user.id}`}
                   onClick={() => editPerson(user.id)}
                 />
                 <FontAwesomeIcon
                   icon={faTrash}
-                  className="user-icon, delete"
+                  className="delete"
+                  data-testid={`delete-${user.id}`}
                   onClick={() => deletePerson(user.id)}
                 />
               </div>
@@ -177,12 +171,17 @@ const Users = () => {
               type="email"
               placeholder="Enter email"
               className="invite-input"
+              data-testid="invite-input"
             />
             {isSubmitted && errors.email && (
               <p className="error-message">{errors.email.message}</p>
             )}
 
-            <button type="submit" className="invite-button">
+            <button 
+            type="submit" 
+            className="invite-button"
+            data-testid="invite-submit"
+            >
               Send
             </button>
             <button
