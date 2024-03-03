@@ -68,15 +68,20 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   };
 
   return (
-    <div className={styles.verticalLayout}>
+    <form
+      data-testid="timer-automation-form"
+      onSubmit={onSubmit}
+      className={styles.verticalLayout}
+    >
       <p>Name</p>
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        data-testid="name-input"
       />
       <p>Time</p>
-      <TimeSelection time={time} setTime={setTime} />
+      <TimeSelection time={time} setTime={setTime} data-testid="time-input" />
       <DaySelection
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
@@ -92,11 +97,12 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
       />
       <button
-        onClick={onSubmit}
+        type="submit"
         disabled={isButtonDisabled()}
-        style={
+        className={
           isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
         }
+        data-testid="submit-button"
       >
         {automation ? "Update Automation" : "Create New Automation"}
       </button>
@@ -107,9 +113,10 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
           role="button"
           aria-label="Delete"
           style={{ cursor: "pointer" }}
+          data-testid="delete-button"
         />
       )}
-    </div>
+    </form>
   );
 };
 

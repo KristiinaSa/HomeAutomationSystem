@@ -1,5 +1,6 @@
+/* eslint-env jest */
 import { render, screen } from "@testing-library/react";
-import TestCard from "../../src/components/TestCard.jsx";
+import TestCard from "../../components/TestCard.jsx";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCoffee as faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
