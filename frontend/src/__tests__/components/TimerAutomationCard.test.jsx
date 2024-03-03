@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { TimerAutomationCard } from "../../src/components/Automations/TimerAutomationCard.jsx";
+import { TimerAutomationCard } from "../../components/Automations/TimerAutomationCard.jsx";
 
 describe("TimerAutomationCard", () => {
   it("renders correctly", () => {
@@ -46,7 +46,7 @@ describe("TimerAutomationCard", () => {
     expect(nameElement.textContent).toBe("Test Automation 2");
 
     const statusElement = screen.getByTestId("automation-status");
-    expect(statusElement.textContent).toBe("2 accessories");
+    expect(statusElement.textContent).toBe("Disabled");
 
     const timeElement = screen.getByTestId("automation-time");
     expect(timeElement.textContent).toBe("22:00");

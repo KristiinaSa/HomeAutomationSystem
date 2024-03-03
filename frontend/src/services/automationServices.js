@@ -64,6 +64,15 @@ export const updateAutomation = async (id, data) => {
   }
 };
 
+export const deleteTimerAutomation = async (id) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/timer/${id}`);
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};
+
 export const deleteAutomation = async (id) => {
   try {
     const response = await axios.delete(`${baseUrl}/${id}`);

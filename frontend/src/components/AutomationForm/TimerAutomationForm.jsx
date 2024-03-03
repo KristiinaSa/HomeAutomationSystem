@@ -5,7 +5,7 @@ import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
-import { dummyDevices } from "../../dummyData/dummyDevices";
+import { getDevices } from "../../services/accessoryServices";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +26,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
     sunday: false,
   });
   const [devices, setDevices] = useState([]);
+  const [availableDevices, setAvailableDevices] = useState([]);
 
   useEffect(() => {
     if (automation) {
@@ -37,6 +38,15 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
     }
   }, [automation]);
 
+  useEffect(() => {
+    const fetchDevices = async () => {
+      const devices = await getDevices();
+      setAvailableDevices(devices);
+      console.log(devices);
+    };
+    fetchDevices();
+  }, []);
+
   const onSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -44,7 +54,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       weekdays: selectedDays,
       time,
       devices,
-      isDisabled,
+      active: isDisabled,
       type: automation ? automation.type : "timer",
     };
     console.log(data);
@@ -58,21 +68,26 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   };
 
   return (
-    <div className={styles.verticalLayout}>
+    <form
+      data-testid="timer-automation-form"
+      onSubmit={onSubmit}
+      className={styles.verticalLayout}
+    >
       <p>Name</p>
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        data-testid="name-input"
       />
       <p>Time</p>
-      <TimeSelection time={time} setTime={setTime} />
+      <TimeSelection time={time} setTime={setTime} data-testid="time-input" />
       <DaySelection
         selectedDays={selectedDays}
         setSelectedDays={setSelectedDays}
       />
       <DeviceSelection
-        devices={dummyDevices}
+        devices={availableDevices}
         selectedDevices={devices}
         setSelectedDevices={setDevices}
       />
@@ -82,11 +97,12 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
       />
       <button
-        onClick={onSubmit}
+        type="submit"
         disabled={isButtonDisabled()}
-        style={
+        className={
           isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
         }
+        data-testid="submit-button"
       >
         {automation ? "Update Automation" : "Create New Automation"}
       </button>
@@ -97,9 +113,10 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
           role="button"
           aria-label="Delete"
           style={{ cursor: "pointer" }}
+          data-testid="delete-button"
         />
       )}
-    </div>
+    </form>
   );
 };
 

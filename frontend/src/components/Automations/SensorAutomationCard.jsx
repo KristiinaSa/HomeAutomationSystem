@@ -15,7 +15,7 @@ export const SensorAutomationCard = ({ automation }) => {
       <h2 data-testid="automation-name">{automation.name}</h2>
       <p data-testid="automation-sensor">{automation.sensor.name} sensor</p>
       <p data-testid="automation-status">
-        {automation.isDisabled ? "Disabled" : `${numDevices} accessories`}
+        {automation.active ? "Disabled" : `${numDevices} accessories`}
       </p>
       <p data-testid="automation-action">Action: {automation.action}</p>
       <a

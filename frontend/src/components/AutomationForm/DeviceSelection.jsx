@@ -35,6 +35,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
           value={selectedDeviceId}
           onChange={handleDeviceChange}
           className={styles.selectBox}
+          data-testid="devices-input"
         >
           <option value="" disabled>
             Select devices
@@ -54,6 +55,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
             <li key={index} className={styles.centerContent}>
               {device.name}
               <button
+                type="button"
                 className={styles.removeButton}
                 onClick={() => handleRemoveDevice(device)}
               >

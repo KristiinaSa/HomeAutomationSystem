@@ -7,6 +7,7 @@ const TimeSelection = ({ time, setTime }) => (
       value={time}
       onChange={(e) => setTime(e.target.value)}
       className={styles.timeInput}
+      data-testid="time-input"
     />
   </label>
 );

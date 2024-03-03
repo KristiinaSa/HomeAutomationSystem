@@ -1,19 +1,18 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { loginDummyData } = require("../dummyData/loginDummyData.js");
+const User = require("../models/userModel.js");
 
 dotenv.config();
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
-  if (
-    email === loginDummyData.email &&
-    bcrypt.compareSync(password, loginDummyData.password)
-  ) {
+  const user = await User.findOne({ where: { email } });
+
+  if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
-      { email: loginDummyData.email, name: loginDummyData.name },
+      { email: user.email, name: user.name },
       process.env.JWT_SECRET,
       {
         expiresIn: "48h",
@@ -46,4 +45,35 @@ const logout = (req, res) => {
   }
 };
 
-module.exports = { login, logout };
+const register = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const existingUser = await User.findOne({ where: { email } });
+  if (!existingUser) {
+    res.status(400).json({
+      message:
+        "Email not found. Please ask your admin to add you to the users.",
+    });
+    return;
+  }
+
+  if (existingUser && existingUser.password) {
+    res.status(400).json({ message: "This user has already been registered." });
+    return;
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  existingUser.name = name;
+  existingUser.password = hashedPassword;
+
+  const updatedUser = await existingUser.save();
+
+  if (updatedUser) {
+    res.status(201).json({ message: "User created." });
+  } else {
+    res.status(500).json({ message: "Error creating user." });
+  }
+};
+
+module.exports = { login, logout, register };

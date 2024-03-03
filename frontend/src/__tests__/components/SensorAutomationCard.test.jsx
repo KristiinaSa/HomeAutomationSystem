@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { SensorAutomationCard } from "../../src/components/Automations/SensorAutomationCard.jsx";
+import { SensorAutomationCard } from "../../components/Automations/SensorAutomationCard.jsx";
 
 describe("TimerAutomationCard", () => {
   it("renders correctly", () => {

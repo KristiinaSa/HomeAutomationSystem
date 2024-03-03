@@ -9,7 +9,7 @@ const DaySelection = ({ selectedDays, setSelectedDays }) => {
   };
 
   return (
-    <div className={styles.horizontalLayout}>
+    <div className={styles.horizontalLayout} data-testid="days-input">
       {Object.keys(selectedDays).map((day) => (
         <label
           key={day}
