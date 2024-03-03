@@ -40,12 +40,16 @@ const Users = () => {
   }, [update]);
 
   const deletePerson = async (id) => {
-    try {
-      await deleteUser(id);
-      setUpdate(true);
-    } catch (error) {
-      console.log("Error delete user", error.message);
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    else {
+      try {
+        await deleteUser(id);
+        setUpdate(true);
+      } catch (error) {
+        console.log("Error delete user", error.message);
+      }
     }
+    
   };
 
   const editPerson = (id) => {
@@ -70,14 +74,14 @@ const Users = () => {
   const invitePerson = async (email) => {
     try {
       await inviteUser(email);
-    reset();
-    setShowInvite(false);
-    setInviteSent(true);
-    setUpdate(true);
-  } catch (error) {
-    console.log("Failed to invite user:", error.message);
-  }
-}
+      reset();
+      setShowInvite(false);
+      setInviteSent(true);
+      setUpdate(true);
+    } catch (error) {
+      console.log("Failed to invite user:", error.message);
+    }
+  };
 
   useEffect(() => {
     if (inviteSent) {
@@ -97,9 +101,9 @@ const Users = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -177,10 +181,10 @@ const Users = () => {
               <p className="error-message">{errors.email.message}</p>
             )}
 
-            <button 
-            type="submit" 
-            className="invite-button"
-            data-testid="invite-submit"
+            <button
+              type="submit"
+              className="invite-button"
+              data-testid="invite-submit"
             >
               Send
             </button>
