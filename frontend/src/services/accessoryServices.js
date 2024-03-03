@@ -6,6 +6,7 @@ export const getAccessories = async () => {
     const response = await axios.get(baseUrl);
     return response.data;
   } catch (err) {
+    console.log("Error getting accessories: " + err);
     throw new Error(err.response.data);
   }
 };
@@ -15,6 +16,7 @@ export const getDevices = async () => {
     const response = await axios.get(`${baseUrl}/devices`);
     return response.data;
   } catch (err) {
+    console.log("Error getting devices: " + err);
     throw new Error(err.response.data);
   }
 };

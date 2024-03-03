@@ -36,7 +36,7 @@ export const TimerAutomationCard = ({ automation }) => {
   };
 
   return (
-    <div key={automation.id} data-testid="automation-card">
+    <div data-testid="automation-card">
       <h2 data-testid="automation-name">{automation.name}</h2>
       <p data-testid="automation-status">
         {automation.active ? "Disabled" : `${numDevices} accessories`}

@@ -25,15 +25,28 @@ export const Automations = () => {
   }, []);
 
   return (
-    <div className={styles.automationContainer}>
+    <div
+      className={styles.automationContainer}
+      data-testid="automation-container"
+    >
       {automations.map((automation) =>
         automation.type === "timer" ? (
-          <TimerAutomationCard key={automation.id} automation={automation} />
+          <div
+            key={automation.id}
+            data-testid={`timer-automation-${automation.id}`}
+          >
+            <TimerAutomationCard automation={automation} />
+          </div>
         ) : (
-          <SensorAutomationCard key={automation.id} automation={automation} />
+          <div
+            key={automation.id}
+            data-testid={`sensor-automation-${automation.id}`}
+          >
+            <SensorAutomationCard automation={automation} />
+          </div>
         )
       )}
-      <Link to="/automations/new">
+      <Link to="/automations/new" data-testid="create-automation-button">
         <button>Create New Automation</button>
       </Link>
     </div>
