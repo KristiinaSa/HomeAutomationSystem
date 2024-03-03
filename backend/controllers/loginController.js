@@ -49,20 +49,27 @@ const register = async (req, res) => {
   const { name, email, password } = req.body;
 
   const existingUser = await User.findOne({ where: { email } });
-  if (existingUser) {
-    res.status(400).json({ message: "Email already in use." });
+  if (!existingUser) {
+    res.status(400).json({
+      message:
+        "Email not found. Please ask your admin to add you to the users.",
+    });
+    return;
+  }
+
+  if (existingUser && existingUser.password) {
+    res.status(400).json({ message: "This user has already been registered." });
     return;
   }
 
   const hashedPassword = bcrypt.hashSync(password, 10);
 
-  const newUser = await User.create({
-    name,
-    email,
-    password: hashedPassword,
-  });
+  existingUser.name = name;
+  existingUser.password = hashedPassword;
 
-  if (newUser) {
+  const updatedUser = await existingUser.save();
+
+  if (updatedUser) {
     res.status(201).json({ message: "User created." });
   } else {
     res.status(500).json({ message: "Error creating user." });
