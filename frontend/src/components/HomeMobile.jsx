@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { CategoriesContext } from "../CategoriesContext";
 import { RoomContext } from "../RoomContext";
 import "./HomeMobile.css";
@@ -6,8 +7,8 @@ import TestCard from "./TestCard";
 import Room from "./Room";
 
 const HomeMobile = () => {
-  const {categories} = useContext(CategoriesContext);
-  const {rooms} = useContext(RoomContext);
+  const { categories } = useContext(CategoriesContext);
+  const { rooms } = useContext(RoomContext);
 
   return (
     <>
@@ -21,7 +22,7 @@ const HomeMobile = () => {
             key={category.id}
             title={category.title}
             icon={category.icon}
-            count={category.count}
+            status={category.status}
           />
         ))}
       </div>
@@ -30,7 +31,9 @@ const HomeMobile = () => {
         <h2>Rooms</h2>
         {rooms.map((room) => (
           <div key={room.id}>
-            <Room name={room.name} />
+            <NavLink to={`/room/${room.id}`} className="home-link">
+              <Room name={room.name} />
+            </NavLink>
             <div className="card-container">
               {room.cards &&
                 room.cards.map((card) => (
@@ -38,7 +41,7 @@ const HomeMobile = () => {
                     key={card.id}
                     title={card.title}
                     icon={card.icon}
-                    count={card.count}
+                    status={card.status}
                   />
                 ))}
             </div>

@@ -56,8 +56,14 @@ const NavbarDesktop = () => {
         <div className="navbar-rooms">
           {rooms.map((room) => (
             <div key={room.id} className="navbar-room">
-              <FontAwesomeIcon icon={faArrowAltCircleRight} />
-              <p>{room.name}</p>
+              <NavLink to={`/room/${room.id}`} className={({ isActive }) =>
+                isActive ? "active" : "navbar-link"}
+              >
+                <div className="navbar-room">
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                  <p>{room.name}</p>
+                </div>
+              </NavLink>
             </div>
           ))}
         </div>
