@@ -5,6 +5,9 @@ const {
   getAllAccessories,
   getAllDevices,
   getAllSensors,
+  addDevice,
+  deleteDevice,
+  toggleOnOff,
 } = require("../../controllers/accessoryController.js");
 
 router.get("/", getAllAccessories);
@@ -13,12 +16,10 @@ router.get("/devices", getAllDevices);
 
 router.get("/sensors", getAllSensors);
 
-router.get("/add-accessory", (req, res) => {
-  res.send("Add Accessory");
-});
+router.post("/add-device", addDevice);
 
-router.get("/delete-accessory", (req, res) => {
-  res.send("Delete Accessory");
-});
+router.delete("/delete-device", deleteDevice);
+
+router.post("/toggle/:id", toggleOnOff);
 
 module.exports = router;
