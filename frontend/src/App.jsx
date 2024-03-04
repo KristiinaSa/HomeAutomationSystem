@@ -13,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import { ThemeProvider } from "./ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import RegistrationPage  from "./pages/RegistrationPage";
+import RoomPage from "./pages/RoomPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegistrationPage />} />
+                  <Route path="/room/:id" element={<RoomPage />} />
                   </Route>
                 </Routes>
               </Router>
