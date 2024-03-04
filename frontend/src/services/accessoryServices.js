@@ -20,3 +20,23 @@ export const getDevices = async () => {
     throw new Error(err.response.data);
   }
 };
+
+  export const addDevice = async (data) => {
+    try {
+      const response = await axios.post(`${baseUrl}/add-device/`, data);
+      return response.data;
+    } catch (err) {
+      console.log("Error getting device: " + err);
+      throw new Error(err.response.data);
+    }
+  };
+
+export const getRoomNames = async () => {
+  try {
+    const response = await axios.get(`/api/v1/rooms`);
+    return response.data;
+  } catch (err) {
+    console.log("Error getting rooms: " + err);
+    throw new Error(err.response.data);
+  }
+}
