@@ -14,6 +14,7 @@ import { ThemeProvider } from "./ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import RegistrationPage  from "./pages/RegistrationPage";
 import AddingDevice from "./pages/AddingDevice";
+import RoomPage from "./pages/RoomPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegistrationPage />} />
                   <Route path="/add-device" element={<AddingDevice />} />
+                  <Route path="/room/:id" element={<RoomPage />} />
                   </Route>
                 </Routes>
               </Router>

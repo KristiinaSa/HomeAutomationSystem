@@ -8,6 +8,7 @@ const Device = require("../models/deviceModel.js");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
+const SensorHistory = require("../models/sensorHistoryModel.js");
 
 async function addTestData() {
   const system = await System.create({
@@ -35,11 +36,29 @@ async function addTestData() {
     unit: "°C",
     data_type: "double",
   });
+
   const valueType2 = await ValueType.create({
     type: "Humidity",
     unit: "%",
     data_type: "int",
   });
+
+  const sensorHistoryData1 = Array.from({ length: 100 }, (_, i) => ({
+    sensor_id: sensor1.id,
+    sensor_value: Math.random() * 100,
+    timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
+    data_type: "double",
+  }));
+
+  const sensorHistoryData2 = Array.from({ length: 100 }, (_, i) => ({
+    sensor_id: sensor1.id,
+    sensor_value: Math.random() * 100,
+    timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
+    data_type: "int",
+  }));
+
+  await SensorHistory.bulkCreate(sensorHistoryData1);
+  await SensorHistory.bulkCreate(sensorHistoryData2);
 
   await sensor1.addValueType(valueType);
   await sensor2.addValueType(valueType2);
@@ -48,8 +67,7 @@ async function addTestData() {
     room.createDevice({
       name: "Table Lamp",
       type: "Light",
-      model: "BOB-LED",
-      value: "on",
+      value: "true",
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
@@ -57,8 +75,7 @@ async function addTestData() {
     room.createDevice({
       name: "Ceiling Lamp",
       type: "Light",
-      model: "DAN-LED",
-      value: "off",
+      value: "false",
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
