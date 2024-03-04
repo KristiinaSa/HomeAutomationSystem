@@ -13,14 +13,16 @@ const ThemeToggle = () => {
         type="checkbox"
         checked={theme === "dark"}
         onChange={toggleTheme}
+        data-testid="theme-toggle"
       />
-      <div className={styles.slider}>
+      <div className={styles.slider} data-testid="slider">
         <div
           className={`${styles.circle} ${
             theme === "dark"
               ? styles["circle-dark"] + " " + styles.move
               : styles["circle-light"]
           }`}
+          data-testid="circle"
         >
           <FontAwesomeIcon
             icon={theme === "dark" ? faMoon : faSun}
