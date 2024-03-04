@@ -15,6 +15,7 @@ import { AuthProvider } from "./AuthContext";
 import RegistrationPage  from "./pages/RegistrationPage";
 import AddingDevice from "./pages/AddingDevice";
 import RoomPage from "./pages/RoomPage";
+import AccessoriesPage from "./pages/AccessoriesPage";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
                   <Route path="/register" element={<RegistrationPage />} />
                   <Route path="/add-device" element={<AddingDevice />} />
                   <Route path="/room/:id" element={<RoomPage />} />
+                  <Route path="/accessories" element={<AccessoriesPage />} />
                   </Route>
                 </Routes>
               </Router>
