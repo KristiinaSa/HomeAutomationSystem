@@ -1,0 +1,51 @@
+import axios from "axios";
+
+const baseUrl = "/api/v1/login";
+
+const login = async (email, password) => {
+  try {
+    const response = await axios.post(baseUrl, { email, password });
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Request failed with status code ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error logging in:", error.message);
+    throw error;
+  }
+};
+
+const logout = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/logout`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Request failed with status code ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error logging out:", error.message);
+    throw error;
+  }
+};
+
+const register = async (name, email, password) => {
+  try {
+    const response = await axios.post(`${baseUrl}/register`, {
+      name,
+      email,
+      password,
+    });
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Request failed with status code ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error registering:", error.message);
+    throw error;
+  }
+};
+
+export default { login, logout, register };
