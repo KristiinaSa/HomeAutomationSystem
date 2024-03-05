@@ -8,10 +8,13 @@ export const AuthProvider = ({ children }) => {
   );
 
   const logout = () => {
-    localStorage.removeItem("access_token");
-    setIsLoggedIn(false);
+    try {
+      localStorage.removeItem("access_token");
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
-
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout }}>
       {children}
