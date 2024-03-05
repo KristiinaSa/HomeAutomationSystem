@@ -9,10 +9,10 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ where: { email } });
-
+  console.log("user:", user);
   if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
-      { email: user.email, name: user.name },
+      { id: user.id, name: user.name },
       process.env.JWT_SECRET,
       {
         expiresIn: "48h",
