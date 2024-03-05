@@ -1,7 +1,59 @@
-.add-device-container {
+@media screen and (min-width: 768px) {
+    .add-device-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin-left: 25%;
+        width: calc(100% - 25%);
+    }  
+}
+
+@media screen and (max-width: 768px) {
+    .add-device-container {
+        padding: 30px;
+        width: 80%;
+    }
+    
+}
+
+.choose-section {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin-left: 25%;
+    justify-content: space-between;
+    margin-top: 30px;
+    width: 80%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.choose-box {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.secondary-btn {
+    background: none;
+    color: var(--secondary-btn-text-color);
+    border: 1px solid var(--secondary-btn-text-color);
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    font-family: 'Poppins', sans-serif;
+}
+
+.add-device-btn,
+.cancel-btn {
+    width: 45%;
 }

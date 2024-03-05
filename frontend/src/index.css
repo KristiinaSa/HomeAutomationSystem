@@ -14,6 +14,8 @@
     --day-circle-active-color: #AD7386;
     --error-message-color: #D12F44;
     --input-background-color: #FFFFFF;
+    --primary-btn-background-color: #F6F6F6;
+    --secondary-btn-text-color: #F6F6F6;
 }
 
 /* Dark theme variables */
@@ -30,4 +32,6 @@
     --day-circle-active-color: #C28196;
     --error-message-color: #d15061;
     --input-background-color: #F6F6F6;
+    --primary-btn-background-color: #322E40;
+    --secondary-btn-text-color: #F6F6F6;
 }
