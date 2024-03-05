@@ -31,3 +31,14 @@ export const getDevices = async () => {
       throw new Error(err.response.data);
     }
   };
+
+  export const deleteDevice = async (id) => {
+    try {
+      const response = await axios.delete(`${baseUrl}/delete-device/${id}`);
+      console.log("Device deleted successfully", response.data);
+      return response.data;
+    } catch (err) {
+      console.log("Error deleting device: " + err);
+      throw new Error(err.response.data);
+    }
+  };
