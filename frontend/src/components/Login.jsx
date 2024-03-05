@@ -7,10 +7,18 @@ import "./Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, errorMessage, loginSuccess, setErrorMessage } = useLogin();
+  const {
+    login,
+    errorMessage,
+    loginSuccess,
+    setErrorMessage,
+    setLoginSuccess,
+  } = useLogin();
 
   const emailRef = useRef();
   const errorRef = useRef();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     emailRef.current.focus();
