@@ -7,18 +7,10 @@ import "./Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {
-    login,
-    errorMessage,
-    loginSuccess,
-    setErrorMessage,
-    setLoginSuccess,
-  } = useLogin();
+  const { login, errorMessage, loginSuccess, setErrorMessage } = useLogin();
 
   const emailRef = useRef();
   const errorRef = useRef();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -27,22 +19,6 @@ const Login = () => {
   useEffect(() => {
     setErrorMessage("");
   }, [email, password, setErrorMessage]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoggedIn, navigate]);
-
-  useEffect(() => {
-    if (loginSuccess) {
-      setTimeout(() => {
-        setIsLoggedIn(true);
-        navigate("/");
-        setLoginSuccess(false);
-      }, 3000);
-    }
-  }, [loginSuccess, navigate, setIsLoggedIn, setLoginSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

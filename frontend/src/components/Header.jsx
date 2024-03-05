@@ -17,9 +17,18 @@ import {
   faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = ({ icon, text, path, onClick }) => {
+const MenuItem = ({ icon, text, path, onClick, onClose }) => {
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="menu-item" onClick={onClick}>
+    <div className="menu-item" onClick={handleClick}>
       <FontAwesomeIcon icon={icon} />
       {path ? (
         <NavLink to={path} className="hover-underline-animation">
@@ -112,7 +121,7 @@ const Header = () => {
         </div>
         <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
           {menuItems.map((item, index) => (
-            <MenuItem key={index} {...item} />
+            <MenuItem key={index} {...item} onClose={() => setIsOpen(false)} />
           ))}
         </div>
       </div>

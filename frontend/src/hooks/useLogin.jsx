@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import authService from "../services/authService";
+import { AuthContext } from "../AuthContext";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -14,7 +16,9 @@ const useLogin = () => {
     try {
       const response = await authService.login(email, password);
       localStorage.setItem("access_token", response.token);
+      console.log(response.token);
       setLoginSuccess(true);
+      setIsLoggedIn(true);
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
