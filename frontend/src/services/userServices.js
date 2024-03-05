@@ -49,4 +49,18 @@ const changeRole = async (id, role) => {
   }
 };
 
-export { getAllUsers, deleteUser, inviteUser, changeRole };
+const themeToggler = async () => {
+  try {
+    const response = await axios.post(`${baseUrl}/theme`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Request failed with status code ${response.status}`);
+    }
+  } catch (err) {
+    console.error("Error changing role:", err.message);
+    throw err;
+  }
+};
+
+export { getAllUsers, deleteUser, inviteUser, changeRole, themeToggler };
