@@ -41,49 +41,44 @@ const Header = () => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/api/v1/login/logout", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (response.ok) {
-      navigate("/login");
-      logout();
-    } else {
-      console.error("Logout failed");
-    }
+    logout();
+    navigate("/login");
   };
 
-  const menuItems = [
-    {
-      icon: faLightbulb,
-      text: "Add accessory",
-      onClick: () => {
-        console.log("Add accessory clicked");
-      },
-    },
-    { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
-    {
-      icon: faArrowCircleRight,
-      text: "Add room",
-      onClick: () => {
-        console.log("Add room clicked");
-      },
-    },
-    {
-      icon: faUser,
-      text: "Add users",
-      onClick: () => {
-        console.log("Add users clicked");
-      },
-    },
-    isLoggedIn
-      ? { icon: faSignOut, text: "Log out", onClick: handleLogout }
-      : { icon: faSignIn, text: "Log in", path: "/login" },
-    !isLoggedIn && { icon: faAddressBook, text: "Register", path: "/register" },
-  ];
+  const menuItems = isLoggedIn
+    ? [
+        {
+          icon: faLightbulb,
+          text: "Add accessory",
+          onClick: () => {
+            console.log("Add accessory clicked");
+          },
+        },
+        {
+          icon: faTachometerAlt,
+          text: "Add automation",
+          path: "/automations/new",
+        },
+        {
+          icon: faArrowCircleRight,
+          text: "Add room",
+          onClick: () => {
+            console.log("Add room clicked");
+          },
+        },
+        {
+          icon: faUser,
+          text: "Add users",
+          onClick: () => {
+            console.log("Add users clicked");
+          },
+        },
+        { icon: faSignOut, text: "Log out", onClick: handleLogout },
+      ]
+    : [
+        { icon: faSignIn, text: "Log in", path: "/login" },
+        { icon: faAddressBook, text: "Register", path: "/register" },
+      ];
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {

@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
-import authService from "../services/authService";
+import useLogin from "../hooks/useLogin";
 import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const {
+    login,
+    errorMessage,
+    loginSuccess,
+    setErrorMessage,
+    setLoginSuccess,
+  } = useLogin();
 
   const emailRef = useRef();
   const errorRef = useRef();
@@ -21,7 +26,7 @@ const Login = () => {
 
   useEffect(() => {
     setErrorMessage("");
-  }, [email, password]);
+  }, [email, password, setErrorMessage]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -37,28 +42,11 @@ const Login = () => {
         setLoginSuccess(false);
       }, 3000);
     }
-  }, [loginSuccess, navigate, setIsLoggedIn]);
+  }, [loginSuccess, navigate, setIsLoggedIn, setLoginSuccess]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setErrorMessage("Please fill in all the fields");
-      return;
-    }
-
-    try {
-      const response = await authService.login(email, password);
-      localStorage.setItem("token", response.token);
-      setLoginSuccess(true);
-    } catch (error) {
-      if (error.response) {
-        setErrorMessage(error.response.data.message);
-      } else if (error.request) {
-        setErrorMessage("No response from server. Please try again later.");
-      } else {
-        setErrorMessage(error.message);
-      }
-    }
+    login(email, password);
   };
 
   return (
@@ -99,7 +87,7 @@ const Login = () => {
           LOG IN
         </button>
         <p className="login-register-router">
-          Don't have an account? <a href="/register">Register</a>
+          Don&apos;t have an account? <a href="/register">Register</a>
         </p>
         <p
           ref={errorRef}

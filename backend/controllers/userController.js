@@ -28,9 +28,10 @@ const getAllUsers = async (req, res) => {
 };
 
 const inviteUser = async (req, res) => {
-  const { email } = req.body.email;
+  const email = req.body.email;
+  const system_id = req.user && req.user.system_id ? req.user.system_id : 1;
   try {
-    const user = await User.create({ email });
+    const user = await User.create({ email, system_id });
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: "Error inviting user" });

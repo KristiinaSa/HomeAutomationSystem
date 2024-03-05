@@ -13,6 +13,9 @@ const {
   deleteTimerAutomation,
 } = require("../../controllers/automationController.js");
 
+const authenticateToken = require("../../middleware/authToken.js");
+const getUserData = require("../../middleware/getUserData.js");
+
 router.get("/", getAutomations);
 
 router.get("/:id", getAutomation);
