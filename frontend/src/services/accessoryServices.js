@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axiosInstance";
 const baseUrl = "/api/v1/accessories";
 
 export const getAccessories = async () => {

@@ -17,7 +17,6 @@ const getAutomations = async (req, res, next) => {
         through: { attributes: [] },
       },
     });
-    console.log("timeAutomations:", timeAutomations); // Add this line
 
     let sensorAutomations = await SensorAutomation.findAll({
       attributes: ["id", "active"],
@@ -27,7 +26,6 @@ const getAutomations = async (req, res, next) => {
         through: { attributes: [] },
       },
     });
-    console.log("sensorAutomations:", sensorAutomations); // Add this line
 
     timeAutomations = timeAutomations.map((automation) => {
       const automationData = automation.toJSON();
@@ -41,7 +39,6 @@ const getAutomations = async (req, res, next) => {
     }));
 
     const automations = [...timeAutomations, ...sensorAutomations];
-    console.log("automations:", automations); // Add this line
 
     res.send(automations);
   } catch (err) {
@@ -108,7 +105,7 @@ const addAutomation = async (req, res, next) => {
 
 const addTimerAutomation = async (req, res, next) => {
   try {
-    console.log(req.body);
+    const { system_id } = req.user;
     const { devices, weekdays, ...automationData } = req.body;
     const requiredFields = ["name", "time", "active"];
 
@@ -129,7 +126,7 @@ const addTimerAutomation = async (req, res, next) => {
     const newAutomation = await TimeAutomation.create({
       ...automationData,
       weekdays: weekdaysToBitmask(weekdays),
-      system_id: 1,
+      system_id,
     });
 
     if (devices && devices.length > 0) {

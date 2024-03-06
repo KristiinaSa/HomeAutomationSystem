@@ -1,5 +1,6 @@
 // Adds some basic data to the database for testing purposes
 require("./associations.js");
+const bcrypt = require("bcrypt");
 
 const System = require("../models/systemModel.js");
 const Room = require("../models/roomModel.js");
@@ -107,7 +108,7 @@ async function addTestData() {
   const user = await system.createUser({
     name: "test",
     email: "test@example.com",
-    password: "password",
+    password: bcrypt.hashSync("password", 10),
     role: "owner",
   });
 

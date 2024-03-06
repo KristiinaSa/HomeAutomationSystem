@@ -18,9 +18,18 @@ import {
   faHouseLaptop,
 } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = ({ icon, text, path, onClick }) => {
+const MenuItem = ({ icon, text, path, onClick, onClose }) => {
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="menu-item" onClick={onClick}>
+    <div className="menu-item" onClick={handleClick}>
       <FontAwesomeIcon icon={icon} />
       {path ? (
         <NavLink to={path} className="hover-underline-animation">
@@ -42,21 +51,10 @@ const Header = () => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/api/v1/login/logout", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (response.ok) {
-      navigate("/login");
-      logout();
-    } else {
-      console.error("Logout failed");
-    }
+    logout();
+    navigate("/login");
   };
-
+  
   const menuItems = [
     {
       icon: faLightbulb,
@@ -117,7 +115,7 @@ const Header = () => {
         </div>
         <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
           {menuItems.map((item, index) => (
-            <MenuItem key={index} {...item} />
+            <MenuItem key={index} {...item} onClose={() => setIsOpen(false)} />
           ))}
         </div>
       </div>

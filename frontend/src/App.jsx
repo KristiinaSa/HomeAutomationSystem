@@ -12,10 +12,13 @@ import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
 import { ThemeProvider } from "./ThemeContext";
 import { AuthProvider } from "./AuthContext";
-import RegistrationPage  from "./pages/RegistrationPage";
+import RegistrationPage from "./pages/RegistrationPage";
 import AddingDevice from "./pages/AddingDevice";
 import RoomPage from "./pages/RoomPage";
 import AccessoriesPage from "./pages/AccessoriesPage";
+
+import ProtectedRoute from "./components/ProtectedRoutes";
+import PublicRoute from "./components/PublicRoute";
 
 function App() {
   return (
@@ -38,6 +41,8 @@ function App() {
                       element={<AutomationForm />}
                     />
                     <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/add-device" element={<AddingDevice />} />
+                    <Route path="/room/:id" element={<RoomPage />} />
                     <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegistrationPage />} />
                   <Route path="/add-device" element={<AddingDevice />} />
