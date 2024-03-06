@@ -30,4 +30,8 @@ function bitmaskToWeekdays(bitmask) {
   };
 }
 
-module.exports = { weekdaysToBitmask, bitmaskToWeekdays };
+const TYPE_TO_DATA_TYPE = {
+  light: "boolean",
+};
+
+module.exports = { weekdaysToBitmask, bitmaskToWeekdays, TYPE_TO_DATA_TYPE };
