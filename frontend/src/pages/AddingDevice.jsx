@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const AddingDevice = () => {
   const [device, setDevice] = useState({ name: '', type: 'light' });
   const [rooms, setRooms] = useState([]);
-  const [room, setRoom] = useState({});
+  const [chosenRoom, setChosenRoom] = useState(1);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -27,8 +27,12 @@ const AddingDevice = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const result = await addDevice(device, room);
-  
+    const deviceInfo = {
+      name: device.name,
+      type: device.type,
+      room_id: chosenRoom,
+    }
+    const result = await addDevice(deviceInfo);
     if (result) {
       setMessage('Device added successfully');
       setTimeout(() => {
@@ -50,8 +54,10 @@ const AddingDevice = () => {
         <label htmlFor="roomName">Choose a room:</label>
         <select
           id="roomName"
-          value={device.room_id} // To ensure the select shows the current state
-          onChange={(e) => setRoom(Number(e.target.value))}
+          value={chosenRoom} // To ensure the select shows the current state
+          onChange={(e) => {
+            setChosenRoom(Number(e.target.value)); 
+          }}
           className="choose-box"
         >
           {rooms.map((room) => (
