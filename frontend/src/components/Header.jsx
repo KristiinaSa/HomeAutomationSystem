@@ -15,6 +15,7 @@ import {
   faSignIn,
   faSignOut,
   faAddressBook,
+  faHouseLaptop,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
@@ -53,41 +54,34 @@ const Header = () => {
     logout();
     navigate("/login");
   };
-
-  const menuItems = isLoggedIn
-    ? [
-        {
-          icon: faLightbulb,
-          text: "Add accessory",
-          onClick: () => {
-            console.log("Add accessory clicked");
-          },
-        },
-        {
-          icon: faTachometerAlt,
-          text: "Add automation",
-          path: "/automations/new",
-        },
-        {
-          icon: faArrowCircleRight,
-          text: "Add room",
-          onClick: () => {
-            console.log("Add room clicked");
-          },
-        },
-        {
-          icon: faUser,
-          text: "Add users",
-          onClick: () => {
-            console.log("Add users clicked");
-          },
-        },
-        { icon: faSignOut, text: "Log out", onClick: handleLogout },
-      ]
-    : [
-        { icon: faSignIn, text: "Log in", path: "/login" },
-        { icon: faAddressBook, text: "Register", path: "/register" },
-      ];
+  
+  const menuItems = [
+    {
+      icon: faLightbulb,
+      text: "Add device",
+      path: "/add-device",
+    },
+    { icon: faHouseLaptop, text: "Accessories", path: "/accessories" },
+    { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
+    {
+      icon: faArrowCircleRight,
+      text: "Add room",
+      onClick: () => {
+        console.log("Add room clicked");
+      },
+    },
+    {
+      icon: faUser,
+      text: "Add users",
+      onClick: () => {
+        console.log("Add users clicked");
+      },
+    },
+    isLoggedIn
+      ? { icon: faSignOut, text: "Log out", onClick: handleLogout }
+      : { icon: faSignIn, text: "Log in", path: "/login" },
+    !isLoggedIn && { icon: faAddressBook, text: "Register", path: "/register" },
+  ];
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {

@@ -40,6 +40,7 @@ describe('Users Component - Delete Button Functionality', () => {
     });
   
     it('renders delete button for each user and triggers deletion on click', async () => {
+      window.confirm = vi.fn().mockReturnValue(true);
       const { findByTestId } = render(<Users />);
   
       // Wait for the delete button to be available in the DOM

@@ -53,15 +53,14 @@ const addDevice = async (req, res, next) => {
 
 const deleteDevice = async (req, res, next) => {
   try {
-    const device = await Device.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    console.log("Deleted device:", device);
-    res.send(device);
+    const device = await Device.destroy({where: { id: req.params.id}});
+    if (!device) {
+      return res.status(404).json({ error: "Device not found" });
+    }
+    res.status(200).json({ message: "Device deleted successfully" });
   } catch (err) {
     next(err);
+    res.status(500).json({ error: "Error deleting device" });
   }
 };
 
