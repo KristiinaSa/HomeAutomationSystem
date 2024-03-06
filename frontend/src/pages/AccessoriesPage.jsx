@@ -2,6 +2,7 @@ import { getDevices, deleteDevice } from "../services/accessoryServices";
 import { useState, useEffect } from "react";
 import "./AccessoriesPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const AccessoriesPage = () => {
@@ -79,8 +80,9 @@ const AccessoriesPage = () => {
               <p className="secondary-text">{device.type}</p>
               </div>
               <FontAwesomeIcon
-                icon="trash"
+                icon={faTrash}
                 className="delete"
+                data-testid={`delete-${device.id}`}
                 onClick={() => deletionDevice(device.id)}
               />
             </div>
