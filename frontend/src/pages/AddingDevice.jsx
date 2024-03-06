@@ -49,8 +49,9 @@ const AddingDevice = () => {
       <div className="choose-section">
         <label htmlFor="roomName">Choose a room:</label>
         <select
+          id="roomName"
           value={device.room_id} // To ensure the select shows the current state
-          onChange={(e) => setRoom(e.target.value)}
+          onChange={(e) => setRoom(Number(e.target.value))}
           className="choose-box"
         >
           {rooms.map((room) => (
@@ -63,6 +64,7 @@ const AddingDevice = () => {
       <div className="choose-section">
         <label htmlFor="deviceType">Choose a device category:</label>
         <select
+          id="deviceType"
           value={device.type} // To ensure the select shows the current state
           onChange={(e) => setDevice({ ...device, type: e.target.value })}
           className="choose-box"
