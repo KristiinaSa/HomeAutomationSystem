@@ -15,6 +15,7 @@ import {
   faSignIn,
   faSignOut,
   faAddressBook,
+  faHouseLaptop,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ icon, text, path, onClick }) => {
@@ -59,11 +60,10 @@ const Header = () => {
   const menuItems = [
     {
       icon: faLightbulb,
-      text: "Add accessory",
-      onClick: () => {
-        console.log("Add accessory clicked");
-      },
+      text: "Add device",
+      path: "/add-device",
     },
+    { icon: faHouseLaptop, text: "Accessories", path: "/accessories" },
     { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
     {
       icon: faArrowCircleRight,
