@@ -16,6 +16,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import AddingDevice from "./pages/AddingDevice";
 import RoomPage from "./pages/RoomPage";
 import AccessoriesPage from "./pages/AccessoriesPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
 import PublicRoute from "./components/PublicRoute";
@@ -48,6 +49,7 @@ function App() {
                   <Route path="/add-device" element={<AddingDevice />} />
                   <Route path="/room/:id" element={<RoomPage />} />
                   <Route path="/accessories" element={<AccessoriesPage />} />
+                  <Route path="/analytics" element={<AnalyticsPage />} />
                   </Route>
                 </Routes>
               </Router>
