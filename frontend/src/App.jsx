@@ -29,26 +29,22 @@ function App() {
               <Router>
                 <Routes>
                   <Route path="/" element={<Layout />}>
-                    <Route element={<ProtectedRoute />}>
-                      <Route index element={<HomeMobile />} />
-                      <Route path="automations" element={<Automations />} />
-                      <Route
-                        path="automations/new"
-                        element={<AutomationForm />}
-                      />
-                      <Route
-                        path="/automations/edit/:id"
-                        element={<AutomationForm />}
-                      />
-                      <Route path="/settings" element={<SettingsPage />} />
-                      <Route path="/add-device" element={<AddingDevice />} />
-                      <Route path="/room/:id" element={<RoomPage />} />
-                    </Route>
+                    <Route index element={<HomeMobile />} />
+                    <Route path="automations" element={<Automations />} />
+                    <Route
+                      path="automations/new"
+                      element={<AutomationForm />}
+                    />
+                    <Route
+                      path="/automations/edit/:id"
+                      element={<AutomationForm />}
+                    />
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/add-device" element={<AddingDevice />} />
+                    <Route path="/room/:id" element={<RoomPage />} />
 
-                    <Route element={<PublicRoute />}>
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route path="/register" element={<RegistrationPage />} />
-                    </Route>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegistrationPage />} />
                   </Route>
                 </Routes>
               </Router>
