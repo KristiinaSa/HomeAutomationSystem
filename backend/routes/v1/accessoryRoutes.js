@@ -8,6 +8,7 @@ const {
   addDevice,
   deleteDevice,
   toggleOnOff,
+  getRoomDevices,
 } = require("../../controllers/accessoryController.js");
 
 router.get("/", getAllAccessories);
@@ -21,5 +22,7 @@ router.post("/add-device", addDevice);
 router.delete("/delete-device/:id", deleteDevice);
 
 router.post("/toggle/:id", toggleOnOff);
+
+router.get("/room-devices/:id", getRoomDevices);
 
 module.exports = router;

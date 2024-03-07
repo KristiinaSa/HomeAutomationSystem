@@ -114,6 +114,19 @@ const toggleOnOff = async (req, res, next) => {
   }
 };
 
+const getRoomDevices = async (req, res, next) => {
+  try {
+    const devices = await Device.findAll({
+      where: {
+        room_id: req.params.id,
+      },
+    });
+    res.send(devices);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   getAllAccessories,
   getAllDevices,
@@ -121,4 +134,5 @@ module.exports = {
   addDevice,
   deleteDevice,
   toggleOnOff,
+  getRoomDevices,
 };

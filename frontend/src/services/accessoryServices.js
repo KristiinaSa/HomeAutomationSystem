@@ -42,3 +42,13 @@ export const getDevices = async () => {
       throw new Error(err.response.data);
     }
   };
+
+  export const getRoomDevices = async (id) => {
+    try {
+      const response = await axios.get(`${baseUrl}/room-devices/${id}`);
+      return response.data;
+    } catch (err) {
+      console.log("Error getting room devices: " + err);
+      throw new Error(err.response.data);
+    }
+  }
