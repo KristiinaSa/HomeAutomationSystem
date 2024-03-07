@@ -5,10 +5,29 @@ import { RoomContext } from "../RoomContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
+import { useEffect, useState } from "react";
+import { getDevices } from "../services/accessoryServices";
+import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms } = useContext(RoomContext);
+  // const [roomDevices, setRoomDevices] = useState([]);
+  const [devices, setDevices] = useState([]);
+
+  useEffect(() => {
+    const fetchDevices = async () => {
+      try {
+        const devices = await getDevices();
+        setDevices(devices);
+        console.log("devices:", devices);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchDevices();
+  }, []);
+
 
   return (
     <>
@@ -35,13 +54,14 @@ const HomeMobile = () => {
               <Room name={room.name} />
             </NavLink>
             <div className="card-container">
-              {room.cards &&
-                room.cards.map((card) => (
-                  <TestCard
-                    key={card.id}
-                    title={card.title}
-                    icon={card.icon}
-                    status={card.status}
+              {room && devices.filter(
+                device => device.room_id === room.id
+                ).map((device) => (
+                <TestCard
+                  key={device.id}
+                  title={device.name}
+                  icon={device.type === "light" | device.type === "Light" ? faLightbulb : ""}
+                  status={device.status}
                   />
                 ))}
             </div>
