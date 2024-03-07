@@ -18,7 +18,7 @@ router.get("/sensors", getAllSensors);
 
 router.post("/add-device", addDevice);
 
-router.delete("/delete-device", deleteDevice);
+router.delete("/delete-device/:id", deleteDevice);
 
 router.post("/toggle/:id", toggleOnOff);
 

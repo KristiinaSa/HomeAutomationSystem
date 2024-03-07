@@ -13,15 +13,23 @@ const {
   deleteTimerAutomation,
 } = require("../../controllers/automationController.js");
 
+const authenticateToken = require("../../middleware/authToken.js");
+const getUserData = require("../../middleware/getUserData.js");
+
 router.get("/", getAutomations);
 
 router.get("/:id", getAutomation);
 
 // Timer-based automation
-router.get("/timer/:id", getTimerAutomation);
-router.post("/timer", addTimerAutomation);
-router.put("/timer/:id", editTimerAutomation);
-router.delete("/timer/:id", deleteTimerAutomation);
+router.get("/timer/:id", authenticateToken, getUserData, getTimerAutomation);
+router.post("/timer", authenticateToken, getUserData, addTimerAutomation);
+router.put("/timer/:id", authenticateToken, getUserData, editTimerAutomation);
+router.delete(
+  "/timer/:id",
+  authenticateToken,
+  getUserData,
+  deleteTimerAutomation
+);
 
 // Sensor-based automation
 router.get("/sensor/:id", getAutomation);

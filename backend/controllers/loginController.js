@@ -2,23 +2,37 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const User = require("../models/userModel.js");
+const Setting = require("../models/settingModel.js");
 
 dotenv.config();
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({
+    where: { email },
+    include: [
+      {
+        model: Setting,
+        as: "setting",
+        attributes: ["using_darkmode"],
+      },
+    ],
+  });
 
   if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
-      { email: user.email, name: user.name },
+      { id: user.id, name: user.name },
       process.env.JWT_SECRET,
       {
         expiresIn: "48h",
       }
     );
-    res.status(200).json({ message: "Logged in.", token });
+    res.status(200).json({
+      message: "Logged in.",
+      token,
+      using_darkmode: user.setting.using_darkmode,
+    });
   } else {
     res.status(401).json({ message: "Invalid email or password." });
   }

@@ -2,6 +2,8 @@ require("../db/associations.js");
 
 const Device = require("../models/deviceModel.js");
 const Sensor = require("../models/sensorModel.js");
+const Room = require("../models/roomModel.js");
+const { TYPE_TO_DATA_TYPE } = require("./helpers.js");
 
 const getAllAccessories = async (req, res, next) => {
   try {
@@ -20,7 +22,7 @@ const getAllAccessories = async (req, res, next) => {
 const getAllDevices = async (req, res, next) => {
   try {
     const devices = await Device.findAll({
-      attributes: ["id", "name", "type", "model", "room_id"],
+      attributes: ["id", "name", "type", "room_id"],
     });
     console.log("devices:", devices);
     res.send(devices);
@@ -43,7 +45,17 @@ const getAllSensors = async (req, res, next) => {
 
 const addDevice = async (req, res, next) => {
   try {
-    const device = await Device.create(req.body);
+    const room = await Room.findByPk(req.body.room_id);
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+
+    req.body.data_type = TYPE_TO_DATA_TYPE[req.body.type];
+
+    const device = await Device.create({
+      ...req.body,
+      system_id: room.system_id,
+    });
     console.log("Added device:", device);
     res.send(device);
   } catch (err) {
@@ -53,15 +65,14 @@ const addDevice = async (req, res, next) => {
 
 const deleteDevice = async (req, res, next) => {
   try {
-    const device = await Device.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    console.log("Deleted device:", device);
-    res.send(device);
+    const device = await Device.destroy({ where: { id: req.params.id } });
+    if (!device) {
+      return res.status(404).json({ error: "Device not found" });
+    }
+    res.status(200).json({ message: "Device deleted successfully" });
   } catch (err) {
     next(err);
+    res.status(500).json({ error: "Error deleting device" });
   }
 };
 

@@ -12,4 +12,13 @@ const addRoom = async (req, res, next) => {
   }
 };
 
-module.exports = { addRoom };
+const getRooms = async (req, res, next) => {
+  try {
+    const rooms = await Room.findAll();
+    res.send(rooms);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { addRoom, getRooms};

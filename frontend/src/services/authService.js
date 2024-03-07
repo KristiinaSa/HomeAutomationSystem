@@ -1,10 +1,11 @@
-import axios from "axios";
+import axios from "./axiosInstance";
 
 const baseUrl = "/api/v1/login";
 
 const login = async (email, password) => {
   try {
     const response = await axios.post(baseUrl, { email, password });
+    console.log("response", response);
     if (response.status === 200) {
       return response.data;
     } else {
