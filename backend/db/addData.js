@@ -12,7 +12,10 @@ const CurrentValue = require("../models/currentValueModel.js");
 const SensorHistory = require("../models/sensorHistoryModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
 
+const sequelize = require("./sequelizeConnector.js");
+
 async function addTestData() {
+  await sequelize.sync({ force: true });
   const system = await System.create({
     name: "Test System",
   });
