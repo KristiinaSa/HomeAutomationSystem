@@ -17,6 +17,13 @@ async function addTestData() {
     name: "Test System",
   });
 
+  const user = await system.createUser({
+    name: "test",
+    email: "test@example.com",
+    password: bcrypt.hashSync("password", 10),
+    role: "owner",
+  });
+
   const room = await system.createRoom({
     name: "Test Room",
   });
@@ -90,6 +97,7 @@ async function addTestData() {
       sensor_value: Math.random() < 0.5 ? "true" : "false",
       timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
       data_type: "boolean",
+      user_id: user.id,
     }));
 
     await UsageHistory.bulkCreate(usageHistoryData);
@@ -116,13 +124,6 @@ async function addTestData() {
 
   await timeAutomations[0].addDevice(devices);
   await timeAutomations[1].addDevice(devices);
-
-  const user = await system.createUser({
-    name: "test",
-    email: "test@example.com",
-    password: bcrypt.hashSync("password", 10),
-    role: "owner",
-  });
 
   console.log("Test data added successfully");
 }
