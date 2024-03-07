@@ -1,6 +1,5 @@
 import "./Analytics.css";
 import { getAllAnalytics } from "../services/accessoryServices";
-import { dummyAnalytics } from "../dummyData/dummyAnalytics";
 import { useEffect, useState } from "react";
 
 const Analytics = () => {
@@ -10,6 +9,7 @@ const Analytics = () => {
       try {
         const data = await getAllAnalytics();
         setAnalytics(data);
+        console.log("DATA", data);
       } catch (error) {
         console.log(error);
       }
@@ -26,8 +26,8 @@ const Analytics = () => {
           {analytics.map((device) => {
             return (
               <div key={device.id} className="device-box">
-                <h4>{device.name}</h4>
-
+                <h4>{device.name} </h4>
+                <p className="room-name">{device.room_name}</p>
                 <p>Active time today: {device.active_time} hours</p>
                 <p>Last interaction: {device.last_interaction}</p>
               </div>
