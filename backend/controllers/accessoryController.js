@@ -3,6 +3,9 @@ require("../db/associations.js");
 const Device = require("../models/deviceModel.js");
 const Sensor = require("../models/sensorModel.js");
 const Room = require("../models/roomModel.js");
+const UsageHistory = require("../models/usageHistoryModel.js");
+const { Op } = require("sequelize");
+
 const { TYPE_TO_DATA_TYPE } = require("./helpers.js");
 
 const getAllAccessories = async (req, res, next) => {
@@ -114,6 +117,74 @@ const toggleOnOff = async (req, res, next) => {
   }
 };
 
+const getDeviceAnalytics = async (req, res, next) => {
+  try {
+    const devices = await Device.findAll({
+      where: {
+        system_id: 1,
+      },
+    });
+
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const activePeriodsToday = await UsageHistory.findAll({
+      where: {
+        device_id: {
+          [Op.in]: devices.map((device) => device.id),
+        },
+        sensor_value: "true",
+        timestamp: {
+          [Op.gte]: startOfToday,
+        },
+      },
+      order: [
+        ["device_id", "ASC"],
+        ["timestamp", "ASC"],
+      ],
+    });
+
+    const activePeriodsByDevice = activePeriodsToday.reduce((groups, entry) => {
+      if (!groups[entry.device_id]) {
+        groups[entry.device_id] = [];
+      }
+      groups[entry.device_id].push(entry);
+      return groups;
+    }, {});
+
+    const result = [];
+    for (const device of devices) {
+      let totalActiveTime = 0;
+      const activePeriods = activePeriodsByDevice[device.id] || [];
+      for (let i = 0; i < activePeriods.length - 1; i++) {
+        const periodStart = new Date(activePeriods[i].timestamp);
+        const periodEnd = new Date(activePeriods[i + 1].timestamp);
+
+        totalActiveTime += periodEnd - periodStart;
+      }
+
+      const totalActiveHours = totalActiveTime / 1000 / 60 / 60;
+      const lastInteractionDate = activePeriods[activePeriods.length - 1]
+        ? new Date(activePeriods[activePeriods.length - 1].timestamp)
+        : undefined;
+      const lastInteractionTime = lastInteractionDate
+        ? `${lastInteractionDate.getHours()}:${lastInteractionDate.getMinutes()}:${lastInteractionDate.getSeconds()}`
+        : undefined;
+      result.push({
+        id: device.id,
+        name: device.name,
+        type: device.type,
+        active_time: totalActiveHours,
+        last_interaction: lastInteractionTime,
+      });
+    }
+
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getAllAccessories,
   getAllDevices,
@@ -121,4 +192,5 @@ module.exports = {
   addDevice,
   deleteDevice,
   toggleOnOff,
+  getDeviceAnalytics,
 };
