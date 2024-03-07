@@ -128,7 +128,7 @@ const getRoomDevices = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
 
 const getDeviceAnalytics = async (req, res, next) => {
   try {
@@ -136,6 +136,12 @@ const getDeviceAnalytics = async (req, res, next) => {
       where: {
         system_id: 1,
       },
+      include: [
+        {
+          model: Room,
+          attributes: ["name"],
+        },
+      ],
     });
 
     const startOfToday = new Date();
@@ -187,6 +193,7 @@ const getDeviceAnalytics = async (req, res, next) => {
         id: device.id,
         name: device.name,
         type: device.type,
+        room_name: device.room.name,
         active_time: totalActiveHours,
         last_interaction: lastInteractionTime,
       });
@@ -197,7 +204,6 @@ const getDeviceAnalytics = async (req, res, next) => {
     next(err);
   }
 };
-
 
 module.exports = {
   getAllAccessories,
