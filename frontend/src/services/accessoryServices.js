@@ -21,16 +21,16 @@ export const getDevices = async () => {
   }
 };
 
-  export const addDevice = async (data) => {
-    try {
-      const response = await axios.post(`${baseUrl}/add-device/`, data);
-      console.log("Device added successfully", response.data);
-      return response.data;
-    } catch (err) {
-      console.log("Error getting device: " + err);
-      throw new Error(err.response.data);
-    }
-  };
+export const addDevice = async (data) => {
+  try {
+    const response = await axios.post(`${baseUrl}/add-device/`, data);
+    console.log("Device added successfully", response.data);
+    return response.data;
+  } catch (err) {
+    console.log("Error getting device: " + err);
+    throw new Error(err.response.data);
+  }
+};
 
   export const deleteDevice = async (id) => {
     try {
@@ -52,3 +52,14 @@ export const getDevices = async () => {
       throw new Error(err.response.data);
     }
   }
+
+export const getAllAnalytics = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/analytics`);
+    return response.data;
+  } catch (err) {
+    console.log("Error getting analytics: " + err);
+    throw new Error(err.response.data);
+  }
+};
+

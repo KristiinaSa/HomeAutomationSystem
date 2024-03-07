@@ -9,6 +9,7 @@ const {
   deleteDevice,
   toggleOnOff,
   getRoomDevices,
+  getDeviceAnalytics,
 } = require("../../controllers/accessoryController.js");
 
 router.get("/", getAllAccessories);
@@ -24,5 +25,7 @@ router.delete("/delete-device/:id", deleteDevice);
 router.post("/toggle/:id", toggleOnOff);
 
 router.get("/room-devices/:id", getRoomDevices);
+
+router.get("/analytics/", getDeviceAnalytics);
 
 module.exports = router;

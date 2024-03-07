@@ -10,10 +10,18 @@ const TimeAutomation = require("../models/timeAutomationModel.js");
 const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
 const SensorHistory = require("../models/sensorHistoryModel.js");
+const UsageHistory = require("../models/usageHistoryModel.js");
 
 async function addTestData() {
   const system = await System.create({
     name: "Test System",
+  });
+
+  const user = await system.createUser({
+    name: "test",
+    email: "test@example.com",
+    password: bcrypt.hashSync("password", 10),
+    role: "owner",
   });
 
   const room = await system.createRoom({
@@ -67,7 +75,7 @@ async function addTestData() {
   const devices = await Promise.all([
     room.createDevice({
       name: "Table Lamp",
-      type: "Light",
+      type: "light",
       value: "true",
       data_type: "boolean",
       role_access: "resident",
@@ -75,13 +83,25 @@ async function addTestData() {
     }),
     room.createDevice({
       name: "Ceiling Lamp",
-      type: "Light",
+      type: "light",
       value: "false",
       data_type: "boolean",
       role_access: "resident",
       system_id: system.id,
     }),
   ]);
+
+  for (const device of devices) {
+    const usageHistoryData = Array.from({ length: 20 }, (_, i) => ({
+      device_id: device.id,
+      sensor_value: Math.random() < 0.5 ? "true" : "false",
+      timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
+      data_type: "boolean",
+      user_id: user.id,
+    }));
+
+    await UsageHistory.bulkCreate(usageHistoryData);
+  }
 
   const timeAutomations = await TimeAutomation.bulkCreate([
     {
@@ -104,13 +124,6 @@ async function addTestData() {
 
   await timeAutomations[0].addDevice(devices);
   await timeAutomations[1].addDevice(devices);
-
-  const user = await system.createUser({
-    name: "test",
-    email: "test@example.com",
-    password: bcrypt.hashSync("password", 10),
-    role: "owner",
-  });
 
   console.log("Test data added successfully");
 }
