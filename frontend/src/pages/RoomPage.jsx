@@ -1,7 +1,6 @@
-import React from "react";
 import RoomInformation from "../components/RoomInformation";
 
-const RoomPage = ({}) => {
+const RoomPage = () => {
   return (
     <div>
       <RoomInformation />
