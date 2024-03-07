@@ -18,17 +18,12 @@ const useLogin = () => {
     }
     try {
       const response = await authService.login(email, password);
-      console.log("FAFA");
       localStorage.setItem("access_token", response.token);
       const theme = response.using_darkmode ? "dark" : "light";
       localStorage.setItem("theme", theme);
-      console.log("GAGA");
       setTheme(theme);
-      console.log("DADA");
       setLoginSuccess(true);
-      console.log("SASA");
       setIsLoggedIn(true);
-      console.log("YE");
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
