@@ -90,18 +90,6 @@ async function addTestData() {
     }),
   ]);
 
-  for (const device of devices) {
-    const usageHistoryData = Array.from({ length: 20 }, (_, i) => ({
-      device_id: device.id,
-      sensor_value: Math.random() < 0.5 ? "true" : "false",
-      timestamp: new Date(Date.now() - i * 60 * 60 * 1000),
-      data_type: "boolean",
-      user_id: user.id,
-    }));
-
-    await UsageHistory.bulkCreate(usageHistoryData);
-  }
-
   const timeAutomations = await TimeAutomation.bulkCreate([
     {
       name: "Test Automation 1",

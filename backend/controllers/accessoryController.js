@@ -110,6 +110,14 @@ const toggleOnOff = async (req, res, next) => {
       },
     });
 
+    await UsageHistory.create({
+      device_id: updatedDevice.id,
+      user_id: req.user.id,
+      sensor_value: newValue,
+      data_type: updatedDevice.data_type,
+      timestamp: new Date(),
+    });
+
     console.log("Toggled device:", updatedDevice);
     res.send(updatedDevice);
   } catch (err) {
@@ -152,7 +160,7 @@ const getDeviceAnalytics = async (req, res, next) => {
         device_id: {
           [Op.in]: devices.map((device) => device.id),
         },
-        sensor_value: "true",
+        sensor_value: "on",
         timestamp: {
           [Op.gte]: startOfToday,
         },
