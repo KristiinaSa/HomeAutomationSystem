@@ -43,7 +43,9 @@ const useLogin = () => {
     console.log("useEffect called, loginSuccess:", loginSuccess);
     if (loginSuccess) {
       console.log("loginSuccess", loginSuccess);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
   }, [loginSuccess, navigate]);
 
