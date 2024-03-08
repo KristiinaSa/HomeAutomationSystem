@@ -1,39 +1,18 @@
-import axios from "axios";
 import { useState, useRef } from "react";
 import "./Registration.css";
+import useRegister from "../hooks/useRegister";
 
 const Registration = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const errorRef = useRef();
+  const { register, registerSuccess, errorMessage } = useRegister();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setErrorMessage("Please fill in all the fields");
-      return;
-    }
-
-    try {
-      const response = axios.post(
-        "http://localhost:3000/api/v1/login/register",
-        {
-          name: username,
-          email,
-          password,
-        }
-      );
-    } catch (error) {
-      if (error.response) {
-        setErrorMessage(error.response.data.message);
-      } else if (error.request) {
-        setErrorMessage("No response from server. Please try again later.");
-      } else {
-        setErrorMessage(error.message);
-      }
-    }
+    register(name, email, password);
   };
 
   {
@@ -41,13 +20,13 @@ const Registration = () => {
       <div>
         <form className="registration-form">
           <h1>Register</h1>
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Name</label>
           <input
             className="registration-input"
             type="text"
             placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             autoComplete="username"
             id="username"
             name="username"
@@ -81,6 +60,7 @@ const Registration = () => {
             className="registration-submit-button"
             type="submit"
             onClick={handleSubmit}
+            disabled={registerSuccess}
           >
             Register
           </button>
@@ -90,6 +70,11 @@ const Registration = () => {
           <p className="registration-error-message" ref={errorRef}>
             {errorMessage}
           </p>
+          {registerSuccess && (
+            <p className="registration-success-message">
+              Success! Redirecting to log in page...
+            </p>
+          )}
         </form>
       </div>
     );
