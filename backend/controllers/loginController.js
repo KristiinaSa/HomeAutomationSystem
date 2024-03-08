@@ -80,6 +80,7 @@ const register = async (req, res) => {
 
   existingUser.name = name;
   existingUser.password = hashedPassword;
+  existingUser.is_registered = 1;
 
   const updatedUser = await existingUser.save();
 
