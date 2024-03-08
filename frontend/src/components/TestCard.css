@@ -1,4 +1,4 @@
-.card{
+.card {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -12,19 +12,30 @@
     width: 30%;
     min-width: 200px;
 }
-.card-body{
+
+.card-body {
     display: flex;
     align-items: center;
     margin: 0.5rem;
     padding: 0.5rem;
 }
-.card-column > * {
+
+.card-column>* {
     margin: 0.2rem 0;
 }
-.card-column{
+
+.card-column {
     display: flex;
-    flex-direction:column;
-    justify-content:space-around;
+    flex-direction: column;
+    justify-content: space-around;
     margin: 0.5rem;
     padding: 0.5rem;
+}
+
+.icon-on {
+    color: #FFD700
+}
+
+.icon-off {
+    color: #36454F
 }

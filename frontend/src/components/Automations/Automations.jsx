@@ -16,7 +16,6 @@ export const Automations = () => {
       try {
         const data = await getAutomations();
         setAutomations(data);
-        console.log(data);
       } catch (err) {
         console.error(err);
       }

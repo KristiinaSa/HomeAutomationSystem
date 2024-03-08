@@ -9,7 +9,6 @@ const Analytics = () => {
       try {
         const data = await getAllAnalytics();
         setAnalytics(data);
-        console.log("DATA", data);
       } catch (error) {
         console.log(error);
       }

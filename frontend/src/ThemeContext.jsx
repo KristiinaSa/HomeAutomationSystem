@@ -33,7 +33,6 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 

@@ -1,14 +1,10 @@
 import authService from "../services/authService";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "../ThemeContext";
-import { AuthContext } from "../AuthContext";
 
 const useRegister = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
-  const { setTheme } = useContext(ThemeContext);
-  const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const register = async (name, email, password) => {
@@ -17,10 +13,7 @@ const useRegister = () => {
       return;
     }
     try {
-      const response = await authService.register(name, email, password);
-      const theme = response.using_darkmode ? "dark" : "light";
-      localStorage.setItem("theme", theme);
-      setTheme(theme);
+      await authService.register(name, email, password);
       setRegisterSuccess(true);
     } catch (error) {
       if (error.response) {
@@ -33,26 +26,14 @@ const useRegister = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("registerSuccess updated:", registerSuccess);
-  }, [registerSuccess]);
+  useEffect(() => {}, [registerSuccess]);
 
   useEffect(() => {
-    console.log("useEffect called, registerSuccess:", registerSuccess);
     if (registerSuccess) {
-      console.log("registerSuccess", registerSuccess);
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+      setTimeout(() => {}, 3000);
+      navigate("/login");
     }
   }, [registerSuccess, navigate]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      console.log("isLoggedIn", isLoggedIn);
-      navigate("/");
-    }
-  }, [isLoggedIn, navigate]);
 
   return {
     register,
