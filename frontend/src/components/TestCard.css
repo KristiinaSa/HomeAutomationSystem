@@ -11,6 +11,7 @@
     box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
     width: 30%;
     min-width: 200px;
+    cursor: pointer;
 }
 
 .card-body {
@@ -33,9 +34,9 @@
 }
 
 .icon-on {
-    color: #FFD700
+    color: var(--light-bulb-on-color)
 }
 
 .icon-off {
-    color: #36454F
+    color: var(--light-bulb-off-color)
 }
