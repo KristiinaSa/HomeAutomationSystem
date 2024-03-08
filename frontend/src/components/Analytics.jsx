@@ -27,8 +27,11 @@ const Analytics = () => {
               <div key={device.id} className="device-box">
                 <h4>{device.name} </h4>
                 <p className="room-name">{device.room_name}</p>
-                <p>Active time today: {device.active_time} hours</p>
-                <p>Last interaction: {device.last_interaction}</p>
+                <p>Active time today: {device.active_time}</p>
+                <p>
+                  Last interaction:{" "}
+                  {device.last_interaction ? device.last_interaction : "-"}
+                </p>
               </div>
             );
           })}

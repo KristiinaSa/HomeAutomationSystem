@@ -160,7 +160,6 @@ const getDeviceAnalytics = async (req, res, next) => {
         device_id: {
           [Op.in]: devices.map((device) => device.id),
         },
-        sensor_value: "on",
         timestamp: {
           [Op.gte]: startOfToday,
         },
@@ -183,26 +182,34 @@ const getDeviceAnalytics = async (req, res, next) => {
     for (const device of devices) {
       let totalActiveTime = 0;
       const activePeriods = activePeriodsByDevice[device.id] || [];
-      for (let i = 0; i < activePeriods.length - 1; i++) {
+      for (let i = 0; i < activePeriods.length; i += 2) {
         const periodStart = new Date(activePeriods[i].timestamp);
-        const periodEnd = new Date(activePeriods[i + 1].timestamp);
+        const periodEnd =
+          i + 1 < activePeriods.length
+            ? new Date(activePeriods[i + 1].timestamp)
+            : new Date();
 
         totalActiveTime += periodEnd - periodStart;
       }
 
-      const totalActiveHours = totalActiveTime / 1000 / 60 / 60;
+      const totalActiveHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
+      const totalActiveMinutes = Math.floor((totalActiveTime / 1000 / 60) % 60);
+
       const lastInteractionDate = activePeriods[activePeriods.length - 1]
         ? new Date(activePeriods[activePeriods.length - 1].timestamp)
         : undefined;
       const lastInteractionTime = lastInteractionDate
-        ? `${lastInteractionDate.getHours()}:${lastInteractionDate.getMinutes()}:${lastInteractionDate.getSeconds()}`
+        ? `${lastInteractionDate.toLocaleDateString()} ${lastInteractionDate.toLocaleTimeString(
+            [],
+            { hour: "2-digit", minute: "2-digit" }
+          )}`
         : undefined;
       result.push({
         id: device.id,
         name: device.name,
         type: device.type,
         room_name: device.room.name,
-        active_time: totalActiveHours,
+        active_time: `${totalActiveHours}h ${totalActiveMinutes}m`,
         last_interaction: lastInteractionTime,
       });
     }
