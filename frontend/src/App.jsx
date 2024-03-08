@@ -17,9 +17,12 @@ import AddingDevice from "./pages/AddingDevice";
 import RoomPage from "./pages/RoomPage";
 import AccessoriesPage from "./pages/AccessoriesPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import AddingRoomPage from "./pages/AddingRoomPage";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
 import PublicRoute from "./components/PublicRoute";
+
+
 
 function App() {
   return (
@@ -50,6 +53,7 @@ function App() {
                   <Route path="/room/:id" element={<RoomPage />} />
                   <Route path="/accessories" element={<AccessoriesPage />} />
                   <Route path="/analytics" element={<AnalyticsPage />} />
+                  <Route path="/add-room" element={<AddingRoomPage />} />
                   </Route>
                 </Routes>
               </Router>

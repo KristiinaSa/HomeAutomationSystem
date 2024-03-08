@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CategoriesContext } from "../CategoriesContext";
 import { RoomContext } from "../RoomContext";
 import "./HomeMobile.css";
@@ -14,6 +14,7 @@ const HomeMobile = () => {
   const { rooms } = useContext(RoomContext);
   // const [roomDevices, setRoomDevices] = useState([]);
   const [devices, setDevices] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -24,51 +25,68 @@ const HomeMobile = () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     fetchDevices();
   }, []);
 
+  const handleClick = () => {
+    navigate("/add-room");
+  };
 
   return (
-    <>
+    <div className="home-container">
+      <h1>Home</h1>
       <div className="categories-container">
-        <h1>Home</h1>
         <h2>Categories</h2>
-      </div>
-      <div className="card-container">
-        {categories.map((category) => (
-          <TestCard
-            key={category.id}
-            title={category.title}
-            icon={category.icon}
-            status={category.status}
-          />
-        ))}
+        <div className="card-container">
+          {categories.map((category) => (
+            <TestCard
+              key={category.id}
+              title={category.title}
+              icon={category.icon}
+              status={category.status}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="rooms-container">
-        <h2>Rooms</h2>
+        <div className="rooms-title">
+          <h2>Rooms</h2>
+          <button
+            type="button"
+            className="primary-btn"
+            onClick={() => handleClick()}
+          >
+            Add room
+          </button>
+        </div>
         {rooms.map((room) => (
-          <div key={room.id}>
+          <div key={room.id} className="room-container">
             <NavLink to={`/room/${room.id}`} className="home-link">
               <Room name={room.name} />
             </NavLink>
             <div className="card-container">
-              {room && devices.filter(
-                device => device.room_id === room.id
-                ).map((device) => (
-                <TestCard
-                  key={device.id}
-                  title={device.name}
-                  icon={device.type === "light" | device.type === "Light" ? faLightbulb : ""}
-                  status={device.status}
-                  />
-                ))}
+              {room &&
+                devices
+                  .filter((device) => device.room_id === room.id)
+                  .map((device) => (
+                    <TestCard
+                      key={device.id}
+                      title={device.name}
+                      icon={
+                        (device.type === "light") | (device.type === "Light")
+                          ? faLightbulb
+                          : ""
+                      }
+                      status={device.status}
+                    />
+                  ))}
             </div>
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
