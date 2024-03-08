@@ -1,24 +1,14 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import { AuthContext } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
 import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {
-    login,
-    errorMessage,
-    loginSuccess,
-    setErrorMessage,
-    setLoginSuccess,
-  } = useLogin();
+  const { login, errorMessage, loginSuccess, setErrorMessage } = useLogin();
 
   const emailRef = useRef();
   const errorRef = useRef();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -81,7 +71,7 @@ const Login = () => {
           {errorMessage}
         </p>
         {loginSuccess && (
-          <p aria-live="assertive">
+          <p className="login-success-message">
             Log in succesfull! Redirecting to home page...
           </p>
         )}
