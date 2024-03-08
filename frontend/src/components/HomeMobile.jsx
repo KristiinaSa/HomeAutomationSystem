@@ -6,7 +6,7 @@ import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
 import { useEffect, useState } from "react";
-import { getDevices } from "../services/accessoryServices";
+import { getDevices, toggleOnOff } from "../services/accessoryServices";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
@@ -31,6 +31,19 @@ const HomeMobile = () => {
 
   const handleClick = () => {
     navigate("/add-room");
+  };
+
+  const handleToggle = async (id) => {
+    try {
+      const device = await toggleOnOff(id);
+      console.log("Toggled device:", device);
+      const updatedDevices = devices.map((d) =>
+        d.id === device.id ? { ...d, value: device.value } : d
+      );
+      setDevices(updatedDevices);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -79,7 +92,8 @@ const HomeMobile = () => {
                           ? faLightbulb
                           : ""
                       }
-                      status={device.status}
+                      status={device.value}
+                      onClick={() => handleToggle(device.id)}
                     />
                   ))}
             </div>
