@@ -25,7 +25,7 @@ const getAllAccessories = async (req, res, next) => {
 const getAllDevices = async (req, res, next) => {
   try {
     const devices = await Device.findAll({
-      attributes: ["id", "name", "type", "room_id"],
+      attributes: ["id", "name", "type", "room_id", "value"],
     });
     console.log("devices:", devices);
     res.send(devices);
