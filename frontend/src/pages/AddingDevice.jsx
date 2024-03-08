@@ -89,7 +89,7 @@ const AddingDevice = () => {
           className="choose-box"
         />
         <div className="btn-container">
-        <button type="submit" className="primary-btn add-device-btn">Add Device</button>
+        <button type="submit" className="primary-btn add-btn">Add Device</button>
         <button type="reset" className="secondary-btn cancel-btn" onClick={handleCancel}>Cancel</button>
         </div>
       </form>

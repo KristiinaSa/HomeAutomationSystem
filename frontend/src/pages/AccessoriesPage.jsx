@@ -63,7 +63,7 @@ const AccessoriesPage = () => {
     </div>
       <div className="devices-container">
         <div className="title-button">
-          <h4>Devices</h4>
+          <h2>Devices</h2>
           <button
             type="button"
             className="primary-btn"
