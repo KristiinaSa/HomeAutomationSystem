@@ -1,6 +1,6 @@
 // Adds some basic data to the database for testing purposes
 require("./associations.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const System = require("../models/systemModel.js");
 const Room = require("../models/roomModel.js");

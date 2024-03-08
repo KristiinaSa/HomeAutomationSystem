@@ -1,0 +1,42 @@
+version: "3"
+networks:
+  homeautomation:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+services:
+  backend:
+    build: ./backend
+    networks:
+      - homeautomation
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - PORT=3001
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+  frontend:
+    build: ./frontend
+    networks:
+      - homeautomation
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - PORT=3001
+      - VITE_PROXY_HOST=backend
+  mariadb:
+    image: mariadb:latest
+    networks:
+      - homeautomation
+    environment:
+      MYSQL_ROOT_PASSWORD: 7hXr6VUUB9zyaAC8eaUy
+      MYSQL_DATABASE: homeautomation
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:
