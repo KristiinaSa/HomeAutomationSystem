@@ -13,6 +13,7 @@ TimeAutomation.init(
     weekdays: DataTypes.INTEGER,
     time: DataTypes.STRING,
     type: { type: DataTypes.STRING, defaultValue: "timer" },
+    action: { type: DataTypes.STRING, defaultValue: "Turn off" },
   },
   { sequelize, modelName: "timeAutomation" }
 );

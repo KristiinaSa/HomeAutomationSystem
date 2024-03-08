@@ -71,7 +71,7 @@ const getTimerAutomation = async (req, res, next) => {
         attributes: ["id", "name", "type"],
         through: { attributes: [] },
       },
-      attributes: ["id", "weekdays", "time", "active", "name"],
+      attributes: ["id", "weekdays", "time", "active", "name", "action"],
     });
 
     if (!timerAutomation) {

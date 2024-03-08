@@ -10,6 +10,8 @@ import { getDevices } from "../../services/accessoryServices";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+import ActionType from "./ActionType";
+
 import styles from "./CreateAutomation.module.css";
 
 const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
@@ -27,6 +29,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   });
   const [devices, setDevices] = useState([]);
   const [availableDevices, setAvailableDevices] = useState([]);
+  const [actionType, setActionType] = useState("");
 
   useEffect(() => {
     if (automation) {
@@ -35,6 +38,8 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       setSelectedDays(automation.weekdays);
       setDevices(automation.devices);
       setIsDisabled(automation.active);
+      setActionType(automation.action);
+      console.log(automation);
     }
   }, [automation]);
 
@@ -56,6 +61,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       devices,
       active: isDisabled,
       type: automation ? automation.type : "timer",
+      action: actionType,
     };
     console.log(data);
     handleSubmit(data, automation?.id);
@@ -64,7 +70,8 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const isButtonDisabled = () => {
     const noDaysSelected = !Object.values(selectedDays).some(Boolean);
     const noDevicesSelected = devices.length === 0;
-    return !time || noDaysSelected || noDevicesSelected || !name;
+
+    return !time || noDaysSelected || noDevicesSelected || !name || !actionType;
   };
 
   return (
@@ -95,6 +102,11 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         automation={automation}
         isDisabled={isDisabled}
         handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
+      />
+      <ActionType
+        action={actionType}
+        setAction={setActionType}
+        data-testid="action-type"
       />
       <button
         type="submit"
