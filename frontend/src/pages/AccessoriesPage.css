@@ -1,7 +1,7 @@
 @media (max-width: 768px) {
   .accessories-container {
-    /* margin-left: 20px; */
     padding: 30px;
+    width: 80%;
   }
 }
 
@@ -12,14 +12,17 @@
     justify-content: flex-start;
     margin-left: 25%;
     padding: 20px;
+    width: calc((100vw - 25vw)*0.8);
   }
 }
 
 .title-button {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 30px;
+  width: 100%;
 }
 
 .primary-btn {
@@ -31,6 +34,7 @@
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   font-family: 'Poppins', sans-serif;
+  min-width: 150px;
 }
 
 .analytics-btn {
@@ -38,17 +42,17 @@
 }
 
 .device-container {
+  margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
 }
 
 .device-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 25%;
-  min-width: 100px;
+  width: 30%;
+  min-width: 150px;
   margin: 10px 20px 10px 0;
   padding: 20px;
   background-color: var(--component-box-color);
