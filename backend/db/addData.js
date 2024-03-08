@@ -79,17 +79,13 @@ async function addTestData() {
     room.createDevice({
       name: "Table Lamp",
       type: "light",
-      value: "true",
       data_type: "boolean",
-      role_access: "resident",
       system_id: system.id,
     }),
     room.createDevice({
       name: "Ceiling Lamp",
       type: "light",
-      value: "false",
       data_type: "boolean",
-      role_access: "resident",
       system_id: system.id,
     }),
   ]);
