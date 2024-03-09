@@ -2,7 +2,7 @@ import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getRooms } from '../../services/roomServices';
 import { addDevice } from '../../services/accessoryServices';
-import AddingDevice from '../../pages/AddingDevice';
+import AddingDevice from '../../components/AddingDevice';
 
 const navigate = vi.fn();
 

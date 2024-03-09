@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import "./Header.css";
@@ -45,7 +45,7 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 

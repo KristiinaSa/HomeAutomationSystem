@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getRooms } from "./services/roomServices"
+import { getRooms } from "../services/roomServices";
 
 export const RoomContext = createContext();
 
@@ -14,7 +14,7 @@ export const RoomProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     fetchRooms();
   }, []);
 

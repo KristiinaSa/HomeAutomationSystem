@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { ThemeContext } from "../ThemeContext";
+import { ThemeContext } from "../context/ThemeContext";
 import { useContext } from "react";
 import styles from "./ThemeToggle.module.css";
 

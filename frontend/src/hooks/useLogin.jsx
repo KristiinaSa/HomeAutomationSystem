@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
-import { ThemeContext } from "../ThemeContext";
+import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");

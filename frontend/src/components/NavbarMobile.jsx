@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faTachometerAlt, faCog } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom'
 import './NavbarMobile.css'
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
 
 const NavbarMobile = () => {
