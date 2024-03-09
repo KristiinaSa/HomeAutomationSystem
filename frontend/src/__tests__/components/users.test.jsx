@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Users from '../components/Users';
-import * as userService from '../services/userServices';
+import Users from '../../components/Users';
+import * as userService from '../../services/userServices';
 import { act } from 'react-dom/test-utils';
 
 // Mock the userServices module
-vi.mock('../services/userServices', () => ({
+vi.mock('../../services/userServices', () => ({
   getAllUsers: vi.fn(),
   deleteUser: vi.fn().mockResolvedValue(undefined), 
   inviteUser: vi.fn().mockResolvedValue(undefined),
