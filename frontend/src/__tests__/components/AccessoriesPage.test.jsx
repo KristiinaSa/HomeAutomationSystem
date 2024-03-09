@@ -1,11 +1,11 @@
 import { describe, it, vi, beforeEach, expect } from "vitest";
 import { render, fireEvent, screen } from "@testing-library/react";
-import AccessoriesPage from "../pages/AccessoriesPage";
-import * as accessoryServices from "../services/accessoryServices";
+import AccessoriesPage from "../../pages/AccessoriesPage";
+import * as accessoryServices from "../../services/accessoryServices";
 import { MemoryRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 
-vi.mock("../services/accessoryServices", () => ({
+vi.mock("../../services/accessoryServices", () => ({
   getDevices: vi.fn(),
   deleteDevice: vi.fn(),
 }));

@@ -1,8 +1,8 @@
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getRooms } from '../services/roomServices';
-import { addDevice } from '../services/accessoryServices';
-import AddingDevice from '../pages/AddingDevice';
+import { getRooms } from '../../services/roomServices';
+import { addDevice } from '../../services/accessoryServices';
+import AddingDevice from '../../pages/AddingDevice';
 
 const navigate = vi.fn();
 
@@ -14,10 +14,10 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock('../services/roomServices', () => ({
+vi.mock('../../services/roomServices', () => ({
     getRooms: vi.fn(),
 }));
-vi.mock('../services/accessoryServices', () => ({
+vi.mock('../../services/accessoryServices', () => ({
     addDevice: vi.fn(),
 }));
 
@@ -58,7 +58,7 @@ describe('AddingDevice', () => {
     fireEvent.change(screen.getByLabelText('Device Name:'), { target: { value: 'Light 1' } });
     fireEvent.click(screen.getByText('Add Device'));
 
-    await waitFor(() => expect(addDevice).toHaveBeenCalledWith({ name: 'Light 1', type: 'light' }, 1));
+    await waitFor(() => expect(addDevice).toHaveBeenCalledWith({ name: 'Light 1', room_id: 1, type: 'light' }));
     expect(screen.getByText('Device added successfully')).toBeInTheDocument();
     
     await new Promise((r) => setTimeout(r, 2000));

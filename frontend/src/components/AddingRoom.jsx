@@ -13,7 +13,7 @@ const AddingRoom = () => {
     console.log("New room:", newRoom);
     const result = await addRoom(newRoom);
     if (result) {
-        setMessage('Device added successfully');
+        setMessage('Room added successfully');
         setTimeout(() => {
           navigate(-1); // Navigate to the previous page after 2 seconds
         }, 2000);
