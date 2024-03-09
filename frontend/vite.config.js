@@ -19,6 +19,9 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: "jsdom",
       setupFiles: "setupTests.js",
+      coverage: {
+        exclude: ["**/util/**", "**/hooks/**", "**/dummyData/**"],
+      }
     },
   };
 });
