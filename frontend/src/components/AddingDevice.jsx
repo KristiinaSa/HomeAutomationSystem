@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getRooms } from "../services/roomServices";
 import { addDevice } from "../services/accessoryServices";
 import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
+import { DeviceContext } from "../context/DeviceContext";
 
 const AddingDevice = () => {
   const [device, setDevice] = useState({ name: '', type: 'light' });
   const [rooms, setRooms] = useState([]);
   const [chosenRoom, setChosenRoom] = useState(1);
   const [message, setMessage] = useState('');
+  const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const AddingDevice = () => {
     }
     const result = await addDevice(deviceInfo);
     if (result) {
+      setUpdate(true);
       setMessage('Device added successfully');
       setTimeout(() => {
         navigate(-1); // Navigate to the previous page after 2 seconds

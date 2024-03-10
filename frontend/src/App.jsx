@@ -20,6 +20,7 @@ import AddingRoomPage from "./pages/AddingRoomPage";
 // import ProtectedRoute from "./components/ProtectedRoutes";
 // import PublicRoute from "./components/PublicRoute";
 import HomePage from "./pages/HomePage";
+import { DeviceProvider } from "./context/DeviceContext";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <ThemeProvider>
           <CategoriesProvider>
             <RoomProvider>
+              <DeviceProvider>
               <Router>
                 <Routes>
                   <Route path="/" element={<Layout />}>
@@ -54,6 +56,7 @@ function App() {
                   </Route>
                 </Routes>
               </Router>
+              </DeviceProvider>
             </RoomProvider>
           </CategoriesProvider>
         </ThemeProvider>

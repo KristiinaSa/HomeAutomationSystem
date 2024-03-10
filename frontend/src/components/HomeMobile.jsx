@@ -2,32 +2,34 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { CategoriesContext } from "../context/CategoriesContext";
 import { RoomContext } from "../context/RoomContext";
+import { DeviceContext } from "../context/DeviceContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
-import { useEffect, useState } from "react";
-import { getDevices, toggleOnOff } from "../services/accessoryServices";
+// import { useEffect, useState } from "react";
+import { toggleOnOff } from "../services/accessoryServices";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms } = useContext(RoomContext);
+  const { devices, setDevices } = useContext(DeviceContext);
   // const [roomDevices, setRoomDevices] = useState([]);
-  const [devices, setDevices] = useState([]);
+  // const [devices, setDevices] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchDevices = async () => {
-      try {
-        const devices = await getDevices();
-        setDevices(devices);
-        console.log("devices:", devices);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDevices();
-  }, []);
+  // useEffect(() => {
+  //   const fetchDevices = async () => {
+  //     try {
+  //       const devices = await getDevices();
+  //       setDevices(devices);
+  //       console.log("devices:", devices);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchDevices();
+  // }, []);
 
   const handleClick = () => {
     navigate("/add-room");

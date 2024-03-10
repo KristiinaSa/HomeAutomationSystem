@@ -1,13 +1,13 @@
-import { getDevices, deleteDevice } from "../services/accessoryServices";
-import { useState, useEffect } from "react";
+import { deleteDevice } from "../services/accessoryServices";
+import { useContext } from "react";
 import "./Accessories.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { DeviceContext } from "../context/DeviceContext";
 
 const Accessories = () => {
-  const [devices, setDevices] = useState([]);
-  const [update, setUpdate] = useState(false);
+  const { devices, setUpdate} = useContext(DeviceContext);
   const navigate = useNavigate();
 
   const handleClick = (eventType) => {
@@ -20,21 +20,6 @@ const Accessories = () => {
         break;
     }
   };
-
-  const fetchDevices = async () => {
-    try {
-      const devices = await getDevices();
-      setDevices(devices);
-      setUpdate(false);
-      console.log("Devices from database:", devices);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDevices();
-  }, [update]);
 
   const deletionDevice = async (id) => {
     if (!window.confirm("Are you sure you want to delete this device?")) return;
