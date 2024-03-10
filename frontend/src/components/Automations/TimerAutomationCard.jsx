@@ -39,7 +39,7 @@ export const TimerAutomationCard = ({ automation }) => {
     <div data-testid="automation-card">
       <h2 data-testid="automation-name">{automation.name}</h2>
       <p data-testid="automation-status">
-        {automation.active ? "Disabled" : `${numDevices} accessories`}
+        {automation.disabled ? "Disabled" : `${numDevices} accessories`}
       </p>
       <p data-testid="automation-time">{automation.time}</p>
       <p data-testid="automation-active-days">{activeDays.join(", ")}</p>

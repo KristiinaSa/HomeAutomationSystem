@@ -188,8 +188,11 @@ const getDeviceAnalytics = async (req, res, next) => {
           i + 1 < activePeriods.length
             ? new Date(activePeriods[i + 1].timestamp)
             : new Date();
-
-        totalActiveTime += periodEnd - periodStart;
+        if (periodStart < startOfToday && periodEnd >= startOfToday) {
+          totalActiveTime += periodEnd - startOfToday;
+        } else {
+          totalActiveTime += periodEnd - periodStart;
+        }
       }
 
       const totalActiveHours = Math.floor(totalActiveTime / 1000 / 60 / 60);

@@ -93,7 +93,6 @@ async function addTestData() {
   const timeAutomations = await TimeAutomation.bulkCreate([
     {
       name: "Test Automation 1",
-      active: true,
       weekdays: 127,
       time: "10:00",
       action: "on",
@@ -101,7 +100,6 @@ async function addTestData() {
     },
     {
       name: "Test Automation 2",
-      active: true,
       weekdays: 127,
       time: "22:00",
       action: "off",

@@ -4,8 +4,8 @@ const ActionType = ({ action, setAction }) => {
       Action:
       <select value={action} onChange={(e) => setAction(e.target.value)}>
         <option value="">Select an action</option>
-        <option value="Turn on">Turn on</option>
-        <option value="Turn off">Turn off</option>
+        <option value="Turn On">Turn On</option>
+        <option value="Turn Off">Turn Off</option>
       </select>
     </label>
   );

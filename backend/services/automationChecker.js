@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const TimeAutomation = require("../models/timeAutomationModel.js");
+const Device = require("../models/deviceModel.js");
 const { Op } = require("sequelize");
 
 const checkAutomations = async () => {
@@ -16,8 +17,13 @@ const checkAutomations = async () => {
   const automations = await TimeAutomation.findAll({
     where: {
       time: currentTime,
-      active: true,
+      disabled: false,
       [Op.and]: [Sequelize.literal(`weekdays & ${currentDayBit} != 0`)],
+    },
+    include: {
+      model: Device,
+      attributes: ["id"],
+      through: { attributes: [] },
     },
   });
 
@@ -25,6 +31,19 @@ const checkAutomations = async () => {
 
   automations.forEach((automation) => {
     console.log(`Running automation: ${automation.name}`);
+    automation.devices.forEach(async (device) => {
+      try {
+        await Device.update(
+          { value: automation.action },
+          { where: { id: device.id } }
+        );
+        console.log(
+          `Updated device ${device.id} value to ${automation.action}`
+        );
+      } catch (error) {
+        console.error(`Failed to update device ${device.id}: ${error}`);
+      }
+    });
   });
 };
 
