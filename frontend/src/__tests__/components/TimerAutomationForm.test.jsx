@@ -8,7 +8,7 @@ vi.mock("../../services/accessoryServices", () => ({
   getDevices: vi.fn(),
 }));
 
-describe("Users Component", () => {
+describe("TimerAutomationForm Component", () => {
   beforeEach(() => {
     vi.resetAllMocks();
     accessoryServices.getDevices.mockResolvedValue(mockDevices);
@@ -30,7 +30,7 @@ describe("Users Component", () => {
       sunday: true,
     },
     time: "22:00",
-    active: true,
+    disabled: true,
     type: "timer",
     devices: [
       {

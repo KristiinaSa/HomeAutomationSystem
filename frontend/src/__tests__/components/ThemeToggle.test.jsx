@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
 import ThemeToggle from "../../components/ThemeToggle.jsx";
-import { ThemeContext } from "../../ThemeContext.jsx";
+import { ThemeContext } from "../../context/ThemeContext.jsx";
 
 describe("ThemeToggle", () => {
   it("renders without crashing", () => {
