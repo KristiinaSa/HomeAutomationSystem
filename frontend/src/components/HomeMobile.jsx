@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { CategoriesContext } from "../CategoriesContext";
-import { RoomContext } from "../RoomContext";
+import { CategoriesContext } from "../context/CategoriesContext";
+import { RoomContext } from "../context/RoomContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";

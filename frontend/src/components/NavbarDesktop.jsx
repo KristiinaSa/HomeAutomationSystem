@@ -1,46 +1,68 @@
 import { useContext } from "react";
-import { CategoriesContext } from "../CategoriesContext";
-import { RoomContext } from "../RoomContext";
+import { CategoriesContext } from "../context/CategoriesContext";
+import { RoomContext } from "../context/RoomContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 import "./NavbarDesktop.css";
 
 const NavbarDesktop = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms } = useContext(RoomContext);
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const handleClick = (e) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+    }
+  }
 
   return (
     <div className="navbar-desktop">
       <h2 className="logo">Smart Home Mate</h2>
       <div className="navbar-main">
         <NavLink to="/" className={({ isActive}) => 
-      isActive ? "active" : "navbar-link"}>
+      isActive ? "active" : "navbar-link"}
+      onClick={(e) => {
+        handleClick(e);
+      }}
+      >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faHome} />
             <p>Home</p>
           </div>
         </NavLink>
         <NavLink to="/automations" className={({ isActive}) => 
-      isActive ? "active" : "navbar-link"}>
+      isActive ? "active" : "navbar-link"}
+      onClick={(e) => {
+        handleClick(e);
+      }}
+      >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faTachometerAlt} />
             <p>Automation</p>
           </div>
         </NavLink>
         <NavLink to="/settings" className={({ isActive}) => 
-      isActive ? "active" : "navbar-link"}>
+      isActive ? "active" : "navbar-link"}
+      onClick={(e) => {
+        handleClick(e);
+      }}
+      >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faCog} />
             <p>Settings</p>
           </div>
         </NavLink>
       </div>
-      <div className="navbar-categories-container">
+      {isLoggedIn && (
+        <>
+        <div className="navbar-categories-container">
         <h3>Categories</h3>
         <div className="navbar-categories">
           {categories.map((category) => (
@@ -68,6 +90,9 @@ const NavbarDesktop = () => {
           ))}
         </div>
       </div>
+      </>
+      )}
+      
     </div>
   );
 };

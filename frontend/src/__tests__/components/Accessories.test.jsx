@@ -1,11 +1,11 @@
 import { describe, it, vi, beforeEach, expect } from "vitest";
 import { render, fireEvent, screen } from "@testing-library/react";
-import AccessoriesPage from "../pages/AccessoriesPage";
-import * as accessoryServices from "../services/accessoryServices";
+import Accessories from "../../components/Accessories";
+import * as accessoryServices from "../../services/accessoryServices";
 import { MemoryRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 
-vi.mock("../services/accessoryServices", () => ({
+vi.mock("../../services/accessoryServices", () => ({
   getDevices: vi.fn(),
   deleteDevice: vi.fn(),
 }));
@@ -20,7 +20,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-describe("AccessoriesPage", () => {
+describe("Accessories", () => {
     beforeEach(() => {
         navigate.mockClear();
     });
@@ -31,7 +31,7 @@ describe("AccessoriesPage", () => {
       { id: 2, name: "Device 2", type: "Type B" },
     ]);
 
-    render(<AccessoriesPage />, { wrapper: MemoryRouter });
+    render(<Accessories />, { wrapper: MemoryRouter });
 
     expect(await screen.findByText("Device 1")).toBeInTheDocument();
     expect(screen.getByText("Type A")).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe("AccessoriesPage", () => {
 
   it("navigates to add device page on button click", async () => {
 
-    render(<AccessoriesPage />, { wrapper: MemoryRouter });
+    render(<Accessories />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByRole("button", { name: "Add device" }));
     expect(navigate).toHaveBeenCalledWith("/add-device");
@@ -49,7 +49,7 @@ describe("AccessoriesPage", () => {
 
   it("navigates to analytics page on button click", async () => {
 
-    render(<AccessoriesPage />, { wrapper: MemoryRouter });
+    render(<Accessories />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByText("Show analytics"));
     expect(navigate).toHaveBeenCalledWith("/analytics");
@@ -62,7 +62,7 @@ describe("AccessoriesPage", () => {
     ]);
     accessoryServices.deleteDevice.mockResolvedValue();
 
-    const { findByTestId } = render(<AccessoriesPage />, {
+    const { findByTestId } = render(<Accessories />, {
       wrapper: MemoryRouter,
     });
 

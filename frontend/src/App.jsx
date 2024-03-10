@@ -1,28 +1,25 @@
 import "./App.css";
 import "./util/icons";
-import { CategoriesProvider } from "./CategoriesContext";
-import { RoomProvider } from "./RoomContext";
+import { CategoriesProvider } from "./context/CategoriesContext";
+import { RoomProvider } from "./context/RoomContext";
 import Layout from "./pages/Layout";
-import HomeMobile from "./components/HomeMobile";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AutomationForm } from "./components/AutomationForm/AutomationForm";
 import { Automations } from "./components/Automations/Automations";
 import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
-import { ThemeProvider } from "./ThemeContext";
-import { AuthProvider } from "./AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import RegistrationPage from "./pages/RegistrationPage";
-import AddingDevice from "./pages/AddingDevice";
+import AddDevicePage from "./pages/AddDevicePage";
 import RoomPage from "./pages/RoomPage";
 import AccessoriesPage from "./pages/AccessoriesPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AddingRoomPage from "./pages/AddingRoomPage";
 
-import ProtectedRoute from "./components/ProtectedRoutes";
-import PublicRoute from "./components/PublicRoute";
-
-
+// import ProtectedRoute from "./components/ProtectedRoutes";
+// import PublicRoute from "./components/PublicRoute";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -34,7 +31,7 @@ function App() {
               <Router>
                 <Routes>
                   <Route path="/" element={<Layout />}>
-                    <Route index element={<HomeMobile />} />
+                    <Route index element={<HomePage />} />
                     <Route path="automations" element={<Automations />} />
                     <Route
                       path="automations/new"
@@ -45,15 +42,15 @@ function App() {
                       element={<AutomationForm />}
                     />
                     <Route path="/settings" element={<SettingsPage />} />
-                    <Route path="/add-device" element={<AddingDevice />} />
+                    <Route path="/add-device" element={<AddDevicePage />} />
                     <Route path="/room/:id" element={<RoomPage />} />
                     <Route path="/login" element={<LoginPage />} />
-                  <Route path="/register" element={<RegistrationPage />} />
-                  <Route path="/add-device" element={<AddingDevice />} />
-                  <Route path="/room/:id" element={<RoomPage />} />
-                  <Route path="/accessories" element={<AccessoriesPage />} />
-                  <Route path="/analytics" element={<AnalyticsPage />} />
-                  <Route path="/add-room" element={<AddingRoomPage />} />
+                    <Route path="/register" element={<RegistrationPage />} />
+                    <Route path="/add-device" element={<AddDevicePage />} />
+                    <Route path="/room/:id" element={<RoomPage />} />
+                    <Route path="/accessories" element={<AccessoriesPage />} />
+                    <Route path="/analytics" element={<AnalyticsPage />} />
+                    <Route path="/add-room" element={<AddingRoomPage />} />
                   </Route>
                 </Routes>
               </Router>

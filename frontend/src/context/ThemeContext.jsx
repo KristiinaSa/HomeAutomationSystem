@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { themeToggler } from "./services/userServices";
+import { themeToggler } from "../services/userServices";
 
 export const ThemeContext = createContext();
 
