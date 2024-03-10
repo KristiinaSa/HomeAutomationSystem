@@ -55,6 +55,12 @@ const Header = () => {
     navigate("/login");
   };
 
+  const handleClick = (e) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+    }
+  };
+
   const menuItems = isLoggedIn
     ? [
         {
@@ -109,7 +115,13 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
-      <NavLink to="/" className="header-item home-icon">
+      <NavLink
+        to="/"
+        className="header-item home-icon"
+        onClick={(e) => {
+          handleClick(e);
+        }}
+      >
         <FontAwesomeIcon icon={faHome} className="header-icon" />
       </NavLink>
       <div className="header-item">
