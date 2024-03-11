@@ -1,30 +1,18 @@
-import { useState, useEffect, useContext } from "react";
-import { getRooms } from "../services/roomServices";
+import { useState, useContext } from "react";
+// import { getRooms } from "../services/roomServices";
 import { addDevice } from "../services/accessoryServices";
 import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
+import { RoomContext } from "../context/RoomContext";
 
 const AddingDevice = () => {
   const [device, setDevice] = useState({ name: '', type: 'light' });
-  const [rooms, setRooms] = useState([]);
+  const { rooms } = useContext(RoomContext);
   const [chosenRoom, setChosenRoom] = useState(1);
   const [message, setMessage] = useState('');
   const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const rooms = await getRooms();
-        setRooms(rooms);
-        console.log("Rooms from database:", rooms);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchRooms();
-  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

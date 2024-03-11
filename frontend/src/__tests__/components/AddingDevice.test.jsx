@@ -1,10 +1,16 @@
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getRooms } from '../../services/roomServices';
 import { addDevice } from '../../services/accessoryServices';
 import AddingDevice from '../../components/AddingDevice';
+import { DeviceContext } from "../../context/DeviceContext";
+import { RoomContext } from '../../context/RoomContext';
 
 const navigate = vi.fn();
+
+const mockRooms = [
+    { id: 1, name: 'Room 1' },
+];  
+const setUpdate = vi.fn();
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom"); // Import actual implementations
@@ -14,9 +20,6 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock('../../services/roomServices', () => ({
-    getRooms: vi.fn(),
-}));
 vi.mock('../../services/accessoryServices', () => ({
     addDevice: vi.fn(),
 }));
@@ -24,18 +27,17 @@ vi.mock('../../services/accessoryServices', () => ({
 describe('AddingDevice', () => {
   beforeEach(() => {
     navigate.mockClear();
-    getRooms.mockClear();
     addDevice.mockResolvedValue(true);
   });
 
   it('renders correctly', async () => {
-    getRooms.mockResolvedValue([
-        { id: 1, name: 'Room 1' },
-        ]);
-    render(<AddingDevice />);
-    
 
-    await waitFor(() => expect(getRooms).toHaveBeenCalledTimes(1));
+        render(
+          <RoomContext.Provider value={{ rooms: mockRooms }}>
+            <DeviceContext.Provider value={{ setUpdate }}>
+          <AddingDevice />
+          </DeviceContext.Provider>
+          </RoomContext.Provider>);
 
     expect(screen.getByText('Adding a device')).toBeInTheDocument();
     expect(screen.getByText('Choose a room:')).toBeInTheDocument();
@@ -46,12 +48,13 @@ describe('AddingDevice', () => {
   });
 
   it('fills the form and submits', async () => {
-    getRooms.mockResolvedValue([
-        { id: 1, name: 'Room 1' },
-        ]);
-    render(<AddingDevice />);
 
-    await waitFor(() => expect(getRooms).toHaveBeenCalledTimes(1));
+        render(
+          <RoomContext.Provider value={{ rooms: mockRooms}}>
+          <DeviceContext.Provider value={{ setUpdate }}>
+          <AddingDevice />
+          </DeviceContext.Provider>
+          </RoomContext.Provider>);
 
     fireEvent.change(screen.getByLabelText('Choose a room:'), { target: { value: "1" } });
     fireEvent.change(screen.getByLabelText('Choose a device category:'), { target: { value: 'light' }});
@@ -59,6 +62,7 @@ describe('AddingDevice', () => {
     fireEvent.click(screen.getByText('Add Device'));
 
     await waitFor(() => expect(addDevice).toHaveBeenCalledWith({ name: 'Light 1', room_id: 1, type: 'light' }));
+    
     expect(screen.getByText('Device added successfully')).toBeInTheDocument();
     
     await new Promise((r) => setTimeout(r, 2000));
@@ -66,12 +70,13 @@ describe('AddingDevice', () => {
     });
 
     it('cancels the form', async () => {
-        getRooms.mockResolvedValue([
-            { id: 1, name: 'Room 1' },
-            ]);
-        render(<AddingDevice />);
-    
-        await waitFor(() => expect(getRooms).toHaveBeenCalledTimes(1));
+
+            render(
+              <RoomContext.Provider value={{ rooms: mockRooms }}>
+              <DeviceContext.Provider value={{ setUpdate }}>
+              <AddingDevice />
+              </DeviceContext.Provider>
+              </RoomContext.Provider>);
     
         fireEvent.click(screen.getByText('Cancel'));
     

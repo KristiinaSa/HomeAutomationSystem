@@ -2,8 +2,10 @@ import { vi, expect, describe, it, beforeEach} from 'vitest';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { addRoom } from '../../services/roomServices';
 import AddingRoom from '../../components/AddingRoom';
+import { RoomContext } from '../../context/RoomContext';
 
 const navigate = vi.fn();
+const setUpdate = vi.fn();
 
 vi.mock("react-router-dom", async () => {
     const actual = await vi.importActual("react-router-dom"); // Import actual implementations
@@ -23,7 +25,10 @@ describe('AddingRoom', () => {
         addRoom.mockResolvedValue(true);
       });
   it('renders correctly', () => {
-    render(<AddingRoom />);
+    render(
+    <RoomContext.Provider value={{ setUpdate }}>
+    <AddingRoom />
+    </RoomContext.Provider>);
     expect(screen.getByText('Adding a room')).toBeInTheDocument();
     expect(screen.getByText('Room name:')).toBeInTheDocument();
     expect(screen.getByText('Add Room')).toBeInTheDocument();
@@ -31,8 +36,10 @@ describe('AddingRoom', () => {
   });
 
   it('handles form submission', async () => {
-    render(<AddingRoom />);
-
+    render(
+      <RoomContext.Provider value={{ setUpdate }}>
+      <AddingRoom />
+      </RoomContext.Provider>);
     fireEvent.change(screen.getByLabelText('Room name:'), { target: { value: 'New Room' } });
     fireEvent.click(screen.getByText('Add Room'));
 
@@ -44,7 +51,10 @@ describe('AddingRoom', () => {
   });
 
   it('handles form cancellation', () => {
-   render(<AddingRoom />);
+    render(
+      <RoomContext.Provider value={{ setUpdate }}>
+      <AddingRoom />
+      </RoomContext.Provider>);
 
     fireEvent.click(screen.getByText('Cancel'));
     expect(navigate).toHaveBeenCalledWith(-1);
