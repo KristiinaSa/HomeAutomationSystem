@@ -34,7 +34,11 @@
     "supertest": "^6.3.4"
   },
   "jest": {
-    "transform": {}
+    "transform": {},
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
   },
   "engines": {
     "node": ">= 14.17"
