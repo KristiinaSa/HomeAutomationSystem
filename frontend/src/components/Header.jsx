@@ -77,16 +77,12 @@ const Header = () => {
         {
           icon: faArrowCircleRight,
           text: "Add room",
-          onClick: () => {
-            console.log("Add room clicked");
-          },
+          path: "/add-room",
         },
         {
           icon: faUser,
           text: "Add users",
-          onClick: () => {
-            console.log("Add users clicked");
-          },
+          path: "/settings",
         },
         { icon: faSignOut, text: "Log out", onClick: handleLogout },
       ]
