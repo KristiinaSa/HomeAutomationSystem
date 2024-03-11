@@ -61,14 +61,14 @@ This guide walks you through setting up the Home Automation System locally.
   `npm install`
 
 **Database Setup:**
-See the detailed instructions in the [Database Setup](#database-setup) section below.
+See the detailed instructions in the [Database Setup](#db-setup) section below.
 
 **Environment Variables:**
 
 - Edit the `.env` files in both `/backend` and `/frontend` folders.
 - Set the port you want to use (e.g., 3000).
 - Add your database credentials to the backend `.env` file.
-- Generate a JWT secret using: `node generate-token.js`
+- Generate a JWT secret using: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
 
 * Copy the generated value to the `JWT_SECRET` field in the backend `.env` file.
 * In the `/frontend` `.env` file, set the `VITE_PROXY_PORT` to the same port used in the backend.
@@ -105,7 +105,7 @@ VITE_PROXY_PORT=
 
 ```
 
-## DB Setup {#database-setup}
+## DB Setup
 
 1. **Create Databases**:
 
