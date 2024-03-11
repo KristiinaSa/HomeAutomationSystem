@@ -1,32 +1,47 @@
 import { addRoom } from "../services/roomServices";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoomContext } from "../context/RoomContext";
 import "./AddingRoom.css";
 
 const AddingRoom = () => {
-  const [newRoom, setNewRoom] = useState({ name: '', system_id: 1 });
-  const [message, setMessage] = useState('');
-  const { setUpdate } = useContext(RoomContext);
-    const navigate = useNavigate();
+  const [newRoom, setNewRoom] = useState({ name: "", system_id: 1 });
+  const [message, setMessage] = useState("");
+  const { setUpdate, errorMessage } = useContext(RoomContext);
+  const navigate = useNavigate();
+  const [timeoutId, setTimeoutId] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("New room:", newRoom);
     const result = await addRoom(newRoom);
     if (result) {
-        setUpdate(true);
-        setMessage('Room added successfully');
-        setTimeout(() => {
-          navigate(-1); // Navigate to the previous page after 2 seconds
-        }, 2000);
-      } else {
-        setMessage('Failed to add device');
-      }
+      setUpdate(true);
+      setMessage("Great news! New room has been added successfully.");
+      const id = setTimeout(() => {
+        navigate(-1); // Navigate to the previous page after 2 seconds
+      }, 2000);
+      setTimeoutId(id);
+    } else {
+      setMessage(
+        "Oops! We hit a bump adding your room. Let's try that one more time, shall we?\""
+      );
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
   };
 
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
   const handleCancel = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
   return (
@@ -37,7 +52,7 @@ const AddingRoom = () => {
         <input
           type="text"
           id="roomName"
-          onChange={(e) => setNewRoom({...newRoom, name: e.target.value})}
+          onChange={(e) => setNewRoom({ ...newRoom, name: e.target.value })}
           className="choose-box"
         />
         <div className="btn-container">
@@ -53,7 +68,7 @@ const AddingRoom = () => {
           </button>
         </div>
       </form>
-      {message && <p>{message}</p>}
+      {(message || errorMessage) && <p>{message || errorMessage}</p>}
     </div>
   );
 };

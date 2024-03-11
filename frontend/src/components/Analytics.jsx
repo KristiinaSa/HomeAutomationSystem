@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -11,6 +13,7 @@ const Analytics = () => {
         setAnalytics(data);
       } catch (error) {
         console.log(error);
+        setMessage("Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?");
       }
     }
     fetchData();
@@ -37,6 +40,7 @@ const Analytics = () => {
           })}
         </div>
       </div>
+      {message && <p>{message}</p>}
     </div>
   );
 };

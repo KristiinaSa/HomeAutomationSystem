@@ -8,7 +8,7 @@ import { RoomContext } from "../context/RoomContext";
 
 const AddingDevice = () => {
   const [device, setDevice] = useState({ name: "", type: "light" });
-  const { rooms } = useContext(RoomContext);
+  const { rooms, errorMessage } = useContext(RoomContext);
   const [chosenRoom, setChosenRoom] = useState(1);
   const [message, setMessage] = useState("");
   const { setUpdate } = useContext(DeviceContext);
@@ -26,13 +26,18 @@ const AddingDevice = () => {
     const result = await addDevice(deviceInfo);
     if (result) {
       setUpdate(true);
-      setMessage("Device added successfully");
+      setMessage("Great news! Your device has been added successfully.");
       const id = setTimeout(() => {
         navigate(-1); // Navigate to the previous page after 2 seconds
       }, 2000);
       setTimeoutId(id);
     } else {
-      setMessage("Failed to add device");
+      setMessage(
+        "Looks like adding your device didn't go through. Let's give it another go, shall we?"
+      );
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
     }
   };
 
@@ -102,7 +107,7 @@ const AddingDevice = () => {
           </button>
         </div>
       </form>
-      {message && <p>{message}</p>}
+      {(message || errorMessage) && <p>{message || errorMessage}</p>}
     </div>
   );
 };
