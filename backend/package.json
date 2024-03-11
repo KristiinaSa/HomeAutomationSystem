@@ -37,7 +37,7 @@
     "transform": {},
     "coverageReporters": [
       "text",
-      "cobertura"
+      "junit"
     ]
   },
   "engines": {
