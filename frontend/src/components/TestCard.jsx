@@ -11,7 +11,7 @@ const TestCard = ({ title, icon, status, onClick }) => {
     <div className="card" onClick={onClick}>
       <div className="card-body">
         <FontAwesomeIcon icon={icon} size="2x" className={iconClass} />
-        <div className="card-column">
+        <div className="card-column noSelect">
           <p>{title}</p>
           <p>{capitalizedStatus}</p>
         </div>

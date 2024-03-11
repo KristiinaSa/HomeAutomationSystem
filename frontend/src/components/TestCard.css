@@ -42,3 +42,10 @@
     color: var(--light-bulb-off-color);
     transition: color 0.3s ease;
 }
+
+.noSelect {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
