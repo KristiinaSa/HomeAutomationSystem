@@ -10,6 +10,7 @@ const RoomInformation = () => {
   const { id } = useParams();
   const room = rooms.find((room) => room.id === parseInt(id));
   const [roomDevices, setRoomDevices] = useState([]);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (room) {
@@ -21,6 +22,9 @@ const RoomInformation = () => {
         fetchRoomDevices();
       } catch (error) {
         console.log(error);
+        setMessage(
+          "Uh-oh! We ran into a snag pulling up your room's devices. Could you try again later?"
+        );
       }
     }
   }, [room]);
@@ -46,6 +50,7 @@ const RoomInformation = () => {
           </div>
         </div>
       )}
+      {message && <p>{message}</p>}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { dummyUsers } from "../dummyData/dummyUsers";
 import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import {
   deleteUser,
@@ -23,6 +22,7 @@ const Users = () => {
     reset,
   } = useForm();
   const [update, setUpdate] = useState(false);
+  const [message, setMessage] = useState("");
 
   const fetchUsers = async () => {
     try {
@@ -32,6 +32,7 @@ const Users = () => {
       console.log(users);
     } catch (error) {
       console.log(error);
+      setMessage("Oops! There was a hiccup fetching user details. Please refresh and try once more.")
     }
   };
 
@@ -45,9 +46,14 @@ const Users = () => {
       try {
         await deleteUser(id);
         setUpdate(true);
+        setMessage("All set! The user has been successfully removed.")
       } catch (error) {
         console.log("Error delete user", error.message);
+        setMessage("Could not delete user this time. Please try again later.");
       }
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
     }
     
   };
@@ -66,9 +72,14 @@ const Users = () => {
       await changeRole(id, role);
       setEditingId(null);
       setUpdate(true);
+      setMessage("Role updated successfully!");
     } catch (error) {
       console.log("Failed to update role:", error.message);
+      setMessage("Oops! Updating the role didn't quite work out. Let's give it another shot.");
     }
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   };
 
   const invitePerson = async (email) => {
@@ -80,7 +91,12 @@ const Users = () => {
       setUpdate(true);
     } catch (error) {
       console.log("Failed to invite user:", error.message);
+      setMessage("Looks like sending the invitation hit a snag. How about we try that once more?");
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
     }
+
   };
 
   useEffect(() => {
@@ -205,6 +221,7 @@ const Users = () => {
           </div>
         )}
       </div>
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };

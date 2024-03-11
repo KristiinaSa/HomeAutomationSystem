@@ -7,7 +7,7 @@ import "./AddingRoom.css";
 const AddingRoom = () => {
   const [newRoom, setNewRoom] = useState({ name: '', system_id: 1 });
   const [message, setMessage] = useState('');
-  const { setUpdate } = useContext(RoomContext);
+  const { setUpdate, errorMessage } = useContext(RoomContext);
     const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -16,12 +16,15 @@ const AddingRoom = () => {
     const result = await addRoom(newRoom);
     if (result) {
         setUpdate(true);
-        setMessage('Room added successfully');
+        setMessage('Great news! New room has been added successfully.');
         setTimeout(() => {
           navigate(-1); // Navigate to the previous page after 2 seconds
         }, 2000);
       } else {
-        setMessage('Failed to add device');
+        setMessage('Oops! We hit a bump adding your room. Let\'s try that one more time, shall we?"');
+        setTimeout(() => {
+          setMessage('');
+        }, 2000);
       }
   };
 
@@ -53,7 +56,7 @@ const AddingRoom = () => {
           </button>
         </div>
       </form>
-      {message && <p>{message}</p>}
+      {(message || errorMessage) && <p>{message || errorMessage}</p>}
     </div>
   );
 };
