@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-// import { getRooms } from "../services/roomServices";
 import { addDevice } from "../services/accessoryServices";
 import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import { RoomContext } from "../context/RoomContext";
 
 const AddingDevice = () => {
   const [device, setDevice] = useState({ name: '', type: 'light' });
-  const { rooms } = useContext(RoomContext);
+  const { rooms, errorMessage } = useContext(RoomContext);
   const [chosenRoom, setChosenRoom] = useState(1);
   const [message, setMessage] = useState('');
   const { setUpdate } = useContext(DeviceContext);
@@ -25,12 +24,15 @@ const AddingDevice = () => {
     const result = await addDevice(deviceInfo);
     if (result) {
       setUpdate(true);
-      setMessage('Device added successfully');
+      setMessage('Great news! Your device has been added successfully.');
       setTimeout(() => {
         navigate(-1); // Navigate to the previous page after 2 seconds
       }, 2000);
     } else {
-      setMessage('Failed to add device');
+      setMessage('Looks like adding your device didn\'t go through. Let\'s give it another go, shall we?');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
     }
   };
 
@@ -84,7 +86,7 @@ const AddingDevice = () => {
         <button type="reset" className="secondary-btn cancel-btn" onClick={handleCancel}>Cancel</button>
         </div>
       </form>
-      {message && <p>{message}</p>}
+      {(message || errorMessage) && <p>{message || errorMessage}</p>}
     </div>
   );
 };

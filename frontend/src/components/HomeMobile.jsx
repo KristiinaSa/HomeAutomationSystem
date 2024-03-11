@@ -11,8 +11,8 @@ import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
-  const { rooms } = useContext(RoomContext);
-  const { devices, setDevices } = useContext(DeviceContext);
+  const { rooms, errorMessage } = useContext(RoomContext);
+  const { devices, setDevices, errorMsg } = useContext(DeviceContext);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -86,6 +86,7 @@ const HomeMobile = () => {
           </div>
         ))}
       </div>
+      {(errorMessage || errorMsg) && <p>{errorMessage || errorMsg}</p>}
     </div>
   );
 };

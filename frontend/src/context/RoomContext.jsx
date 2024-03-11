@@ -6,6 +6,7 @@ export const RoomContext = createContext();
 export const RoomProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -15,12 +16,13 @@ export const RoomProvider = ({ children }) => {
         setUpdate(false);
       } catch (error) {
         console.log(error);
+        setErrorMessage("Looks like we stumbled while fetching your rooms. Mind trying again shortly?");
       }
     };
     fetchRooms();
   }, [update]);
 
   return (
-    <RoomContext.Provider value={{ rooms, update, setUpdate }}>{children}</RoomContext.Provider>
+    <RoomContext.Provider value={{ rooms, update, setUpdate, errorMessage }}>{children}</RoomContext.Provider>
   );
 };

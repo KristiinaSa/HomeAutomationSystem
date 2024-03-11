@@ -1,5 +1,5 @@
 import { deleteDevice } from "../services/accessoryServices";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "./Accessories.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
 
 const Accessories = () => {
-  const { devices, setUpdate} = useContext(DeviceContext);
+  const { devices, setUpdate, errorMsg} = useContext(DeviceContext);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleClick = (eventType) => {
@@ -28,9 +29,14 @@ const Accessories = () => {
         console.log("Deleting device with id:", id);
         await deleteDevice(id);
         setUpdate(true);
+        setMessage("Done! Your device has been removed.");
       } catch (error) {
         console.log("Error delete device", error.message);
+        setMessage("Could not delete device this time. Please try again later");
       }
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
     }
   };
 
@@ -74,6 +80,7 @@ const Accessories = () => {
           ))}
         </div>
       </div>
+      {(message || errorMsg) && <p>{message || errorMsg}</p>}
     </div>
   );
 };
