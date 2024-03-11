@@ -6,7 +6,7 @@ import { DeviceContext } from "../context/DeviceContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
-import { toggleOnOff } from "../services/accessoryServices";
+import { useToggle } from "../hooks/useToggle";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
@@ -19,18 +19,7 @@ const HomeMobile = () => {
     navigate("/add-room");
   };
 
-  const handleToggle = async (id) => {
-    try {
-      const device = await toggleOnOff(id);
-      console.log("Toggled device:", device);
-      const updatedDevices = devices.map((d) =>
-        d.id === device.id ? { ...d, value: device.value } : d
-      );
-      setDevices(updatedDevices);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { handleToggle } = useToggle();
 
   return (
     <div className="home-container">
@@ -71,7 +60,7 @@ const HomeMobile = () => {
                   .filter((device) => device.room_id === room.id)
                   .map((device) => (
                     <TestCard
-                      key={device.id}
+                      id={device.id}
                       title={device.name}
                       icon={
                         (device.type === "light") | (device.type === "Light")
@@ -79,7 +68,7 @@ const HomeMobile = () => {
                           : ""
                       }
                       status={device.value}
-                      onClick={() => handleToggle(device.id)}
+                      handleToggle={handleToggle}
                     />
                   ))}
             </div>
