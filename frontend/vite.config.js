@@ -20,8 +20,9 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: "setupTests.js",
       coverage: {
+        reporter: ["text", "cobertura"],
         exclude: ["**/util/**", "**/hooks/**", "**/dummyData/**"],
-      }
+      },
     },
   };
 });
