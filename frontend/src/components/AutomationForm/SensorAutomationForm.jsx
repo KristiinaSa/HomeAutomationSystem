@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
 import { dummySensors } from "../../dummyData/dummySensors";
 import { getDevices } from "../../services/accessoryServices";
+
+import { DeviceContext } from "../../context/DeviceContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
