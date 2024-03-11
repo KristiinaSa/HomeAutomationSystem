@@ -5,20 +5,22 @@ export const RoomContext = createContext();
 
 export const RoomProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const rooms = await getRooms();
         setRooms(rooms);
+        setUpdate(false);
       } catch (error) {
         console.log(error);
       }
     };
     fetchRooms();
-  }, []);
+  }, [update]);
 
   return (
-    <RoomContext.Provider value={{ rooms }}>{children}</RoomContext.Provider>
+    <RoomContext.Provider value={{ rooms, update, setUpdate }}>{children}</RoomContext.Provider>
   );
 };
