@@ -7,6 +7,7 @@ import { dummySensors } from "../../dummyData/dummySensors";
 import { getDevices } from "../../services/accessoryServices";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import styles from "./CreateAutomation.module.css";
 
 const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
@@ -16,6 +17,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [value, setValue] = useState(0);
   const [devices, setDevices] = useState([]);
   const [action, setAction] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (automation) {
@@ -115,7 +117,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         isDisabled={isDisabled}
         handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
       />
-
+      <div className={styles.buttonsArea}> 
       <button
         type="submit"
         disabled={isButtonDisabled()}
@@ -133,6 +135,14 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
           style={{ cursor: "pointer" }}
         />
       )}
+      <button
+      type="button"
+      onClick={() => navigate(-1)}
+      className="secondary-btn"
+      >
+        Cancel
+      </button>
+      </div>
     </form>
   );
 };
