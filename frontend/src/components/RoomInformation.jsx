@@ -32,7 +32,7 @@ const RoomInformation = () => {
 
   return (
     <div>
-      <div className="room-information-container">
+      <div className="room-information-container" data-testid="room-container">
       {room && (
         <div key={room.id}>
           <h2>{room.name}</h2>
