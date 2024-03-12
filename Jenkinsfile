@@ -3,14 +3,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout from GitHub') {
-            steps {
-                script {
-                    checkout scm
-                }
-            }
-        }
-
         stage('Install Dependencies & Run Tests') {
             parallel {
                 stage('Frontend') {
