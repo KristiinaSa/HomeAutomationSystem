@@ -1,7 +1,7 @@
 import styles from "./CreateAutomation.module.css";
 
 const TimeSelection = ({ time, setTime }) => (
-  <label>
+    
     <input
       type="time"
       value={time}
@@ -9,7 +9,7 @@ const TimeSelection = ({ time, setTime }) => (
       className={styles.timeInput}
       data-testid="time-input"
     />
-  </label>
+
 );
 
 export default TimeSelection;

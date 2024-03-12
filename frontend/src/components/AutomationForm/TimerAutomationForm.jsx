@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-
+import { useNavigate } from "react-router-dom";
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
@@ -32,6 +32,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [automationDevices, setAutomationDevices] = useState([]);
   const [availableDevices, setAvailableDevices] = useState([]);
   const [actionType, setActionType] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (automation) {
@@ -59,7 +60,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       name,
       weekdays: selectedDays,
       time,
-      devices,
+      devices: automationDevices,
       disabled: isDisabled,
       type: automation ? automation.type : "timer",
       action: actionType,
@@ -109,26 +110,37 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         setAction={setActionType}
         data-testid="action-type"
       />
+      <div className={styles.buttonsArea}>
       <button
         type="submit"
         disabled={isButtonDisabled()}
         className={
-          isButtonDisabled() ? styles.disabledButtonStyles : styles.buttonStyles
+          isButtonDisabled() ? styles.disabledButton : "primary-btn"
         }
         data-testid="submit-button"
       >
         {automation ? "Update Automation" : "Create New Automation"}
       </button>
       {automation && (
+        <button className="secondary-btn"
+        onClick={() => handleDelete(automation.id)}
+        aria-label="Delete"
+          style={{ cursor: "pointer" }}
+          data-testid="delete-button">
         <FontAwesomeIcon
           icon={faTrash}
-          onClick={() => handleDelete(automation.id)}
-          role="button"
-          aria-label="Delete"
-          style={{ cursor: "pointer" }}
-          data-testid="delete-button"
         />
+        Delete
+        </button>
       )}
+      <button
+      type="button"
+      onClick={() => navigate(-1)}
+      className="secondary-btn"
+      >
+        Cancel
+      </button>
+      </div>
     </form>
   );
 };
