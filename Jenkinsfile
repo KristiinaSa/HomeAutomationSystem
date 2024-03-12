@@ -52,15 +52,27 @@ pipeline {
         }
         stage('Build and Run Docker Compose') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'docker-compose build'
-                        sh 'docker-compose up -d'
-                    } else {
-                        bat 'docker-compose build'
-                        bat 'docker-compose up -d'
+                withCredentials([
+                    string(credentialsId: 'port', variable: 'PORT'),
+                    string(credentialsId: 'db_host', variable: 'DB_HOST'),
+                    string(credentialsId: 'db_name', variable: 'DB_NAME'),
+                    string(credentialsId: 'db_user', variable: 'DB_USER'),
+                    string(credentialsId: 'db_password', variable: 'DB_PASSWORD'),
+                    string(credentialsId: 'test_db_name', variable: 'TEST_DB_NAME'),
+                    string(credentialsId: 'test_db_user', variable: 'TEST_DB_USER'),
+                    string(credentialsId: 'test_db_password', variable: 'TEST_DB_PASSWORD'),
+                    string(credentialsId: 'jwt_secret', variable: 'JWT_SECRET'),
+                ]) {
+                    script {
+                        if (isUnix()) {
+                            sh 'docker-compose build'
+                            sh 'docker-compose up -d'
+                        } else {
+                            bat 'docker-compose build'
+                            bat 'docker-compose up -d'
+                        }
                     }
-                }
+}
             }
         }
         stage('Push Docker Images') {
