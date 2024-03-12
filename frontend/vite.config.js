@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
           "**/components/PublicRoute.jsx",
           "**/components/LightBrightness.jsx",
         ],
-      },,
+      },
     },
   };
 });
