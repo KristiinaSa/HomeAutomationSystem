@@ -23,13 +23,6 @@ export default defineConfig(({ mode }) => {
         reporter: ["text", "cobertura"],
         exclude: ["**/util/**", "**/hooks/**", "**/dummyData/**"],
       },
-      reporters: [
-        [
-          "junit",
-          { suiteName: "custom suite name", classname: "custom-classname" },
-        ],
-      ],
-      outputFile: "coverage/test-output.json",
     },
   };
 });
