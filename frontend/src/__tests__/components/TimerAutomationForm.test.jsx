@@ -1,17 +1,28 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, act, fireEvent, within } from "@testing-library/react";
+import { render, screen, act, fireEvent, within, waitFor } from "@testing-library/react";
 import TimerAutomationForm from "../../components/AutomationForm/TimerAutomationForm";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as accessoryServices from "../../services/accessoryServices.js";
 import { DeviceProvider } from "../../context/DeviceContext.jsx";
 
+const navigate = vi.fn();
+
 vi.mock("../../services/accessoryServices", () => ({
   getDevices: vi.fn(),
 }));
 
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom"); // Import actual implementations
+  return {
+    ...actual, // Spread actual implementations
+    useNavigate: () => navigate, // Mock useNavigate with a spy function
+  };
+});
+
 describe("TimerAutomationForm Component", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    navigate.mockClear();
     accessoryServices.getDevices.mockResolvedValue(mockDevices);
   });
 
@@ -191,5 +202,23 @@ describe("TimerAutomationForm Component", () => {
       expect(checkbox.checked).toBe(mockAutomation.weekdays[day]);
     });
     expect(screen.getByText("No devices available")).toBeInTheDocument();
+  });
+
+  it("cancel button navigates back", async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <DeviceProvider>
+            <TimerAutomationForm
+              handleSubmit={handleSubmit}
+              automation={mockAutomation}
+            />
+          </DeviceProvider>
+        </Router>
+      );
+    });
+
+    fireEvent.click(screen.getByTestId("cancel-button"));
+    await waitFor(() => expect(navigate).toHaveBeenCalledWith(-1));
   });
 });

@@ -44,7 +44,7 @@ describe('AddingRoom', () => {
     fireEvent.click(screen.getByText('Add Room'));
 
     await waitFor(() => expect(addRoom).toHaveBeenCalledWith({ name: 'New Room', system_id: 1 }));
-    expect(screen.getByText('Room added successfully')).toBeInTheDocument();
+    expect(screen.getByText('Great news! New room has been added successfully.')).toBeInTheDocument();
 
     await new Promise((r) => setTimeout(r, 2000));
     await waitFor(() => expect(navigate).toHaveBeenCalledWith(-1));

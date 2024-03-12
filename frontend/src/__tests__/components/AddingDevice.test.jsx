@@ -63,7 +63,7 @@ describe('AddingDevice', () => {
 
     await waitFor(() => expect(addDevice).toHaveBeenCalledWith({ name: 'Light 1', room_id: 1, type: 'light' }));
     
-    expect(screen.getByText('Device added successfully')).toBeInTheDocument();
+    expect(screen.getByText("Great news! Your device has been added successfully.")).toBeInTheDocument();
     
     await new Promise((r) => setTimeout(r, 2000));
     await waitFor(() => expect(navigate).toHaveBeenCalledWith(-1));
