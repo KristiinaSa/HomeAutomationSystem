@@ -198,3 +198,20 @@
   width: 100%;
   margin-top: 20px;
 }
+
+/* CSS for sensor form */
+
+.sensorLabel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.sensorLabel select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 102%;
+  font-family: 'Poppins', sans-serif;
+}
