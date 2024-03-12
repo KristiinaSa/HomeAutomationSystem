@@ -72,8 +72,13 @@ pipeline {
                         env.JWT_SECRET = "${JWT_SECRET}"
                         env.PORT = "${PORT}"
                     }
-                    sh 'docker-compose build'
-                    sh 'docker-compose up -d'
+                    if (isUnix()) {
+                        sh 'docker-compose build'
+                        sh 'docker-compose up -d'
+                    } else {
+                        bat 'docker-compose build'
+                        bat 'docker-compose up -d'
+                    }
                 }
             }
         }
