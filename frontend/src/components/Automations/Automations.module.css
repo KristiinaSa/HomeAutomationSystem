@@ -4,3 +4,53 @@
   cursor: pointer;
   padding: 0;
 }
+
+.automationCard {
+  display: flex;
+  width: 100%;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.automationIcons {
+  display: flex;
+  gap: 1rem;
+  color: var(--tertiary-text-color-mobile);
+  padding: 20px 0 20px 0;
+}
+
+.automationDate {
+  display: flex;
+  gap: 1rem;
+}
+
+.automationDate p {
+  color: var(--secondary-text-color-mobile);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.info p {
+  color: var(--tertiary-text-color-mobile);
+}
+
+.icon-on {
+  color: var(--light-bulb-on-color);
+}
+
+.icon-off {
+  color: var(--light-bulb-off-color);
+}
+
+@media (max-width: 450px) {
+  .automationCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
