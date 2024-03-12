@@ -30,7 +30,9 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
 
   return (
     <div className="menu-item" onClick={handleClick}>
-      <FontAwesomeIcon icon={icon} />
+      <div className="icon-container">
+        <FontAwesomeIcon icon={icon} />
+      </div>
       {path ? (
         <NavLink to={path} className="hover-underline-animation">
           {text}

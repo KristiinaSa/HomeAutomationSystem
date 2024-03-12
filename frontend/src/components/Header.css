@@ -96,6 +96,11 @@
   margin-right: 10px;
 }
 
+.icon-container{
+  width: 30px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .header-item.home-icon {
     display: none;
