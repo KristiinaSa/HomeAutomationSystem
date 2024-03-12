@@ -4,6 +4,7 @@ import TestCard from "./TestCard";
 import { useParams } from "react-router-dom";
 import { getRoomDevices } from "../services/accessoryServices";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import "./RoomInformation.css";
 
 const RoomInformation = () => {
   const { rooms } = useContext(RoomContext);
@@ -31,9 +32,11 @@ const RoomInformation = () => {
 
   return (
     <div>
+      <div className="room-information-container">
       {room && (
         <div key={room.id}>
           <h2>{room.name}</h2>
+          <div className="room-cards-container">
           <div className="cards">
             {roomDevices.map((card) => (
               <TestCard
@@ -47,10 +50,12 @@ const RoomInformation = () => {
                 status={card.status}
               />
             ))}
+            </div>
           </div>
         </div>
       )}
       {message && <p>{message}</p>}
+      </div>
     </div>
   );
 };
