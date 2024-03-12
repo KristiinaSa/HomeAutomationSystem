@@ -137,6 +137,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       type="button"
       onClick={() => navigate(-1)}
       className="secondary-btn"
+      data-testid="cancel-button"
       >
         Cancel
       </button>
