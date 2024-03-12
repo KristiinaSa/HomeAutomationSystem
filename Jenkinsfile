@@ -58,7 +58,7 @@ pipeline {
                     string(credentialsId: 'db-host', variable: 'DB_HOST'),
                     string(credentialsId: 'db-name', variable: 'DB_NAME'),
                     usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
-                    string(credentialsId: 'test-db_name', variable: 'TEST_DB_NAME'),
+                    string(credentialsId: 'test-db-name', variable: 'TEST_DB_NAME'),
                     usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
                     string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET'),
                     ]) {
