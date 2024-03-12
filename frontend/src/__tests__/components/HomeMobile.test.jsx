@@ -1,17 +1,18 @@
+import { vi, it, expect, describe } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CategoriesContext } from "../../context/CategoriesContext";
 import { RoomContext } from "../../context/RoomContext";
 import { DeviceContext } from "../../context/DeviceContext";
 import HomeMobile from "../../components/HomeMobile";
-import jest from "jest-mock";
 
-test("renders HomeMobile component", () => {
+describe("HomeMobile component", () => {
+it("renders HomeMobile component", () => {
   const categoriesContextValue = { categories: [] };
   const roomContextValue = { rooms: [], errorMessage: null };
   const deviceContextValue = {
     devices: [],
-    setDevices: jest.fn(),
+    setDevices: vi.fn(),
     errorMsg: null,
   };
 
@@ -28,4 +29,6 @@ test("renders HomeMobile component", () => {
   );
 
   expect(screen.getByText("Home")).toBeInTheDocument();
+  expect(screen.getByText("Rooms")).toBeInTheDocument();
+});
 });
