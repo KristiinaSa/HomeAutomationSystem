@@ -1,3 +1,5 @@
+import styles from "./CreateAutomation.module.css";
+
 export const DisableCheckbox = ({
   automation,
   isDisabled,
@@ -5,8 +7,8 @@ export const DisableCheckbox = ({
 }) => {
   return (
     automation && (
-      <label>
-        Disabled:
+      <label className={styles.disableCheckbox}>
+        Disable automation:
         <input
           type="checkbox"
           checked={isDisabled}

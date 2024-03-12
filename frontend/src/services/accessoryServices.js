@@ -72,3 +72,13 @@ export const toggleOnOff = async (id) => {
     throw new Error(err.response.data);
   }
 };
+
+export default {
+  toggleOnOff,
+  getAccessories,
+  getDevices,
+  addDevice,
+  deleteDevice,
+  getRoomDevices,
+  getAllAnalytics,
+};

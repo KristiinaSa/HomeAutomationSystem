@@ -7,6 +7,8 @@ import { dummySensors } from "../../dummyData/dummySensors";
 import { getDevices } from "../../services/accessoryServices";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import styles from "./CreateAutomation.module.css";
 
 const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -15,6 +17,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [value, setValue] = useState(0);
   const [devices, setDevices] = useState([]);
   const [action, setAction] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (automation) {
@@ -60,8 +63,8 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
+    <form onSubmit={onSubmit} className={styles.verticalLayout}>
+      <label className={styles.sensorLabel}>
         Name:
         <input
           type="text"
@@ -70,7 +73,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         />{" "}
       </label>
 
-      <label>
+      <label className={styles.sensorLabel}>
         Sensor:
         <select value={sensorId} onChange={(e) => setSensorId(e.target.value)}>
           <option value="">Select a sensor</option>
@@ -82,7 +85,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         </select>
       </label>
 
-      <label>
+      <label className={styles.sensorLabel}>
         Value:
         <input
           type="range"
@@ -100,7 +103,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         setSelectedDevices={setDevices}
       />
 
-      <label>
+      <label className={styles.sensorLabel}>
         Action:
         <select value={action} onChange={(e) => setAction(e.target.value)}>
           <option value="">Select an action</option>
@@ -114,8 +117,12 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         isDisabled={isDisabled}
         handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
       />
-
-      <button type="submit" disabled={isButtonDisabled()}>
+      <div className={styles.buttonsArea}> 
+      <button
+        type="submit"
+        disabled={isButtonDisabled()}
+        className={isButtonDisabled() ? styles.disabledButton : "primary-btn"}
+      >
         {automation ? "Update Automation" : "Create New Automation"}
       </button>
 
@@ -128,6 +135,14 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
           style={{ cursor: "pointer" }}
         />
       )}
+      <button
+      type="button"
+      onClick={() => navigate(-1)}
+      className="secondary-btn"
+      >
+        Cancel
+      </button>
+      </div>
     </form>
   );
 };

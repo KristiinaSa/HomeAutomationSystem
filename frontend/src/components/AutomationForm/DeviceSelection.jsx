@@ -28,7 +28,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
   );
 
   return (
-    <div className={styles.verticalLayout}>
+    <div className={styles.deviceSelection}>
       <p>Devices</p>
       {availableDevices.length > 0 ? (
         <select
