@@ -1,0 +1,17 @@
+.go-back-button {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .go-back-button {
+      display: block;
+      position: fixed;
+      bottom: 6rem;
+      right: 1rem;
+      cursor: pointer;
+    }
+  
+    .go-back-icon {
+      font-size: 2rem;
+      color: var(--primary-text-color-mobile);
+    }
