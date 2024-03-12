@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const User = require("../models/userModel.js");
@@ -80,6 +80,7 @@ const register = async (req, res) => {
 
   existingUser.name = name;
   existingUser.password = hashedPassword;
+  existingUser.is_registered = 1;
 
   const updatedUser = await existingUser.save();
 

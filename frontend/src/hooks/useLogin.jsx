@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import authService from "../services/authService";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../AuthContext";
-import { ThemeContext } from "../ThemeContext";
+import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -18,17 +18,12 @@ const useLogin = () => {
     }
     try {
       const response = await authService.login(email, password);
-      console.log("FAFA");
       localStorage.setItem("access_token", response.token);
       const theme = response.using_darkmode ? "dark" : "light";
       localStorage.setItem("theme", theme);
-      console.log("GAGA");
       setTheme(theme);
-      console.log("DADA");
       setLoginSuccess(true);
-      console.log("SASA");
       setIsLoggedIn(true);
-      console.log("YE");
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
@@ -41,14 +36,10 @@ const useLogin = () => {
   };
 
   useEffect(() => {
-    console.log("loginSuccess updated:", loginSuccess);
-  }, [loginSuccess]);
-
-  useEffect(() => {
-    console.log("useEffect called, loginSuccess:", loginSuccess);
     if (loginSuccess) {
-      console.log("loginSuccess", loginSuccess);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
   }, [loginSuccess, navigate]);
 

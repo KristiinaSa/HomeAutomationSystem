@@ -1,28 +1,19 @@
-import { useState, useEffect } from "react";
-import { getRooms } from "../services/roomServices";
+import { useState, useContext, useEffect } from "react";
+// import { getRooms } from "../services/roomServices";
 import { addDevice } from "../services/accessoryServices";
 import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
+import { DeviceContext } from "../context/DeviceContext";
+import { RoomContext } from "../context/RoomContext";
 
 const AddingDevice = () => {
-  const [device, setDevice] = useState({ name: '', type: 'light' });
-  const [rooms, setRooms] = useState([]);
+  const [device, setDevice] = useState({ name: "", type: "light" });
+  const { rooms, errorMessage } = useContext(RoomContext);
   const [chosenRoom, setChosenRoom] = useState(1);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const rooms = await getRooms();
-        setRooms(rooms);
-        console.log("Rooms from database:", rooms);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchRooms();
-  }, []);
+  const [timeoutId, setTimeoutId] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,20 +22,35 @@ const AddingDevice = () => {
       name: device.name,
       type: device.type,
       room_id: chosenRoom,
-    }
+    };
     const result = await addDevice(deviceInfo);
     if (result) {
-      setMessage('Device added successfully');
-      setTimeout(() => {
+      setUpdate(true);
+      setMessage("Great news! Your device has been added successfully.");
+      const id = setTimeout(() => {
         navigate(-1); // Navigate to the previous page after 2 seconds
       }, 2000);
+      setTimeoutId(id);
     } else {
-      setMessage('Failed to add device');
+      setMessage(
+        "Looks like adding your device didn't go through. Let's give it another go, shall we?"
+      );
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
   const handleCancel = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
   return (
@@ -56,7 +62,7 @@ const AddingDevice = () => {
           id="roomName"
           value={chosenRoom} // To ensure the select shows the current state
           onChange={(e) => {
-            setChosenRoom(Number(e.target.value)); 
+            setChosenRoom(Number(e.target.value));
           }}
           className="choose-box"
         >
@@ -89,11 +95,19 @@ const AddingDevice = () => {
           className="choose-box"
         />
         <div className="btn-container">
-        <button type="submit" className="primary-btn add-device-btn">Add Device</button>
-        <button type="reset" className="secondary-btn cancel-btn" onClick={handleCancel}>Cancel</button>
+          <button type="submit" className="primary-btn add-btn">
+            Add Device
+          </button>
+          <button
+            type="reset"
+            className="secondary-btn cancel-btn"
+            onClick={handleCancel}
+          >
+            Cancel
+          </button>
         </div>
       </form>
-      {message && <p>{message}</p>}
+      {(message || errorMessage) && <p>{message || errorMessage}</p>}
     </div>
   );
 };

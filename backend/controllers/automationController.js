@@ -7,10 +7,20 @@ const TimeAutomation = require("../models/timeAutomationModel.js");
 const SensorAutomation = require("../models/sensorAutomationModel.js");
 const Device = require("../models/deviceModel.js");
 
+const { ACTION_TO_STRING, STRING_TO_ACTION } = require("./helpers.js");
+
 const getAutomations = async (req, res, next) => {
   try {
     let timeAutomations = await TimeAutomation.findAll({
-      attributes: ["id", "name", "weekdays", "time", "active", "type"],
+      attributes: [
+        "id",
+        "name",
+        "weekdays",
+        "time",
+        "disabled",
+        "type",
+        "action",
+      ],
       include: {
         model: Device,
         attributes: ["id", "name", "type"],
@@ -30,12 +40,14 @@ const getAutomations = async (req, res, next) => {
     timeAutomations = timeAutomations.map((automation) => {
       const automationData = automation.toJSON();
       automationData.weekdays = bitmaskToWeekdays(automationData.weekdays);
+      automationData.action = ACTION_TO_STRING[automationData.action];
       return automationData;
     });
 
     sensorAutomations = sensorAutomations.map((automation) => ({
       ...automation.toJSON(),
       type: "sensor",
+      active: ACTION_TO_STRING[automation.active],
     }));
 
     const automations = [...timeAutomations, ...sensorAutomations];
@@ -71,7 +83,7 @@ const getTimerAutomation = async (req, res, next) => {
         attributes: ["id", "name", "type"],
         through: { attributes: [] },
       },
-      attributes: ["id", "weekdays", "time", "active", "name"],
+      attributes: ["id", "weekdays", "time", "disabled", "name", "action"],
     });
 
     if (!timerAutomation) {
@@ -82,6 +94,7 @@ const getTimerAutomation = async (req, res, next) => {
 
     timerAutomation.weekdays = bitmaskToWeekdays(timerAutomation.weekdays);
     timerAutomation.type = "timer";
+    timerAutomation.action = ACTION_TO_STRING[timerAutomation.action];
     res.send(timerAutomation);
   } catch (err) {
     next(err);
@@ -89,7 +102,6 @@ const getTimerAutomation = async (req, res, next) => {
 };
 
 const addAutomation = async (req, res, next) => {
-  console.log(req.body);
   try {
     const newAutomation = {
       id: uuidv4(),
@@ -107,7 +119,7 @@ const addTimerAutomation = async (req, res, next) => {
   try {
     const { system_id } = req.user;
     const { devices, weekdays, ...automationData } = req.body;
-    const requiredFields = ["name", "time", "active"];
+    const requiredFields = ["name", "time", "disabled"];
 
     requiredFields.forEach((field) => {
       if (automationData[field] === undefined) {
@@ -122,6 +134,8 @@ const addTimerAutomation = async (req, res, next) => {
       err.status = 400;
       throw err;
     }
+
+    automationData.action = STRING_TO_ACTION[automationData.action];
 
     const newAutomation = await TimeAutomation.create({
       ...automationData,
@@ -164,7 +178,7 @@ const editAutomation = async (req, res, next) => {
 const editTimerAutomation = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const { devices, weekdays, ...automationData } = req.body;
+    let { devices, weekdays, ...automationData } = req.body;
     const automation = await TimeAutomation.findOne({
       where: {
         id: id,
@@ -181,12 +195,16 @@ const editTimerAutomation = async (req, res, next) => {
       !automationData.name ||
       !weekdays ||
       !automationData.time ||
-      automationData.active === undefined
+      automationData.action === undefined
     ) {
       const err = new Error("Missing required fields");
       err.status = 400;
       throw err;
     }
+
+    automationData.action =
+      STRING_TO_ACTION[automationData.action.toLowerCase()];
+    console.log("automationData:", automationData);
 
     await automation.update({
       ...automationData,

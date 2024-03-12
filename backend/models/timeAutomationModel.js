@@ -9,10 +9,11 @@ TimeAutomation.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
-    active: DataTypes.BOOLEAN,
+    disabled: { type: DataTypes.BOOLEAN, defaultValue: false },
     weekdays: DataTypes.INTEGER,
     time: DataTypes.STRING,
     type: { type: DataTypes.STRING, defaultValue: "timer" },
+    action: { type: DataTypes.STRING, defaultValue: "off" },
   },
   { sequelize, modelName: "timeAutomation" }
 );

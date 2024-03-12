@@ -1,6 +1,6 @@
 // Adds some basic data to the database for testing purposes
 require("./associations.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const System = require("../models/systemModel.js");
 const Room = require("../models/roomModel.js");
@@ -10,10 +10,21 @@ const TimeAutomation = require("../models/timeAutomationModel.js");
 const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
 const SensorHistory = require("../models/sensorHistoryModel.js");
+const UsageHistory = require("../models/usageHistoryModel.js");
+
+const sequelize = require("./sequelizeConnector.js");
 
 async function addTestData() {
+  await sequelize.sync({ force: true });
   const system = await System.create({
     name: "Test System",
+  });
+
+  const user = await system.createUser({
+    name: "test",
+    email: "test@example.com",
+    password: bcrypt.hashSync("password", 10),
+    role: "owner",
   });
 
   const room = await system.createRoom({
@@ -67,18 +78,14 @@ async function addTestData() {
   const devices = await Promise.all([
     room.createDevice({
       name: "Table Lamp",
-      type: "Light",
-      value: "true",
+      type: "light",
       data_type: "boolean",
-      role_access: "resident",
       system_id: system.id,
     }),
     room.createDevice({
       name: "Ceiling Lamp",
-      type: "Light",
-      value: "false",
+      type: "light",
       data_type: "boolean",
-      role_access: "resident",
       system_id: system.id,
     }),
   ]);
@@ -86,7 +93,6 @@ async function addTestData() {
   const timeAutomations = await TimeAutomation.bulkCreate([
     {
       name: "Test Automation 1",
-      active: true,
       weekdays: 127,
       time: "10:00",
       action: "on",
@@ -94,7 +100,6 @@ async function addTestData() {
     },
     {
       name: "Test Automation 2",
-      active: true,
       weekdays: 127,
       time: "22:00",
       action: "off",
@@ -104,13 +109,6 @@ async function addTestData() {
 
   await timeAutomations[0].addDevice(devices);
   await timeAutomations[1].addDevice(devices);
-
-  const user = await system.createUser({
-    name: "test",
-    email: "test@example.com",
-    password: bcrypt.hashSync("password", 10),
-    role: "owner",
-  });
 
   console.log("Test data added successfully");
 }

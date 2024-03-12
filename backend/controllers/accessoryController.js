@@ -3,6 +3,9 @@ require("../db/associations.js");
 const Device = require("../models/deviceModel.js");
 const Sensor = require("../models/sensorModel.js");
 const Room = require("../models/roomModel.js");
+const UsageHistory = require("../models/usageHistoryModel.js");
+const { Op } = require("sequelize");
+
 const { TYPE_TO_DATA_TYPE } = require("./helpers.js");
 
 const getAllAccessories = async (req, res, next) => {
@@ -22,7 +25,7 @@ const getAllAccessories = async (req, res, next) => {
 const getAllDevices = async (req, res, next) => {
   try {
     const devices = await Device.findAll({
-      attributes: ["id", "name", "type", "room_id"],
+      attributes: ["id", "name", "type", "room_id", "value"],
     });
     console.log("devices:", devices);
     res.send(devices);
@@ -107,8 +110,114 @@ const toggleOnOff = async (req, res, next) => {
       },
     });
 
+    await UsageHistory.create({
+      device_id: updatedDevice.id,
+      user_id: req.user.id,
+      sensor_value: newValue,
+      data_type: updatedDevice.data_type,
+      timestamp: new Date(),
+    });
+
     console.log("Toggled device:", updatedDevice);
     res.send(updatedDevice);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getRoomDevices = async (req, res, next) => {
+  try {
+    const devices = await Device.findAll({
+      where: {
+        room_id: req.params.id,
+      },
+    });
+    res.send(devices);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getDeviceAnalytics = async (req, res, next) => {
+  try {
+    const devices = await Device.findAll({
+      where: {
+        system_id: 1,
+      },
+      include: [
+        {
+          model: Room,
+          attributes: ["name"],
+        },
+      ],
+    });
+
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const activePeriodsToday = await UsageHistory.findAll({
+      where: {
+        device_id: {
+          [Op.in]: devices.map((device) => device.id),
+        },
+        timestamp: {
+          [Op.gte]: startOfToday,
+        },
+      },
+      order: [
+        ["device_id", "ASC"],
+        ["timestamp", "ASC"],
+      ],
+    });
+
+    const activePeriodsByDevice = activePeriodsToday.reduce((groups, entry) => {
+      if (!groups[entry.device_id]) {
+        groups[entry.device_id] = [];
+      }
+      groups[entry.device_id].push(entry);
+      return groups;
+    }, {});
+
+    const result = [];
+    for (const device of devices) {
+      let totalActiveTime = 0;
+      const activePeriods = activePeriodsByDevice[device.id] || [];
+      for (let i = 0; i < activePeriods.length; i += 2) {
+        const periodStart = new Date(activePeriods[i].timestamp);
+        const periodEnd =
+          i + 1 < activePeriods.length
+            ? new Date(activePeriods[i + 1].timestamp)
+            : new Date();
+        if (periodStart < startOfToday && periodEnd >= startOfToday) {
+          totalActiveTime += periodEnd - startOfToday;
+        } else {
+          totalActiveTime += periodEnd - periodStart;
+        }
+      }
+
+      const totalActiveHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
+      const totalActiveMinutes = Math.floor((totalActiveTime / 1000 / 60) % 60);
+
+      const lastInteractionDate = activePeriods[activePeriods.length - 1]
+        ? new Date(activePeriods[activePeriods.length - 1].timestamp)
+        : undefined;
+      const lastInteractionTime = lastInteractionDate
+        ? `${lastInteractionDate.toLocaleDateString()} ${lastInteractionDate.toLocaleTimeString(
+            [],
+            { hour: "2-digit", minute: "2-digit" }
+          )}`
+        : undefined;
+      result.push({
+        id: device.id,
+        name: device.name,
+        type: device.type,
+        room_name: device.room.name,
+        active_time: `${totalActiveHours}h ${totalActiveMinutes}m`,
+        last_interaction: lastInteractionTime,
+      });
+    }
+
+    res.send(result);
   } catch (err) {
     next(err);
   }
@@ -121,4 +230,6 @@ module.exports = {
   addDevice,
   deleteDevice,
   toggleOnOff,
+  getRoomDevices,
+  getDeviceAnalytics,
 };

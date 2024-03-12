@@ -8,10 +8,22 @@ require("../../db/associations.js");
 const System = require("../../models/systemModel.js");
 const TimeAutomation = require("../../models/timeAutomationModel.js");
 
+const bcrypt = require("bcryptjs");
+
 beforeAll(async () => {
   await sequelize.sync({ force: true });
+
   const system = await System.create({
     name: "Test System",
+  });
+
+  const user = await system.createUser({
+    name: "Test User",
+    email: "test@test.test",
+    password: bcrypt.hashSync("password", 10),
+    role: "owner",
+    is_registered: true,
+    system_id: system.id,
   });
 
   const room = await system.createRoom({
@@ -40,9 +52,17 @@ beforeAll(async () => {
     name: "Test Automation",
     weekdays: 127,
     time: "12:00",
-    active: true,
+    disabled: true,
     system_id: system.id,
   });
+
+  const response = await request(app)
+    .post("/api/v1/login")
+    .send({ email: "test@test.test", password: "password" });
+
+  token = response.body.token;
+  expect(token).toBeDefined();
+  expect(typeof token).toBe("string");
 });
 
 afterAll(async () => {
@@ -51,7 +71,9 @@ afterAll(async () => {
 
 describe("GET /api/v1/automations", () => {
   it("should return all automations", async () => {
-    const response = await request(app).get("/api/v1/automations");
+    const response = await request(app)
+      .get("/api/v1/automations")
+      .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBe(1);
@@ -64,29 +86,27 @@ describe("GET /api/v1/automations/:id", () => {
       name: "Test Automation 2",
       weekdays: 127,
       time: "12:00",
-      active: true,
+      disabled: true,
       devices: [
         {
           name: "Test Device",
-          type: "Light",
-          model: "BOB-LED",
+          type: "light",
           value: "on",
           data_type: "boolean",
-          role_access: "resident",
         },
       ],
       system_id: 1,
     });
 
-    const response = await request(app).get(
-      `/api/v1/automations/timer/${newAutomation.id}`
-    );
+    const response = await request(app)
+      .get(`/api/v1/automations/timer/${newAutomation.id}`)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id", newAutomation.id);
     expect(response.body).toHaveProperty("weekdays");
     expect(response.body).toHaveProperty("time", "12:00");
-    expect(response.body).toHaveProperty("active", true);
+    expect(response.body).toHaveProperty("disabled", true);
     expect(response.body).toHaveProperty("name", "Test Automation 2");
     expect(response.body).toHaveProperty("type", "timer");
   });
@@ -106,7 +126,7 @@ describe("POST /api/v1/automations/timer", () => {
         sunday: true,
       },
       time: "12:00",
-      active: true,
+      disabled: false,
       system_id: 1,
       devices: [
         {
@@ -117,13 +137,14 @@ describe("POST /api/v1/automations/timer", () => {
 
     const response = await request(app)
       .post("/api/v1/automations/timer")
-      .send(newAutomationData);
+      .send(newAutomationData)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("weekdays");
     expect(response.body).toHaveProperty("time", "12:00");
-    expect(response.body).toHaveProperty("active", true);
+    expect(response.body).toHaveProperty("disabled", false);
     expect(response.body).toHaveProperty("name", "Test Automation 3");
   });
 }, 10000);
@@ -152,7 +173,8 @@ describe("POST /api/v1/automations/timer", () => {
 
     const response = await request(app)
       .post("/api/v1/automations/timer")
-      .send(newAutomationData);
+      .send(newAutomationData)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(400);
   });
@@ -164,12 +186,13 @@ describe("PUT /api/v1/automations/timer/:id", () => {
       name: "Test Automation 4",
       weekdays: 127,
       time: "12:00",
-      active: true,
+      disabled: true,
       system_id: 1,
     });
 
     const updatedAutomationData = {
       name: "Updated Automation",
+      action: "on",
       weekdays: {
         monday: false,
         tuesday: false,
@@ -180,7 +203,7 @@ describe("PUT /api/v1/automations/timer/:id", () => {
         sunday: false,
       },
       time: "13:00",
-      active: false,
+      disabled: false,
       devices: [
         {
           id: 1,
@@ -190,13 +213,14 @@ describe("PUT /api/v1/automations/timer/:id", () => {
 
     const response = await request(app)
       .put(`/api/v1/automations/timer/${newAutomation.id}`)
-      .send(updatedAutomationData);
+      .send(updatedAutomationData)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id", newAutomation.id);
     expect(response.body).toHaveProperty("weekdays");
     expect(response.body).toHaveProperty("time", "13:00");
-    expect(response.body).toHaveProperty("active", false);
+    expect(response.body).toHaveProperty("disabled", false);
     expect(response.body).toHaveProperty("name", "Updated Automation");
   });
 }, 10000);
@@ -215,7 +239,7 @@ describe("PUT /api/v1/automations/timer/:id", () => {
         sunday: false,
       },
       time: "13:00",
-      active: false,
+      disabled: false,
       devices: [
         {
           id: 1,
@@ -225,7 +249,8 @@ describe("PUT /api/v1/automations/timer/:id", () => {
 
     const response = await request(app)
       .put(`/api/v1/automations/timer/9999`)
-      .send(updatedAutomationData);
+      .send(updatedAutomationData)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(404);
   });
@@ -237,19 +262,19 @@ describe("DELETE /api/v1/automations/timer/:id", () => {
       name: "Test Automation 5",
       weekdays: 127,
       time: "12:00",
-      active: true,
+      disabled: true,
       system_id: 1,
     });
 
-    const response = await request(app).delete(
-      `/api/v1/automations/timer/${newAutomation.id}`
-    );
+    const response = await request(app)
+      .delete(`/api/v1/automations/timer/${newAutomation.id}`)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id", newAutomation.id);
     expect(response.body).toHaveProperty("weekdays");
     expect(response.body).toHaveProperty("time", "12:00");
-    expect(response.body).toHaveProperty("active", true);
+    expect(response.body).toHaveProperty("disabled", true);
     expect(response.body).toHaveProperty("name", "Test Automation 5");
 
     const deletedAutomation = await TimeAutomation.findOne({
@@ -261,9 +286,9 @@ describe("DELETE /api/v1/automations/timer/:id", () => {
   });
 
   it("should return 404 if automation with given id does not exist", async () => {
-    const response = await request(app).delete(
-      `/api/v1/automations/timer/9999`
-    );
+    const response = await request(app)
+      .delete(`/api/v1/automations/timer/9999`)
+      .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(404);
   });

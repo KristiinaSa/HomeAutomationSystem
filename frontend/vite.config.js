@@ -10,13 +10,18 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
-        "/api": `http://localhost:${env.VITE_PROXY_PORT || 3000}`,
+        "/api": `http://${env.VITE_PROXY_HOST || "localhost"}:${
+          env.VITE_PROXY_PORT || 3000
+        }`,
       },
     },
     test: {
       globals: true,
       environment: "jsdom",
       setupFiles: "setupTests.js",
+      coverage: {
+        exclude: ["**/util/**", "**/hooks/**", "**/dummyData/**"],
+      }
     },
   };
 });

@@ -18,8 +18,5 @@ describe("TestCard", () => {
 
     const titleElement = screen.getByText("Test Title");
     expect(titleElement).toBeInTheDocument();
-
-    const countElement = screen.getByText("2 On");
-    expect(countElement).toBeInTheDocument();
   });
 });

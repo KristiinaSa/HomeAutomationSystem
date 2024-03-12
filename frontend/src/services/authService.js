@@ -38,7 +38,7 @@ const register = async (name, email, password) => {
       email,
       password,
     });
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       return response.data;
     } else {
       throw new Error(`Request failed with status code ${response.status}`);

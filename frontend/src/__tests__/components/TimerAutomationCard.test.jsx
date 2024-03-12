@@ -18,7 +18,7 @@ describe("TimerAutomationCard", () => {
         sunday: true,
       },
       time: "22:00",
-      active: true,
+      disabled: true,
       type: "timer",
       devices: [
         {

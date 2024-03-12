@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import "./Header.css";
@@ -45,7 +45,7 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -54,34 +54,42 @@ const Header = () => {
     logout();
     navigate("/login");
   };
-  
-  const menuItems = [
-    {
-      icon: faLightbulb,
-      text: "Add device",
-      path: "/add-device",
-    },
-    { icon: faHouseLaptop, text: "Accessories", path: "/accessories" },
-    { icon: faTachometerAlt, text: "Add automation", path: "/automations/new" },
-    {
-      icon: faArrowCircleRight,
-      text: "Add room",
-      onClick: () => {
-        console.log("Add room clicked");
-      },
-    },
-    {
-      icon: faUser,
-      text: "Add users",
-      onClick: () => {
-        console.log("Add users clicked");
-      },
-    },
-    isLoggedIn
-      ? { icon: faSignOut, text: "Log out", onClick: handleLogout }
-      : { icon: faSignIn, text: "Log in", path: "/login" },
-    !isLoggedIn && { icon: faAddressBook, text: "Register", path: "/register" },
-  ];
+
+  const handleClick = (e) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+    }
+  };
+
+  const menuItems = isLoggedIn
+    ? [
+        {
+          icon: faLightbulb,
+          text: "Add device",
+          path: "/add-device",
+        },
+        { icon: faHouseLaptop, text: "Accessories", path: "/accessories" },
+        {
+          icon: faTachometerAlt,
+          text: "Add automation",
+          path: "/automations/new",
+        },
+        {
+          icon: faArrowCircleRight,
+          text: "Add room",
+          path: "/add-room",
+        },
+        {
+          icon: faUser,
+          text: "Add users",
+          path: "/settings",
+        },
+        { icon: faSignOut, text: "Log out", onClick: handleLogout },
+      ]
+    : [
+        { icon: faSignIn, text: "Log in", path: "/login" },
+        { icon: faAddressBook, text: "Register", path: "/register" },
+      ];
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {
@@ -103,7 +111,13 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
-      <NavLink to="/" className="header-item home-icon">
+      <NavLink
+        to="/"
+        className="header-item home-icon"
+        onClick={(e) => {
+          handleClick(e);
+        }}
+      >
         <FontAwesomeIcon icon={faHome} className="header-icon" />
       </NavLink>
       <div className="header-item">

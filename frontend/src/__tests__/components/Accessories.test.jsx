@@ -1,16 +1,22 @@
 import { describe, it, vi, beforeEach, expect } from "vitest";
-import { render, fireEvent, screen } from "@testing-library/react";
-import AccessoriesPage from "../pages/AccessoriesPage";
-import * as accessoryServices from "../services/accessoryServices";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import Accessories from "../../components/Accessories";
+import * as accessoryServices from "../../services/accessoryServices";
 import { MemoryRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
+import { DeviceContext } from "../../context/DeviceContext";
 
-vi.mock("../services/accessoryServices", () => ({
-  getDevices: vi.fn(),
+vi.mock("../../services/accessoryServices", () => ({
+
   deleteDevice: vi.fn(),
 }));
 
 const navigate = vi.fn();
+
+const mockDevices = [
+  { id: 1, name: "Device 1", type: "Type A" },
+  { id: 2, name: "Device 2", type: "Type B" },
+];
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom"); // Import actual implementations
@@ -20,18 +26,23 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-describe("AccessoriesPage", () => {
+describe("Accessories", () => {
     beforeEach(() => {
         navigate.mockClear();
     });
 
   it("fetches and displays devices correctly", async () => {
-    accessoryServices.getDevices.mockResolvedValue([
-      { id: 1, name: "Device 1", type: "Type A" },
-      { id: 2, name: "Device 2", type: "Type B" },
-    ]);
+    // accessoryServices.getDevices.mockResolvedValue([
+    //   { id: 1, name: "Device 1", type: "Type A" },
+    //   { id: 2, name: "Device 2", type: "Type B" },
+    // ]);
 
-    render(<AccessoriesPage />, { wrapper: MemoryRouter });
+    
+
+    render(
+    <DeviceContext.Provider value={{ devices: mockDevices }}>
+    <Accessories />
+    </DeviceContext.Provider>, { wrapper: MemoryRouter });
 
     expect(await screen.findByText("Device 1")).toBeInTheDocument();
     expect(screen.getByText("Type A")).toBeInTheDocument();
@@ -41,7 +52,10 @@ describe("AccessoriesPage", () => {
 
   it("navigates to add device page on button click", async () => {
 
-    render(<AccessoriesPage />, { wrapper: MemoryRouter });
+    render(
+      <DeviceContext.Provider value={{ devices: mockDevices }}>
+      <Accessories />
+      </DeviceContext.Provider>, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByRole("button", { name: "Add device" }));
     expect(navigate).toHaveBeenCalledWith("/add-device");
@@ -49,7 +63,10 @@ describe("AccessoriesPage", () => {
 
   it("navigates to analytics page on button click", async () => {
 
-    render(<AccessoriesPage />, { wrapper: MemoryRouter });
+    render(
+      <DeviceContext.Provider value={{ devices: mockDevices }}>
+      <Accessories />
+      </DeviceContext.Provider>, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByText("Show analytics"));
     expect(navigate).toHaveBeenCalledWith("/analytics");
@@ -57,14 +74,13 @@ describe("AccessoriesPage", () => {
 
   it("deletes a device on delete icon click", async () => {
     window.confirm = vi.fn().mockReturnValue(true);
-    accessoryServices.getDevices.mockResolvedValue([
-      { id: 1, name: "Device 1", type: "Type A" },
-    ]);
-    accessoryServices.deleteDevice.mockResolvedValue();
+    const setUpdate = vi.fn();
+    accessoryServices.deleteDevice.mockResolvedValue({});
 
-    const { findByTestId } = render(<AccessoriesPage />, {
-      wrapper: MemoryRouter,
-    });
+    const { findByTestId } = render(
+      <DeviceContext.Provider value={{ devices: mockDevices, setUpdate }}>
+      <Accessories />
+      </DeviceContext.Provider>, { wrapper: MemoryRouter });
 
     await screen.findByText("Device 1"); 
     const deleteButton = await findByTestId("delete-1");
@@ -78,6 +94,9 @@ describe("AccessoriesPage", () => {
     expect(window.confirm).toHaveBeenCalledWith(
       "Are you sure you want to delete this device?"
     );
-    expect(accessoryServices.deleteDevice).toHaveBeenCalledWith(1);
+    await waitFor(() => {
+      expect(accessoryServices.deleteDevice).toHaveBeenCalledWith(1);
+      expect(setUpdate).toHaveBeenCalledWith(true);
+    });
   });
 });

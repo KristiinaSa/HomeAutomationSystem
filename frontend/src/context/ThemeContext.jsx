@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { themeToggler } from "./services/userServices";
+import { themeToggler } from "../services/userServices";
 
 export const ThemeContext = createContext();
 
@@ -33,7 +33,6 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 

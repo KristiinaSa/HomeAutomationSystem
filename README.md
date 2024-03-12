@@ -1,35 +1,121 @@
-# HomeAutomationSystem
+<h1 align="center">Smart Home Mate</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="NodeJS">
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white" alt="MariaDB">
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React">
+  <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB" alt="Express.js">
+  <img src="https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white" alt="Jenkins">
+  <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+</p>
+
+## Description
+
+Home Smart Mate is a web-based application designed to simplify the management and automation of smart home devices. This application offers a responsive, user-friendly interface and robust server-side capabilities for efficient smart home integration.
+
+### Core Functionality:
+
+#### Device Management:
+
+Users can control and manage smart home devices through a single, centralized platform. This integration aims to provide convenience and ease of use, allowing for real-time adjustments and monitoring.
+
+#### Automation Setup:
+
+The application supports the creation of custom automation rules, enabling devices to operate based on specific conditions or schedules. This feature allows users to automate routine tasks, such as turning on/off lights, enhancing both comfort and energy efficiency.
+
+#### Room and Device Organization:
+
+As users expand their smart home setups, Home Smart Mate facilitates the addition of new rooms and devices. This organizational tool helps maintain clarity and control as the complexity of the smart environment grows.
+
+#### User Invitations:
+
+To accommodate multiple users within a household, the application offers the ability to invite additional users. This feature supports varying levels of access permissions, ensuring that each user can interact with the smart home setup according to their needs.
+
+#### Analytics Dashboard:
+
+Home Smart Mate includes an analytics dashboard that provides insights into device usage patterns. By analyzing data on how and when devices are used, users can make informed decisions to optimize their smart home setups for both efficiency and cost-effectiveness.
+
+## Requirements
+
+```
+Node.js >= 18
+MariaDB
+```
+
+## Setup process
+
+### Setting Up Home Automation System
+
+This guide walks you through setting up the Home Automation System locally.
+
+**Cloning the Repository:**
+
+- Open your terminal and run the following command to clone the repository:
+
+`git clone https://github.com/KristiinaSa/HomeAutomationSystem.git`
+
+**Installing Dependencies:**
+
+- Navigate to the project directory:
+- Install dependencies in both backend and frontend folders:
+  `npm install`
+
+**Database Setup:**
+See the detailed instructions in the [Database Setup](#db-setup) section below.
+
+**Environment Variables:**
+
+- Edit the `.env` files in both `/backend` and `/frontend` folders.
+- Set the port you want to use (e.g., 3000).
+- Add your database credentials to the backend `.env` file.
+- Generate a JWT secret using: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+
+* Copy the generated value to the `JWT_SECRET` field in the backend `.env` file.
+* In the `/frontend` `.env` file, set the `VITE_PROXY_PORT` to the same port used in the backend.
+
+**Starting the Application:**
+
+- Open two terminal windows.
+- In one terminal, navigate to the `/backend` folder and run: `npm run dev`
+- In the other terminal, navigate to the `/frontend` folder and run: `npm run dev`
+
+This will start both the server and the web application.
 
 ## .env for BACKEND
 
 ```
+
 PORT=
-DB_HOST=localhost
+DB_HOST=localhosthttps://github.com/Nischhal3/Health-Guard/tree/main?tab=readme-ov-file
 DB_NAME=homeautomation
 DB_USER=
 DB_PASSWORD=
 TEST_DB_NAME=homeautomation_test
 TEST_DB_USER=
 TEST_DB_PASSWORD=
+JWT_SECRET=
+
 ```
 
 ### .env for FRONTEND
 
 ```
+
 VITE_PROXY_PORT=
+
 ```
 
 ## DB Setup
 
 1. **Create Databases**:
 
-- Use HeidiSQL or the MariaDB command line to create two databases:
+- Create two databases in MariaDB:
   - Name the first database 'homeautomation'
   - Name the second database 'homeautomation_test'
 
 2. **Create Tables**:
 
-- Run the following command while in your __backend folder__:
+- Run the following command while in your **backend folder**:
   - `node db/createTables.js`
 - Verify that the tables were created correctly in the 'homeautomation' database.
 
@@ -37,6 +123,6 @@ VITE_PROXY_PORT=
 
 - Run this command in the same terminal window:
   - `node db/addData.js`
-- Check the 'homeautomation' database to make sure the dummy data was added (__not all tables currently get dummy data, easiest way to confirm is to check the system table for an entry__).
+- Check the 'homeautomation' database to make sure the dummy data was added (**not all tables currently get dummy data, easiest way to confirm is to check the system table for an entry**).
 
 **'homeautomation_test'** tables should be automatically generated by tests and don't need any manual operations.
