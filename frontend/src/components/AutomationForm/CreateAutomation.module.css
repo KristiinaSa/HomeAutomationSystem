@@ -76,7 +76,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #d9d9d9;
+  background: var(--day-circle-inactive-color);
   color: var(--primary-text-color-mobile);
   text-align: center;
   margin-right: 10px;
