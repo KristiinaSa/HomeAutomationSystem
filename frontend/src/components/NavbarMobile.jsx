@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faTachometerAlt, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faTachometerAlt, faCog, faHouseLaptop } from '@fortawesome/free-solid-svg-icons'
 import { NavLink } from 'react-router-dom'
 import './NavbarMobile.css'
 import { AuthContext } from '../context/AuthContext';
@@ -41,6 +41,15 @@ const NavbarMobile = () => {
         <div className='navbar-mobile_item'>
         <FontAwesomeIcon icon={faCog} className='navbar-mobile-icon'/>
             Settings
+        </div>
+      </NavLink>
+      <NavLink to='/accessories' className={({ isActive}) => 
+      isActive ? "active" : "navbar-link"}
+      onClick={(e) => {handleClick(e)}}
+      >
+        <div className='navbar-mobile_item'>
+        <FontAwesomeIcon icon={faHouseLaptop} className='navbar-mobile-icon'/>
+            Accessories
         </div>
       </NavLink>
         
