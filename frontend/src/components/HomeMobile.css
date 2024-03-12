@@ -1,5 +1,7 @@
 @media screen and (max-width: 768px) {
-
+  .home-container {
+    margin-bottom: 88px;
+  }
   .home-link {
     text-decoration: none;
     color: var(--primary-text-color-mobile);
