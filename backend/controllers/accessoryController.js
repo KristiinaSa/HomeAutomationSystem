@@ -237,13 +237,12 @@ const updateDeviceStatus = async (req, res, next) => {
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders();
 
-  // Add the response object to the list of connected clients for this system
+  // Siirrä REDIS-tietokantaan tulevaisuudessa
   if (!clients.has(system_id)) {
     clients.set(system_id, []);
   }
   clients.get(system_id).push(res);
 
-  // Listen for the 'devicesUpdated' event and send an update to the frontend when the event is fired
   eventEmitter.on("devicesUpdated", (updatedSystemId) => {
     if (updatedSystemId === system_id) {
       res.write(`data: ${JSON.stringify({ systemId: updatedSystemId })}\n\n`);
@@ -251,7 +250,6 @@ const updateDeviceStatus = async (req, res, next) => {
   });
 
   req.on("close", () => {
-    // Remove the response object from the list of connected clients when the connection is closed
     const systemClients = clients.get(system_id);
     const index = systemClients.indexOf(res);
     if (index !== -1) {
