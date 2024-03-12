@@ -53,13 +53,27 @@ pipeline {
         stage('Build and Run Docker Compose') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh 'docker-compose build'
-                        sh 'docker-compose up -d'
-                    } else {
-                        bat 'docker-compose build'
-                        bat 'docker-compose up -d'
+                    withCredentials([
+                    string(credentialsId: 'port', variable: 'PORT'),
+                    string(credentialsId: 'db-host', variable: 'DB_HOST'),
+                    string(credentialsId: 'db-name', variable: 'DB_NAME'),
+                    usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
+                    string(credentialsId: 'test-db_name', variable: 'TEST_DB_NAME'),
+                    usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
+                    string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET'),
+                    ]) {
+                        env.DB_HOST = "${DB_HOST}"
+                        env.DB_NAME = "${DB_NAME}"
+                        env.DB_USER = "${DB_USER}"
+                        env.DB_PASSWORD = "${DB_PASSWORD}"
+                        env.TEST_DB_NAME = "${TEST_DB_NAME}"
+                        env.TEST_DB_USER = "${TEST_DB_USER}"
+                        env.TEST_DB_PASSWORD = "${TEST_DB_PASSWORD}"
+                        env.JWT_SECRET = "${JWT_SECRET}"
+                        env.PORT = "${PORT}"
                     }
+                    sh 'docker-compose build'
+                    sh 'docker-compose up -d'
                 }
             }
         }
