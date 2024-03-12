@@ -4,3 +4,6 @@
 frontend/.env
 
 .DS_Store
+
+backend/coverage/
+frontend/coverage/
