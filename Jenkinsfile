@@ -1,6 +1,7 @@
 /* groovylint-disable NestedBlockDepth */
 pipeline {
     agent any
+
     stages {
         stage('Install Dependencies & Run Tests') {
             parallel {
@@ -51,15 +52,13 @@ pipeline {
         }
         stage('Build and Run Docker Compose') {
             steps {
-             {
-                    script {
-                        if (isUnix()) {
-                            sh 'docker-compose build'
-                            sh 'docker-compose up -d'
-                        } else {
-                            bat 'docker-compose build'
-                            bat 'docker-compose up -d'
-                        }
+                script {
+                    if (isUnix()) {
+                        sh 'docker-compose build'
+                        sh 'docker-compose up -d'
+                    } else {
+                        bat 'docker-compose build'
+                        bat 'docker-compose up -d'
                     }
                 }
             }
