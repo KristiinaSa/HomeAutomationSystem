@@ -1,7 +1,13 @@
 /* groovylint-disable NestedBlockDepth */
 pipeline {
     agent any
-
+    environment {
+        DB_HOST = credentials('db-host')
+        DB_NAME = credentials('db-name')
+        TEST_DB_NAME = credentials('test-db-name')
+        JWT_SECRET = credentials('jwt-secret')
+        PORT = credentials('port')
+    }
     stages {
         stage('Install Dependencies & Run Tests') {
             parallel {
@@ -25,12 +31,8 @@ pipeline {
                 stage('Backend') {
                     steps {
                         withCredentials([
-                    string(credentialsId: 'db-host', variable: 'DB_HOST'),
-                    string(credentialsId: 'db-name', variable: 'DB_NAME'),
                     usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
-                    string(credentialsId: 'test-db-name', variable: 'TEST_DB_NAME'),
                     usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
-                    string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET')
                 ]) {
                             dir('backend') {
                                 script {
@@ -54,13 +56,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                    string(credentialsId: 'port', variable: 'PORT'),
-                    string(credentialsId: 'db-host', variable: 'DB_HOST'),
-                    string(credentialsId: 'db-name', variable: 'DB_NAME'),
                     usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
-                    string(credentialsId: 'test-db-name', variable: 'TEST_DB_NAME'),
                     usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
-                    string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET'),
                     ]) {
                         env.DB_HOST = "${DB_HOST}"
                         env.DB_NAME = "${DB_NAME}"
