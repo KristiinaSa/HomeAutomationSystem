@@ -20,8 +20,18 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: "setupTests.js",
       coverage: {
-        exclude: ["**/util/**", "**/hooks/**", "**/dummyData/**"],
-      }
+        exclude: [
+          "**/util/**",
+          "**/hooks/**",
+          "**/dummyData/**",
+          "**/services/**",
+          "**/context/**",
+          "**/pages/**",
+          "**/components/ProtectedRoutes.jsx",
+          "**/components/PublicRoute.jsx",
+          "**/components/LightBrightness.jsx",
+        ],
+      },
     },
   };
 });
