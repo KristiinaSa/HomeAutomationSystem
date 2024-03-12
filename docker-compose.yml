@@ -14,9 +14,15 @@ services:
       - ./backend:/app
       - /app/node_modules
     environment:
-      - PORT=3001
+      - PORT=${PORT}
       - DB_HOST=mariadb
-      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - TEST_DB_NAME=${TEST_DB_NAME}
+      - TEST_DB_USER=${TEST_DB_USER}
+      - TEST_DB_PASSWORD=${TEST_DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
   frontend:
     build: ./frontend
     networks:
@@ -27,15 +33,15 @@ services:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - VITE_PROXY_PORT=3001
+      - VITE_PROXY_PORT=${PORT}
       - VITE_PROXY_HOST=backend
   mariadb:
     image: mariadb:latest
     networks:
       - homeautomation
     environment:
-      MYSQL_ROOT_PASSWORD: 7hXr6VUUB9zyaAC8eaUy
-      MYSQL_DATABASE: homeautomation
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
     volumes:
       - db-data:/var/lib/mysql
 volumes:
