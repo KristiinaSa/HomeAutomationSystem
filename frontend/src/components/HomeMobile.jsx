@@ -6,7 +6,7 @@ import { DeviceContext } from "../context/DeviceContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
-import { useToggle } from "../hooks/useToggle";
+import useToggle from "../hooks/useToggle";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 
 const HomeMobile = () => {
@@ -60,7 +60,7 @@ const HomeMobile = () => {
                   .filter((device) => device.room_id === room.id)
                   .map((device) => (
                     <TestCard
-                      id={device.id}
+                      key={device.id}
                       title={device.name}
                       icon={
                         (device.type === "light") | (device.type === "Light")
@@ -68,7 +68,7 @@ const HomeMobile = () => {
                           : ""
                       }
                       status={device.value}
-                      handleToggle={handleToggle}
+                      onClick={() => handleToggle(device.id)}
                     />
                   ))}
             </div>
