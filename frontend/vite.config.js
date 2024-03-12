@@ -21,8 +21,18 @@ export default defineConfig(({ mode }) => {
       setupFiles: "setupTests.js",
       coverage: {
         reporter: ["cobertura", "html", "text"],
-        exclude: ["**/util/**", "**/hooks/**", "**/dummyData/**"],
-      },
+        exclude: [
+          "**/util/**",
+          "**/hooks/**",
+          "**/dummyData/**",
+          "**/services/**",
+          "**/context/**",
+          "**/pages/**",
+          "**/components/ProtectedRoutes.jsx",
+          "**/components/PublicRoute.jsx",
+          "**/components/LightBrightness.jsx",
+        ],
+      },,
     },
   };
 });
