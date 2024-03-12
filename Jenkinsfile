@@ -1,28 +1,7 @@
 /* groovylint-disable NestedBlockDepth */
 pipeline {
     agent any
-        environment {
-        def generateEnvFile() {
-            def envVars = withCredentials([
-                string(credentialsId: 'db-host', variable: 'DB_HOST'),
-                string(credentialsId: 'db-name', variable: 'DB_NAME'),
-                usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
-                string(credentialsId: 'test-db-name', variable: 'TEST_DB_NAME'),
-                usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
-                string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET')
-            ]) {
-                return envVars.collect { "${it.key}=${it.value}" }.join('\n')
-            }
-        }
-    }
-
     stages {
-        stage('Generate .env File') {
-            steps {
-                def envFileContent = generateEnvFile()
-                writeFile file: '.env', text: envFileContent
-            }
-        }
         stage('Install Dependencies & Run Tests') {
             parallel {
                 stage('Frontend') {
@@ -72,15 +51,7 @@ pipeline {
         }
         stage('Build and Run Docker Compose') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'port', variable: 'PORT'),
-                    string(credentialsId: 'db-host', variable: 'DB_HOST'),
-                    string(credentialsId: 'db-name', variable: 'DB_NAME'),
-                    usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
-                    string(credentialsId: 'test-db_name', variable: 'TEST_DB_NAME'),
-                    usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
-                    string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET'),
-                ]) {
+             {
                     script {
                         if (isUnix()) {
                             sh 'docker-compose build'
@@ -90,7 +61,7 @@ pipeline {
                             bat 'docker-compose up -d'
                         }
                     }
-}
+                }
             }
         }
         stage('Push Docker Images') {
