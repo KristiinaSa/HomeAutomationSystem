@@ -2,6 +2,8 @@ const Sequelize = require("sequelize");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const Device = require("../models/deviceModel.js");
 const { Op } = require("sequelize");
+const events = require("events");
+const eventEmitter = new events.EventEmitter();
 
 const checkAutomations = async () => {
   const now = new Date();
@@ -22,7 +24,7 @@ const checkAutomations = async () => {
     },
     include: {
       model: Device,
-      attributes: ["id"],
+      attributes: ["id", "system_id"], // Include system_id
       through: { attributes: [] },
     },
   });
@@ -30,16 +32,18 @@ const checkAutomations = async () => {
   console.log(automations);
 
   automations.forEach((automation) => {
-    console.log(`Running automation: ${automation.name}`);
+    //console.log(`Running automation: ${automation.name}`);
     automation.devices.forEach(async (device) => {
       try {
         await Device.update(
           { value: automation.action },
           { where: { id: device.id } }
         );
-        console.log(
-          `Updated device ${device.id} value to ${automation.action}`
-        );
+        //console.log(
+        //`Updated device ${device.id} value to ${automation.action}`
+        //);
+
+        eventEmitter.emit("devicesUpdated", device.system_id);
       } catch (error) {
         console.error(`Failed to update device ${device.id}: ${error}`);
       }
@@ -47,4 +51,4 @@ const checkAutomations = async () => {
   });
 };
 
-module.exports = checkAutomations;
+module.exports = { checkAutomations, eventEmitter };

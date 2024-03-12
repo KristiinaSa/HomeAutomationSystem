@@ -59,7 +59,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       name,
       weekdays: selectedDays,
       time,
-      devices,
+      devices: automationDevices,
       disabled: isDisabled,
       type: automation ? automation.type : "timer",
       action: actionType,

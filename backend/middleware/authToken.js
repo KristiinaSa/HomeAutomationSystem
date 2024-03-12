@@ -1,16 +1,22 @@
 const jwt = require("jsonwebtoken");
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+function authenticateToken(req, res, next) {
+  // Try to get the token from the Authorization header
+  const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token == null) return res.sendStatus(401);
+  // If no token in the Authorization header, try to get it from the query parameters
+  const queryToken = req.query.access_token;
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  const finalToken = token || queryToken;
+
+  if (finalToken == null) return res.sendStatus(401);
+
+  jwt.verify(finalToken, process.env.JWT_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
     next();
   });
-};
+}
 
 module.exports = authenticateToken;

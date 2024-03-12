@@ -8,7 +8,7 @@ const notFoundHandler = require("./middleware/notFoundHandler.js");
 
 const apiV1Router = require("./routes/v1/apiV1Router.js");
 
-const checkAutomations = require("./services/automationChecker.js");
+const { checkAutomations } = require("./services/automationChecker.js");
 
 const app = express();
 

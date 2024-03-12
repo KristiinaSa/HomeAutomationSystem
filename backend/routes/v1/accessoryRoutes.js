@@ -10,6 +10,7 @@ const {
   toggleOnOff,
   getRoomDevices,
   getDeviceAnalytics,
+  updateDeviceStatus,
 } = require("../../controllers/accessoryController.js");
 
 const authenticateToken = require("../../middleware/authToken.js");
@@ -30,5 +31,7 @@ router.post("/toggle/:id", authenticateToken, getUserData, toggleOnOff);
 router.get("/room-devices/:id", getRoomDevices);
 
 router.get("/analytics/", getDeviceAnalytics);
+
+router.get("/status/", authenticateToken, getUserData, updateDeviceStatus);
 
 module.exports = router;
