@@ -26,12 +26,12 @@ router.post("/add-device", addDevice);
 
 router.delete("/delete-device/:id", deleteDevice);
 
-router.post("/toggle/:id", authenticateToken, getUserData, toggleOnOff);
+router.post("/toggle/:id", toggleOnOff);
 
 router.get("/room-devices/:id", getRoomDevices);
 
 router.get("/analytics/", getDeviceAnalytics);
 
-router.get("/status/", authenticateToken, getUserData, updateDeviceStatus);
+router.get("/status/", updateDeviceStatus);
 
 module.exports = router;
