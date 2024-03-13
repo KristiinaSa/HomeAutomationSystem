@@ -2,6 +2,7 @@ require("../db/associations.js");
 const { eventEmitter } = require("../services/automationChecker.js");
 
 const Device = require("../models/deviceModel.js");
+const User = require("../models/userModel.js");
 const Sensor = require("../models/sensorModel.js");
 const Room = require("../models/roomModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
@@ -173,6 +174,12 @@ const getDeviceAnalytics = async (req, res, next) => {
           [Op.gte]: startOfToday,
         },
       },
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+      ],
       order: [
         ["device_id", "ASC"],
         ["timestamp", "ASC"],
@@ -191,30 +198,36 @@ const getDeviceAnalytics = async (req, res, next) => {
     for (const device of devices) {
       let totalActiveTime = 0;
       const activePeriods = activePeriodsByDevice[device.id] || [];
-      for (let i = 0; i < activePeriods.length; i += 2) {
-        const periodStart = new Date(activePeriods[i].timestamp);
-        const periodEnd =
-          i + 1 < activePeriods.length
-            ? new Date(activePeriods[i + 1].timestamp)
-            : new Date();
-        if (periodStart < startOfToday && periodEnd >= startOfToday) {
-          totalActiveTime += periodEnd - startOfToday;
-        } else {
+      let periodStart;
+      for (const period of activePeriods) {
+        if (period.sensor_value === "on") {
+          periodStart = new Date(period.timestamp);
+        } else if (period.sensor_value === "off" && periodStart) {
+          const periodEnd = new Date(period.timestamp);
           totalActiveTime += periodEnd - periodStart;
+          periodStart = null;
         }
+      }
+
+      if (periodStart) {
+        totalActiveTime += new Date() - periodStart;
       }
 
       const totalActiveHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
       const totalActiveMinutes = Math.floor((totalActiveTime / 1000 / 60) % 60);
 
-      const lastInteractionDate = activePeriods[activePeriods.length - 1]
-        ? new Date(activePeriods[activePeriods.length - 1].timestamp)
+      const lastInteractionEntry = activePeriods[activePeriods.length - 1];
+      const lastInteractionDate = lastInteractionEntry
+        ? new Date(lastInteractionEntry.timestamp)
+        : undefined;
+      const lastInteractionUser = lastInteractionEntry
+        ? lastInteractionEntry.user.name
         : undefined;
       const lastInteractionTime = lastInteractionDate
         ? `${lastInteractionDate.toLocaleDateString()} ${lastInteractionDate.toLocaleTimeString(
             [],
             { hour: "2-digit", minute: "2-digit" }
-          )}`
+          )} by ${lastInteractionUser}`
         : undefined;
       result.push({
         id: device.id,
@@ -225,6 +238,8 @@ const getDeviceAnalytics = async (req, res, next) => {
         last_interaction: lastInteractionTime,
       });
     }
+
+    console.log("Device analytics:", result);
 
     res.send(result);
   } catch (err) {
