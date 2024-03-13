@@ -43,8 +43,8 @@ export const AutomationForm = () => {
   const handleSubmit = async (data, id) => {
     if (id) {
       if (data.type === "timer") {
+        console.log("Updating automation", id, data);
         await updateTimerAutomation(id, data);
-        console.log("Updating timer-based automation");
       }
     } else {
       if (data.type === "timer") {

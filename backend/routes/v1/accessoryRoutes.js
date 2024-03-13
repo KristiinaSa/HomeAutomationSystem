@@ -10,6 +10,7 @@ const {
   toggleOnOff,
   getRoomDevices,
   getDeviceAnalytics,
+  updateDeviceStatus,
 } = require("../../controllers/accessoryController.js");
 
 const authenticateToken = require("../../middleware/authToken.js");
@@ -25,10 +26,12 @@ router.post("/add-device", addDevice);
 
 router.delete("/delete-device/:id", deleteDevice);
 
-router.post("/toggle/:id", authenticateToken, getUserData, toggleOnOff);
+router.post("/toggle/:id", toggleOnOff);
 
 router.get("/room-devices/:id", getRoomDevices);
 
 router.get("/analytics/", getDeviceAnalytics);
+
+router.get("/status/", updateDeviceStatus);
 
 module.exports = router;
