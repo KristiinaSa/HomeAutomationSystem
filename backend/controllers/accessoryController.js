@@ -23,8 +23,10 @@ const getAllAccessories = async (req, res, next) => {
 };
 
 const getAllDevices = async (req, res, next) => {
+  const { system_id } = req.user;
   try {
     const devices = await Device.findAll({
+      where: { system_id },
       attributes: ["id", "name", "type", "room_id", "value"],
     });
     console.log("devices:", devices);
@@ -139,10 +141,11 @@ const getRoomDevices = async (req, res, next) => {
 };
 
 const getDeviceAnalytics = async (req, res, next) => {
+  const { system_id } = req.user;
   try {
     const devices = await Device.findAll({
       where: {
-        system_id: 1,
+        system_id: system_id,
       },
       include: [
         {

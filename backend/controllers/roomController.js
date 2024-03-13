@@ -4,7 +4,8 @@ const Room = require("../models/roomModel.js");
 
 const addRoom = async (req, res, next) => {
   try {
-    const { name, system_id } = req.body;
+    const { system_id } = req.user;
+    const { name } = req.body;
     const room = await Room.create({ name, system_id });
     res.send(room);
   } catch (err) {
@@ -14,11 +15,16 @@ const addRoom = async (req, res, next) => {
 
 const getRooms = async (req, res, next) => {
   try {
-    const rooms = await Room.findAll();
+    const { system_id } = req.user;
+    const rooms = await Room.findAll({
+      where: {
+        system_id,
+      },
+    });
     res.send(rooms);
   } catch (err) {
     next(err);
   }
-}
+};
 
-module.exports = { addRoom, getRooms};
+module.exports = { addRoom, getRooms };

@@ -10,8 +10,12 @@ const Device = require("../models/deviceModel.js");
 const { ACTION_TO_STRING, STRING_TO_ACTION } = require("./helpers.js");
 
 const getAutomations = async (req, res, next) => {
+  const { system_id } = req.user;
   try {
     let timeAutomations = await TimeAutomation.findAll({
+      where: {
+        system_id,
+      },
       attributes: [
         "id",
         "name",
@@ -29,6 +33,9 @@ const getAutomations = async (req, res, next) => {
     });
 
     let sensorAutomations = await SensorAutomation.findAll({
+      where: {
+        system_id,
+      },
       attributes: ["id", "active"],
       include: {
         model: Device,

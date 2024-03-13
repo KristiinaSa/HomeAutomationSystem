@@ -21,6 +21,7 @@ Room.belongsTo(System, { foreignKey: "system_id" });
 Room.hasMany(Sensor, { foreignKey: "room_id" });
 Room.hasMany(Device, { foreignKey: "room_id" });
 
+SensorAutomation.belongsTo(System, { foreignKey: "system_id" });
 SensorAutomation.belongsTo(Sensor, { foreignKey: "sensor_id" });
 SensorAutomation.belongsToMany(Device, { through: "sensor_controls" });
 
@@ -60,3 +61,4 @@ System.hasMany(Sensor, { foreignKey: "system_id" });
 System.hasMany(Device, { foreignKey: "system_id" });
 System.hasMany(User, { foreignKey: "system_id" });
 System.hasMany(TimeAutomation, { foreignKey: "system_id" });
+System.hasMany(SensorAutomation, { foreignKey: "system_id" });
