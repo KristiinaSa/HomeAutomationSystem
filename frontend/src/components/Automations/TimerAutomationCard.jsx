@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faArrowRight, faLightbulb, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from "./Automations.module.css";
 
@@ -36,21 +37,32 @@ export const TimerAutomationCard = ({ automation }) => {
   };
 
   return (
-    <div data-testid="automation-card">
-      <h2 data-testid="automation-name">{automation.name}</h2>
+    <div data-testid="automation-card" className={styles.automationCard}>
+      <div className={styles.leftside}>
+      <h3 data-testid="automation-name">{automation.name}</h3>
+      <div className={styles.automationIcons}>
+        <FontAwesomeIcon icon={faClock} size="2xl" />
+        <FontAwesomeIcon icon={faArrowRight} size="xl" />
+        <FontAwesomeIcon icon={faLightbulb} size="2xl" className={automation.action === "Turn On" ? 'icon-on' : 'icon-off'}/>
+      </div>
+      <div className={styles.automationDate}>
+      <p data-testid="automation-time">{automation.time}</p>
+      <p data-testid="automation-active-days">{activeDays.join(", ")}</p>
+      </div>
+      </div>
+      <div className={styles.info}>
       <p data-testid="automation-status">
         {automation.disabled ? "Disabled" : `${numDevices} accessories`}
       </p>
-      <p data-testid="automation-time">{automation.time}</p>
-      <p data-testid="automation-active-days">{activeDays.join(", ")}</p>
       <a
         onClick={handleEdit}
         aria-label="Edit"
         className={styles["edit-button"]}
         data-testid="edit-button"
       >
-        <FontAwesomeIcon icon="fa-solid fa-chevron-right" size="xl" />
+        <FontAwesomeIcon icon={faChevronRight} size="xl" />
       </a>
+      </div>
     </div>
   );
 };

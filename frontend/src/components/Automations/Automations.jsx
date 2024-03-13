@@ -24,15 +24,19 @@ export const Automations = () => {
   }, []);
 
   return (
+    <div className={styles.pageContainer}>
+      <h1>Automations</h1>
     <div
       className={styles.automationContainer}
       data-testid="automation-container"
     >
+      
       {automations.map((automation) =>
         automation.type === "timer" ? (
           <div
             key={automation.id}
             data-testid={`timer-automation-${automation.id}`}
+            className={styles.automationCard}
           >
             <TimerAutomationCard automation={automation} />
           </div>
@@ -45,8 +49,10 @@ export const Automations = () => {
           </div>
         )
       )}
-      <Link to="/automations/new" data-testid="create-automation-button">
-        <button>Create New Automation</button>
+      
+    </div>
+    <Link to="/automations/new" data-testid="create-automation-button">
+        <button className="primary-btn">Create New Automation</button>
       </Link>
     </div>
   );

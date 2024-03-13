@@ -73,10 +73,10 @@ export const AutomationForm = () => {
   return (
     <div className={styles.formContainer}>
       {!id && (
-        <>
-          <button onClick={() => setFormType("timer")}>Timer Mode</button>
-          <button onClick={() => setFormType("sensor")}>Sensor Mode</button>
-        </>
+        <div className={styles.buttonBox}>
+          <button onClick={() => setFormType("timer")} className="primary-btn">Timer Mode</button>
+          <button onClick={() => setFormType("sensor")} className="primary-btn">Sensor Mode</button>
+        </div>
       )}
 
       {automation ? (
