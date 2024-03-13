@@ -13,14 +13,21 @@ const statusRouter = require("./statusRouter.js");
 const authenticateToken = require("../../middleware/authToken.js");
 const getUserData = require("../../middleware/getUserData.js");
 
-apiV1Router.use("/automations", automationRouter);
-apiV1Router.use("/users", userRouter);
-apiV1Router.use("/rooms", roomRouter);
-apiV1Router.use("/accessories", accessoryRouter);
+apiV1Router.use(
+  "/automations",
+  authenticateToken,
+  getUserData,
+  automationRouter
+);
+apiV1Router.use("/users", authenticateToken, getUserData, userRouter);
+apiV1Router.use("/rooms", authenticateToken, getUserData, roomRouter);
+apiV1Router.use(
+  "/accessories",
+  authenticateToken,
+  getUserData,
+  accessoryRouter
+);
 apiV1Router.use("/login", loginRouter);
-apiV1Router.use("/status", statusRouter);
-apiV1Router.get("/", authenticateToken, getUserData, (req, res) => {
-  res.status(200).json({ message: "Welcome to the home automation API" });
-});
+apiV1Router.use("/status", authenticateToken, getUserData, statusRouter);
 
 module.exports = apiV1Router;

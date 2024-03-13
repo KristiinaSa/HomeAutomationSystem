@@ -16,6 +16,6 @@ router.delete("/delete-user/:id", deleteUser);
 
 router.patch("/change-role/:id", changeRole);
 
-router.post("/theme", authenticateToken, getUserData, themeToggler);
+router.post("/theme", themeToggler);
 
 module.exports = router;

@@ -1,10 +1,13 @@
 require("../db/associations.js");
+const { eventEmitter } = require("../services/automationChecker.js");
 
 const Device = require("../models/deviceModel.js");
 const Sensor = require("../models/sensorModel.js");
 const Room = require("../models/roomModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
 const { Op } = require("sequelize");
+
+const clients = new Map();
 
 const { TYPE_TO_DATA_TYPE } = require("./helpers.js");
 
@@ -119,6 +122,9 @@ const toggleOnOff = async (req, res, next) => {
     });
 
     console.log("Toggled device:", updatedDevice);
+
+    eventEmitter.emit("devicesUpdated", updatedDevice.system_id);
+
     res.send(updatedDevice);
   } catch (err) {
     next(err);
@@ -223,6 +229,35 @@ const getDeviceAnalytics = async (req, res, next) => {
   }
 };
 
+const updateDeviceStatus = async (req, res, next) => {
+  const { system_id } = req.user;
+
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.flushHeaders();
+
+  // Siirrä REDIS-tietokantaan tulevaisuudessa
+  if (!clients.has(system_id)) {
+    clients.set(system_id, []);
+  }
+  clients.get(system_id).push(res);
+
+  eventEmitter.on("devicesUpdated", (updatedSystemId) => {
+    if (updatedSystemId === system_id) {
+      res.write(`data: ${JSON.stringify({ systemId: updatedSystemId })}\n\n`);
+    }
+  });
+
+  req.on("close", () => {
+    const systemClients = clients.get(system_id);
+    const index = systemClients.indexOf(res);
+    if (index !== -1) {
+      systemClients.splice(index, 1);
+    }
+  });
+};
+
 module.exports = {
   getAllAccessories,
   getAllDevices,
@@ -232,4 +267,5 @@ module.exports = {
   toggleOnOff,
   getRoomDevices,
   getDeviceAnalytics,
+  updateDeviceStatus,
 };
