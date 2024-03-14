@@ -2,6 +2,8 @@ import React from "react";
 import { getByTestId, render, screen } from "@testing-library/react";
 import RoomInformation from "../../components/RoomInformation";
 import { RoomContext } from "../../context/RoomContext";
+import { DeviceProvider } from "../../context/DeviceContext.jsx";
+import { AuthProvider } from "../../context/AuthContext.jsx";
 
 test("renders RoomInformation component", () => {
   // Hardcoded room data
@@ -19,9 +21,13 @@ test("renders RoomInformation component", () => {
 
   // Render RoomInformation component with hardcoded room data
   const { getByTestId } = render(
-    <RoomContext.Provider value={{ rooms }}>
-      <RoomInformation />
-    </RoomContext.Provider>
+    <AuthProvider>
+      <DeviceProvider>
+        <RoomContext.Provider value={{ rooms }}>
+          <RoomInformation />
+        </RoomContext.Provider>
+      </DeviceProvider>
+    </AuthProvider>
   );
 
   // Assertions
