@@ -1,6 +1,5 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import authService from "../services/authService";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -9,7 +8,6 @@ const useLogin = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const { setIsLoggedIn } = useContext(AuthContext);
   const { setTheme } = useContext(ThemeContext);
-  const navigate = useNavigate();
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -34,14 +32,6 @@ const useLogin = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (loginSuccess) {
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    }
-  }, [loginSuccess, navigate]);
 
   return {
     login,
