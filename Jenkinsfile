@@ -113,6 +113,13 @@ pipeline {
     }
     post {
         always {
+            script {
+                if (isUnix()) {
+                    sh 'docker-compose down'
+            } else {
+                    bat 'docker-compose down'
+                }
+            }
             cobertura coberturaReportFile: '**/coverage/cobertura-coverage.xml'
         }
     }
