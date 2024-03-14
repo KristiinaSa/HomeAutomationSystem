@@ -111,36 +111,34 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         data-testid="action-type"
       />
       <div className={styles.buttonsArea}>
-      <button
-        type="submit"
-        disabled={isButtonDisabled()}
-        className={
-          isButtonDisabled() ? styles.disabledButton : "primary-btn"
-        }
-        data-testid="submit-button"
-      >
-        {automation ? "Update Automation" : "Create New Automation"}
-      </button>
-      {automation && (
-        <button className="secondary-btn"
-        onClick={() => handleDelete(automation.id)}
-        aria-label="Delete"
-          style={{ cursor: "pointer" }}
-          data-testid="delete-button">
-        <FontAwesomeIcon
-          icon={faTrash}
-        />
-        Delete
+        <button
+          type="submit"
+          disabled={isButtonDisabled()}
+          className={isButtonDisabled() ? styles.disabledButton : "primary-btn"}
+          data-testid="submit-button"
+        >
+          {automation ? "Update Automation" : "Create New Automation"}
         </button>
-      )}
-      <button
-      type="button"
-      onClick={() => navigate(-1)}
-      className="secondary-btn"
-      data-testid="cancel-button"
-      >
-        Cancel
-      </button>
+        {automation && (
+          <button
+            className="secondary-btn"
+            onClick={() => handleDelete(automation.id)}
+            aria-label="Delete"
+            style={{ cursor: "pointer" }}
+            data-testid="delete-button"
+          >
+            <FontAwesomeIcon icon={faTrash} />
+            Delete
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="secondary-btn"
+          data-testid="cancel-button"
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );
