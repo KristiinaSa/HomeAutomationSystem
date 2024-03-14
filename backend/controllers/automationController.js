@@ -144,7 +144,6 @@ const addTimerAutomation = async (req, res, next) => {
 
     automationData.action =
       STRING_TO_ACTION[automationData.action.toLowerCase()];
-    console.log("automationData:", automationData.action);
 
     const newAutomation = await TimeAutomation.create({
       ...automationData,
