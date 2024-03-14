@@ -17,6 +17,14 @@ RUN npm ci
 # Copy the rest of the code to the working directory
 COPY . .
 
+# Declare build arguments
+ARG DB_HOST
+ARG DB_PORT
+
+# Convert build arguments to environment variables
+ENV DB_HOST=$DB_HOST
+ENV DB_PORT=$DB_PORT
+
 # Install wait-for-it
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
