@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "7hXr6VUUB9zyaAC8eaUy",
+    "password": "",
     "database": "homeautomation",
     "host": "127.0.0.1",
     "dialect": "mariadb"
   },
   "test": {
     "username": "root",
-    "password": "7hXr6VUUB9zyaAC8eaUy",
+    "password": "",
     "database": "homeautomation_test",
     "host": "127.0.0.1",
     "dialect": "mariadb"

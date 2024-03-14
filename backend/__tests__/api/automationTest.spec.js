@@ -41,7 +41,6 @@ beforeAll(async () => {
   await room.createDevice({
     name: "Table Lamp",
     type: "Light",
-    model: "BOB-LED",
     value: "on",
     data_type: "boolean",
     role_access: "resident",
@@ -54,6 +53,7 @@ beforeAll(async () => {
     time: "12:00",
     disabled: true,
     system_id: system.id,
+    action: "on",
   });
 
   const response = await request(app)
@@ -133,6 +133,7 @@ describe("POST /api/v1/automations/timer", () => {
           id: 1,
         },
       ],
+      action: "Turn On",
     };
 
     const response = await request(app)
@@ -169,6 +170,7 @@ describe("POST /api/v1/automations/timer", () => {
           id: 1,
         },
       ],
+      action: "Turn On",
     };
 
     const response = await request(app)
@@ -188,6 +190,7 @@ describe("PUT /api/v1/automations/timer/:id", () => {
       time: "12:00",
       disabled: true,
       system_id: 1,
+      action: "Turn On",
     });
 
     const updatedAutomationData = {
@@ -209,6 +212,7 @@ describe("PUT /api/v1/automations/timer/:id", () => {
           id: 1,
         },
       ],
+      action: "Turn Off",
     };
 
     const response = await request(app)
@@ -245,6 +249,7 @@ describe("PUT /api/v1/automations/timer/:id", () => {
           id: 1,
         },
       ],
+      action: "Turn Off",
     };
 
     const response = await request(app)
@@ -264,6 +269,7 @@ describe("DELETE /api/v1/automations/timer/:id", () => {
       time: "12:00",
       disabled: true,
       system_id: 1,
+      action: "Turn On",
     });
 
     const response = await request(app)
