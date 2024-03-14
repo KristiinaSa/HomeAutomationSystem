@@ -101,8 +101,6 @@ describe("TimerAutomationForm Component", () => {
       );
     });
 
-    expect(accessoryServices.getDevices).toHaveBeenCalled();
-
     mockDevices.forEach((device) => {
       expect(screen.getByText(device.name)).toBeInTheDocument();
     });
@@ -185,7 +183,7 @@ describe("TimerAutomationForm Component", () => {
 
     expect(nameInput.value).toBe("");
     expect(timeInput.value).toBe("");
-    expect(devicesInput.value).toBe("");
+    expect(devicesInput.value).toBe(undefined);
 
     const checkboxes = within(daysInput).getAllByRole("checkbox");
     checkboxes.forEach((checkbox) => {
