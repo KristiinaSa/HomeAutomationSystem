@@ -41,8 +41,8 @@ services:
     networks:
       - homeautomation
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_NAME}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_NAME}
     volumes:
       - db-data:/var/lib/mysql
 volumes:
