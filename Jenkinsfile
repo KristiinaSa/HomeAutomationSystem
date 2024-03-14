@@ -7,8 +7,6 @@ pipeline {
         TEST_DB_NAME = credentials('test-db-name')
         JWT_SECRET = credentials('jwt-secret')
         PORT = credentials('port')
-        DB_PORT = credentials('db-port')
-        VITE_PROXY_HOST = credentials('vite-proxy-host')
     }
     stages {
         stage('Install Dependencies & Run Tests') {
@@ -72,9 +70,11 @@ pipeline {
                         env.PORT = "${PORT}"
                     }
                     if (isUnix()) {
+                        sh 'docker-compose down'
                         sh 'docker-compose build'
                         sh 'docker-compose up -d'
                     } else {
+                        bat 'docker-compose down'
                         bat 'docker-compose build'
                         bat 'docker-compose up -d'
                     }
@@ -88,15 +88,23 @@ pipeline {
                         if (isUnix()) {
                             sh 'docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD'
                             sh 'docker tag homeautomationsystem-backend:latest $DOCKER_HUB_USERNAME/homeautomationsystem-backend:latest'
+                            sh 'docker tag homeautomationsystem-backend:latest $DOCKER_HUB_USERNAME/homeautomationsystem-backend:$BUILD_NUMBER'
                             sh 'docker push $DOCKER_HUB_USERNAME/homeautomationsystem-backend:latest'
+                            sh 'docker push $DOCKER_HUB_USERNAME/homeautomationsystem-backend:$BUILD_NUMBER'
                             sh 'docker tag homeautomationsystem-frontend:latest $DOCKER_HUB_USERNAME/homeautomationsystem-frontend:latest'
+                            sh 'docker tag homeautomationsystem-frontend:latest $DOCKER_HUB_USERNAME/homeautomationsystem-frontend:$BUILD_NUMBER'
                             sh 'docker push $DOCKER_HUB_USERNAME/homeautomationsystem-frontend:latest'
+                            sh 'docker push $DOCKER_HUB_USERNAME/homeautomationsystem-frontend:$BUILD_NUMBER'
                 } else {
                             bat 'docker login -u %DOCKER_HUB_USERNAME% -p %DOCKER_HUB_PASSWORD%'
                             bat 'docker tag homeautomationsystem-backend:latest %DOCKER_HUB_USERNAME%/homeautomationsystem-backend:latest'
+                            bat 'docker tag homeautomationsystem-backend:latest %DOCKER_HUB_USERNAME%/homeautomationsystem-backend:%BUILD_NUMBER%'
                             bat 'docker push %DOCKER_HUB_USERNAME%/homeautomationsystem-backend:latest'
+                            bat 'docker push %DOCKER_HUB_USERNAME%/homeautomationsystem-backend:%BUILD_NUMBER%'
                             bat 'docker tag homeautomationsystem-frontend:latest %DOCKER_HUB_USERNAME%/homeautomationsystem-frontend:latest'
+                            bat 'docker tag homeautomationsystem-frontend:latest %DOCKER_HUB_USERNAME%/homeautomationsystem-frontend:%BUILD_NUMBER%'
                             bat 'docker push %DOCKER_HUB_USERNAME%/homeautomationsystem-frontend:latest'
+                            bat 'docker push %DOCKER_HUB_USERNAME%/homeautomationsystem-frontend:%BUILD_NUMBER%'
                         }
                     }
                 }
@@ -105,13 +113,6 @@ pipeline {
     }
     post {
         always {
-            script {
-                if (isUnix()) {
-                    sh 'docker-compose down'
-            } else {
-                    bat 'docker-compose down'
-                }
-            }
             cobertura coberturaReportFile: '**/coverage/cobertura-coverage.xml'
         }
     }
