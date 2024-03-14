@@ -142,7 +142,9 @@ const addTimerAutomation = async (req, res, next) => {
       throw err;
     }
 
-    automationData.action = STRING_TO_ACTION[automationData.action];
+    automationData.action =
+      STRING_TO_ACTION[automationData.action.toLowerCase()];
+    console.log("automationData:", automationData.action);
 
     const newAutomation = await TimeAutomation.create({
       ...automationData,
@@ -211,7 +213,6 @@ const editTimerAutomation = async (req, res, next) => {
 
     automationData.action =
       STRING_TO_ACTION[automationData.action.toLowerCase()];
-    console.log("automationData:", automationData);
 
     await automation.update({
       ...automationData,
