@@ -22,4 +22,4 @@ ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.s
 RUN chmod +x /wait-for-it.sh
 
 # Define the command to run the app
-CMD /wait-for-it.sh ${DB_HOST}:${DB_PORT} -- node db/createTables.js && node db/addData.js && npm start
+CMD /wait-for-it.sh mariadb:3306 -- node db/createTables.js && node db/addData.js && npm start
