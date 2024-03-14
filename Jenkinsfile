@@ -74,11 +74,9 @@ pipeline {
                     if (isUnix()) {
                         sh 'docker-compose down'
                         sh 'docker-compose build'
-                        sh 'docker-compose up -d'
                     } else {
                         bat 'docker-compose down'
                         bat 'docker-compose build'
-                        bat 'docker-compose up -d'
                     }
                 }
             }
