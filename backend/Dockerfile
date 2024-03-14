@@ -10,9 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies, add bash, and remove unnecessary files
-RUN apk add --no-cache bash && \
-  npm ci && \
-  rm -f package-lock.json
+RUN apk add --no-cache bash && npm ci
 
 # Copy the rest of the code to the working directory
 COPY . .
