@@ -9,8 +9,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies and remove unnecessary files
+RUN npm ci && \
+  rm -f package-lock.json
 
 # Copy the rest of the code to the working directory
 COPY . .

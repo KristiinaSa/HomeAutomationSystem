@@ -7,6 +7,8 @@ pipeline {
         TEST_DB_NAME = credentials('test-db-name')
         JWT_SECRET = credentials('jwt-secret')
         PORT = credentials('port')
+        DB_PORT = credentials('db-port')
+        VITE_PROXY_HOST = credentials('vite-proxy-host')
     }
     stages {
         stage('Install Dependencies & Run Tests') {
