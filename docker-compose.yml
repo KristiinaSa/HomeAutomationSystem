@@ -8,6 +8,7 @@ networks:
 services:
   backend:
     build: ./backend
+    image: homeauto-back:latest
     networks:
       - homeautomation
     volumes:
@@ -26,6 +27,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
   frontend:
     build: ./frontend
+    image: homeauto-front:latest
     networks:
       - homeautomation
     ports:
