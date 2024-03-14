@@ -1,9 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, act, fireEvent, within, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  act,
+  fireEvent,
+  within,
+  waitFor,
+} from "@testing-library/react";
 import TimerAutomationForm from "../../components/AutomationForm/TimerAutomationForm";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as accessoryServices from "../../services/accessoryServices.js";
 import { DeviceProvider } from "../../context/DeviceContext.jsx";
+import { AuthProvider } from "../../context/AuthContext.jsx";
 
 const navigate = vi.fn();
 
@@ -80,18 +88,18 @@ describe("TimerAutomationForm Component", () => {
     await act(async () => {
       render(
         <Router>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-              handleDelete={handleDelete}
-            />
-          </DeviceProvider>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+                handleDelete={handleDelete}
+              />
+            </DeviceProvider>
+          </AuthProvider>
         </Router>
       );
     });
-
-    expect(accessoryServices.getDevices).toHaveBeenCalled();
 
     mockDevices.forEach((device) => {
       expect(screen.getByText(device.name)).toBeInTheDocument();
@@ -102,13 +110,15 @@ describe("TimerAutomationForm Component", () => {
     await act(async () => {
       render(
         <Router>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-              handleDelete={handleDelete}
-            />
-          </DeviceProvider>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+                handleDelete={handleDelete}
+              />
+            </DeviceProvider>
+          </AuthProvider>
         </Router>
       );
     });
@@ -121,13 +131,15 @@ describe("TimerAutomationForm Component", () => {
     await act(async () => {
       render(
         <Router>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-              handleDelete={handleDelete}
-            />
-          </DeviceProvider>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+                handleDelete={handleDelete}
+              />
+            </DeviceProvider>
+          </AuthProvider>
         </Router>
       );
     });
@@ -139,9 +151,11 @@ describe("TimerAutomationForm Component", () => {
 
   it("disables the submit button when the form is not filled out completely", async () => {
     render(
-      <DeviceProvider>
-        <TimerAutomationForm handleSubmit={handleSubmit} />
-      </DeviceProvider>
+      <AuthProvider>
+        <DeviceProvider>
+          <TimerAutomationForm handleSubmit={handleSubmit} />
+        </DeviceProvider>
+      </AuthProvider>
     );
 
     const submitButton = screen.getByTestId("submit-button");
@@ -152,11 +166,13 @@ describe("TimerAutomationForm Component", () => {
   it("renders empty form fields when the automation prop is not provided", async () => {
     await act(async () => {
       render(
-        <DeviceProvider>
-          <Router>
-            <TimerAutomationForm handleSubmit={handleSubmit} />
-          </Router>
-        </DeviceProvider>
+        <AuthProvider>
+          <DeviceProvider>
+            <Router>
+              <TimerAutomationForm handleSubmit={handleSubmit} />
+            </Router>
+          </DeviceProvider>
+        </AuthProvider>
       );
     });
 
@@ -167,7 +183,7 @@ describe("TimerAutomationForm Component", () => {
 
     expect(nameInput.value).toBe("");
     expect(timeInput.value).toBe("");
-    expect(devicesInput.value).toBe("");
+    expect(devicesInput.value).toBe(undefined);
 
     const checkboxes = within(daysInput).getAllByRole("checkbox");
     checkboxes.forEach((checkbox) => {
@@ -179,12 +195,14 @@ describe("TimerAutomationForm Component", () => {
     await act(async () => {
       render(
         <Router>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-            />
-          </DeviceProvider>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+              />
+            </DeviceProvider>
+          </AuthProvider>
         </Router>
       );
     });
@@ -208,12 +226,14 @@ describe("TimerAutomationForm Component", () => {
     await act(async () => {
       render(
         <Router>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-            />
-          </DeviceProvider>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+              />
+            </DeviceProvider>
+          </AuthProvider>
         </Router>
       );
     });

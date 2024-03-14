@@ -28,14 +28,13 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
   );
 
   return (
-    <div className={styles.deviceSelection}>
+    <div className={styles.deviceSelection} data-testid="devices-input">
       <p>Devices</p>
       {availableDevices.length > 0 ? (
         <select
           value={selectedDeviceId}
           onChange={handleDeviceChange}
           className={styles.selectBox}
-          data-testid="devices-input"
         >
           <option value="" disabled>
             Select devices

@@ -86,7 +86,7 @@ This will start both the server and the web application.
 ```
 
 PORT=
-DB_HOST=localhosthttps://github.com/Nischhal3/Health-Guard/tree/main?tab=readme-ov-file
+DB_HOST=
 DB_NAME=homeautomation
 DB_USER=
 DB_PASSWORD=

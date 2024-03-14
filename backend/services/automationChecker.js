@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const Device = require("../models/deviceModel.js");
+const UsageHistory = require("../models/usageHistoryModel.js");
 const { Op } = require("sequelize");
 const events = require("events");
 const eventEmitter = new events.EventEmitter();
@@ -38,6 +39,14 @@ const checkAutomations = async () => {
           { value: automation.action },
           { where: { id: device.id } }
         );
+        const updatedDevice = await Device.findByPk(device.id);
+        await UsageHistory.create({
+          device_id: updatedDevice.id,
+          user_id: 1,
+          sensor_value: automation.action,
+          data_type: updatedDevice.data_type,
+          timestamp: new Date(),
+        });
         eventEmitter.emit("devicesUpdated", device.system_id);
       } catch (error) {
         console.error(`Failed to update device ${device.id}: ${error}`);
