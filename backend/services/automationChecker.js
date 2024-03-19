@@ -9,7 +9,7 @@ const eventEmitter = new events.EventEmitter();
 const checkAutomations = async () => {
   const now = new Date();
 
-  const currentDayIndex = now.getDay() || 7;
+  const currentDayIndex = now.getDay() === 0 ? 7 : now.getDay();
   const currentDayBit = 1 << (currentDayIndex - 1);
   const currentHours = now.getHours().toString().padStart(2, "0");
   const currentMinutes = now.getMinutes().toString().padStart(2, "0");

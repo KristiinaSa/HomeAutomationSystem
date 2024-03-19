@@ -111,6 +111,9 @@ async function addTestData() {
   await timeAutomations[1].addDevice(devices);
 
   console.log("Test data added successfully");
+
+  await sequelize.close();
+  console.log("Connection closed.");
 }
 
 addTestData();

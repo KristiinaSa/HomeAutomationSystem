@@ -15,6 +15,10 @@ sequelize
   .sync({ force: false })
   .then(() => {
     console.log("All models were synchronized successfully.");
+    return sequelize.close();
+  })
+  .then(() => {
+    console.log("Connection closed.");
   })
   .catch((error) => {
     console.error("Error syncing models: ", error);
