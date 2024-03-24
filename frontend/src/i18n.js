@@ -27,8 +27,8 @@ i18n
     fallbackLng: "en",
     debug: true,
     detection: {
-      order: ["localStorage", "queryString", "cookie"],
-      cache: ["localStorage", "cookie"],
+      order: ["localStorage", "navigator"],
+      cache: ["localStorage"],
     },
     interpolation: {
       escapeValue: false,
