@@ -2,9 +2,11 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./CreateAutomation.module.css";
+import { useTranslation } from "react-i18next";
 
 const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
+  const { t } = useTranslation();
 
   const handleDeviceChange = (event) => {
     const selectedDevice = devices.find(
@@ -29,7 +31,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
 
   return (
     <div className={styles.deviceSelection} data-testid="devices-input">
-      <p>Devices</p>
+      <p>{t("devices")}</p>
       {availableDevices.length > 0 ? (
         <select
           value={selectedDeviceId}
@@ -37,7 +39,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
           className={styles.selectBox}
         >
           <option value="" disabled>
-            Select devices
+            {t("select devices")}
           </option>
           {availableDevices.map((device) => (
             <option key={device.id} value={device.id}>

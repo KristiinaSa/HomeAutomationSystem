@@ -5,6 +5,8 @@ import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
+import { useTranslation } from "react-i18next";
+
 import { DeviceContext } from "../../context/DeviceContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,6 +34,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [automationDevices, setAutomationDevices] = useState([]);
   const [availableDevices, setAvailableDevices] = useState([]);
   const [actionType, setActionType] = useState("");
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +45,6 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       setAutomationDevices(automation.devices);
       setIsDisabled(automation.disabled);
       setActionType(automation.action);
-      console.log(automation);
     }
   }, [automation]);
 
@@ -82,14 +84,14 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       onSubmit={onSubmit}
       className={styles.verticalLayout}
     >
-      <p>Name</p>
+      <p>{t("name")}</p>
       <input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         data-testid="name-input"
       />
-      <p>Time</p>
+      <p>{t("time")}</p>
       <TimeSelection time={time} setTime={setTime} data-testid="time-input" />
       <DaySelection
         selectedDays={selectedDays}
@@ -117,7 +119,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
           className={isButtonDisabled() ? styles.disabledButton : "primary-btn"}
           data-testid="submit-button"
         >
-          {automation ? "Update Automation" : "Create New Automation"}
+          {automation ? t("update automation") : t("create new automation")}
         </button>
         {automation && (
           <button
@@ -128,7 +130,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
             data-testid="delete-button"
           >
             <FontAwesomeIcon icon={faTrash} />
-            Delete
+            {t("delete")}
           </button>
         )}
         <button
@@ -137,7 +139,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
           className="secondary-btn"
           data-testid="cancel-button"
         >
-          Cancel
+          {t("cancel")}
         </button>
       </div>
     </form>

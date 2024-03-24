@@ -1,6 +1,9 @@
 import styles from "./CreateAutomation.module.css";
+import { useTranslation } from "react-i18next";
 
 const DaySelection = ({ selectedDays, setSelectedDays }) => {
+  const { t } = useTranslation();
+
   const handleCheckboxChange = (event) => {
     setSelectedDays({
       ...selectedDays,
@@ -24,7 +27,7 @@ const DaySelection = ({ selectedDays, setSelectedDays }) => {
             onChange={handleCheckboxChange}
             className={styles.srOnly}
           />
-          {day.charAt(0).toUpperCase()}{" "}
+          {t(day.charAt(0).toUpperCase() + day.slice(1))}{" "}
         </label>
       ))}
     </div>
