@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import "./Registration.css";
 import useRegister from "../hooks/useRegister";
 
@@ -6,6 +7,7 @@ const Registration = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { t } = useTranslation();
 
   const errorRef = useRef();
   const { register, registerSuccess, errorMessage } = useRegister();
@@ -19,12 +21,12 @@ const Registration = () => {
     return (
       <div>
         <form className="registration-form">
-          <h1>Register</h1>
-          <label htmlFor="username">Name</label>
+          <h1>{t("register")}</h1>
+          <label htmlFor="username">{t("name")}</label>
           <input
             className="registration-input"
             type="text"
-            placeholder="Username"
+            placeholder={t("name")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoComplete="username"
@@ -32,11 +34,11 @@ const Registration = () => {
             name="username"
             required
           />
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{t("email")}</label>
           <input
             className="registration-input"
             type="email"
-            placeholder="Email"
+            placeholder={t("email")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
@@ -44,11 +46,11 @@ const Registration = () => {
             name="email"
             required
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("password")}</label>
           <input
             className="registration-input"
             type="password"
-            placeholder="Password"
+            placeholder={t("password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
@@ -62,17 +64,17 @@ const Registration = () => {
             onClick={handleSubmit}
             disabled={registerSuccess}
           >
-            Register
+            {t("register")}
           </button>
           <p className="registration-login-router">
-            Already have an account? <a href="/login">Log in</a>
+            {t("already have an account?")} <a href="/login">{t("login")}</a>
           </p>
           <p className="registration-error-message" ref={errorRef}>
             {errorMessage}
           </p>
           {registerSuccess && (
             <p className="registration-success-message">
-              Success! Redirecting to log in page...
+              {t("registration successful")}
             </p>
           )}
         </form>
