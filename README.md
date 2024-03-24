@@ -113,6 +113,8 @@ VITE_PROXY_PORT=
   - Name the first database 'homeautomation'
   - Name the second database 'homeautomation_test'
 
+**Both databases need collation to be set to utf8mb4_unicode_ci or similar**
+
 2. **Create Tables**:
 
 - Run the following command while in your **backend folder**:
