@@ -48,7 +48,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
           ))}
         </select>
       ) : (
-        <p>No devices available</p>
+        <p>{t("no devices available")}</p>
       )}
       {selectedDevices.length > 0 ? (
         <ul className={styles.deviceList}>
