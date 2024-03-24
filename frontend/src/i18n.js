@@ -23,13 +23,12 @@ i18n
     fallbackLng: "en",
     debug: true,
     detection: {
-      order: ["queryString", "cookie"],
-      cache: ["cookie"],
+      order: ["localStorage", "queryString", "cookie"],
+      cache: ["localStorage", "cookie"],
     },
     interpolation: {
       escapeValue: false,
     },
-    resources,
   });
 
 export default i18n;
