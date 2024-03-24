@@ -101,7 +101,7 @@ const getActiveDays = (automation, weekdays, weekends, allDays, t) => {
     activeDays.length === weekends.length &&
     activeDays.every((day) => weekends.includes(day))
   ) {
-    activeDays = [t("weekends")];
+    activeDays = [t("weekend")];
   } else {
     activeDays = activeDays.map((day) =>
       t(day.charAt(0).toUpperCase() + day.slice(1))
