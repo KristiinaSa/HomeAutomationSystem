@@ -23,6 +23,7 @@
   "login successful": "Login successful! Redirecting to home page...",
   "already have an account?": "Already have an account?",
   "don't have an account?": "Don't have an account?",
+  "registration successful": "Registration successful! Redirecting to login page...",
   "add": "Add",
   "on": "On",
   "off": "Off",
