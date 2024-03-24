@@ -7,7 +7,7 @@ export const LanguagePicker = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem("i18nextLng") || "en"
   );
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const fetchLanguages = async () => {
@@ -39,7 +39,7 @@ export const LanguagePicker = () => {
 
   return (
     <>
-      <h2>Choose a language:</h2>
+      <h2>{t("Choose a language")}:</h2>
       <select value={selectedLanguage} onChange={handleLanguageChange}>
         {languages.map((language) => (
           <option key={language.id} value={language.code}>

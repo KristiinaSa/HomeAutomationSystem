@@ -60,5 +60,6 @@
   "Invitation sent": "招待状を送信しました",
   "Invalid email or password.": "無効なメールアドレスまたはパスワード",
   "No response from server. Please try again later.": "サーバーからの応答がありません。後で再試行してください。",
-  "Please fill in all the fields.": "すべてのフィールドに入力してください。"
+  "Please fill in all the fields.": "すべてのフィールドに入力してください。",
+  "Choose a language": "言語を選択"
 }

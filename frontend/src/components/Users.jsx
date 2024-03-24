@@ -8,6 +8,7 @@ import {
   getAllUsers,
   changeRole,
 } from "../services/userServices";
+import { useTranslation } from "react-i18next";
 import "./Users.css";
 
 const Users = () => {
@@ -23,6 +24,7 @@ const Users = () => {
   } = useForm();
   const [update, setUpdate] = useState(false);
   const [message, setMessage] = useState("");
+  const { t } = useTranslation();
 
   const fetchUsers = async () => {
     try {
@@ -32,7 +34,9 @@ const Users = () => {
       console.log(users);
     } catch (error) {
       console.log(error);
-      setMessage("Oops! There was a hiccup fetching user details. Please refresh and try once more.")
+      setMessage(
+        "Oops! There was a hiccup fetching user details. Please refresh and try once more."
+      );
     }
   };
 
@@ -46,7 +50,7 @@ const Users = () => {
       try {
         await deleteUser(id);
         setUpdate(true);
-        setMessage("All set! The user has been successfully removed.")
+        setMessage("All set! The user has been successfully removed.");
       } catch (error) {
         console.log("Error delete user", error.message);
         setMessage("Could not delete user this time. Please try again later.");
@@ -55,7 +59,6 @@ const Users = () => {
         setMessage("");
       }, 3000);
     }
-    
   };
 
   const editPerson = (id) => {
@@ -75,7 +78,9 @@ const Users = () => {
       setMessage("Role updated successfully!");
     } catch (error) {
       console.log("Failed to update role:", error.message);
-      setMessage("Oops! Updating the role didn't quite work out. Let's give it another shot.");
+      setMessage(
+        "Oops! Updating the role didn't quite work out. Let's give it another shot."
+      );
     }
     setTimeout(() => {
       setMessage("");
@@ -91,12 +96,13 @@ const Users = () => {
       setUpdate(true);
     } catch (error) {
       console.log("Failed to invite user:", error.message);
-      setMessage("Looks like sending the invitation hit a snag. How about we try that once more?");
+      setMessage(
+        "Looks like sending the invitation hit a snag. How about we try that once more?"
+      );
       setTimeout(() => {
         setMessage("");
       }, 3000);
     }
-
   };
 
   useEffect(() => {
@@ -125,7 +131,7 @@ const Users = () => {
 
   return (
     <div className="users-container">
-      <h2>Users</h2>
+      <h2>{t("users")}</h2>
       <div className="users-box">
         {persons.map((user) => {
           let initials = "";

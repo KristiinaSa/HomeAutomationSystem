@@ -60,5 +60,6 @@
   "Invitation sent": "Kutsu lähetetty!",
   "Invalid email or password.": "Virheellinen sähköposti tai salasana",
   "No response from server. Please try again later.": "Ei vastausta palvelimelta. Yritä myöhemmin uudelleen.",
-  "Please fill in all the fields.": "Täytä kaikki kentät."
+  "Please fill in all the fields.": "Täytä kaikki kentät.",
+  "Choose a language": "Valitse kieli"
 }
