@@ -8,12 +8,14 @@ import TestCard from "./TestCard";
 import Room from "./Room";
 import useToggle from "../hooks/useToggle";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms, errorMessage } = useContext(RoomContext);
   const { devices, errorMsg } = useContext(DeviceContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     navigate("/add-room");
@@ -23,14 +25,14 @@ const HomeMobile = () => {
 
   return (
     <div className="home-container">
-      <h1>Home</h1>
+      <h1>{t("home")}</h1>
       <div className="categories-container">
-        <h2>Categories</h2>
+        <h2>{t("categories")}</h2>
         <div className="card-container">
           {categories.map((category) => (
             <TestCard
               key={category.id}
-              title={category.title}
+              title={t(category.title.toLowerCase())}
               icon={category.icon}
               status={category.status}
             />
@@ -40,13 +42,13 @@ const HomeMobile = () => {
 
       <div className="rooms-container">
         <div className="rooms-title">
-          <h2>Rooms</h2>
+          <h2>{t("rooms")}</h2>
           <button
             type="button"
             className="primary-btn"
             onClick={() => handleClick()}
           >
-            Add room
+            {t("add")} {t("room")}
           </button>
         </div>
         {rooms.map((room) => (
