@@ -32,7 +32,7 @@ const HomeMobile = () => {
           {categories.map((category) => (
             <TestCard
               key={category.id}
-              title={category.title}
+              title={t(category.title.toLowerCase())}
               icon={category.icon}
               status={category.status}
             />
