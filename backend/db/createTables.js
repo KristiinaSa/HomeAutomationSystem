@@ -10,6 +10,7 @@ const Setting = require("../models/settingModel.js");
 const System = require("../models/systemModel.js");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const User = require("../models/userModel.js");
+const Language = require("../models/languageModel.js");
 
 sequelize
   .sync({ force: false })

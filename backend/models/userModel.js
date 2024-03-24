@@ -4,6 +4,7 @@ const getSequelize = require("../db/db.js");
 const sequelize = getSequelize();
 
 const Settings = require("./settingModel.js");
+const Language = require("./languageModel.js");
 
 class User extends Model {}
 
@@ -24,8 +25,12 @@ User.init(
 );
 
 User.afterCreate(async (user, options) => {
+  const language = await Language.findOne({ where: { code: "en" } });
+  if (!language) throw new Error("Default language not found");
+
   await Settings.create({
     user_id: user.id,
+    language_id: language.id,
   });
 });
 

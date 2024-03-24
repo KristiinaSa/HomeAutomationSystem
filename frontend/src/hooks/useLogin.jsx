@@ -9,11 +9,11 @@ const useLogin = () => {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const { setIsLoggedIn } = useContext(AuthContext);
   const { setTheme } = useContext(ThemeContext);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const login = async (email, password) => {
     if (!email || !password) {
-      setErrorMessage("Please fill in all the fields");
+      setErrorMessage(t("Please fill in all the fields."));
       return;
     }
     try {
@@ -31,9 +31,9 @@ const useLogin = () => {
       setIsLoggedIn(true);
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(t(error.response.data.message));
       } else if (error.request) {
-        setErrorMessage("No response from server. Please try again later.");
+        setErrorMessage(t("No response from server. Please try again later."));
       } else {
         setErrorMessage(error.message);
       }

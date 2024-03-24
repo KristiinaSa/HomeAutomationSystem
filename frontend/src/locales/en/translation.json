@@ -57,5 +57,8 @@
   "Invite people": "Invite people",
   "Enter email": "Enter email",
   "Send": "Send",
-  "Invitation sent": "Invitation sent!"
+  "Invitation sent": "Invitation sent!",
+  "Invalid email or password.": "Invalid email or password",
+  "No response from server. Please try again later.": "No response from server. Please try again later.",
+  "Please fill in all the fields.": "Please fill in all the fields."
 }

@@ -70,10 +70,25 @@ const themeToggler = async (req, res) => {
   }
 };
 
+const changeLanguage = async (req, res) => {
+  console.log("in changeLanguage");
+  console.log("req.body", req.body);
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    const settings = await user.getSetting();
+    await settings.update({ language_id: req.body.id });
+    res.status(200).json({ language_id: req.body.id });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ error: "Error updating language" });
+  }
+};
+
 module.exports = {
   deleteUser,
   getAllUsers,
   inviteUser,
   changeRole,
   themeToggler,
+  changeLanguage,
 };

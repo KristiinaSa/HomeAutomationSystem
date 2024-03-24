@@ -10,6 +10,7 @@ const User = require("../models/userModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
 const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
+const Language = require("../models/languageModel.js");
 
 Device.belongsTo(System, { foreignKey: "system_id" });
 Device.belongsTo(Room, { foreignKey: "room_id" });
@@ -45,6 +46,7 @@ CurrentValue.belongsTo(Sensor, { foreignKey: "sensor_id" });
 CurrentValue.belongsTo(ValueType, { foreignKey: "value_type_id" });
 
 Setting.belongsTo(User, { foreignKey: "user_id" });
+Setting.belongsTo(Language, { foreignKey: "language_id" });
 
 TimeAutomation.belongsToMany(Device, { through: "timer_controls" });
 TimeAutomation.belongsTo(System, { foreignKey: "system_id" });

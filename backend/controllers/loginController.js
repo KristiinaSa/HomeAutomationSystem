@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const User = require("../models/userModel.js");
 const Setting = require("../models/settingModel.js");
+const Language = require("../models/languageModel.js");
 
 dotenv.config();
 
@@ -15,7 +16,14 @@ const login = async (req, res) => {
       {
         model: Setting,
         as: "setting",
-        attributes: ["using_darkmode", "language"],
+        attributes: ["using_darkmode"],
+        include: [
+          {
+            model: Language,
+            as: "language",
+            attributes: ["code"],
+          },
+        ],
       },
     ],
   });
@@ -32,7 +40,7 @@ const login = async (req, res) => {
       message: "Logged in.",
       token,
       using_darkmode: user.setting.using_darkmode,
-      language: user.setting.language,
+      language: user.setting.language.code,
     });
   } else {
     res.status(401).json({ message: "Invalid email or password." });

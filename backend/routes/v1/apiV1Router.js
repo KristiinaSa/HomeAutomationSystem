@@ -8,6 +8,7 @@ const roomRouter = require("./roomRoutes.js");
 const accessoryRouter = require("./accessoryRoutes.js");
 const loginRouter = require("./loginRoutes.js");
 const statusRouter = require("./statusRouter.js");
+const languageRouter = require("./languageRouter.js");
 
 // Middleware imports¨
 const authenticateToken = require("../../middleware/authToken.js");
@@ -29,5 +30,7 @@ apiV1Router.use(
 );
 apiV1Router.use("/login", loginRouter);
 apiV1Router.use("/status", authenticateToken, getUserData, statusRouter);
+
+apiV1Router.use("/languages", authenticateToken, getUserData, languageRouter);
 
 module.exports = apiV1Router;

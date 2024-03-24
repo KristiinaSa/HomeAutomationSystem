@@ -63,4 +63,30 @@ const themeToggler = async () => {
   }
 };
 
-export { getAllUsers, deleteUser, inviteUser, changeRole, themeToggler };
+const getLanguages = async () => {
+  try {
+    const response = await axios.get("/api/v1/languages");
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};
+
+const setLanguage = async (language) => {
+  try {
+    const response = await axios.patch(`${baseUrl}/language`, language);
+    return response.data;
+  } catch (err) {
+    throw new Error(err.response.data);
+  }
+};
+
+export {
+  getAllUsers,
+  deleteUser,
+  inviteUser,
+  changeRole,
+  themeToggler,
+  getLanguages,
+  setLanguage,
+};
