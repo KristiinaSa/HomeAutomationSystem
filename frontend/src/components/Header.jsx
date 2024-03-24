@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,6 +51,7 @@ const Header = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -67,30 +69,30 @@ const Header = () => {
     ? [
         {
           icon: faLightbulb,
-          text: "Add device",
+          text: `${t("add")} ${t("device")}`,
           path: "/add-device",
         },
-        { icon: faHouseLaptop, text: "Accessories", path: "/accessories" },
+        { icon: faHouseLaptop, text: t("accessories"), path: "/accessories" },
         {
           icon: faTachometerAlt,
-          text: "Add automation",
+          text: `${t("add")} ${t("automation")}`,
           path: "/automations/new",
         },
         {
           icon: faArrowCircleRight,
-          text: "Add room",
+          text: `${t("add")} ${t("room")}`,
           path: "/add-room",
         },
         {
           icon: faUser,
-          text: "Add users",
+          text: `${t("add")} ${t("users")}`,
           path: "/settings",
         },
-        { icon: faSignOut, text: "Log out", onClick: handleLogout },
+        { icon: faSignOut, text: t("logout"), onClick: handleLogout },
       ]
     : [
-        { icon: faSignIn, text: "Log in", path: "/login" },
-        { icon: faAddressBook, text: "Register", path: "/register" },
+        { icon: faSignIn, text: t("login"), path: "/login" },
+        { icon: faAddressBook, text: t("register"), path: "/register" },
       ];
 
   const handleClickOutside = (e) => {
