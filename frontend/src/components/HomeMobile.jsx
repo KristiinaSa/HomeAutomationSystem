@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms, errorMessage } = useContext(RoomContext);
-  const { devices, setDevices, errorMsg } = useContext(DeviceContext);
+  const { devices, errorMsg } = useContext(DeviceContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
 

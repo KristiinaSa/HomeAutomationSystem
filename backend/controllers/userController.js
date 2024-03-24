@@ -1,4 +1,7 @@
 const User = require("../models/userModel.js");
+const System = require("../models/systemModel.js");
+
+const sendEmail = require("../services/sendEmail.js");
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -30,8 +33,17 @@ const getAllUsers = async (req, res) => {
 const inviteUser = async (req, res) => {
   const email = req.body.email;
   const system_id = req.user && req.user.system_id ? req.user.system_id : 1;
+  const system = await System.findOne({ where: { id: system_id } });
+  const systemName = system.name;
+  const admin = req.user.name;
   try {
     const user = await User.create({ email, system_id });
+    sendEmail(email, "You're invited!", "inviteUser", {
+      name: "User",
+      link: "http://localhost:5173/register",
+      systemName,
+      admin,
+    });
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: "Error inviting user" });
