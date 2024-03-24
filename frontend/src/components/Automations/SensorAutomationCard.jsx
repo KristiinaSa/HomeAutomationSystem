@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Automations.module.css";
+import { useTranslation } from "react-i18next";
 
 export const SensorAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
+  const { t } = useTranslation();
 
   const handleEdit = () => {
     navigate(`/automations/edit/${automation.id}`);
@@ -17,7 +19,9 @@ export const SensorAutomationCard = ({ automation }) => {
       <p data-testid="automation-status">
         {automation.disabled ? "Disabled" : `${numDevices} accessories`}
       </p>
-      <p data-testid="automation-action">Action: {automation.action}</p>
+      <p data-testid="automation-action">
+        {t("action")}: {automation.action}
+      </p>
       <a
         onClick={handleEdit}
         aria-label="Edit"
