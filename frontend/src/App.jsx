@@ -17,59 +17,77 @@ import AccessoriesPage from "./pages/AccessoriesPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AddingRoomPage from "./pages/AddingRoomPage";
 
+import { LanguageProvider } from "./context/LanguageContext";
+
 import ProtectedRoute from "./components/ProtectedRoutes";
 import PublicRoute from "./components/PublicRoute";
 import HomePage from "./pages/HomePage";
 import { DeviceProvider } from "./context/DeviceContext";
+
+import "./i18n";
 
 function App() {
   return (
     <>
       <AuthProvider>
         <ThemeProvider>
-          <CategoriesProvider>
-            <RoomProvider>
-              <DeviceProvider>
-                <Router>
-                  <Routes>
-                    <Route path="/" element={<Layout />}>
-                      <Route element={<ProtectedRoute />}>
-                        <Route index element={<HomePage />} />
-                        <Route path="automations" element={<Automations />} />
-                        <Route
-                          path="automations/new"
-                          element={<AutomationForm />}
-                        />
-                        <Route
-                          path="/automations/edit/:id"
-                          element={<AutomationForm />}
-                        />
-                        <Route path="/settings" element={<SettingsPage />} />
-                        <Route path="/add-device" element={<AddDevicePage />} />
-                        <Route path="/room/:id" element={<RoomPage />} />
-                        <Route path="/add-device" element={<AddDevicePage />} />
-                        <Route path="/room/:id" element={<RoomPage />} />
-                        <Route
-                          path="/accessories"
-                          element={<AccessoriesPage />}
-                        />
-                        <Route path="/analytics" element={<AnalyticsPage />} />
-                        <Route path="/add-room" element={<AddingRoomPage />} />
-                      </Route>
+          <LanguageProvider>
+            <CategoriesProvider>
+              <RoomProvider>
+                <DeviceProvider>
+                  <Router>
+                    <Routes>
+                      <Route path="/" element={<Layout />}>
+                        <Route element={<ProtectedRoute />}>
+                          <Route index element={<HomePage />} />
+                          <Route path="automations" element={<Automations />} />
+                          <Route
+                            path="automations/new"
+                            element={<AutomationForm />}
+                          />
+                          <Route
+                            path="/automations/edit/:id"
+                            element={<AutomationForm />}
+                          />
+                          <Route path="/settings" element={<SettingsPage />} />
+                          <Route
+                            path="/add-device"
+                            element={<AddDevicePage />}
+                          />
+                          <Route path="/room/:id" element={<RoomPage />} />
+                          <Route
+                            path="/add-device"
+                            element={<AddDevicePage />}
+                          />
+                          <Route path="/room/:id" element={<RoomPage />} />
+                          <Route
+                            path="/accessories"
+                            element={<AccessoriesPage />}
+                          />
+                          <Route
+                            path="/analytics"
+                            element={<AnalyticsPage />}
+                          />
+                          <Route
+                            path="/add-room"
+                            element={<AddingRoomPage />}
+                          />
+                        </Route>
 
-                      <Route element={<PublicRoute />}>
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route
-                          path="/register"
-                          element={<RegistrationPage />}
-                        />
+                        <Route element={<PublicRoute />}>
+                          <Route path="/login" element={<LoginPage />} />
+                          <Route
+                            path="/register"
+                            element={<RegistrationPage />}
+                          />
+                        </Route>
                       </Route>
-                    </Route>
-                  </Routes>
-                </Router>
-              </DeviceProvider>
-            </RoomProvider>
-          </CategoriesProvider>
+                    </Routes>
+                  </Router>
+                </DeviceProvider>
+              </RoomProvider>
+            </CategoriesProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </AuthProvider>
     </>

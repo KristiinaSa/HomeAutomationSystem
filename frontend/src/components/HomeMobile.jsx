@@ -8,11 +8,13 @@ import TestCard from "./TestCard";
 import Room from "./Room";
 import useToggle from "../hooks/useToggle";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms, errorMessage } = useContext(RoomContext);
   const { devices, setDevices, errorMsg } = useContext(DeviceContext);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -23,7 +25,7 @@ const HomeMobile = () => {
 
   return (
     <div className="home-container">
-      <h1>Home</h1>
+      <h1>{t("Home")}</h1>
       <div className="categories-container">
         <h2>Categories</h2>
         <div className="card-container">

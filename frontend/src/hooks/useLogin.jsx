@@ -2,12 +2,14 @@ import { useState, useContext } from "react";
 import authService from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
+import { LanguageContext } from "../context/LanguageContext";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const { setIsLoggedIn } = useContext(AuthContext);
   const { setTheme } = useContext(ThemeContext);
+  const { setLanguage } = useContext(LanguageContext);
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -22,6 +24,8 @@ const useLogin = () => {
       setTheme(theme);
       setLoginSuccess(true);
       setIsLoggedIn(true);
+      const userLanguage = response.language;
+      setLanguage(userLanguage);
     } catch (error) {
       if (error.response) {
         setErrorMessage(error.response.data.message);
