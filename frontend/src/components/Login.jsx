@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import useLogin from "../hooks/useLogin";
 import "./Login.css";
 
@@ -6,6 +7,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, errorMessage, loginSuccess, setErrorMessage } = useLogin();
+  const { t } = useTranslation();
 
   const emailRef = useRef();
   const errorRef = useRef();
@@ -26,12 +28,12 @@ const Login = () => {
   return (
     <div>
       <form className="login-form">
-        <h1>Log in</h1>
-        <label htmlFor="email">Email</label>
+        <h1>{t("login")}</h1>
+        <label htmlFor="email">{t("email")}</label>
         <input
           className="login-input"
           type="email"
-          placeholder="Email"
+          placeholder={t("email")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           ref={emailRef}
@@ -40,11 +42,11 @@ const Login = () => {
           name="email"
           required
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{t("password")}</label>
         <input
           className="login-input"
           type="password"
-          placeholder="Password"
+          placeholder={t("password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
@@ -58,10 +60,10 @@ const Login = () => {
           onClick={handleSubmit}
           disabled={loginSuccess}
         >
-          LOG IN
+          {t("login")}
         </button>
         <p className="login-register-router">
-          Don&apos;t have an account? <a href="/register">Register</a>
+          {t("don't have an account?")} <a href="/register">{t("register")}</a>
         </p>
         <p
           ref={errorRef}
@@ -71,9 +73,7 @@ const Login = () => {
           {errorMessage}
         </p>
         {loginSuccess && (
-          <p className="login-success-message">
-            Log in succesfull! Redirecting to home page...
-          </p>
+          <p className="login-success-message">{t("login successful")}</p>
         )}
       </form>
     </div>
