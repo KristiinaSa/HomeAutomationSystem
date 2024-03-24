@@ -7,13 +7,17 @@ const useRegister = () => {
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, newSystem, timeZone) => {
     if (!email || !password || !name) {
       setErrorMessage("Please fill in all the fields");
       return;
     }
     try {
-      await authService.register(name, email, password);
+      if (newSystem) {
+        await authService.createSystem(name, email, password, timeZone);
+      } else {
+        await authService.joinSystem(name, email, password);
+      }
       setRegisterSuccess(true);
     } catch (error) {
       if (error.response) {
@@ -26,11 +30,8 @@ const useRegister = () => {
     }
   };
 
-  useEffect(() => {}, [registerSuccess]);
-
   useEffect(() => {
     if (registerSuccess) {
-      setTimeout(() => {}, 3000);
       navigate("/login");
     }
   }, [registerSuccess, navigate]);

@@ -15,16 +15,6 @@ export const TimerAutomationCard = ({ automation }) => {
   const numDevices = automation.devices ? automation.devices.length : 0;
   const { t } = useTranslation();
 
-  const dayAbbreviations = {
-    monday: "Mon",
-    tuesday: "Tue",
-    wednesday: "Wed",
-    thursday: "Thu",
-    friday: "Fri",
-    saturday: "Sat",
-    sunday: "Sun",
-  };
-
   const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
   const weekends = ["saturday", "sunday"];
   const allDays = [...weekdays, ...weekends];

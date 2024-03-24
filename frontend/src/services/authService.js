@@ -31,7 +31,7 @@ const logout = async () => {
   }
 };
 
-const register = async (name, email, password) => {
+const joinSystem = async (name, email, password) => {
   try {
     const response = await axios.post(`${baseUrl}/register`, {
       name,
@@ -49,4 +49,22 @@ const register = async (name, email, password) => {
   }
 };
 
-export default { login, logout, register };
+const createSystem = async (name, email, password) => {
+  try {
+    const response = await axios.post(`${baseUrl}/create-system`, {
+      name,
+      email,
+      password,
+    });
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    } else {
+      throw new Error(`Request failed with status code ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error creating system:", error.message);
+    throw error;
+  }
+};
+
+export default { login, logout, joinSystem, createSystem };

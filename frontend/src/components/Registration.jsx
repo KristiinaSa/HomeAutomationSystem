@@ -7,14 +7,18 @@ const Registration = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newSystem, setNewSystem] = useState(false);
   const { t } = useTranslation();
+  const [timeZone, setTimeZone] = useState(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
 
   const errorRef = useRef();
   const { register, registerSuccess, errorMessage } = useRegister();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    register(name, email, password);
+    register(name, email, password, newSystem, timeZone);
   };
 
   {
@@ -66,6 +70,15 @@ const Registration = () => {
           >
             {t("register")}
           </button>
+          <label htmlFor="newSystem">New System</label>
+          <input
+            className="registration-input"
+            type="checkbox"
+            checked={newSystem}
+            onChange={(e) => setNewSystem(e.target.checked)}
+            id="newSystem"
+            name="newSystem"
+          />
           <p className="registration-login-router">
             {t("already have an account?")} <a href="/login">{t("login")}</a>
           </p>

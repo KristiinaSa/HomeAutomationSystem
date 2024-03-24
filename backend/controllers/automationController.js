@@ -6,12 +6,24 @@ const { bitmaskToWeekdays, weekdaysToBitmask } = require("./helpers.js");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const SensorAutomation = require("../models/sensorAutomationModel.js");
 const Device = require("../models/deviceModel.js");
+const System = require("../models/systemModel.js");
 
 const { ACTION_TO_STRING, STRING_TO_ACTION } = require("./helpers.js");
+
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const getAutomations = async (req, res, next) => {
   const { system_id } = req.user;
   try {
+    const system = await System.findOne({ where: { id: system_id } });
+    const systemTimezone = system.time_zone;
+    console.log("Timezone data:", systemTimezone);
+
     let timeAutomations = await TimeAutomation.findAll({
       where: {
         system_id,
@@ -48,6 +60,14 @@ const getAutomations = async (req, res, next) => {
       const automationData = automation.toJSON();
       automationData.weekdays = bitmaskToWeekdays(automationData.weekdays);
       automationData.action = ACTION_TO_STRING[automationData.action];
+
+      const timeUtc = dayjs.utc(
+        `${dayjs().format("YYYY-MM-DD")}T${automationData.time}:00Z`
+      );
+
+      const timeLocal = timeUtc.tz(systemTimezone).format("HH:mm");
+      automationData.time = timeLocal;
+
       return automationData;
     });
 
@@ -80,6 +100,7 @@ const getAutomation = async (req, res, next) => {
 
 const getTimerAutomation = async (req, res, next) => {
   try {
+    const { system_id } = req.user;
     const id = req.params.id;
     const timerAutomation = await TimeAutomation.findOne({
       where: {
@@ -102,6 +123,17 @@ const getTimerAutomation = async (req, res, next) => {
     timerAutomation.weekdays = bitmaskToWeekdays(timerAutomation.weekdays);
     timerAutomation.type = "timer";
     timerAutomation.action = ACTION_TO_STRING[timerAutomation.action];
+
+    const system = await System.findOne({ where: { id: system_id } });
+    const systemTimezone = system.time_zone;
+
+    const timeUtc = dayjs.utc(
+      `${dayjs().format("YYYY-MM-DD")}T${timerAutomation.time}:00Z`
+    );
+
+    const timeLocal = timeUtc.tz(systemTimezone).format("HH:mm");
+    timerAutomation.time = timeLocal;
+
     res.send(timerAutomation);
   } catch (err) {
     next(err);
@@ -145,6 +177,14 @@ const addTimerAutomation = async (req, res, next) => {
     automationData.action =
       STRING_TO_ACTION[automationData.action.toLowerCase()];
 
+    const timeParts = automationData.time.split(":");
+    const timeDate = new Date();
+    timeDate.setHours(timeParts[0], timeParts[1], 0, 0);
+
+    const timeLocal = dayjs(timeDate);
+    const timeUtc = timeLocal.utc().format("HH:mm");
+    automationData.time = timeUtc;
+
     const newAutomation = await TimeAutomation.create({
       ...automationData,
       weekdays: weekdaysToBitmask(weekdays),
@@ -185,6 +225,7 @@ const editAutomation = async (req, res, next) => {
 
 const editTimerAutomation = async (req, res, next) => {
   try {
+    const { system_id } = req.user;
     const id = req.params.id;
     let { devices, weekdays, ...automationData } = req.body;
     const automation = await TimeAutomation.findOne({
@@ -212,6 +253,17 @@ const editTimerAutomation = async (req, res, next) => {
 
     automationData.action =
       STRING_TO_ACTION[automationData.action.toLowerCase()];
+
+    const system = await System.findOne({ where: { id: system_id } });
+    const systemTimezone = system.time_zone;
+
+    const timeLocal = dayjs.tz(
+      `${dayjs().format("YYYY-MM-DD")}T${automationData.time}:00`,
+      systemTimezone
+    );
+
+    const timeUtc = timeLocal.utc().format("HH:mm");
+    automationData.time = timeUtc;
 
     await automation.update({
       ...automationData,

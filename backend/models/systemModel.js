@@ -13,6 +13,7 @@ System.init(
       primaryKey: true,
     },
     name: { type: DataTypes.STRING, defaultValue: "Home" },
+    time_zone: { type: DataTypes.STRING, defaultValue: "Europe/Helsinki" },
   },
   { sequelize, modelName: "system" }
 );

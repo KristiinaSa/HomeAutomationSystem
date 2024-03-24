@@ -9,10 +9,10 @@ const eventEmitter = new events.EventEmitter();
 const checkAutomations = async () => {
   const now = new Date();
 
-  const currentDayIndex = now.getDay() === 0 ? 7 : now.getDay();
+  const currentDayIndex = now.getUTCDay() === 0 ? 7 : now.getUTCDay();
   const currentDayBit = 1 << (currentDayIndex - 1);
-  const currentHours = now.getHours().toString().padStart(2, "0");
-  const currentMinutes = now.getMinutes().toString().padStart(2, "0");
+  const currentHours = now.getUTCHours().toString().padStart(2, "0");
+  const currentMinutes = now.getUTCMinutes().toString().padStart(2, "0");
   const currentTime = `${currentHours}:${currentMinutes}`;
 
   console.log(`Checking automations on a ${currentDayIndex} at ${currentTime}`);

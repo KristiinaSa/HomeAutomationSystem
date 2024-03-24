@@ -8,4 +8,6 @@ router.post("/logout", loginController.logout);
 
 router.post("/register", loginController.register);
 
+router.post("/create-system", loginController.createSystem);
+
 module.exports = router;

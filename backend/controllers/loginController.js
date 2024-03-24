@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const User = require("../models/userModel.js");
 const Setting = require("../models/settingModel.js");
 const Language = require("../models/languageModel.js");
+const System = require("../models/systemModel.js");
 
 dotenv.config();
 
@@ -100,4 +101,27 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { login, logout, register };
+const createSystem = async (req, res) => {
+  const { name, email, password, timeZone } = req.body;
+
+  const system = await System.create();
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+    system_id: system.id,
+    role: "admin",
+    time_zone: timeZone,
+    is_registered: 1,
+  });
+
+  if (system && user) {
+    res.status(201).json({ message: "System created." });
+  } else {
+    res.status(500).json({ message: "Error creating system." });
+  }
+};
+
+module.exports = { login, logout, register, createSystem };
