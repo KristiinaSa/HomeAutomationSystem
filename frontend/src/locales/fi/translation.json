@@ -28,6 +28,7 @@
   "on": "Päällä",
   "off": "Pois",
   "show analytics": "Näytä käyttöhistoria",
+  "analytics": "Käyttöhistoria",
   "active time today": "Aktiivinen aika tänään",
   "time": "Aika",
   "last interaction": "Viimeksi käytetty",
@@ -73,5 +74,6 @@
   "Oops! Updating the role didn't quite work out. Let's give it another shot.": "Uuups! Roolin päivittämisessä tapahtui virhe. Yritetään uudelleen.",
   "Looks like sending the invitation hit a snag. How about we try that once more?" : "Kutsun lähettämisessä tapahtui virhe. Yritetään uudelleen.",
   "Invalid email address" : "Virheellinen sähköpostiosoite",
-  "Email is required" : "Sähköposti vaaditaan"
+  "Email is required" : "Sähköposti vaaditaan",
+  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?" : "Käyttöhistorian hakemisessa tapahtui virhe. Yritä myöhemmin uudelleen."
 }

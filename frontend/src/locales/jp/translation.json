@@ -28,6 +28,7 @@
   "on": "オン",
   "off": "オフ",
   "show analytics": "アナリティクスを表示",
+  "analytics": "アナリティクス",
   "active time today": "本日のアクティブ時間",
   "time": "時間",
   "last interaction": "最終インタラクション",
@@ -73,5 +74,6 @@
   "Oops! Updating the role didn't quite work out. Let's give it another shot.": "Oops! Updating the role didn't quite work out. Let's give it another shot.",
   "Looks like sending the invitation hit a snag. How about we try that once more?" : "Looks like sending the invitation hit a snag. How about we try that once more?",
   "Invalid email address" : "Invalid email address",
-  "Email is required" : "Email is required"
+  "Email is required" : "Email is required",
+  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?" : "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?"
 }
