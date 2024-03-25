@@ -1,10 +1,12 @@
 import "./Analytics.css";
 import { getAllAnalytics } from "../services/accessoryServices";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
   const [message, setMessage] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchData() {
@@ -21,18 +23,18 @@ const Analytics = () => {
 
   return (
     <div className="analytics-container">
-      <h1>Analytics</h1>
+      <h1>{t("analytics")}</h1>
       <div>
-        <h2>Devices</h2>
+        <h2>{t("devices")}</h2>
         <div className="analytics-card">
           {analytics.map((device) => {
             return (
               <div key={device.id} className="device-box">
                 <h4>{device.name} </h4>
                 <p className="room-name">{device.room_name}</p>
-                <p>Active time today: {device.active_time}</p>
+                <p>{t("active time today")}: {device.active_time}</p>
                 <p>
-                  Last interaction:{" "}
+                  {t("last interaction")}:{" "}
                   {device.last_interaction ? device.last_interaction : "-"}
                 </p>
               </div>

@@ -28,6 +28,7 @@
   "on": "On",
   "off": "Off",
   "show analytics": "Show analytics",
+  "analytics": "Analytics",
   "active time today": "Active time today",
   "time": "Time",
   "last interaction": "Last interaction",
@@ -52,9 +53,9 @@
   "everyday": "Everyday",
   "weekdays": "Weekdays",
   "weekends": "Weekends",
-  "Owner": "Owner",
-  "Resident": "Resident",
-  "Admin": "Admin",
+  "owner": "Owner",
+  "resident": "Resident",
+  "admin": "Admin",
   "Invite people": "Invite people",
   "Enter email": "Enter email",
   "Send": "Send",
@@ -62,5 +63,16 @@
   "Invalid email or password.": "Invalid email or password",
   "No response from server. Please try again later.": "No response from server. Please try again later.",
   "Please fill in all the fields.": "Please fill in all the fields.",
-  "Choose a language": "Choose a language"
+  "Choose a language": "Choose a language",
+  "Oops! There was a hiccup fetching user details. Please refresh and try once more.":
+    "Oops! There was a hiccup fetching user details. Please refresh and try once more.",
+  "Are you sure you want to delete this user?" : "Are you sure you want to delete this user?",
+  "All set! The user has been successfully removed." : "All set! The user has been successfully removed.",
+  "Could not delete user this time. Please try again later." : "Could not delete user this time. Please try again later.",
+  "Role updated successfully!": "Role updated successfully!",
+  "Oops! Updating the role didn't quite work out. Let's give it another shot.": "Oops! Updating the role didn't quite work out. Let's give it another shot.",
+  "Looks like sending the invitation hit a snag. How about we try that once more?" : "Looks like sending the invitation hit a snag. How about we try that once more?",
+  "Invalid email address" : "Invalid email address",
+  "Email is required" : "Email is required",
+  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?" : "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?"
 }
