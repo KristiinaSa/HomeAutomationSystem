@@ -4,9 +4,11 @@ import { NavLink } from 'react-router-dom'
 import './NavbarMobile.css'
 import { AuthContext } from '../context/AuthContext';
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const NavbarMobile = () => {
   const { isLoggedIn } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const handleClick = (e) => {
     if (!isLoggedIn) {
@@ -22,7 +24,7 @@ const NavbarMobile = () => {
       >
         <div className='navbar-mobile_item'>
             <FontAwesomeIcon icon={faHome} className='navbar-mobile-icon'/>
-            Home
+            {t('home')}
         </div>
         </NavLink>
         <NavLink to='/automations' className={({ isActive}) => 
@@ -31,7 +33,7 @@ const NavbarMobile = () => {
       >
         <div className='navbar-mobile_item'>
         <FontAwesomeIcon icon={faTachometerAlt} className='navbar-mobile-icon' />
-            Automation
+            {t("automation")}
         </div>
         </NavLink>
         <NavLink to='/settings' className={({ isActive}) => 
@@ -40,7 +42,7 @@ const NavbarMobile = () => {
       >
         <div className='navbar-mobile_item'>
         <FontAwesomeIcon icon={faCog} className='navbar-mobile-icon'/>
-            Settings
+            {t("settings")}
         </div>
       </NavLink>
       <NavLink to='/accessories' className={({ isActive}) => 
@@ -49,7 +51,7 @@ const NavbarMobile = () => {
       >
         <div className='navbar-mobile_item'>
         <FontAwesomeIcon icon={faHouseLaptop} className='navbar-mobile-icon'/>
-            Accessories
+            {t("accessories")}
         </div>
       </NavLink>
         
