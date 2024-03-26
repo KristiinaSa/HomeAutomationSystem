@@ -35,7 +35,7 @@ const Users = () => {
     } catch (error) {
       console.log(error);
       setMessage(
-        "Oops! There was a hiccup fetching user details. Please refresh and try once more."
+        t("Oops! There was a hiccup fetching user details. Please refresh and try once more.")
       );
     }
   };
@@ -45,15 +45,15 @@ const Users = () => {
   }, [update]);
 
   const deletePerson = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm(t("Are you sure you want to delete this user?"))) return;
     else {
       try {
         await deleteUser(id);
         setUpdate(true);
-        setMessage("All set! The user has been successfully removed.");
+        setMessage(t("All set! The user has been successfully removed."));
       } catch (error) {
         console.log("Error delete user", error.message);
-        setMessage("Could not delete user this time. Please try again later.");
+        setMessage(t("Could not delete user this time. Please try again later."));
       }
       setTimeout(() => {
         setMessage("");
@@ -75,11 +75,11 @@ const Users = () => {
       await changeRole(id, role);
       setEditingId(null);
       setUpdate(true);
-      setMessage("Role updated successfully!");
+      setMessage(t("Role updated successfully!"));
     } catch (error) {
       console.log("Failed to update role:", error.message);
       setMessage(
-        "Oops! Updating the role didn't quite work out. Let's give it another shot."
+        t("Oops! Updating the role didn't quite work out. Let's give it another shot.")
       );
     }
     setTimeout(() => {
@@ -97,7 +97,7 @@ const Users = () => {
     } catch (error) {
       console.log("Failed to invite user:", error.message);
       setMessage(
-        "Looks like sending the invitation hit a snag. How about we try that once more?"
+        t("Looks like sending the invitation hit a snag. How about we try that once more?")
       );
       setTimeout(() => {
         setMessage("");
@@ -157,11 +157,11 @@ const Users = () => {
                         onChange={(e) => updateRole(user.id, e.target.value)}
                         className="role-choicebox"
                       >
-                        <option value="admin">Admin</option>
-                        <option value="resident">Resident</option>
+                        <option value="admin">{t("admin")}</option>
+                        <option value="resident">{t("resident")}</option>
                       </select>
                     ) : (
-                      <span className="user-role">{user.role}</span>
+                      <span className="user-role">{t(user.role)}</span>
                     )}
                   </h4>
                   <p>{user.email}</p>
@@ -188,14 +188,14 @@ const Users = () => {
           <form onSubmit={handleSubmit(invitePerson)} className="invite-form">
             <input
               {...register("email", {
-                required: "Email is required",
+                required: t("Email is required"),
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "Invalid email address",
+                  message: t("Invalid email address"),
                 },
               })}
               type="email"
-              placeholder="Enter email"
+              placeholder={t("Enter email")}
               className="invite-input"
               data-testid="invite-input"
             />
@@ -208,22 +208,22 @@ const Users = () => {
               className="invite-button"
               data-testid="invite-submit"
             >
-              Send
+              {t("Send")}
             </button>
             <button
               type="button"
               className="cancel-button"
               onClick={() => setShowInvite(false)}
             >
-              Cancel
+              {t("cancel")}
             </button>
           </form>
         ) : inviteSent ? (
-          <p className="invite-sent">Invitation sent!</p>
+          <p className="invite-sent">{t("Invitation sent")}</p>
         ) : (
           <div className="invite" onClick={() => setShowInvite(true)}>
             <FontAwesomeIcon icon={faPlus} />
-            Invite people
+            {t("Invite people")}
           </div>
         )}
       </div>

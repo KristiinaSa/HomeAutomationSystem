@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
+import { useTranslation } from "react-i18next";
 
 const Accessories = () => {
   const { devices, setUpdate, errorMsg} = useContext(DeviceContext);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleClick = (eventType) => {
     switch (eventType) {
@@ -43,24 +45,26 @@ const Accessories = () => {
   return (
     <div className="accessories-container">
         <div>
-      <h1>Accessories</h1>
+      <h1>{t("accessories")}</h1>
       <button
         type="button"
         className="primary-btn analytics-btn"
         onClick={() => handleClick("showAnalytics")}
       >
-        Show analytics
+        {t("show analytics")}
       </button>
     </div>
       <div className="devices-container">
         <div className="title-button">
-          <h2>Devices</h2>
+          <h2>{t("devices")}</h2>
           <button
             type="button"
             className="primary-btn"
             onClick={() => handleClick("addDevice")}
           >
-            Add device
+            
+            {t("add")} {t("device")}
+            
           </button>
         </div>
         <div className="device-container">
@@ -68,7 +72,7 @@ const Accessories = () => {
             <div key={device.id} className="device-card">
                 <div>
               <p>{device.name}</p>
-              <p className="secondary-text">{device.type}</p>
+              <p className="secondary-text">{t(device.type)}</p>
               </div>
               <FontAwesomeIcon
                 icon={faTrash}
