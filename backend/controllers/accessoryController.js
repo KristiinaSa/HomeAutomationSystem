@@ -32,6 +32,10 @@ const getAllDevices = async (req, res, next) => {
     const devices = await Device.findAll({
       where: { system_id },
       attributes: ["id", "name", "type", "room_id", "value"],
+      include: {
+        model: Room,
+        attributes: ["name"],
+      },
     });
     console.log("devices:", devices);
     res.send(devices);
