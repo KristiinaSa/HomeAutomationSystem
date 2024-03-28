@@ -8,12 +8,14 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { faHouseLaptop} from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 import "./NavbarDesktop.css";
 
 const NavbarDesktop = () => {
   const { rooms } = useContext(RoomContext);
   const { isLoggedIn } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const handleClick = (e) => {
     if (!isLoggedIn) {
@@ -34,7 +36,7 @@ const NavbarDesktop = () => {
         >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faHome} />
-            <p>Home</p>
+            <p>{t("home")}</p>
           </div>
         </NavLink>
         <NavLink
@@ -46,7 +48,7 @@ const NavbarDesktop = () => {
         >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faTachometerAlt} />
-            <p>Automation</p>
+            <p>{t("automation")}</p>
           </div>
         </NavLink>
         <NavLink
@@ -58,7 +60,7 @@ const NavbarDesktop = () => {
         >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faCog} />
-            <p>Settings</p>
+            <p>{t("settings")}</p>
           </div>
         </NavLink>
         <NavLink
@@ -70,14 +72,14 @@ const NavbarDesktop = () => {
         >
           <div className="navbar-main_item">
             <FontAwesomeIcon icon={faHouseLaptop} />
-            <p>Accessories</p>
+            <p>{t("accessories")}</p>
           </div>
         </NavLink>
       </div>
       {isLoggedIn && (
         <>
           <div className="navbar-rooms-container">
-            <h3>Rooms</h3>
+            <h3>{t("rooms")}</h3>
             <div className="navbar-rooms">
               {rooms.map((room) => (
                 <div key={room.id} className="navbar-room">
