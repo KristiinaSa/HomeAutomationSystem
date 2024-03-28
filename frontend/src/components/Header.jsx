@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import useLanguage from "../hooks/useLanguage";
 
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +18,7 @@ import {
   faSignOut,
   faAddressBook,
   faHouseLaptop,
+  faGlobe
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
@@ -52,6 +54,9 @@ const Header = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { languages, selectedLanguage, handleLanguageChange } = useLanguage();
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const selectedLanguageName = languages.find(lang => lang.code === selectedLanguage)?.name;
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -115,6 +120,25 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
+      <div className="header-item">
+        <div className="plus-icon" onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}>
+          <FontAwesomeIcon icon={faGlobe} className="header-icon" />
+          <span>{selectedLanguageName}</span>
+        </div>
+        <div className={`overflow-menu ${isLanguageMenuOpen ? "show" : ""}`}>
+          {languages.map((language) => (
+            <div 
+              key={language.id} 
+              onClick={() => {
+                handleLanguageChange(language.code);
+                setIsLanguageMenuOpen(false);
+              }}
+            >
+              {language.name}
+            </div>
+          ))}
+        </div>
+      </div>
       <NavLink
         to="/"
         className="header-item home-icon"
