@@ -3,13 +3,15 @@ import authService from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { LanguageContext } from "../context/LanguageContext";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
   const { setIsLoggedIn } = useContext(AuthContext);
   const { setTheme } = useContext(ThemeContext);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { updateLanguage } = useContext(LanguageContext);
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -22,11 +24,7 @@ const useLogin = () => {
       const theme = response.using_darkmode ? "dark" : "light";
       localStorage.setItem("theme", theme);
       setTheme(theme);
-
-      const userLanguage = response.language;
-      localStorage.setItem("i18nextLng", userLanguage);
-      i18n.changeLanguage(userLanguage);
-
+      updateLanguage(response.language);
       setLoginSuccess(true);
       setIsLoggedIn(true);
     } catch (error) {

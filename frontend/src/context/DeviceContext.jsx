@@ -34,7 +34,7 @@ export const DeviceProvider = ({ children }) => {
       const eventSource = new EventSource(
         `/api/v1/accessories/status?access_token=${accessToken}`
       );
-      eventSource.onmessage = (event) => {
+      eventSource.onmessage = () => {
         setUpdate(true);
       };
       return () => {
