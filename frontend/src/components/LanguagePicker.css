@@ -1,0 +1,23 @@
+.language-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 30px;
+    width: 250px;
+}
+
+.language-picker {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .language-container {
+       width: 90%;
+    }
+    
+}
