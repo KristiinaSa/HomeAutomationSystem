@@ -1,8 +1,10 @@
-import useLanguage from '../hooks/useLanguage';
+// import useLanguage from '../hooks/useLanguage';
+import { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
 import './LanguagePicker.css';
 
 export const LanguagePicker = () => {
-  const { languages, selectedLanguage, handleLanguageChange, t } = useLanguage();
+  const { languages, selectedLanguage, handleLanguageChange, t } = useContext(LanguageContext);
 
   return (
     <div className='language-container'>

@@ -2,7 +2,8 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useLanguage from "../hooks/useLanguage";
+// import useLanguage from "../hooks/useLanguage";
+import { LanguageContext } from "../context/LanguageContext";
 
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,7 +57,7 @@ const Header = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { languages, selectedLanguage, handleLanguageChange } = useLanguage();
+  const { languages, selectedLanguage, handleLanguageChange } = useContext(LanguageContext);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const languageMenuRef = useRef();
   const selectedLanguageName = languages.find(lang => lang.code === selectedLanguage)?.name;
