@@ -7,6 +7,24 @@
   padding: 10px;
 }
 
+.header-language {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.lang-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lang-icon span {
+  padding: 0 5px;
+}
+
 .header-item {
   position: relative;
   margin-left: 10px;
@@ -18,8 +36,16 @@
 }
 
 
-.header-item.home-icon, .plus-icon {
+.header-item.home-icon, .plus-icon{
   cursor: pointer;
+}
+
+.checkcircle-active {
+  color: var(--checkcircle-active-color);
+}
+
+.checkcircle-inactive {
+  color: var(--secondary-text-color-mobile);
 }
 
 @keyframes fadeIn {
@@ -53,6 +79,22 @@
   transform: translateY(0);
   visibility: visible;
   transition: opacity 0.5s, transform 0.5s, visibility 0s;
+}
+
+.language-menu-item {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.language-menu-item li {
+  list-style-type: none;
+  padding: 5px 0;
+  
+}
+
+.language-menu-item li svg {
+  margin-right: 10px;
 }
 
 .menu-item {
