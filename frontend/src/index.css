@@ -18,6 +18,7 @@
     --input-background-color: #FFFFFF;
     --primary-btn-background-color: #F6F6F6;
     --secondary-btn-text-color: #F6F6F6;
+    --checkcircle-active-color: #73AD87;
 }
 
 /* Dark theme variables */
@@ -38,4 +39,5 @@
     --input-background-color: #F6F6F6;
     --primary-btn-background-color: #322E40;
     --secondary-btn-text-color: #F6F6F6;
+    --checkcircle-active-color: #479c74;
 }
