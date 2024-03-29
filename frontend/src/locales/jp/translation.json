@@ -3,10 +3,12 @@
   "home": "ホーム",
   "rooms": "部屋",
   "room": "部屋",
+  "room name": "部屋名",
   "settings": "設定",
   "categories": "カテゴリー",
   "devices": "デバイス",
   "device": "デバイス",
+  "device name": "デバイス名",
   "accessories": "アクセサリ",
   "accessory": "アクセサリ",
   "users": "ユーザー",
@@ -64,6 +66,8 @@
   "No response from server. Please try again later.": "サーバーからの応答がありません。再試行してください。",
   "Please fill in all the fields.": "すべてのフィールドに入力してください。",
   "Choose a language": "言語を選択",
+  "choose a room": "部屋を選択",
+  "choose a device category": "デバイスのカテゴリーを選択",
 
   "Oops! There was a hiccup fetching user details. Please refresh and try once more.":
     "Oops! There was a hiccup fetching user details. Please refresh and try once more.",
