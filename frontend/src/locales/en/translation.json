@@ -3,10 +3,12 @@
   "home": "Home",
   "rooms": "Rooms",
   "room": "Room",
+  "room name": "Room name",
   "settings": "Settings",
   "categories": "Categories",
   "devices": "Devices",
   "device": "Device",
+  "device name": "Device name",
   "accessories": "Accessories",
   "accessory": "Accessory",
   "users": "Users",
@@ -64,6 +66,9 @@
   "No response from server. Please try again later.": "No response from server. Please try again later.",
   "Please fill in all the fields.": "Please fill in all the fields.",
   "Choose a language": "Choose a language",
+  "choose a room": "Choose a room",
+  "choose a device category": "Choose a device category",
+
   "Oops! There was a hiccup fetching user details. Please refresh and try once more.":
     "Oops! There was a hiccup fetching user details. Please refresh and try once more.",
   "Are you sure you want to delete this user?" : "Are you sure you want to delete this user?",

@@ -2,6 +2,7 @@ import { addRoom } from "../services/roomServices";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoomContext } from "../context/RoomContext";
+import { useTranslation } from "react-i18next";
 import "./AddingRoom.css";
 
 const AddingRoom = () => {
@@ -10,6 +11,7 @@ const AddingRoom = () => {
   const { setUpdate, errorMessage } = useContext(RoomContext);
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
+  const { t } = useTranslation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,9 +48,9 @@ const AddingRoom = () => {
 
   return (
     <div className="new-room-container">
-      <h1>Adding a room</h1>
+      <h1>{t('add') + ' ' + t('room')}</h1>
       <form onSubmit={handleSubmit} className="choose-section">
-        <label htmlFor="roomName">Room name:</label>
+        <label htmlFor="roomName">{t('room name') + ":"}</label>
         <input
           type="text"
           id="roomName"
@@ -57,14 +59,14 @@ const AddingRoom = () => {
         />
         <div className="btn-container">
           <button type="submit" className="primary-btn add-btn">
-            Add Room
+            {t('add') + ' ' + t('room')}
           </button>
           <button
             type="reset"
             className="secondary-btn cancel-btn"
             onClick={handleCancel}
           >
-            Cancel
+            {t('cancel')}
           </button>
         </div>
       </form>
