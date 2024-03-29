@@ -31,6 +31,6 @@ apiV1Router.use(
 apiV1Router.use("/login", loginRouter);
 apiV1Router.use("/status", authenticateToken, getUserData, statusRouter);
 
-apiV1Router.use("/languages", authenticateToken, getUserData, languageRouter);
+apiV1Router.use("/languages", languageRouter);
 
 module.exports = apiV1Router;
