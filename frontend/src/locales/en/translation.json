@@ -9,8 +9,9 @@
   "devices": "Devices",
   "device": "Device",
   "device name": "Device name",
+  "accessory_other": "Accessories",
+  "accessory_one": "Accessory",
   "accessories": "Accessories",
-  "accessory": "Accessory",
   "users": "Users",
   "lights": "Lights",
   "light": "Light",
@@ -69,15 +70,14 @@
   "choose a room": "Choose a room",
   "choose a device category": "Choose a device category",
 
-  "Oops! There was a hiccup fetching user details. Please refresh and try once more.":
-    "Oops! There was a hiccup fetching user details. Please refresh and try once more.",
-  "Are you sure you want to delete this user?" : "Are you sure you want to delete this user?",
-  "All set! The user has been successfully removed." : "All set! The user has been successfully removed.",
-  "Could not delete user this time. Please try again later." : "Could not delete user this time. Please try again later.",
+  "Oops! There was a hiccup fetching user details. Please refresh and try once more.": "Oops! There was a hiccup fetching user details. Please refresh and try once more.",
+  "Are you sure you want to delete this user?": "Are you sure you want to delete this user?",
+  "All set! The user has been successfully removed.": "All set! The user has been successfully removed.",
+  "Could not delete user this time. Please try again later.": "Could not delete user this time. Please try again later.",
   "Role updated successfully!": "Role updated successfully!",
   "Oops! Updating the role didn't quite work out. Let's give it another shot.": "Oops! Updating the role didn't quite work out. Let's give it another shot.",
-  "Looks like sending the invitation hit a snag. How about we try that once more?" : "Looks like sending the invitation hit a snag. How about we try that once more?",
-  "Invalid email address" : "Invalid email address",
-  "Email is required" : "Email is required",
-  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?" : "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?"
+  "Looks like sending the invitation hit a snag. How about we try that once more?": "Looks like sending the invitation hit a snag. How about we try that once more?",
+  "Invalid email address": "Invalid email address",
+  "Email is required": "Email is required",
+  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?"
 }

@@ -49,7 +49,7 @@ export const TimerAutomationCard = ({ automation }) => {
         <p data-testid="automation-status">
           {automation.disabled
             ? t("Disabled")
-            : `${numDevices} ${t("accessories")}`}
+            : `${numDevices} ${t("accessory", { count: numDevices })}`}
         </p>
         <a
           onClick={handleEdit}
