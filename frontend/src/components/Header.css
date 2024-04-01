@@ -36,7 +36,8 @@
 }
 
 
-.header-item.home-icon, .plus-icon{
+.header-item.home-icon,
+.plus-icon {
   cursor: pointer;
 }
 
@@ -53,6 +54,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -90,7 +92,8 @@
 .language-menu-item li {
   list-style-type: none;
   padding: 5px 0;
-  
+  cursor: pointer;
+
 }
 
 .language-menu-item li svg {
@@ -138,7 +141,7 @@
   margin-right: 10px;
 }
 
-.icon-container{
+.icon-container {
   width: 30px;
   text-align: center;
 }

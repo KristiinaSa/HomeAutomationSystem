@@ -109,7 +109,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (node.current.contains(e.target)) {
+      if (node.current.contains(e.target) || e.target.closest(".lang-icon")) {
         return;
       }
       setIsOpen(false);
@@ -118,7 +118,8 @@ const Header = () => {
     const handleLanguageMenuClickOutside = (e) => {
       if (
         languageMenuRef.current &&
-        !languageMenuRef.current.contains(e.target)
+        !languageMenuRef.current.contains(e.target) &&
+        !e.target.closest(".lang-icon")
       ) {
         setIsLanguageMenuOpen(false);
       }
@@ -141,7 +142,12 @@ const Header = () => {
       <div className="header-language">
         <div
           className="lang-icon"
-          onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+          onClick={() => {
+            if (!isLanguageMenuOpen) {
+              setIsOpen(false);
+            }
+            setIsLanguageMenuOpen(!isLanguageMenuOpen);
+          }}
         >
           <FontAwesomeIcon icon={faGlobe} className="header-icon" />
           <span>{t(selectedLanguageName)}</span>
@@ -190,7 +196,13 @@ const Header = () => {
         <FontAwesomeIcon icon={faHome} className="header-icon" />
       </NavLink>
       <div className="header-item">
-        <div className="plus-icon" onClick={() => setIsOpen(!isOpen)}>
+        <div
+          className="plus-icon"
+          onClick={() => {
+            setIsLanguageMenuOpen(false);
+            setIsOpen(!isOpen);
+          }}
+        >
           <FontAwesomeIcon
             icon={isOpen ? faTimes : faPlus}
             className="header-icon"
