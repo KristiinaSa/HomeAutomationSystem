@@ -4,11 +4,6 @@ import { useTranslation } from "react-i18next";
 
 const TestCard = ({ title, icon, status, onClick }) => {
   const iconClass = status === "on" ? "icon-on" : "icon-off";
-  /*const capitalizedStatus = status
-    ? status.charAt(0).toUpperCase() + status.slice(1)
-    : ""; */
-  const lowercasedStatus = status ? status.toLowerCase() : "";
-
   const { t } = useTranslation();
 
   return (
@@ -17,7 +12,7 @@ const TestCard = ({ title, icon, status, onClick }) => {
         <FontAwesomeIcon icon={icon} size="2x" className={iconClass} />
         <div className="card-column noSelect">
           <p>{title}</p>
-          <p>{t(lowercasedStatus)}</p>
+          <p>{t(status)}</p>
         </div>
       </div>
     </div>

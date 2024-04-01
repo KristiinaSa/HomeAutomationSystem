@@ -21,7 +21,7 @@ import {
   faHouseLaptop,
   faGlobe,
   faChevronDown,
-  faCheckCircle
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
@@ -57,10 +57,13 @@ const Header = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { languages, selectedLanguage, handleLanguageChange } = useContext(LanguageContext);
+  const { languages, selectedLanguage, handleLanguageChange } =
+    useContext(LanguageContext);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const languageMenuRef = useRef();
-  const selectedLanguageName = languages.find(lang => lang.code === selectedLanguage)?.name;
+  const selectedLanguageName = languages.find(
+    (lang) => lang.code === selectedLanguage
+  )?.name;
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -104,55 +107,76 @@ const Header = () => {
         { icon: faAddressBook, text: t("register"), path: "/register" },
       ];
 
-      useEffect(() => {
-        const handleClickOutside = (e) => {
-          if (node.current.contains(e.target)) {
-            return;
-          }
-          setIsOpen(false);
-        };
-      
-        const handleLanguageMenuClickOutside = (e) => {
-          if (languageMenuRef.current && !languageMenuRef.current.contains(e.target)) {
-            setIsLanguageMenuOpen(false);
-          }
-        }
-      
-        const handleClick = (e) => {
-          handleClickOutside(e);
-          handleLanguageMenuClickOutside(e);
-        }
-      
-        document.addEventListener("mousedown", handleClick);
-      
-        return () => {
-          document.removeEventListener("mousedown", handleClick);
-        };
-      }, [isOpen, isLanguageMenuOpen]);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (node.current.contains(e.target)) {
+        return;
+      }
+      setIsOpen(false);
+    };
+
+    const handleLanguageMenuClickOutside = (e) => {
+      if (
+        languageMenuRef.current &&
+        !languageMenuRef.current.contains(e.target)
+      ) {
+        setIsLanguageMenuOpen(false);
+      }
+    };
+
+    const handleClick = (e) => {
+      handleClickOutside(e);
+      handleLanguageMenuClickOutside(e);
+    };
+
+    document.addEventListener("mousedown", handleClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [isOpen, isLanguageMenuOpen]);
 
   return (
     <div className="header" ref={node}>
       <div className="header-language">
-        <div className="lang-icon" onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}>
+        <div
+          className="lang-icon"
+          onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+        >
           <FontAwesomeIcon icon={faGlobe} className="header-icon" />
-          <span>{selectedLanguageName}</span>
-          <FontAwesomeIcon icon={faChevronDown} className="header-icon" style={{fontSize:"10px"}}/>
+          <span>{t(selectedLanguageName)}</span>
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className="header-icon"
+            style={{ fontSize: "10px" }}
+          />
         </div>
-        <div className={`overflow-menu ${isLanguageMenuOpen ? "show" : ""}`} ref={languageMenuRef}>
+        <div
+          className={`overflow-menu ${isLanguageMenuOpen ? "show" : ""}`}
+          ref={languageMenuRef}
+        >
           <ul className="language-menu-item">
             {languages.map((language) => (
-            <li
-              key={language.id} 
-              onClick={() => {
-                handleLanguageChange(language.code);
-                setIsLanguageMenuOpen(false);
-              }}
-              
-            >
-              <FontAwesomeIcon icon={faCheckCircle} className={`header-icon ${language.code == selectedLanguage ? "checkcircle-active" : "checkcircle-inactive"}`} />
-              <span className="hover-underline-animation">{language.name}</span>
-            </li>
-          ))}
+              <li
+                key={language.id}
+                onClick={() => {
+                  handleLanguageChange(language.code);
+                  setIsLanguageMenuOpen(false);
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className={`header-icon ${
+                    language.code == selectedLanguage
+                      ? "checkcircle-active"
+                      : "checkcircle-inactive"
+                  }`}
+                />
+                <span className="hover-underline-animation">
+                  {t(language.name)}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
