@@ -69,6 +69,7 @@
   "Choose a language": "言語を選択",
   "choose a room": "部屋を選択",
   "choose a device category": "デバイスのカテゴリーを選択",
+  "disabled": "無効",
   "Oops! There was a hiccup fetching user details. Please refresh and try once more.": "Oops! There was a hiccup fetching user details. Please refresh and try once more.",
   "Are you sure you want to delete this user?": "Are you sure you want to delete this user?",
   "All set! The user has been successfully removed.": "All set! The user has been successfully removed.",

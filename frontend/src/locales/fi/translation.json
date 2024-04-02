@@ -69,6 +69,7 @@
   "Choose a language": "Valitse kieli",
   "choose a room": "Valitse huone",
   "choose a device category": "Valitse laitteen kategoria",
+  "disabled": "Poistettu käytöstä",
   "Oops! There was a hiccup fetching user details. Please refresh and try once more.": "Uuups! Käyttäjätietojen hakemisessa tapahtui virhe. Päivitä sivu ja yritä uudelleen.",
   "Are you sure you want to delete this user?": "Haluatko varmasti poistaa tämän käyttäjän?",
   "All set! The user has been successfully removed.": "Kaikki valmista! Käyttäjä on poistettu onnistuneesti.",

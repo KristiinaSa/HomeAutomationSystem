@@ -48,7 +48,7 @@ export const TimerAutomationCard = ({ automation }) => {
       <div className={styles.info}>
         <p data-testid="automation-status">
           {automation.disabled
-            ? t("Disabled")
+            ? t("disabled")
             : `${numDevices} ${t("accessory", { count: numDevices })}`}
         </p>
         <a
