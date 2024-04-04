@@ -19,14 +19,16 @@ const AddingRoom = () => {
     const result = await addRoom(newRoom);
     if (result) {
       setUpdate(true);
-      setMessage("Great news! New room has been added successfully.");
+      setMessage(t("Great news! New room has been added successfully."));
       const id = setTimeout(() => {
         navigate(-1); // Navigate to the previous page after 2 seconds
       }, 2000);
       setTimeoutId(id);
     } else {
       setMessage(
-        "Oops! We hit a bump adding your room. Let's try that one more time, shall we?\""
+        t(
+          "Oops! We hit a bump adding your room. Let's try that one more time, shall we?"
+        )
       );
       setTimeout(() => {
         setMessage("");
@@ -48,9 +50,9 @@ const AddingRoom = () => {
 
   return (
     <div className="new-room-container">
-      <h1>{t('add') + ' ' + t('room')}</h1>
+      <h1>{t("add") + " " + t("room")}</h1>
       <form onSubmit={handleSubmit} className="choose-section">
-        <label htmlFor="roomName">{t('room name') + ":"}</label>
+        <label htmlFor="roomName">{t("room name") + ":"}</label>
         <input
           type="text"
           id="roomName"
@@ -59,14 +61,14 @@ const AddingRoom = () => {
         />
         <div className="btn-container">
           <button type="submit" className="primary-btn add-btn">
-            {t('add') + ' ' + t('room')}
+            {t("add") + " " + t("room")}
           </button>
           <button
             type="reset"
             className="secondary-btn cancel-btn"
             onClick={handleCancel}
           >
-            {t('cancel')}
+            {t("cancel")}
           </button>
         </div>
       </form>
