@@ -141,10 +141,12 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
+      {isLoggedIn && (
       <div className="welcome-user">
         <FontAwesomeIcon icon={faUserCircle} className="header-icon" />
         <span>{user}</span>
       </div>
+      )}
       <div className="header-language">
         <div
           className="lang-icon"
