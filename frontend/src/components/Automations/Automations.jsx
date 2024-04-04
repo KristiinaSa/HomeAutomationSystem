@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { getAutomations } from "../../services/automationServices";
@@ -7,12 +7,15 @@ import { TimerAutomationCard } from "./TimerAutomationCard";
 import { SensorAutomationCard } from "./SensorAutomationCard";
 
 import { useTranslation } from "react-i18next";
+import { AuthContext } from "../../context/AuthContext";
 
 import styles from "./Automation.module.css";
+
 
 export const Automations = () => {
   const [automations, setAutomations] = useState([]);
   const { t } = useTranslation();
+  const { role } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchAutomations = async () => {
@@ -52,9 +55,11 @@ export const Automations = () => {
           )
         )}
       </div>
+      {role === 'admin' && (
       <Link to="/automations/new" data-testid="create-automation-button">
         <button className="primary-btn">{t("create new automation")}</button>
       </Link>
+      )}
     </div>
   );
 };

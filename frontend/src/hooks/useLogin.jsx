@@ -4,11 +4,12 @@ import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { LanguageContext } from "../context/LanguageContext";
+import { jwtDecode } from "jwt-decode";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn, setRole, setUser, setUserId } = useContext(AuthContext);
   const { setTheme } = useContext(ThemeContext);
   const { t } = useTranslation();
   const { updateLanguage } = useContext(LanguageContext);
@@ -20,13 +21,22 @@ const useLogin = () => {
     }
     try {
       const response = await authService.login(email, password);
+      
       localStorage.setItem("access_token", response.token);
       const theme = response.using_darkmode ? "dark" : "light";
       localStorage.setItem("theme", theme);
+    
       setTheme(theme);
       updateLanguage(response.language);
       setLoginSuccess(true);
       setIsLoggedIn(true);
+
+      const decodedToken = jwtDecode(response.token);
+      console.log("decodedToken", decodedToken);
+      setRole(decodedToken.role);
+      setUser(decodedToken.name);
+      setUserId(decodedToken.id);
+
     } catch (error) {
       if (error.response) {
         setErrorMessage(t(error.response.data.message));

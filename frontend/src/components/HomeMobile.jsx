@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { CategoriesContext } from "../context/CategoriesContext";
 import { RoomContext } from "../context/RoomContext";
 import { DeviceContext } from "../context/DeviceContext";
+import { AuthContext } from "../context/AuthContext";
 import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
@@ -14,6 +15,7 @@ const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
   const { rooms, errorMessage } = useContext(RoomContext);
   const { devices, errorMsg } = useContext(DeviceContext);
+  const { role } = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -43,6 +45,7 @@ const HomeMobile = () => {
       <div className="rooms-container">
         <div className="rooms-title">
           <h2>{t("rooms")}</h2>
+          {role === "admin" && (
           <button
             type="button"
             className="primary-btn"
@@ -50,6 +53,7 @@ const HomeMobile = () => {
           >
             {t("add")} {t("room")}
           </button>
+        )}
         </div>
         {rooms.map((room) => (
           <div key={room.id} className="room-container">

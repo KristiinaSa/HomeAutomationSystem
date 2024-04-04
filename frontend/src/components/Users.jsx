@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import {
   getAllUsers,
   changeRole,
 } from "../services/userServices";
+import { AuthContext } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import "./Users.css";
 
@@ -25,6 +26,7 @@ const Users = () => {
   const [update, setUpdate] = useState(false);
   const [message, setMessage] = useState("");
   const { t } = useTranslation();
+  const { role } = useContext(AuthContext);
 
   const fetchUsers = async () => {
     try {
@@ -66,16 +68,17 @@ const Users = () => {
     console.log("Editing user with id:", id);
   };
 
-  const updateRole = async (id, role) => {
-    if (role === persons.find((user) => user.id === editingId).role) {
+  const updateRole = async (id, newRole) => {
+    if (newRole === persons.find((user) => user.id === editingId).role) {
       setEditingId(null);
       return;
     }
     try {
-      await changeRole(id, role);
+      await changeRole(id, newRole);
       setEditingId(null);
       setUpdate(true);
       setMessage(t("Role updated successfully!"));
+
     } catch (error) {
       console.log("Failed to update role:", error.message);
       setMessage(
@@ -167,6 +170,7 @@ const Users = () => {
                   <p>{user.email}</p>
                 </div>
               </div>
+              {role === 'admin' && (
               <div className="user-actions">
                 <FontAwesomeIcon
                   icon={faEdit}
@@ -180,11 +184,11 @@ const Users = () => {
                   data-testid={`delete-${user.id}`}
                   onClick={() => deletePerson(user.id)}
                 />
-              </div>
+              </div> )}
             </div>
           );
         })}
-        {showInvite ? (
+        {role === 'admin' && (showInvite ? (
           <form onSubmit={handleSubmit(invitePerson)} className="invite-form">
             <input
               {...register("email", {
@@ -225,7 +229,7 @@ const Users = () => {
             <FontAwesomeIcon icon={faPlus} />
             {t("Invite people")}
           </div>
-        )}
+        ))}
       </div>
       {message && <p className="message">{message}</p>}
     </div>
