@@ -38,10 +38,6 @@ const getAllDevices = async (req, res, next) => {
       },
     });
 
-    devices = devices.map((device) => ({
-      ...device.get({ plain: true }),
-    }));
-
     console.log("devices:", devices);
     res.send(devices);
   } catch (err) {
