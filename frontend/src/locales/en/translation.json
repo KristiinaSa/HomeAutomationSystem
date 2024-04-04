@@ -81,5 +81,9 @@
   "Email is required": "Email is required",
   "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?",
   "Looks like we stumbled while fetching your rooms. Mind trying again shortly?": "Looks like we stumbled while fetching your rooms. Mind trying again shortly?",
-  "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit.": "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit."
+  "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit.": "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit.",
+  "Great news! New room has been added successfully.": "Great news! New room has been added successfully.",
+  "Oops! We hit a bump adding your room. Let's try that one more time, shall we?": "Oops! We hit a bump adding your room. Let's try that one more time, shall we?",
+  "Great news! Your device has been added successfully.": "Great news! Your device has been added successfully.",
+  "Looks like adding your device didn't go through. Let's give it another go, shall we?": "Looks like adding your device didn't go through. Let's give it another go, shall we?"
 }
