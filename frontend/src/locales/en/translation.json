@@ -79,5 +79,7 @@
   "Looks like sending the invitation hit a snag. How about we try that once more?": "Looks like sending the invitation hit a snag. How about we try that once more?",
   "Invalid email address": "Invalid email address",
   "Email is required": "Email is required",
-  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?"
+  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?",
+  "Looks like we stumbled while fetching your rooms. Mind trying again shortly?": "Looks like we stumbled while fetching your rooms. Mind trying again shortly?",
+  "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit.": "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit."
 }
