@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { getRooms } from "../services/roomServices";
 import { AuthContext } from "./AuthContext";
+import { useTranslation } from "react-i18next";
 
 export const RoomContext = createContext();
 
@@ -9,6 +10,7 @@ export const RoomProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]);
   const [update, setUpdate] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -19,7 +21,9 @@ export const RoomProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
         setErrorMessage(
-          "Looks like we stumbled while fetching your rooms. Mind trying again shortly?"
+          t(
+            "Looks like we stumbled while fetching your rooms. Mind trying again shortly?"
+          )
         );
       }
     };
