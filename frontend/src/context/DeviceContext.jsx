@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { getDevices } from "../services/accessoryServices";
 import { AuthContext } from "./AuthContext";
+import { useTranslation } from "react-i18next";
 
 export const DeviceContext = createContext();
 
@@ -9,6 +10,7 @@ export const DeviceProvider = ({ children }) => {
   const [update, setUpdate] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const { isLoggedIn } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -19,7 +21,9 @@ export const DeviceProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
         setErrorMsg(
-          "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit."
+          t(
+            "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit."
+          )
         );
       }
     };
