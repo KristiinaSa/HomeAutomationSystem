@@ -22,6 +22,7 @@ import {
   faGlobe,
   faChevronDown,
   faCheckCircle,
+  faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
@@ -64,6 +65,7 @@ const Header = () => {
   const selectedLanguageName = languages.find(
     (lang) => lang.code === selectedLanguage
   )?.name;
+  const { user } = useContext(AuthContext);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -139,6 +141,10 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
+      <div className="welcome-user">
+        <FontAwesomeIcon icon={faUserCircle} className="header-icon" />
+        <span>{user}</span>
+      </div>
       <div className="header-language">
         <div
           className="lang-icon"
