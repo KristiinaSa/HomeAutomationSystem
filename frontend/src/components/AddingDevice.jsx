@@ -28,14 +28,16 @@ const AddingDevice = () => {
     const result = await addDevice(deviceInfo);
     if (result) {
       setUpdate(true);
-      setMessage("Great news! Your device has been added successfully.");
+      setMessage(t("Great news! Your device has been added successfully."));
       const id = setTimeout(() => {
         navigate(-1); // Navigate to the previous page after 2 seconds
       }, 2000);
       setTimeoutId(id);
     } else {
       setMessage(
-        "Looks like adding your device didn't go through. Let's give it another go, shall we?"
+        t(
+          "Looks like adding your device didn't go through. Let's give it another go, shall we?"
+        )
       );
       setTimeout(() => {
         setMessage("");
@@ -57,9 +59,9 @@ const AddingDevice = () => {
 
   return (
     <div className="add-device-container">
-      <h1>{t('add') + ' ' + t('device')}</h1>
+      <h1>{t("add") + " " + t("device")}</h1>
       <div className="choose-section">
-        <label htmlFor="roomName">{t('choose a room') + ':'}</label>
+        <label htmlFor="roomName">{t("choose a room") + ":"}</label>
         <select
           id="roomName"
           value={chosenRoom} // To ensure the select shows the current state
@@ -76,18 +78,20 @@ const AddingDevice = () => {
         </select>
       </div>
       <div className="choose-section">
-        <label htmlFor="deviceType">{t('choose a device category') + ':'}</label>
+        <label htmlFor="deviceType">
+          {t("choose a device category") + ":"}
+        </label>
         <select
           id="deviceType"
           value={device.type} // To ensure the select shows the current state
           onChange={(e) => setDevice({ ...device, type: e.target.value })}
           className="choose-box"
         >
-          <option value="light">{t('light')}</option>
+          <option value="light">{t("light")}</option>
         </select>
       </div>
       <form onSubmit={handleSubmit} className="choose-section">
-        <label htmlFor="deviceName">{t('device name') + ":"}</label>
+        <label htmlFor="deviceName">{t("device name") + ":"}</label>
         <input
           type="text"
           id="deviceName"
@@ -98,14 +102,14 @@ const AddingDevice = () => {
         />
         <div className="btn-container">
           <button type="submit" className="primary-btn add-btn">
-            {t('add') + ' ' + t('device')}
+            {t("add") + " " + t("device")}
           </button>
           <button
             type="reset"
             className="secondary-btn cancel-btn"
             onClick={handleCancel}
           >
-            {t('cancel')}
+            {t("cancel")}
           </button>
         </div>
       </form>
