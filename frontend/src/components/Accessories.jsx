@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
+import { AuthContext } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
 
 const Accessories = () => {
   const { devices, setUpdate, errorMsg} = useContext(DeviceContext);
+  const { role } = useContext(AuthContext);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -57,6 +59,7 @@ const Accessories = () => {
       <div className="devices-container">
         <div className="title-button">
           <h2>{t("devices")}</h2>
+          {role === "admin" && (
           <button
             type="button"
             className="primary-btn"
@@ -66,6 +69,7 @@ const Accessories = () => {
             {t("add")} {t("device")}
             
           </button>
+        )}
         </div>
         <div className="device-container">
           {devices.map((device) => (
@@ -74,12 +78,14 @@ const Accessories = () => {
               <p>{device.name}</p>
               <p className="secondary-text">{t(device.type)}</p>
               </div>
+              {role === "admin" && (
               <FontAwesomeIcon
                 icon={faTrash}
                 className="delete"
                 data-testid={`delete-${device.id}`}
                 onClick={() => deletionDevice(device.id)}
               />
+            )}
             </div>
           ))}
         </div>
