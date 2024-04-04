@@ -81,5 +81,9 @@
   "Email is required": "メールは必須",
   "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "おやおや！アナリティクスを引き上げる際に問題が発生しました。後でもう一度お試しください。",
   "Looks like we stumbled while fetching your rooms. Mind trying again shortly?": "部屋を持ってくるときにつまずいたようだ。すぐにもう一度お願いできますか？",
-  "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit.": "おっと！ちょっとトラブルがありました。もうしばらくお待ちください。"
+  "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit.": "おっと！ちょっとトラブルがありました。もうしばらくお待ちください。",
+  "Great news! New room has been added successfully.": "素晴らしいニュース！新しい部屋が正常に追加されました。",
+  "Oops! We hit a bump adding your room. Let's try that one more time, shall we?": "おっと！部屋の追加に問題が発生しました。もう一度やってみましょう。",
+  "Great news! Your device has been added successfully.": "素晴らしいニュース！デバイスが正常に追加されました。",
+  "Looks like adding your device didn't go through. Let's give it another go, shall we?": "デバイスの追加がうまくいかなかったようです。もう一度やってみましょう。"
 }
