@@ -79,5 +79,7 @@
   "Looks like sending the invitation hit a snag. How about we try that once more?": "Kutsun lähettämisessä tapahtui virhe. Yritetään uudelleen.",
   "Invalid email address": "Virheellinen sähköpostiosoite",
   "Email is required": "Sähköposti vaaditaan",
-  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "Käyttöhistorian hakemisessa tapahtui virhe. Yritä myöhemmin uudelleen."
+  "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?": "Käyttöhistorian hakemisessa tapahtui virhe. Yritä myöhemmin uudelleen.",
+  "Looks like we stumbled while fetching your rooms. Mind trying again shortly?": "Huoneiden hakemisessa tapahtui virhe. Yritä myöhemmin uudelleen.",
+  "Whoops! We had a little trouble getting your devices. Let's give it another whirl in a bit." : "Laitteiden hakemisessa tapahtui virhe. Yritä myöhemmin uudelleen."
 }
