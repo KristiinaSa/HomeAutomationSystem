@@ -43,7 +43,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
           </option>
           {availableDevices.map((device) => (
             <option key={device.id} value={device.id}>
-              {device.name}
+              {`${device.name} (${device.room.name})`}
             </option>
           ))}
         </select>
@@ -54,7 +54,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
         <ul className={styles.deviceList}>
           {selectedDevices.map((device, index) => (
             <li key={index} className={styles.centerContent}>
-              {device.name}
+              {`${device.name} (${device.room.name})`}
               <button
                 type="button"
                 className={styles.removeButton}

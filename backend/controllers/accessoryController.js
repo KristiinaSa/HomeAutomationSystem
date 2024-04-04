@@ -29,7 +29,7 @@ const getAllAccessories = async (req, res, next) => {
 const getAllDevices = async (req, res, next) => {
   const { system_id } = req.user;
   try {
-    const devices = await Device.findAll({
+    let devices = await Device.findAll({
       where: { system_id },
       attributes: ["id", "name", "type", "room_id", "value"],
       include: {
@@ -37,6 +37,11 @@ const getAllDevices = async (req, res, next) => {
         attributes: ["name"],
       },
     });
+
+    devices = devices.map((device) => ({
+      ...device.get({ plain: true }),
+    }));
+
     console.log("devices:", devices);
     res.send(devices);
   } catch (err) {
