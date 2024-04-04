@@ -7,6 +7,7 @@ const TimeAutomation = require("../models/timeAutomationModel.js");
 const SensorAutomation = require("../models/sensorAutomationModel.js");
 const Device = require("../models/deviceModel.js");
 const System = require("../models/systemModel.js");
+const Room = require("../models/roomModel.js");
 
 const { ACTION_TO_STRING, STRING_TO_ACTION } = require("./helpers.js");
 
@@ -110,6 +111,10 @@ const getTimerAutomation = async (req, res, next) => {
         model: Device,
         attributes: ["id", "name", "type"],
         through: { attributes: [] },
+        include: {
+          model: Room,
+          attributes: ["name"],
+        },
       },
       attributes: ["id", "weekdays", "time", "disabled", "name", "action"],
     });
