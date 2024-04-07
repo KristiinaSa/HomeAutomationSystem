@@ -12,6 +12,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import * as accessoryServices from "../../services/accessoryServices.js";
 import { DeviceProvider } from "../../context/DeviceContext.jsx";
 import { AuthProvider } from "../../context/AuthContext.jsx";
+import { I18nextProvider } from "react-i18next";
+import i18n from "../../i18n.js";
 
 const navigate = vi.fn();
 
@@ -56,11 +58,13 @@ const mockAutomation = {
       id: 1,
       name: "Table Lamp",
       type: "Light",
+      room: { name: "Living Room" },
     },
     {
       id: 2,
       name: "Ceiling Lamp",
       type: "Light",
+      room: { name: "Living Room" },
     },
   ],
 };
@@ -70,11 +74,13 @@ const mockDevices = [
     id: 1,
     name: "Table Lamp",
     type: "Light",
+    room: { name: "Living Room" },
   },
   {
     id: 2,
     name: "Ceiling Lamp",
     type: "Light",
+    room: { name: "Living Room" },
   },
 ];
 
@@ -86,22 +92,26 @@ const mockAutomationWithoutId = {
 it("fetches a timer-based automation", async () => {
   await act(async () => {
     render(
-      <Router>
-        <AuthProvider>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-              handleDelete={handleDelete}
-            />
-          </DeviceProvider>
-        </AuthProvider>
-      </Router>
+      <I18nextProvider i18n={i18n}>
+        <Router>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+                handleDelete={handleDelete}
+              />
+            </DeviceProvider>
+          </AuthProvider>
+        </Router>
+      </I18nextProvider>
     );
   });
 
   mockDevices.forEach((device) => {
-    expect(screen.getByText(device.name)).toBeInTheDocument();
+    expect(
+      screen.getByText(`${device.name} (${device.room.name})`)
+    ).toBeInTheDocument();
   });
 });
 
