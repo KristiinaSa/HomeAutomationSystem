@@ -11,18 +11,11 @@ const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
 const SensorHistory = require("../models/sensorHistoryModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
-const Language = require("../models/languageModel.js");
 
 const sequelize = require("./sequelizeConnector.js");
 
 async function addTestData() {
-  await sequelize.sync({ force: true });
-
-  await Language.bulkCreate([
-    { code: "en", name: "English" },
-    { code: "fi", name: "Suomi" },
-    { code: "jp", name: "日本語" },
-  ]);
+  await sequelize.sync();
 
   const system = await System.create({
     name: "Test System",

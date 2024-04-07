@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const Translation = require("../models/translationModel.js");
+const sequelize = require("./sequelizeConnector.js");
 
 const files = fs.readdirSync("./translations");
 
@@ -12,13 +13,18 @@ const populateTranslations = async () => {
     );
 
     for (const key in translations) {
-      await Translation.create({
-        key,
-        value: translations[key],
-        language,
+      const [instance, created] = await Translation.findOrCreate({
+        where: { key, language },
+        defaults: { value: translations[key] },
       });
+
+      if (!created) {
+        await instance.update({ value: translations[key] });
+      }
     }
   }
+
+  await sequelize.close();
 };
 
 populateTranslations();
