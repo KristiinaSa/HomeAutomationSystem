@@ -11,6 +11,7 @@ const UsageHistory = require("../models/usageHistoryModel.js");
 const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
 const Language = require("../models/languageModel.js");
+const Translation = require("../models/translationModel.js");
 
 Device.belongsTo(System, { foreignKey: "system_id" });
 Device.belongsTo(Room, { foreignKey: "room_id" });

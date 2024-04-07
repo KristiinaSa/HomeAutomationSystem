@@ -9,4 +9,27 @@ const getLanguages = async (req, res) => {
   }
 };
 
+const getTranslations = async (req, res, next) => {
+  try {
+    const { lng, ns } = req.query;
+
+    const Translation = require(`../models/translations_${lng}.js`);
+
+    const translations = await Translation.findAll({
+      where: { namespace: ns },
+    });
+
+    const translationsObject = translations.reduce((obj, translation) => {
+      obj[translation.key] = translation.value;
+      return obj;
+    }, {});
+
+    res.json(translationsObject);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getLanguages, getTranslations };
+
 module.exports = { getLanguages };
