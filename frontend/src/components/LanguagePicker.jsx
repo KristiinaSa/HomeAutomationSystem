@@ -17,7 +17,7 @@ export const LanguagePicker = () => {
       >
         {languages.map((language) => (
           <option key={language.id} value={language.code}>
-            {t(language.name)}
+            {language.name}
           </option>
         ))}
       </select>

@@ -20,8 +20,8 @@ async function addTestData() {
 
   await Language.bulkCreate([
     { code: "en", name: "English" },
-    { code: "fi", name: "Finnish" },
-    { code: "jp", name: "Japanese" },
+    { code: "fi", name: "Suomi" },
+    { code: "jp", name: "日本語" },
   ]);
 
   const system = await System.create({

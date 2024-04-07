@@ -1,4 +1,5 @@
 const Language = require("../models/languageModel.js");
+const Translation = require("../models/translationModel.js");
 
 const getLanguages = async (req, res) => {
   try {
@@ -11,12 +12,10 @@ const getLanguages = async (req, res) => {
 
 const getTranslations = async (req, res, next) => {
   try {
-    const { lng, ns } = req.query;
-
-    const Translation = require(`../models/translations_${lng}.js`);
+    const { lng } = req.query;
 
     const translations = await Translation.findAll({
-      where: { namespace: ns },
+      where: { language: lng },
     });
 
     const translationsObject = translations.reduce((obj, translation) => {
@@ -31,5 +30,3 @@ const getTranslations = async (req, res, next) => {
 };
 
 module.exports = { getLanguages, getTranslations };
-
-module.exports = { getLanguages };

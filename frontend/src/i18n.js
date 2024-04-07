@@ -1,30 +1,19 @@
 import i18n from "i18next";
-import Backend from "i18next-http-backend";
+import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
-import translationEN from "./locales/en/translation.json";
-import translationJP from "./locales/jp/translation.json";
-import translationFI from "./locales/fi/translation.json";
-import commonTranslations from "./locales/commonTranslations.json";
-
-const resources = {
-  en: {
-    translation: { ...translationEN, ...commonTranslations },
-  },
-  jp: {
-    translation: { ...translationJP, ...commonTranslations },
-  },
-  fi: {
-    translation: { ...translationFI, ...commonTranslations },
-  },
-};
 
 i18n
-  .use(Backend)
+  .use(HttpApi)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources,
+    load: "languageOnly",
+    backend: {
+      loadPath: `http://localhost:${
+        import.meta.env.VITE_PROXY_PORT
+      }/api/v1/languages/translations?lng={{lng}}`,
+    },
     fallbackLng: "en",
     debug: true,
     detection: {
