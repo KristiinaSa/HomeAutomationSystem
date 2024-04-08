@@ -1,3 +1,4 @@
+// Use this only with test files that need to test i18n translations. This file is not used in the application code.
 import i18n from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
