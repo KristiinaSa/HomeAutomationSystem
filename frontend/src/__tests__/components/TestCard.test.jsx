@@ -2,11 +2,7 @@
 import { render, screen } from "@testing-library/react";
 import { I18nextProvider } from "react-i18next";
 import TestCard from "../../components/TestCard.jsx";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCoffee as faLightbulb } from "@fortawesome/free-solid-svg-icons";
-import i18n from "../../i18n.js";
-
-library.add(faLightbulb);
+import i18n from "../../i18n-test.js";
 
 describe("TestCard", () => {
   it("renders correctly", () => {

@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import { test, expect } from "vitest";
 import { BrowserRouter as Router } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
-import i18n from "../../i18n.js";
+import i18n from "../../i18n-test.js";
 
 test("renders menu items for logged in users in english, japanese and finnish", async () => {
   const authContextValue = { isLoggedIn: true };
