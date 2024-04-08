@@ -142,10 +142,10 @@ const Header = () => {
   return (
     <div className="header" ref={node}>
       {isLoggedIn && user && (
-      <div className="welcome-user">
-        <FontAwesomeIcon icon={faUserCircle} className="header-icon" />
-        <span>{user}</span>
-      </div>
+        <div className="welcome-user">
+          <FontAwesomeIcon icon={faUserCircle} className="header-icon" />
+          <span>{user}</span>
+        </div>
       )}
       <div className="header-language">
         <div
@@ -158,7 +158,7 @@ const Header = () => {
           }}
         >
           <FontAwesomeIcon icon={faGlobe} className="header-icon" />
-          <span>{t(selectedLanguageName)}</span>
+          <span>{selectedLanguageName}</span>
           <FontAwesomeIcon
             icon={faChevronDown}
             className="header-icon"
@@ -187,7 +187,7 @@ const Header = () => {
                   }`}
                 />
                 <span className="hover-underline-animation">
-                  {t(language.name)}
+                  {language.name}
                 </span>
               </li>
             ))}

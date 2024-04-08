@@ -11,6 +11,10 @@ const System = require("../models/systemModel.js");
 const TimeAutomation = require("../models/timeAutomationModel.js");
 const User = require("../models/userModel.js");
 const Language = require("../models/languageModel.js");
+const models = require("../models/transModel.js");
+const EnTranslation = models.EnTranslation;
+const FiTranslation = models.FiTranslation;
+const JpTranslation = models.JpTranslation;
 
 sequelize
   .sync({ force: false })

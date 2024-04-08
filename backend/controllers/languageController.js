@@ -1,4 +1,5 @@
 const Language = require("../models/languageModel.js");
+const models = require("../models/transModel.js");
 
 const getLanguages = async (req, res) => {
   try {
@@ -9,4 +10,25 @@ const getLanguages = async (req, res) => {
   }
 };
 
-module.exports = { getLanguages };
+const getTranslations = async (req, res, next) => {
+  try {
+    const { lng } = req.query;
+    const modelName = lng + "_translation";
+    const Translation = models[modelName];
+
+    const translations = await Translation.findAll({
+      where: { language: lng },
+    });
+
+    const translationsObject = translations.reduce((obj, translation) => {
+      obj[translation.key] = translation.value;
+      return obj;
+    }, {});
+
+    res.json(translationsObject);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getLanguages, getTranslations };
