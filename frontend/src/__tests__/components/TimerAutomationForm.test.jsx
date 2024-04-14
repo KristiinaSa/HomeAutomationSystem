@@ -13,7 +13,7 @@ import * as accessoryServices from "../../services/accessoryServices.js";
 import { DeviceProvider } from "../../context/DeviceContext.jsx";
 import { AuthProvider } from "../../context/AuthContext.jsx";
 import { I18nextProvider } from "react-i18next";
-import i18n from "../../i18n.js";
+import i18n from "../../i18n-test.js";
 
 const navigate = vi.fn();
 
