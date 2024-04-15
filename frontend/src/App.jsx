@@ -1,5 +1,5 @@
 import "./App.css";
-import "./util/icons";
+import "./utils/icons";
 import { CategoriesProvider } from "./context/CategoriesContext";
 import { RoomProvider } from "./context/RoomContext";
 import Layout from "./pages/Layout";
