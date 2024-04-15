@@ -14,6 +14,24 @@ import { DeviceProvider } from "../../context/DeviceContext.jsx";
 import { AuthProvider } from "../../context/AuthContext.jsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../../i18n-test.js";
+import { LanguageContext } from "../../context/LanguageContext.jsx";
+
+const languages = [
+  { id: 1, code: "en", name: "English" },
+  { id: 2, code: "jp", name: "日本語" },
+  { id: 3, code: "fi", name: "Suomi" },
+];
+
+const languageContextValue = {
+  languages,
+  selectedLanguage: "en",
+  handleLanguageChange: (newLanguage) => {
+    languageContextValue.selectedLanguage = newLanguage;
+    i18n.changeLanguage(newLanguage);
+  },
+  updateLanguage: vi.fn(),
+  t: i18n.t,
+};
 
 const navigate = vi.fn();
 
@@ -93,17 +111,19 @@ it("fetches a timer-based automation", async () => {
   await act(async () => {
     render(
       <I18nextProvider i18n={i18n}>
-        <Router>
-          <AuthProvider>
-            <DeviceProvider>
-              <TimerAutomationForm
-                handleSubmit={handleSubmit}
-                automation={mockAutomation}
-                handleDelete={handleDelete}
-              />
-            </DeviceProvider>
-          </AuthProvider>
-        </Router>
+        <LanguageContext.Provider value={languageContextValue}>
+          <Router>
+            <AuthProvider>
+              <DeviceProvider>
+                <TimerAutomationForm
+                  handleSubmit={handleSubmit}
+                  automation={mockAutomation}
+                  handleDelete={handleDelete}
+                />
+              </DeviceProvider>
+            </AuthProvider>
+          </Router>
+        </LanguageContext.Provider>
       </I18nextProvider>
     );
   });
@@ -118,17 +138,19 @@ it("fetches a timer-based automation", async () => {
 test("calls handleSubmit with the correct arguments when the form is submitted", async () => {
   await act(async () => {
     render(
-      <Router>
-        <AuthProvider>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-              handleDelete={handleDelete}
-            />
-          </DeviceProvider>
-        </AuthProvider>
-      </Router>
+      <LanguageContext.Provider value={languageContextValue}>
+        <Router>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+                handleDelete={handleDelete}
+              />
+            </DeviceProvider>
+          </AuthProvider>
+        </Router>
+      </LanguageContext.Provider>
     );
   });
 
@@ -139,17 +161,19 @@ test("calls handleSubmit with the correct arguments when the form is submitted",
 test("calls handleDelete when the delete button is clicked", async () => {
   await act(async () => {
     render(
-      <Router>
-        <AuthProvider>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-              handleDelete={handleDelete}
-            />
-          </DeviceProvider>
-        </AuthProvider>
-      </Router>
+      <LanguageContext.Provider value={languageContextValue}>
+        <Router>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+                handleDelete={handleDelete}
+              />
+            </DeviceProvider>
+          </AuthProvider>
+        </Router>
+      </LanguageContext.Provider>
     );
   });
 
@@ -160,11 +184,13 @@ test("calls handleDelete when the delete button is clicked", async () => {
 
 test("disables the submit button when the form is not filled out completely", async () => {
   render(
-    <AuthProvider>
-      <DeviceProvider>
-        <TimerAutomationForm handleSubmit={handleSubmit} />
-      </DeviceProvider>
-    </AuthProvider>
+    <LanguageContext.Provider value={languageContextValue}>
+      <AuthProvider>
+        <DeviceProvider>
+          <TimerAutomationForm handleSubmit={handleSubmit} />
+        </DeviceProvider>
+      </AuthProvider>
+    </LanguageContext.Provider>
   );
 
   const submitButton = screen.getByTestId("submit-button");
@@ -175,13 +201,15 @@ test("disables the submit button when the form is not filled out completely", as
 test("renders empty form fields when the automation prop is not provided", async () => {
   await act(async () => {
     render(
-      <AuthProvider>
-        <DeviceProvider>
-          <Router>
-            <TimerAutomationForm handleSubmit={handleSubmit} />
-          </Router>
-        </DeviceProvider>
-      </AuthProvider>
+      <LanguageContext.Provider value={languageContextValue}>
+        <AuthProvider>
+          <DeviceProvider>
+            <Router>
+              <TimerAutomationForm handleSubmit={handleSubmit} />
+            </Router>
+          </DeviceProvider>
+        </AuthProvider>
+      </LanguageContext.Provider>
     );
   });
 
@@ -203,16 +231,18 @@ test("renders empty form fields when the automation prop is not provided", async
 test("populates form fields correctly when the automation prop is provided", async () => {
   await act(async () => {
     render(
-      <Router>
-        <AuthProvider>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-            />
-          </DeviceProvider>
-        </AuthProvider>
-      </Router>
+      <LanguageContext.Provider value={languageContextValue}>
+        <Router>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+              />
+            </DeviceProvider>
+          </AuthProvider>
+        </Router>
+      </LanguageContext.Provider>
     );
   });
 
@@ -234,16 +264,18 @@ test("populates form fields correctly when the automation prop is provided", asy
 test("cancel button navigates back", async () => {
   await act(async () => {
     render(
-      <Router>
-        <AuthProvider>
-          <DeviceProvider>
-            <TimerAutomationForm
-              handleSubmit={handleSubmit}
-              automation={mockAutomation}
-            />
-          </DeviceProvider>
-        </AuthProvider>
-      </Router>
+      <LanguageContext.Provider value={languageContextValue}>
+        <Router>
+          <AuthProvider>
+            <DeviceProvider>
+              <TimerAutomationForm
+                handleSubmit={handleSubmit}
+                automation={mockAutomation}
+              />
+            </DeviceProvider>
+          </AuthProvider>
+        </Router>
+      </LanguageContext.Provider>
     );
   });
 
