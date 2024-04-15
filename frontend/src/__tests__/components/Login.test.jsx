@@ -8,12 +8,21 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "../../i18n-test.js";
 import { LanguageContext } from "../../context/LanguageContext.jsx";
 
+const languages = [
+  { id: 1, code: "en", name: "English" },
+  { id: 2, code: "jp", name: "日本語" },
+  { id: 3, code: "fi", name: "Suomi" },
+];
+
 const languageContextValue = {
-  languages: [],
+  languages,
   selectedLanguage: "en",
-  handleLanguageChange: vi.fn(),
+  handleLanguageChange: (newLanguage) => {
+    languageContextValue.selectedLanguage = newLanguage;
+    i18n.changeLanguage(newLanguage);
+  },
   updateLanguage: vi.fn(),
-  t: vi.fn(),
+  t: i18n.t,
 };
 
 test("renders Login component", async () => {
