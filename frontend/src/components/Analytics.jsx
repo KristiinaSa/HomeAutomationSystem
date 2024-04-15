@@ -10,9 +10,12 @@ const Analytics = () => {
   const { t, formatDateTime } = useLanguage();
 
   const formatDuration = (duration) => {
-    const hours = duration.hours;
-    const minutes = duration.minutes;
-    return `${hours}${t("hours")} ${minutes}${t("minutes")}`;
+    const totalMinutes = duration.as("minutes");
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = Math.floor(totalMinutes % 60);
+    return `${hours}${t("hour", { count: hours })} ${minutes}${t("minute", {
+      count: minutes,
+    })}`;
   };
 
   useEffect(() => {

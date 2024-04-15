@@ -91,7 +91,9 @@
     "Oops! We hit a bump adding your room. Let's try that one more time, shall we?": "Oops! We hit a bump adding your room. Let's try that one more time, shall we?",
     "Great news! Your device has been added successfully.": "Great news! Your device has been added successfully.",
     "Looks like adding your device didn't go through. Let's give it another go, shall we?": "Looks like adding your device didn't go through. Let's give it another go, shall we?",
-    "hours": " hours",
-    "minutes": " minutes"
+    "hour_one": " hour",
+    "minute_one": " minute",
+    "hour_other": " hours",
+    "minute_other": " minutes"
   }
 }
