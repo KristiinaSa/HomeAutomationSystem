@@ -90,6 +90,8 @@
     "Great news! New room has been added successfully.": "素晴らしいニュース！新しい部屋が正常に追加されました。",
     "Oops! We hit a bump adding your room. Let's try that one more time, shall we?": "おっと！部屋の追加に問題が発生しました。もう一度やってみましょう。",
     "Great news! Your device has been added successfully.": "素晴らしいニュース！デバイスが正常に追加されました。",
-    "Looks like adding your device didn't go through. Let's give it another go, shall we?": "デバイスの追加がうまくいかなかったようです。もう一度やってみましょう。"
+    "Looks like adding your device didn't go through. Let's give it another go, shall we?": "デバイスの追加がうまくいかなかったようです。もう一度やってみましょう。",
+    "hours": "時間",
+    "minutes": "分"
   }
 }

@@ -9,6 +9,12 @@ const Analytics = () => {
   const [message, setMessage] = useState("");
   const { t, formatDateTime } = useLanguage();
 
+  const formatDuration = (duration) => {
+    const hours = duration.hours;
+    const minutes = duration.minutes;
+    return `${hours}${t("hours")} ${minutes}${t("minutes")}`;
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -34,7 +40,7 @@ const Analytics = () => {
             const activeTimeDuration = Duration.fromObject({
               minutes: device.active_time,
             });
-            const formattedActiveTime = activeTimeDuration.toFormat("hh:mm");
+            const formattedActiveTime = formatDuration(activeTimeDuration);
 
             let formattedLastInteraction = "-";
             if (device.last_interaction && device.last_interaction.date) {
