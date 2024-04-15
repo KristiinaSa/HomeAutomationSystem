@@ -68,6 +68,8 @@ const getAllSensors = async (req, res, next) => {
 const addDevice = async (req, res, next) => {
   try {
     const room = await Room.findByPk(req.body.room_id);
+    console.log("Room:", room);
+    console.log("Request body:", req.body);
     if (!room) {
       return res.status(404).json({ error: "Room not found" });
     }
@@ -107,7 +109,7 @@ const toggleOnOff = async (req, res, next) => {
     });
 
     if (!device) {
-      return res.status(404).send("Device not found");
+      return res.status(404).json({ message: "Device not found" });
     }
 
     const newValue = device.value === "on" ? "off" : "on";
