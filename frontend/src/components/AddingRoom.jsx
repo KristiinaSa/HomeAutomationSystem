@@ -2,7 +2,7 @@ import { addRoom } from "../services/roomServices";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoomContext } from "../context/RoomContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 import "./AddingRoom.css";
 
 const AddingRoom = () => {
@@ -11,7 +11,7 @@ const AddingRoom = () => {
   const { setUpdate, errorMessage } = useContext(RoomContext);
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

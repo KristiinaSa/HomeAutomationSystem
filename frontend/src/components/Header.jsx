@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-// import useLanguage from "../hooks/useLanguage";
+import { useLanguage } from "../context/LanguageContext";
 import { LanguageContext } from "../context/LanguageContext";
 
 import "./Header.css";
@@ -24,6 +23,7 @@ import {
   faCheckCircle,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { use } from "i18next";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   const handleClick = (e) => {
@@ -57,7 +57,7 @@ const Header = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { languages, selectedLanguage, handleLanguageChange } =
     useContext(LanguageContext);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);

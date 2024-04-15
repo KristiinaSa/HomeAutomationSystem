@@ -6,14 +6,14 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
 import { AuthContext } from "../context/AuthContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 
 const Accessories = () => {
-  const { devices, setUpdate, errorMsg} = useContext(DeviceContext);
+  const { devices, setUpdate, errorMsg } = useContext(DeviceContext);
   const { role } = useContext(AuthContext);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleClick = (eventType) => {
     switch (eventType) {
@@ -46,46 +46,44 @@ const Accessories = () => {
 
   return (
     <div className="accessories-container">
-        <div>
-      <h1>{t("accessories")}</h1>
-      <button
-        type="button"
-        className="primary-btn analytics-btn"
-        onClick={() => handleClick("showAnalytics")}
-      >
-        {t("show analytics")}
-      </button>
-    </div>
+      <div>
+        <h1>{t("accessories")}</h1>
+        <button
+          type="button"
+          className="primary-btn analytics-btn"
+          onClick={() => handleClick("showAnalytics")}
+        >
+          {t("show analytics")}
+        </button>
+      </div>
       <div className="devices-container">
         <div className="title-button">
           <h2>{t("devices")}</h2>
           {role === "admin" && (
-          <button
-            type="button"
-            className="primary-btn"
-            onClick={() => handleClick("addDevice")}
-          >
-            
-            {t("add")} {t("device")}
-            
-          </button>
-        )}
+            <button
+              type="button"
+              className="primary-btn"
+              onClick={() => handleClick("addDevice")}
+            >
+              {t("add")} {t("device")}
+            </button>
+          )}
         </div>
         <div className="device-container">
           {devices.map((device) => (
             <div key={device.id} className="device-card">
-                <div>
-              <p>{device.name}</p>
-              <p className="secondary-text">{t(device.type)}</p>
+              <div>
+                <p>{device.name}</p>
+                <p className="secondary-text">{t(device.type)}</p>
               </div>
               {role === "admin" && (
-              <FontAwesomeIcon
-                icon={faTrash}
-                className="delete"
-                data-testid={`delete-${device.id}`}
-                onClick={() => deletionDevice(device.id)}
-              />
-            )}
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="delete"
+                  data-testid={`delete-${device.id}`}
+                  onClick={() => deletionDevice(device.id)}
+                />
+              )}
             </div>
           ))}
         </div>

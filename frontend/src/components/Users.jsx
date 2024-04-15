@@ -9,7 +9,7 @@ import {
   changeRole,
 } from "../services/userServices";
 import { AuthContext } from "../context/AuthContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 import "./Users.css";
 
 const Users = () => {
@@ -25,7 +25,7 @@ const Users = () => {
   } = useForm();
   const [update, setUpdate] = useState(false);
   const [message, setMessage] = useState("");
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { role } = useContext(AuthContext);
 
   const fetchUsers = async () => {
@@ -37,7 +37,9 @@ const Users = () => {
     } catch (error) {
       console.log(error);
       setMessage(
-        t("Oops! There was a hiccup fetching user details. Please refresh and try once more.")
+        t(
+          "Oops! There was a hiccup fetching user details. Please refresh and try once more."
+        )
       );
     }
   };
@@ -47,7 +49,8 @@ const Users = () => {
   }, [update]);
 
   const deletePerson = async (id) => {
-    if (!window.confirm(t("Are you sure you want to delete this user?"))) return;
+    if (!window.confirm(t("Are you sure you want to delete this user?")))
+      return;
     else {
       try {
         await deleteUser(id);
@@ -55,7 +58,9 @@ const Users = () => {
         setMessage(t("All set! The user has been successfully removed."));
       } catch (error) {
         console.log("Error delete user", error.message);
-        setMessage(t("Could not delete user this time. Please try again later."));
+        setMessage(
+          t("Could not delete user this time. Please try again later.")
+        );
       }
       setTimeout(() => {
         setMessage("");
@@ -78,11 +83,12 @@ const Users = () => {
       setEditingId(null);
       setUpdate(true);
       setMessage(t("Role updated successfully!"));
-
     } catch (error) {
       console.log("Failed to update role:", error.message);
       setMessage(
-        t("Oops! Updating the role didn't quite work out. Let's give it another shot.")
+        t(
+          "Oops! Updating the role didn't quite work out. Let's give it another shot."
+        )
       );
     }
     setTimeout(() => {
@@ -100,7 +106,9 @@ const Users = () => {
     } catch (error) {
       console.log("Failed to invite user:", error.message);
       setMessage(
-        t("Looks like sending the invitation hit a snag. How about we try that once more?")
+        t(
+          "Looks like sending the invitation hit a snag. How about we try that once more?"
+        )
       );
       setTimeout(() => {
         setMessage("");
@@ -170,66 +178,68 @@ const Users = () => {
                   <p>{user.email}</p>
                 </div>
               </div>
-              {role === 'admin' && (
-              <div className="user-actions">
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  className="edit"
-                  data-testid={`edit-${user.id}`}
-                  onClick={() => editPerson(user.id)}
-                />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  className="delete"
-                  data-testid={`delete-${user.id}`}
-                  onClick={() => deletePerson(user.id)}
-                />
-              </div> )}
+              {role === "admin" && (
+                <div className="user-actions">
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    className="edit"
+                    data-testid={`edit-${user.id}`}
+                    onClick={() => editPerson(user.id)}
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="delete"
+                    data-testid={`delete-${user.id}`}
+                    onClick={() => deletePerson(user.id)}
+                  />
+                </div>
+              )}
             </div>
           );
         })}
-        {role === 'admin' && (showInvite ? (
-          <form onSubmit={handleSubmit(invitePerson)} className="invite-form">
-            <input
-              {...register("email", {
-                required: t("Email is required"),
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: t("Invalid email address"),
-                },
-              })}
-              type="email"
-              placeholder={t("Enter email")}
-              className="invite-input"
-              data-testid="invite-input"
-            />
-            {isSubmitted && errors.email && (
-              <p className="error-message">{errors.email.message}</p>
-            )}
+        {role === "admin" &&
+          (showInvite ? (
+            <form onSubmit={handleSubmit(invitePerson)} className="invite-form">
+              <input
+                {...register("email", {
+                  required: t("Email is required"),
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: t("Invalid email address"),
+                  },
+                })}
+                type="email"
+                placeholder={t("Enter email")}
+                className="invite-input"
+                data-testid="invite-input"
+              />
+              {isSubmitted && errors.email && (
+                <p className="error-message">{errors.email.message}</p>
+              )}
 
-            <button
-              type="submit"
-              className="invite-button"
-              data-testid="invite-submit"
-            >
-              {t("Send")}
-            </button>
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={() => setShowInvite(false)}
-            >
-              {t("cancel")}
-            </button>
-          </form>
-        ) : inviteSent ? (
-          <p className="invite-sent">{t("Invitation sent")}</p>
-        ) : (
-          <div className="invite" onClick={() => setShowInvite(true)}>
-            <FontAwesomeIcon icon={faPlus} />
-            {t("Invite people")}
-          </div>
-        ))}
+              <button
+                type="submit"
+                className="invite-button"
+                data-testid="invite-submit"
+              >
+                {t("Send")}
+              </button>
+              <button
+                type="button"
+                className="cancel-button"
+                onClick={() => setShowInvite(false)}
+              >
+                {t("cancel")}
+              </button>
+            </form>
+          ) : inviteSent ? (
+            <p className="invite-sent">{t("Invitation sent")}</p>
+          ) : (
+            <div className="invite" onClick={() => setShowInvite(true)}>
+              <FontAwesomeIcon icon={faPlus} />
+              {t("Invite people")}
+            </div>
+          ))}
       </div>
       {message && <p className="message">{message}</p>}
     </div>

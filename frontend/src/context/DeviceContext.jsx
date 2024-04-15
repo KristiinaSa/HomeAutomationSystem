@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { getDevices } from "../services/accessoryServices";
 import { AuthContext } from "./AuthContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "./LanguageContext";
 
 export const DeviceContext = createContext();
 
@@ -10,7 +10,7 @@ export const DeviceProvider = ({ children }) => {
   const [update, setUpdate] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const { isLoggedIn } = useContext(AuthContext);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const fetchDevices = async () => {

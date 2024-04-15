@@ -6,15 +6,14 @@ import { getAutomations } from "../../services/automationServices";
 import { TimerAutomationCard } from "./TimerAutomationCard";
 import { SensorAutomationCard } from "./SensorAutomationCard";
 
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContext";
 
 import styles from "./Automation.module.css";
 
-
 export const Automations = () => {
   const [automations, setAutomations] = useState([]);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { role } = useContext(AuthContext);
 
   useEffect(() => {
@@ -55,10 +54,10 @@ export const Automations = () => {
           )
         )}
       </div>
-      {role === 'admin' && (
-      <Link to="/automations/new" data-testid="create-automation-button">
-        <button className="primary-btn">{t("create new automation")}</button>
-      </Link>
+      {role === "admin" && (
+        <Link to="/automations/new" data-testid="create-automation-button">
+          <button className="primary-btn">{t("create new automation")}</button>
+        </Link>
       )}
     </div>
   );

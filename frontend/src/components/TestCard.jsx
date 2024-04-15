@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./TestCard.css";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 
 const TestCard = ({ title, icon, status, onClick }) => {
   const iconClass = status === "on" ? "icon-on" : "icon-off";
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     <div className="card" onClick={onClick}>

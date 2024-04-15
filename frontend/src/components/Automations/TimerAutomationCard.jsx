@@ -6,7 +6,7 @@ import {
   faLightbulb,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 
@@ -15,7 +15,7 @@ import styles from "./Automations.module.css";
 export const TimerAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { role } = useContext(AuthContext);
 
   const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
@@ -55,14 +55,14 @@ export const TimerAutomationCard = ({ automation }) => {
             : `${numDevices} ${t("accessory", { count: numDevices })}`}
         </p>
         {role === "admin" && (
-        <a
-          onClick={handleEdit}
-          aria-label="Edit"
-          className={styles["edit-button"]}
-          data-testid="edit-button"
-        >
-          <FontAwesomeIcon icon={faChevronRight} size="xl" />
-        </a>
+          <a
+            onClick={handleEdit}
+            aria-label="Edit"
+            className={styles["edit-button"]}
+            data-testid="edit-button"
+          >
+            <FontAwesomeIcon icon={faChevronRight} size="xl" />
+          </a>
         )}
       </div>
     </div>
