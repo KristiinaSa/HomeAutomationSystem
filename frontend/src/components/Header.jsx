@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-import { LanguageContext } from "../context/LanguageContext";
+// import { LanguageContext } from "../context/LanguageContext";
 
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,12 +18,10 @@ import {
   faSignOut,
   faAddressBook,
   faHouseLaptop,
-  faGlobe,
-  faChevronDown,
-  faCheckCircle,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { use } from "i18next";
+// import { use } from "i18next";
+import LanguageOverflow from "./LanguageOverflow";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   const handleClick = (e) => {
@@ -58,13 +56,13 @@ const Header = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const { languages, selectedLanguage, handleLanguageChange } =
-    useContext(LanguageContext);
-  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-  const languageMenuRef = useRef();
-  const selectedLanguageName = languages.find(
-    (lang) => lang.code === selectedLanguage
-  )?.name;
+  // const { languages, selectedLanguage, handleLanguageChange } =
+  //   useContext(LanguageContext);
+  // const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  // const languageMenuRef = useRef();
+  // const selectedLanguageName = languages.find(
+  //   (lang) => lang.code === selectedLanguage
+  // )?.name;
   const { user } = useContext(AuthContext);
 
   const handleLogout = async (e) => {
@@ -117,19 +115,8 @@ const Header = () => {
       setIsOpen(false);
     };
 
-    const handleLanguageMenuClickOutside = (e) => {
-      if (
-        languageMenuRef.current &&
-        !languageMenuRef.current.contains(e.target) &&
-        !e.target.closest(".lang-icon")
-      ) {
-        setIsLanguageMenuOpen(false);
-      }
-    };
-
     const handleClick = (e) => {
       handleClickOutside(e);
-      handleLanguageMenuClickOutside(e);
     };
 
     document.addEventListener("mousedown", handleClick);
@@ -137,7 +124,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, [isOpen, isLanguageMenuOpen]);
+  }, [isOpen]);
 
   return (
     <div className="header" ref={node}>
@@ -147,53 +134,7 @@ const Header = () => {
           <span>{user}</span>
         </div>
       )}
-      <div className="header-language">
-        <div
-          className="lang-icon"
-          onClick={() => {
-            if (!isLanguageMenuOpen) {
-              setIsOpen(false);
-            }
-            setIsLanguageMenuOpen(!isLanguageMenuOpen);
-          }}
-        >
-          <FontAwesomeIcon icon={faGlobe} className="header-icon" />
-          <span>{selectedLanguageName}</span>
-          <FontAwesomeIcon
-            icon={faChevronDown}
-            className="header-icon"
-            style={{ fontSize: "10px" }}
-          />
-        </div>
-        <div
-          className={`overflow-menu ${isLanguageMenuOpen ? "show" : ""}`}
-          ref={languageMenuRef}
-        >
-          <ul className="language-menu-item">
-            {languages.map((language) => (
-              <li
-                key={language.id}
-                onClick={() => {
-                  handleLanguageChange(language.code);
-                  setIsLanguageMenuOpen(false);
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faCheckCircle}
-                  className={`header-icon ${
-                    language.code == selectedLanguage
-                      ? "checkcircle-active"
-                      : "checkcircle-inactive"
-                  }`}
-                />
-                <span className="hover-underline-animation">
-                  {language.name}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <LanguageOverflow />
       <NavLink
         to="/"
         className="header-item home-icon"
@@ -207,7 +148,7 @@ const Header = () => {
         <div
           className="plus-icon"
           onClick={() => {
-            setIsLanguageMenuOpen(false);
+            // setIsLanguageMenuOpen(false);
             setIsOpen(!isOpen);
           }}
         >
