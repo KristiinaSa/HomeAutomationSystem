@@ -1,17 +1,33 @@
-.go-back-button {
+/* .go-back-button {
     display: none;
+  } */
+
+@media (min-width: 769px) {
+  .go-back-button {
+    display: block;
+    position: fixed;
+    bottom: 1rem;
+    right: 2rem;
+    cursor: pointer;
   }
-  
-  @media (max-width: 768px) {
-    .go-back-button {
-      display: block;
-      position: fixed;
-      bottom: 6rem;
-      right: 1rem;
-      cursor: pointer;
-    }
-  
-    .go-back-icon {
-      font-size: 2rem;
-      color: var(--primary-text-color-mobile);
-    }
+
+  .go-back-icon {
+    font-size: 2rem;
+    color: var(--primary-text-color);
+  }
+}
+
+@media (max-width: 768px) {
+  .go-back-button {
+    display: block;
+    position: fixed;
+    bottom: 6rem;
+    right: 1rem;
+    cursor: pointer;
+  }
+
+  .go-back-icon {
+    font-size: 2rem;
+    color: var(--primary-text-color-mobile);
+  }
+}
