@@ -5,6 +5,8 @@ import { CategoriesContext } from "../../context/CategoriesContext";
 import { RoomContext } from "../../context/RoomContext";
 import { DeviceContext } from "../../context/DeviceContext";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import { LanguageContext } from "../../context/LanguageContext.jsx";
+import { languageContextValue } from "../../utils/languageTestSetup.js";
 import HomeMobile from "../../components/HomeMobile";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../../i18n-test.js";
@@ -36,9 +38,11 @@ test("renders HomeMobile component", async () => {
         <RoomContext.Provider value={roomContextValue}>
           <DeviceContext.Provider value={deviceContextValue}>
             <AuthContext.Provider value={{ authContextValue }}>
-              <Router>
-                <HomeMobile />
-              </Router>
+              <LanguageContext.Provider value={languageContextValue}>
+                <Router>
+                  <HomeMobile />
+                </Router>
+              </LanguageContext.Provider>
             </AuthContext.Provider>
           </DeviceContext.Provider>
         </RoomContext.Provider>
@@ -53,9 +57,11 @@ test("renders HomeMobile component", async () => {
         <RoomContext.Provider value={roomContextValue}>
           <DeviceContext.Provider value={deviceContextValue}>
             <AuthContext.Provider value={{ authContextValue }}>
-              <Router>
-                <HomeMobile />
-              </Router>
+              <LanguageContext.Provider value={languageContextValue}>
+                <Router>
+                  <HomeMobile />
+                </Router>
+              </LanguageContext.Provider>
             </AuthContext.Provider>
           </DeviceContext.Provider>
         </RoomContext.Provider>
@@ -73,9 +79,11 @@ test("renders HomeMobile component", async () => {
         <RoomContext.Provider value={roomContextValue}>
           <DeviceContext.Provider value={deviceContextValue}>
             <AuthContext.Provider value={{ authContextValue }}>
-              <Router>
-                <HomeMobile />
-              </Router>
+              <LanguageContext.Provider value={languageContextValue}>
+                <Router>
+                  <HomeMobile />
+                </Router>
+              </LanguageContext.Provider>
             </AuthContext.Provider>
           </DeviceContext.Provider>
         </RoomContext.Provider>
