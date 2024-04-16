@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import { render, screen } from "@testing-library/react";
+import { describe, it, expect} from 'vitest';
 import { I18nextProvider } from "react-i18next";
 import { LanguageContext } from "../../context/LanguageContext.jsx";
 import TestCard from "../../components/TestCard.jsx";
