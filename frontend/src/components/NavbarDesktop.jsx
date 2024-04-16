@@ -23,8 +23,12 @@ const NavbarDesktop = () => {
     }
   };
 
+  if (!isLoggedIn) {
+    return null;
+  }
+  
   return (
-    <div className="navbar-desktop">
+    <div className="navbar-desktop" >
       <h2 className="logo">Smart Home Mate</h2>
       <div className="navbar-main">
         <NavLink
