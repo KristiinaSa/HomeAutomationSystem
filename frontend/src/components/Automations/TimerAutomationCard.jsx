@@ -54,7 +54,7 @@ export const TimerAutomationCard = ({ automation }) => {
             ? t("disabled")
             : `${numDevices} ${t("accessory", { count: numDevices })}`}
         </p>
-        {role === "admin" && (
+        {(role === "admin" || role === 'owner') && (
           <a
             onClick={handleEdit}
             aria-label="Edit"

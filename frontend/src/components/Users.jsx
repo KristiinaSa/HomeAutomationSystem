@@ -178,7 +178,7 @@ const Users = () => {
                   <p>{user.email}</p>
                 </div>
               </div>
-              {role === "admin" && (
+              {(role === "admin" || role === 'owner') && (
                 <div className="user-actions">
                   <FontAwesomeIcon
                     icon={faEdit}
@@ -197,7 +197,7 @@ const Users = () => {
             </div>
           );
         })}
-        {role === "admin" &&
+        {(role === "admin" || role === 'owner') &&
           (showInvite ? (
             <form onSubmit={handleSubmit(invitePerson)} className="invite-form">
               <input

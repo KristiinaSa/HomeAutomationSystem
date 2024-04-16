@@ -59,7 +59,7 @@ const Accessories = () => {
       <div className="devices-container">
         <div className="title-button">
           <h2>{t("devices")}</h2>
-          {role === "admin" && (
+          {(role === "admin" || role === 'owner') && (
             <button
               type="button"
               className="primary-btn"
@@ -76,7 +76,7 @@ const Accessories = () => {
                 <p>{device.name}</p>
                 <p className="secondary-text">{t(device.type)}</p>
               </div>
-              {role === "admin" && (
+              {(role === "admin" || role === 'owner') && (
                 <FontAwesomeIcon
                   icon={faTrash}
                   className="delete"
