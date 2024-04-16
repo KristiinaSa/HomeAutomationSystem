@@ -9,7 +9,7 @@ import TestCard from "./TestCard";
 import Room from "./Room";
 import useToggle from "../hooks/useToggle";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 
 const HomeMobile = () => {
   const { categories } = useContext(CategoriesContext);
@@ -17,7 +17,7 @@ const HomeMobile = () => {
   const { devices, errorMsg } = useContext(DeviceContext);
   const { role } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleClick = () => {
     navigate("/add-room");
@@ -46,14 +46,14 @@ const HomeMobile = () => {
         <div className="rooms-title">
           <h2>{t("rooms")}</h2>
           {role === "admin" && (
-          <button
-            type="button"
-            className="primary-btn"
-            onClick={() => handleClick()}
-          >
-            {t("add")} {t("room")}
-          </button>
-        )}
+            <button
+              type="button"
+              className="primary-btn"
+              onClick={() => handleClick()}
+            >
+              {t("add")} {t("room")}
+            </button>
+          )}
         </div>
         {rooms.map((room) => (
           <div key={room.id} className="room-container">

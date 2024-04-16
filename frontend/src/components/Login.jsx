@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 import useLogin from "../hooks/useLogin";
 import "./Login.css";
 
@@ -7,7 +7,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, errorMessage, loginSuccess, setErrorMessage } = useLogin();
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const emailRef = useRef();
   const errorRef = useRef();

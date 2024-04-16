@@ -1,11 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-// import { getRooms } from "../services/roomServices";
 import { addDevice } from "../services/accessoryServices";
 import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
 import { RoomContext } from "../context/RoomContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 
 const AddingDevice = () => {
   const [device, setDevice] = useState({ name: "", type: "light" });
@@ -15,7 +14,7 @@ const AddingDevice = () => {
   const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

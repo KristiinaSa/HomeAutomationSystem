@@ -5,17 +5,17 @@ import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { faHouseLaptop} from "@fortawesome/free-solid-svg-icons";
+import { faHouseLaptop } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 
 import "./NavbarDesktop.css";
 
 const NavbarDesktop = () => {
   const { rooms } = useContext(RoomContext);
   const { isLoggedIn } = useContext(AuthContext);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleClick = (e) => {
     if (!isLoggedIn) {

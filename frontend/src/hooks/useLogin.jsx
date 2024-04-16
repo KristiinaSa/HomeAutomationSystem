@@ -2,16 +2,17 @@ import { useState, useContext } from "react";
 import authService from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 import { LanguageContext } from "../context/LanguageContext";
 import { jwtDecode } from "jwt-decode";
 
 const useLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const { setIsLoggedIn, setRole, setUser, setUserId } = useContext(AuthContext);
+  const { setIsLoggedIn, setRole, setUser, setUserId } =
+    useContext(AuthContext);
   const { setTheme } = useContext(ThemeContext);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { updateLanguage } = useContext(LanguageContext);
 
   const login = async (email, password) => {
@@ -21,11 +22,11 @@ const useLogin = () => {
     }
     try {
       const response = await authService.login(email, password);
-      
+
       localStorage.setItem("access_token", response.token);
       const theme = response.using_darkmode ? "dark" : "light";
       localStorage.setItem("theme", theme);
-    
+
       setTheme(theme);
       updateLanguage(response.language);
       setLoginSuccess(true);
@@ -36,7 +37,6 @@ const useLogin = () => {
       setRole(decodedToken.role);
       setUser(decodedToken.name);
       setUserId(decodedToken.id);
-
     } catch (error) {
       if (error.response) {
         setErrorMessage(t(error.response.data.message));

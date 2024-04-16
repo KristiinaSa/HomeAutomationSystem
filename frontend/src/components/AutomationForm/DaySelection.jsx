@@ -1,8 +1,8 @@
 import styles from "./CreateAutomation.module.css";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 const DaySelection = ({ selectedDays, setSelectedDays }) => {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleCheckboxChange = (event) => {
     setSelectedDays({

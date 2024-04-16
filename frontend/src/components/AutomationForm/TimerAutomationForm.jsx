@@ -5,7 +5,7 @@ import TimeSelection from "./TimeSelection";
 import DeviceSelection from "./DeviceSelection";
 import { DisableCheckbox } from "./DisableCheckbox";
 
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 import { DeviceContext } from "../../context/DeviceContext";
 
@@ -34,7 +34,7 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [automationDevices, setAutomationDevices] = useState([]);
   const [availableDevices, setAvailableDevices] = useState([]);
   const [actionType, setActionType] = useState("");
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   useEffect(() => {

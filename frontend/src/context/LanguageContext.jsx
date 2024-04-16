@@ -1,13 +1,21 @@
-import { createContext } from "react";
-import { useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { getLanguages, setLanguage } from "../services/userServices";
 import { useTranslation } from "react-i18next";
 import { AuthContext } from "../context/AuthContext";
+import { DateTime } from "luxon";
 
 export const LanguageContext = createContext();
 
 const mapLanguageCode = (code) => {
   return code.includes("-") ? code.split("-")[0] : code;
+};
+
+const getLocaleForDate = (code) => {
+  let locale = code.includes("-") ? code.split("-")[0] : code;
+  if (locale === "jp") {
+    locale = "ja";
+  }
+  return locale;
 };
 
 export const LanguageProvider = ({ children }) => {
@@ -56,6 +64,12 @@ export const LanguageProvider = ({ children }) => {
     i18n.changeLanguage(simplifiedLanguageCode);
   };
 
+  const formatDateTime = (dateString) => {
+    const locale = getLocaleForDate(selectedLanguage);
+    const date = DateTime.fromISO(dateString).setLocale(locale);
+    return date.toLocaleString(DateTime.DATETIME_MED);
+  };
+
   return (
     <LanguageContext.Provider
       value={{
@@ -64,9 +78,12 @@ export const LanguageProvider = ({ children }) => {
         handleLanguageChange,
         updateLanguage,
         t,
+        formatDateTime,
       }}
     >
       {children}
     </LanguageContext.Provider>
   );
 };
+
+export const useLanguage = () => useContext(LanguageContext);

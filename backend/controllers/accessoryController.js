@@ -6,11 +6,19 @@ const User = require("../models/userModel.js");
 const Sensor = require("../models/sensorModel.js");
 const Room = require("../models/roomModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
+const System = require("../models/systemModel.js");
 const { Op } = require("sequelize");
 
 const clients = new Map();
 
 const { TYPE_TO_DATA_TYPE } = require("./helpers.js");
+
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const getAllAccessories = async (req, res, next) => {
   try {
@@ -60,6 +68,8 @@ const getAllSensors = async (req, res, next) => {
 const addDevice = async (req, res, next) => {
   try {
     const room = await Room.findByPk(req.body.room_id);
+    console.log("Room:", room);
+    console.log("Request body:", req.body);
     if (!room) {
       return res.status(404).json({ error: "Room not found" });
     }
@@ -99,7 +109,7 @@ const toggleOnOff = async (req, res, next) => {
     });
 
     if (!device) {
-      return res.status(404).send("Device not found");
+      return res.status(404).json({ message: "Device not found" });
     }
 
     const newValue = device.value === "on" ? "off" : "on";
@@ -155,6 +165,13 @@ const getRoomDevices = async (req, res, next) => {
 const getDeviceAnalytics = async (req, res, next) => {
   const { system_id } = req.user;
   try {
+    const system = await System.findOne({
+      where: {
+        id: system_id,
+      },
+    });
+    const systemTimezone = system.time_zone;
+
     const devices = await Device.findAll({
       where: {
         system_id: system_id,
@@ -205,7 +222,7 @@ const getDeviceAnalytics = async (req, res, next) => {
       const activePeriods = activePeriodsByDevice[device.id] || [];
       let periodStart;
       for (const period of activePeriods) {
-        if (period.sensor_value === "on") {
+        if (period.sensor_value === "on" && !periodStart) {
           periodStart = new Date(period.timestamp);
         } else if (period.sensor_value === "off" && periodStart) {
           const periodEnd = new Date(period.timestamp);
@@ -220,26 +237,27 @@ const getDeviceAnalytics = async (req, res, next) => {
 
       const totalActiveHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
       const totalActiveMinutes = Math.floor((totalActiveTime / 1000 / 60) % 60);
+      const totalActiveTimeInMinutes = Math.floor(totalActiveTime / 1000 / 60);
 
       const lastInteractionEntry = activePeriods[activePeriods.length - 1];
       const lastInteractionDate = lastInteractionEntry
-        ? new Date(lastInteractionEntry.timestamp)
+        ? dayjs.utc(lastInteractionEntry.timestamp).tz(systemTimezone)
         : undefined;
       const lastInteractionUser = lastInteractionEntry
         ? lastInteractionEntry.user.name
         : undefined;
-      const lastInteractionTime = lastInteractionDate
-        ? `${lastInteractionDate.toLocaleDateString()} ${lastInteractionDate.toLocaleTimeString(
-            [],
-            { hour: "2-digit", minute: "2-digit" }
-          )} by ${lastInteractionUser}`
+      const lastInteractionTime = lastInteractionEntry
+        ? {
+            date: lastInteractionDate.toISOString(),
+            user: lastInteractionUser,
+          }
         : undefined;
       result.push({
         id: device.id,
         name: device.name,
         type: device.type,
         room_name: device.room.name,
-        active_time: `${totalActiveHours}h ${totalActiveMinutes}m`,
+        active_time: totalActiveTimeInMinutes,
         last_interaction: lastInteractionTime,
       });
     }

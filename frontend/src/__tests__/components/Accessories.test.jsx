@@ -7,7 +7,6 @@ import { act } from "react-dom/test-utils";
 import { DeviceContext } from "../../context/DeviceContext";
 
 vi.mock("../../services/accessoryServices", () => ({
-
   deleteDevice: vi.fn(),
 }));
 
@@ -27,9 +26,9 @@ vi.mock("react-router-dom", async () => {
 });
 
 describe("Accessories", () => {
-    beforeEach(() => {
-        navigate.mockClear();
-    });
+  beforeEach(() => {
+    navigate.mockClear();
+  });
 
   it("fetches and displays devices correctly", async () => {
     // accessoryServices.getDevices.mockResolvedValue([
@@ -37,12 +36,12 @@ describe("Accessories", () => {
     //   { id: 2, name: "Device 2", type: "Type B" },
     // ]);
 
-    
-
     render(
-    <DeviceContext.Provider value={{ devices: mockDevices }}>
-    <Accessories />
-    </DeviceContext.Provider>, { wrapper: MemoryRouter });
+      <DeviceContext.Provider value={{ devices: mockDevices }}>
+        <Accessories />
+      </DeviceContext.Provider>,
+      { wrapper: MemoryRouter }
+    );
 
     expect(await screen.findByText("Device 1")).toBeInTheDocument();
     expect(screen.getByText("Type A")).toBeInTheDocument();
@@ -51,22 +50,24 @@ describe("Accessories", () => {
   });
 
   it("navigates to add device page on button click", async () => {
-
     render(
       <DeviceContext.Provider value={{ devices: mockDevices }}>
-      <Accessories />
-      </DeviceContext.Provider>, { wrapper: MemoryRouter });
+        <Accessories />
+      </DeviceContext.Provider>,
+      { wrapper: MemoryRouter }
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Add device" }));
     expect(navigate).toHaveBeenCalledWith("/add-device");
   });
 
   it("navigates to analytics page on button click", async () => {
-
     render(
       <DeviceContext.Provider value={{ devices: mockDevices }}>
-      <Accessories />
-      </DeviceContext.Provider>, { wrapper: MemoryRouter });
+        <Accessories />
+      </DeviceContext.Provider>,
+      { wrapper: MemoryRouter }
+    );
 
     fireEvent.click(screen.getByText("Show analytics"));
     expect(navigate).toHaveBeenCalledWith("/analytics");
@@ -79,10 +80,12 @@ describe("Accessories", () => {
 
     const { findByTestId } = render(
       <DeviceContext.Provider value={{ devices: mockDevices, setUpdate }}>
-      <Accessories />
-      </DeviceContext.Provider>, { wrapper: MemoryRouter });
+        <Accessories />
+      </DeviceContext.Provider>,
+      { wrapper: MemoryRouter }
+    );
 
-    await screen.findByText("Device 1"); 
+    await screen.findByText("Device 1");
     const deleteButton = await findByTestId("delete-1");
 
     expect(deleteButton).toBeInTheDocument();

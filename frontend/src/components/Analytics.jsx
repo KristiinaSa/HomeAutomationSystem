@@ -1,12 +1,22 @@
 import "./Analytics.css";
 import { getAllAnalytics } from "../services/accessoryServices";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Duration } from "luxon";
+import { useLanguage } from "../context/LanguageContext";
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
   const [message, setMessage] = useState("");
-  const { t } = useTranslation();
+  const { t, formatDateTime } = useLanguage();
+
+  const formatDuration = (duration) => {
+    const totalMinutes = duration.as("minutes");
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = Math.floor(totalMinutes % 60);
+    return `${hours}${t("hour", { count: hours })} ${minutes}${t("minute", {
+      count: minutes,
+    })}`;
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -15,7 +25,9 @@ const Analytics = () => {
         setAnalytics(data);
       } catch (error) {
         console.log(error);
-        setMessage("Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?");
+        setMessage(
+          "Uh-oh! We ran into a snag pulling up your analytics. Could you try again later?"
+        );
       }
     }
     fetchData();
@@ -28,14 +40,28 @@ const Analytics = () => {
         <h2>{t("devices")}</h2>
         <div className="analytics-card">
           {analytics.map((device) => {
+            const activeTimeDuration = Duration.fromObject({
+              minutes: device.active_time,
+            });
+            const formattedActiveTime = formatDuration(activeTimeDuration);
+
+            let formattedLastInteraction = "-";
+            if (device.last_interaction && device.last_interaction.date) {
+              const formattedLastInteractionDate = formatDateTime(
+                device.last_interaction.date
+              );
+              formattedLastInteraction = `${formattedLastInteractionDate} by ${device.last_interaction.user}`;
+            }
+
             return (
               <div key={device.id} className="device-box">
                 <h4>{device.name} </h4>
                 <p className="room-name">{device.room_name}</p>
-                <p>{t("active time today")}: {device.active_time}</p>
                 <p>
-                  {t("last interaction")}:{" "}
-                  {device.last_interaction ? device.last_interaction : "-"}
+                  {t("active time today")}: {formattedActiveTime}
+                </p>
+                <p>
+                  {t("last interaction")}: {formattedLastInteraction}
                 </p>
               </div>
             );

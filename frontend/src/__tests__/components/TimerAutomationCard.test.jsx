@@ -1,9 +1,28 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { test, expect } from "vitest";
+import { vi, test, expect } from "vitest";
 import { TimerAutomationCard } from "../../components/Automations/TimerAutomationCard.jsx";
 import { I18nextProvider } from "react-i18next";
-import i18n from "../../i18n.js";
+import { AuthProvider } from "../../context/AuthContext.jsx";
+import i18n from "../../i18n-test.js";
+import { LanguageContext } from "../../context/LanguageContext.jsx";
+
+const languages = [
+  { id: 1, code: "en", name: "English" },
+  { id: 2, code: "jp", name: "日本語" },
+  { id: 3, code: "fi", name: "Suomi" },
+];
+
+const languageContextValue = {
+  languages,
+  selectedLanguage: "en",
+  handleLanguageChange: (newLanguage) => {
+    languageContextValue.selectedLanguage = newLanguage;
+    i18n.changeLanguage(newLanguage);
+  },
+  updateLanguage: vi.fn(),
+  t: i18n.t,
+};
 
 test("TimerAutomationCard renders correctly", () => {
   const mockAutomation = {
@@ -35,11 +54,15 @@ test("TimerAutomationCard renders correctly", () => {
     ],
   };
   render(
-    <Router>
-      <I18nextProvider i18n={i18n}>
-        <TimerAutomationCard automation={mockAutomation} />
-      </I18nextProvider>
-    </Router>
+    <LanguageContext.Provider value={languageContextValue}>
+      <AuthProvider>
+        <Router>
+          <I18nextProvider i18n={i18n}>
+            <TimerAutomationCard automation={mockAutomation} />
+          </I18nextProvider>
+        </Router>
+      </AuthProvider>
+    </LanguageContext.Provider>
   );
 
   const cardElement = screen.getByTestId("automation-card");

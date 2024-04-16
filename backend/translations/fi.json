@@ -90,6 +90,10 @@
     "Great news! New room has been added successfully.": "Uusi huone on lisätty onnistuneesti!",
     "Oops! We hit a bump adding your room. Let's try that one more time, shall we?": "Huoneen lisäämisessä tapahtui virhe. Yritäthän uudelleen.",
     "Great news! Your device has been added successfully.": "Laitteesi on lisätty onnistuneesti!",
-    "Looks like adding your device didn't go through. Let's give it another go, shall we?": "Laitteen lisäämisessä tapahtui virhe. Yritäthän uudelleen."
+    "Looks like adding your device didn't go through. Let's give it another go, shall we?": "Laitteen lisäämisessä tapahtui virhe. Yritäthän uudelleen.",
+    "hour_one": " tunti",
+    "minute_one": " minuutti",
+    "hour_other": " tuntia",
+    "minute_other": " minuuttia"
   }
 }

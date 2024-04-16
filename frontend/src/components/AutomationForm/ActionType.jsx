@@ -1,9 +1,9 @@
 import styles from "./CreateAutomation.module.css";
 
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 const ActionType = ({ action, setAction }) => {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   return (
     <div className={styles.action}>
       <p>{t("devices")}</p>

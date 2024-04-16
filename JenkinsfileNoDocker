@@ -1,0 +1,63 @@
+/* groovylint-disable NestedBlockDepth */
+pipeline {
+    agent any
+    environment {
+        DB_HOST = credentials('db-host')
+        DB_NAME = credentials('db-name')
+        TEST_DB_NAME = credentials('test-db-name')
+        JWT_SECRET = credentials('jwt-secret')
+        PORT = credentials('port')
+        DB_PORT = credentials('db-port')
+        VITE_PROXY_HOST = credentials('vite-proxy-host')
+    }
+    stages {
+        stage('Install Dependencies & Run Tests') {
+            parallel {
+                stage('Frontend') {
+                    steps {
+                        dir('frontend') {
+                            script {
+                                if (isUnix()) {
+                                    sh 'npm install'
+                                    sh 'npm test'
+                                    sh 'npm test -- --coverage'
+                        } else {
+                                    bat 'npm install'
+                                    bat 'npm test'
+                                    bat 'npm test -- --coverage'
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('Backend') {
+                    steps {
+                        withCredentials([
+                    usernamePassword(credentialsId: 'db-credentials', usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD'),
+                    usernamePassword(credentialsId: 'test-db-credentials', usernameVariable: 'TEST_DB_USER', passwordVariable: 'TEST_DB_PASSWORD'),
+                ]) {
+                            dir('backend') {
+                                script {
+                                    if (isUnix()) {
+                                        sh 'npm install'
+                                        sh 'npm test'
+                                        sh 'npm test -- --coverage'
+                            } else {
+                                        bat 'npm install'
+                                        bat 'npm test'
+                                        bat 'npm test -- --coverage'
+                                    }
+                                }
+                            }
+                }
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cobertura coberturaReportFile: '**/coverage/cobertura-coverage.xml'
+        }
+    }
+}

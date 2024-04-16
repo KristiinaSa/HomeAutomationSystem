@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 import "./Registration.css";
 import useRegister from "../hooks/useRegister";
 
@@ -8,7 +8,7 @@ const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newSystem, setNewSystem] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const [timeZone, setTimeZone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );

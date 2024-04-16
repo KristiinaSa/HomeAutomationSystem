@@ -7,6 +7,7 @@ require("../../db/associations.js");
 
 const System = require("../../models/systemModel.js");
 const TimeAutomation = require("../../models/timeAutomationModel.js");
+const Language = require("../../models/languageModel.js");
 
 const bcrypt = require("bcryptjs");
 
@@ -15,6 +16,11 @@ beforeAll(async () => {
 
   const system = await System.create({
     name: "Test System",
+  });
+
+  const language = await Language.create({
+    name: "English",
+    code: "en",
   });
 
   const user = await system.createUser({

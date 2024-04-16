@@ -2,11 +2,11 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./CreateAutomation.module.css";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleDeviceChange = (event) => {
     const selectedDevice = devices.find(

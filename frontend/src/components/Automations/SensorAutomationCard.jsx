@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Automations.module.css";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const SensorAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleEdit = () => {
     navigate(`/automations/edit/${automation.id}`);

@@ -1,11 +1,11 @@
 import ThemeToggle from "../components/ThemeToggle";
 import Users from "../components/Users";
 import LanguagePicker from "../components/LanguagePicker";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../context/LanguageContext";
 import "./SettingsPage.css";
 
 const SettingsPage = () => {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   return (
     <div className="settings-container">
       <h1>{t("settings")}</h1>

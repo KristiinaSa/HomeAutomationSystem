@@ -1,12 +1,12 @@
 import styles from "./CreateAutomation.module.css";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const DisableCheckbox = ({
   automation,
   isDisabled,
   handleCheckboxChange,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   return (
     automation && (
