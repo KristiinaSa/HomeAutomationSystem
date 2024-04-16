@@ -31,10 +31,10 @@ const login = async (req, res) => {
 
   if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
-      { id: user.id, name: user.name, role: user.role},
+      { id: user.id, name: user.name, role: user.role },
       process.env.JWT_SECRET,
       {
-        expiresIn: "48h",
+        expiresIn: "168h",
       }
     );
     res.status(200).json({
@@ -57,7 +57,6 @@ const logout = (req, res) => {
         if (err) {
           res.status(401).json({ message: "Invalid token" });
         } else {
-          // TO DO: Add token to blacklist or revocation list here
           res.status(200).json({ message: "Logged out successfully" });
         }
       });
