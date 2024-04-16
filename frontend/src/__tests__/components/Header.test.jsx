@@ -6,15 +6,10 @@ import { test, expect } from "vitest";
 import { BrowserRouter as Router } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../../i18n-test.js";
+import { languageContextValue } from "../../utils/languageTestSetup.js";
 
 test("renders menu items for logged in users in english, japanese and finnish", async () => {
   const authContextValue = { isLoggedIn: true };
-  const languageContextValue = {
-    languages: [],
-    selectedLanguage: "en",
-    handleLanguageChange: vi.fn(),
-    updateLanguage: vi.fn(),
-  };
   const { rerender } = render(
     <I18nextProvider i18n={i18n}>
       <AuthContext.Provider value={authContextValue}>
@@ -77,12 +72,6 @@ test("renders menu items for logged in users in english, japanese and finnish", 
 
 test("renders menu items for logged out users", () => {
   const authContextValue = { isLoggedIn: false };
-  const languageContextValue = {
-    languages: [],
-    selectedLanguage: "en",
-    handleLanguageChange: vi.fn(),
-    updateLanguage: vi.fn(),
-  };
   render(
     <I18nextProvider i18n={i18n}>
       <AuthContext.Provider value={authContextValue}>
