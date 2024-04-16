@@ -58,7 +58,7 @@ const AddingDevice = () => {
 
   return (
     <div className="add-device-container">
-      <h1>{t("add") + " " + t("device")}</h1>
+      <h1 data-testid="add-title">{t("add") + " " + t("device")}</h1>
       <div className="choose-section">
         <label htmlFor="roomName">{t("choose a room") + ":"}</label>
         <select
@@ -100,7 +100,7 @@ const AddingDevice = () => {
           className="choose-box"
         />
         <div className="btn-container">
-          <button type="submit" className="primary-btn add-btn">
+          <button type="submit" className="primary-btn add-btn" data-testid="add-button">
             {t("add") + " " + t("device")}
           </button>
           <button

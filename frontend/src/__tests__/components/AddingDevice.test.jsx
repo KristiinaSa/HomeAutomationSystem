@@ -5,8 +5,15 @@ import AddingDevice from "../../components/AddingDevice";
 import { DeviceContext } from "../../context/DeviceContext";
 import { RoomContext } from "../../context/RoomContext";
 import { LanguageContext } from "../../context/LanguageContext";
+import { AuthContext } from "../../context/AuthContext";
+import { I18nextProvider } from "react-i18next";
+import i18n from "../../i18n-test";
 import { languageContextValue } from "../../utils/languageTestSetup";
 
+const authContextValue = {
+  role: "admin",
+  isLoggedIn: true,
+};
 
 const navigate = vi.fn();
 
@@ -33,35 +40,40 @@ describe("AddingDevice", () => {
 
   it("renders correctly", async () => {
     render(
-      <RoomContext.Provider value={{ rooms: mockRooms }}>
-        <DeviceContext.Provider value={{ setUpdate }}>
-          <LanguageContext.Provider value={languageContextValue}>
-            <AddingDevice />
-          </LanguageContext.Provider>
-        </DeviceContext.Provider>
-      </RoomContext.Provider>
+      <I18nextProvider i18n={i18n}>
+        <LanguageContext.Provider value={languageContextValue}>
+          <AuthContext.Provider value={authContextValue}>
+            <RoomContext.Provider value={{ rooms: mockRooms }}>
+              <DeviceContext.Provider value={{ setUpdate }}>
+                <AddingDevice />
+              </DeviceContext.Provider>
+            </RoomContext.Provider>
+          </AuthContext.Provider>
+        </LanguageContext.Provider>
+      </I18nextProvider>
     );
 
-    expect(
-      screen.getByRole("heading", { name: /Add Device/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /Add Device/i })
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("add-title")).toHaveTextContent("Add Device");
+    expect(screen.getByText("Choose a room:")).toBeInTheDocument();
     expect(screen.getByText("Choose a device category:")).toBeInTheDocument();
     expect(screen.getByText("Device name:")).toBeInTheDocument();
+    expect(screen.getByTestId("add-button")).toHaveTextContent("Add Device");
     expect(screen.getByText("Cancel")).toBeInTheDocument();
   });
 
   it("fills the form and submits", async () => {
     render(
-      <RoomContext.Provider value={{ rooms: mockRooms }}>
-        <DeviceContext.Provider value={{ setUpdate }}>
-          <LanguageContext.Provider value={languageContextValue}>
-            <AddingDevice />
-          </LanguageContext.Provider>
-        </DeviceContext.Provider>
-      </RoomContext.Provider>
+      <I18nextProvider i18n={i18n}>
+        <LanguageContext.Provider value={languageContextValue}>
+          <AuthContext.Provider value={authContextValue}>
+            <RoomContext.Provider value={{ rooms: mockRooms }}>
+              <DeviceContext.Provider value={{ setUpdate }}>
+                <AddingDevice />
+              </DeviceContext.Provider>
+            </RoomContext.Provider>
+          </AuthContext.Provider>
+        </LanguageContext.Provider>
+      </I18nextProvider>
     );
 
     fireEvent.change(screen.getByLabelText("Choose a room:"), {
@@ -73,7 +85,8 @@ describe("AddingDevice", () => {
     fireEvent.change(screen.getByLabelText("Device name:"), {
       target: { value: "Light 1" },
     });
-    fireEvent.click(screen.getByRole("button", { name: /Add Device/i }));
+    
+    fireEvent.click(screen.getByTestId("add-button"));
 
     await waitFor(() =>
       expect(addDevice).toHaveBeenCalledWith({
@@ -93,17 +106,59 @@ describe("AddingDevice", () => {
 
   it("cancels the form", async () => {
     render(
-      <RoomContext.Provider value={{ rooms: mockRooms }}>
-        <DeviceContext.Provider value={{ setUpdate }}>
-          <LanguageContext.Provider value={languageContextValue}>
-            <AddingDevice />
-          </LanguageContext.Provider>
-        </DeviceContext.Provider>
-      </RoomContext.Provider>
+      <I18nextProvider i18n={i18n}>
+      <LanguageContext.Provider value={languageContextValue}>
+        <AuthContext.Provider value={authContextValue}>
+          <RoomContext.Provider value={{ rooms: mockRooms }}>
+            <DeviceContext.Provider value={{ setUpdate }}>
+              <AddingDevice />
+            </DeviceContext.Provider>
+          </RoomContext.Provider>
+        </AuthContext.Provider>
+      </LanguageContext.Provider>
+    </I18nextProvider>
     );
 
     fireEvent.click(screen.getByText("Cancel"));
 
     expect(navigate).toHaveBeenCalledWith(-1);
+  });
+
+  it("renders the correct text in japanese", async () => {
+    const { rerender } = render(
+      <I18nextProvider i18n={i18n}>
+        <LanguageContext.Provider value={languageContextValue}>
+          <AuthContext.Provider value={authContextValue}>
+            <RoomContext.Provider value={{ rooms: mockRooms }}>
+              <DeviceContext.Provider value={{ setUpdate }}>
+                <AddingDevice />
+              </DeviceContext.Provider>
+            </RoomContext.Provider>
+          </AuthContext.Provider>
+        </LanguageContext.Provider>
+      </I18nextProvider>
+    );
+
+    await i18n.changeLanguage("jp");
+
+    rerender(
+      <I18nextProvider i18n={i18n}>
+        <LanguageContext.Provider value={languageContextValue}>
+          <AuthContext.Provider value={authContextValue}>
+            <RoomContext.Provider value={{ rooms: mockRooms }}>
+              <DeviceContext.Provider value={{ setUpdate }}>
+                <AddingDevice />
+              </DeviceContext.Provider>
+            </RoomContext.Provider>
+          </AuthContext.Provider>
+        </LanguageContext.Provider>
+      </I18nextProvider>
+    );
+
+    const addElements = await screen.getAllByText("追加 デバイス");
+    addElements.forEach((element) => {
+      expect(element).toBeInTheDocument();
+    });
+  
   });
 });
