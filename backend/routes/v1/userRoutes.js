@@ -13,14 +13,15 @@ const {
 
 const authenticateToken = require("../../middleware/authToken.js");
 const getUserData = require("../../middleware/getUserData.js");
+const checkRole = require("../../middleware/checkRole.js");
 
 router.get("/", getAllUsers);
 
-router.post("/invite-user", inviteUser);
+router.post("/invite-user", checkRole, inviteUser);
 
-router.delete("/delete-user/:id", deleteUser);
+router.delete("/delete-user/:id", checkRole, deleteUser);
 
-router.patch("/change-role/:id", changeRole);
+router.patch("/change-role/:id", checkRole, changeRole);
 
 router.post("/theme", themeToggler);
 

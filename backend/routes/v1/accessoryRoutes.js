@@ -15,6 +15,7 @@ const {
 
 const authenticateToken = require("../../middleware/authToken.js");
 const getUserData = require("../../middleware/getUserData.js");
+const checkRole = require("../../middleware/checkRole.js");
 
 router.get("/", getAllAccessories);
 
@@ -22,9 +23,9 @@ router.get("/devices", getAllDevices);
 
 router.get("/sensors", getAllSensors);
 
-router.post("/add-device", addDevice);
+router.post("/add-device", checkRole, addDevice);
 
-router.delete("/delete-device/:id", deleteDevice);
+router.delete("/delete-device/:id", checkRole, deleteDevice);
 
 router.post("/toggle/:id", toggleOnOff);
 
