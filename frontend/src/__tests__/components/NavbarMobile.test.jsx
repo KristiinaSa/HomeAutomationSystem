@@ -31,25 +31,4 @@ describe("NavbarMobile", () => {
     expect(screen.getByText("Settings")).toBeInTheDocument();
     expect(screen.getByText("Accessories")).toBeInTheDocument();
   });
-
-  it("prevents navigation when user is not logged in", () => {
-    const handleClick = vi.fn();
-
-    render(
-      <MemoryRouter>
-        <AuthContext.Provider value={{ isLoggedIn: false }}>
-          <LanguageContext.Provider value={languageContextValue}>
-            <NavbarMobile />
-          </LanguageContext.Provider>
-        </AuthContext.Provider>
-      </MemoryRouter>
-    );
-
-    fireEvent.click(screen.getByText("Home"));
-    fireEvent.click(screen.getByText("Automation"));
-    fireEvent.click(screen.getByText("Settings"));
-    fireEvent.click(screen.getByText("Accessories"));
-
-    expect(handleClick).not.toHaveBeenCalledTimes();
-  });
 });

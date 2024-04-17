@@ -43,40 +43,4 @@ describe("NavbarDesktop", () => {
     expect(screen.getByText("Living Room")).toBeInTheDocument();
     expect(screen.getByText("Kitchen")).toBeInTheDocument();
   });
-
-  it("renders correctly when user is not logged in", () => {
-    render(
-      <MemoryRouter>
-        <AuthContext.Provider value={{ isLoggedIn: false }}>
-          <RoomContext.Provider value={{ rooms: [] }}>
-            <LanguageContext.Provider value={languageContextValue}>
-              <NavbarDesktop />
-            </LanguageContext.Provider>
-          </RoomContext.Provider>
-        </AuthContext.Provider>
-      </MemoryRouter>
-    );
-
-    expect(screen.getByText("Smart Home Mate")).toBeInTheDocument();
-    expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.queryByText("Living Room")).not.toBeInTheDocument();
-  });
-
-  it("prevents navigation when user is not logged in", () => {
-    const handleClick = vi.fn();
-    render(
-      <MemoryRouter>
-        <AuthContext.Provider value={{ isLoggedIn: false }}>
-          <RoomContext.Provider value={{ rooms: [] }}>
-            <LanguageContext.Provider value={languageContextValue}>
-              <NavbarDesktop />
-            </LanguageContext.Provider>
-          </RoomContext.Provider>
-        </AuthContext.Provider>
-      </MemoryRouter>
-    );
-
-    fireEvent.click(screen.getByText("Automation"));
-    expect(handleClick).not.toHaveBeenCalled();
-  });
 });

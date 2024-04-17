@@ -30,7 +30,7 @@ export const RoomProvider = ({ children }) => {
     if (isLoggedIn) {
       fetchRooms();
     }
-  }, [update, isLoggedIn]);
+  }, [update, isLoggedIn, t]);
 
   return (
     <RoomContext.Provider value={{ rooms, update, setUpdate, errorMessage }}>
