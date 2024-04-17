@@ -54,7 +54,7 @@ export const Automations = () => {
           )
         )}
       </div>
-      {role === "admin" && (
+      {(role === "admin" || role === 'owner') && (
         <Link to="/automations/new" data-testid="create-automation-button">
           <button className="primary-btn">{t("create new automation")}</button>
         </Link>

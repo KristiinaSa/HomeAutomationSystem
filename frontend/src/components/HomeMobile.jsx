@@ -45,7 +45,7 @@ const HomeMobile = () => {
       <div className="rooms-container">
         <div className="rooms-title">
           <h2>{t("rooms")}</h2>
-          {role === "admin" && (
+          {(role === "admin" || role === 'owner') && (
             <button
               type="button"
               className="primary-btn"

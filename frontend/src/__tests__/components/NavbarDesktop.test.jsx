@@ -4,6 +4,8 @@ import { MemoryRouter } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { RoomContext } from "../../context/RoomContext";
 import NavbarDesktop from "../../components/NavbarDesktop";
+import { LanguageContext } from "../../context/LanguageContext";
+import { languageContextValue } from "../../utils/languageTestSetup";
 
 // Mock FontAwesomeIcon for simplicity
 vi.mock("@fortawesome/react-fontawesome", () => ({
@@ -25,7 +27,9 @@ describe("NavbarDesktop", () => {
       <MemoryRouter>
         <AuthContext.Provider value={{ isLoggedIn: true }}>
           <RoomContext.Provider value={{ rooms: mockRooms }}>
-            <NavbarDesktop />
+            <LanguageContext.Provider value={languageContextValue}>
+              <NavbarDesktop />
+            </LanguageContext.Provider>
           </RoomContext.Provider>
         </AuthContext.Provider>
       </MemoryRouter>
@@ -45,7 +49,9 @@ describe("NavbarDesktop", () => {
       <MemoryRouter>
         <AuthContext.Provider value={{ isLoggedIn: false }}>
           <RoomContext.Provider value={{ rooms: [] }}>
-            <NavbarDesktop />
+            <LanguageContext.Provider value={languageContextValue}>
+              <NavbarDesktop />
+            </LanguageContext.Provider>
           </RoomContext.Provider>
         </AuthContext.Provider>
       </MemoryRouter>
@@ -62,7 +68,9 @@ describe("NavbarDesktop", () => {
       <MemoryRouter>
         <AuthContext.Provider value={{ isLoggedIn: false }}>
           <RoomContext.Provider value={{ rooms: [] }}>
-            <NavbarDesktop />
+            <LanguageContext.Provider value={languageContextValue}>
+              <NavbarDesktop />
+            </LanguageContext.Provider>
           </RoomContext.Provider>
         </AuthContext.Provider>
       </MemoryRouter>

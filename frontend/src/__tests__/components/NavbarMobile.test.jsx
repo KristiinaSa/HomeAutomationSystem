@@ -3,6 +3,8 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import NavbarMobile from "../../components/NavbarMobile";
+import { LanguageContext } from "../../context/LanguageContext";
+import { languageContextValue } from "../../utils/languageTestSetup";
 
 vi.mock("@fortawesome/react-fontawesome", () => ({
   FontAwesomeIcon: ({ icon }) => <span>{icon.iconName}</span>,
@@ -17,7 +19,9 @@ describe("NavbarMobile", () => {
     render(
       <MemoryRouter>
         <AuthContext.Provider value={{ isLoggedIn: true }}>
-          <NavbarMobile />
+          <LanguageContext.Provider value={languageContextValue}>
+            <NavbarMobile />
+          </LanguageContext.Provider>
         </AuthContext.Provider>
       </MemoryRouter>
     );
@@ -28,22 +32,24 @@ describe("NavbarMobile", () => {
     expect(screen.getByText("Accessories")).toBeInTheDocument();
   });
 
-    it("prevents navigation when user is not logged in", () => {
-        const handleClick = vi.fn();
-    
-        render(
-        <MemoryRouter>
-            <AuthContext.Provider value={{ isLoggedIn: false }}>
+  it("prevents navigation when user is not logged in", () => {
+    const handleClick = vi.fn();
+
+    render(
+      <MemoryRouter>
+        <AuthContext.Provider value={{ isLoggedIn: false }}>
+          <LanguageContext.Provider value={languageContextValue}>
             <NavbarMobile />
-            </AuthContext.Provider>
-        </MemoryRouter>
-        );
-    
-        fireEvent.click(screen.getByText("Home"));
-        fireEvent.click(screen.getByText("Automation"));
-        fireEvent.click(screen.getByText("Settings"));
-        fireEvent.click(screen.getByText("Accessories"));
-    
-        expect(handleClick).not.toHaveBeenCalledTimes();
-    });
+          </LanguageContext.Provider>
+        </AuthContext.Provider>
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByText("Home"));
+    fireEvent.click(screen.getByText("Automation"));
+    fireEvent.click(screen.getByText("Settings"));
+    fireEvent.click(screen.getByText("Accessories"));
+
+    expect(handleClick).not.toHaveBeenCalledTimes();
+  });
 });

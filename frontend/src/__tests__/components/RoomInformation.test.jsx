@@ -4,6 +4,11 @@ import RoomInformation from "../../components/RoomInformation";
 import { RoomContext } from "../../context/RoomContext";
 import { DeviceProvider } from "../../context/DeviceContext.jsx";
 import { AuthProvider } from "../../context/AuthContext.jsx";
+import { LanguageContext } from "../../context/LanguageContext.jsx";
+import {
+  languages,
+  languageContextValue,
+} from "../../utils/languageTestSetup.js";
 
 describe("renders RoomInformation component", () => {
   // Hardcoded room data
@@ -23,11 +28,13 @@ describe("renders RoomInformation component", () => {
   it("renders RoomInformation component", () => {
     render(
       <AuthProvider>
-        <DeviceProvider>
-          <RoomContext.Provider value={{ rooms }}>
-            <RoomInformation />
-          </RoomContext.Provider>
-        </DeviceProvider>
+        <LanguageContext.Provider value={languageContextValue}>
+          <DeviceProvider>
+            <RoomContext.Provider value={{ rooms }}>
+              <RoomInformation />
+            </RoomContext.Provider>
+          </DeviceProvider>
+        </LanguageContext.Provider>
       </AuthProvider>
     );
 

@@ -21,6 +21,10 @@ const NavbarMobile = () => {
     }
   };
 
+  if (!isLoggedIn) {
+    return null;
+  }
+
   return (
     <div className="navbar-mobile">
       <NavLink
