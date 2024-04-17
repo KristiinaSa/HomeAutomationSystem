@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
             setIsLoggedIn(false);
           } else {
             setIsLoggedIn(true);
-            setUser(decodedToken.username);
+            setUser(decodedToken.name);
             setRole(decodedToken.role);
             setUserId(decodedToken.userId);
           }
