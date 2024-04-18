@@ -1,55 +1,99 @@
 const request = require("supertest");
-const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const loginController = require("../../controllers/loginController");
-const User = require("../../models/userModel");
+const app = require("../../app.js");
+const System = require("../../models/systemModel");
+const Language = require("../../models/languageModel");
+const getSequelize = require("../../db/db.js");
+const sequelize = getSequelize();
 
-jest.mock("jsonwebtoken");
-jest.mock("../../models/userModel");
-jest.mock("../../models/settingModel");
+let token;
+let system;
 
-const app = express();
-app.use(express.json());
-app.post("/login", loginController.login);
+async function createUser(system) {
+  return await system.createUser({
+    name: "Test User",
+    email: "test@test.test",
+    password: bcrypt.hashSync("password", 10),
+    role: "owner",
+    is_registered: true,
+    system_id: system.id,
+  });
+}
 
-jwt.sign = jest.fn();
-jwt.verify = jest.fn();
+async function createLanguage() {
+  return await Language.create({
+    code: "en",
+    name: "English",
+  });
+}
 
-User.findOne = jest.fn();
+beforeEach(async () => {
+  await sequelize.sync({ force: true });
+
+  system = await System.create({
+    name: "Test System",
+  });
+
+  await createLanguage();
+  await createUser(system);
+
+  const response = await request(app)
+    .post("/api/v1/login")
+    .send({ email: "test@test.test", password: "password" });
+
+  token = response.body.token;
+  expect(token).toBeDefined();
+  expect(typeof token).toBe("string");
+});
+
+afterAll(async () => {
+  await sequelize.close();
+});
 
 describe("loginController", () => {
   describe("login", () => {
     it("should return 200 and a token when the user is authenticated", async () => {
-      const mockUser = {
-        id: 1,
-        name: "Test User",
-        password: bcrypt.hashSync("password", 10),
-        setting: {
-          using_darkmode: false,
-        },
-      };
-
-      User.findOne.mockImplementation(() => Promise.resolve(mockUser));
-      jwt.sign.mockReturnValue("token");
-
       const res = await request(app)
-        .post("/login")
-        .send({ email: "test@example.com", password: "password" });
+        .post("/api/v1/login")
+        .send({ email: "test@test.test", password: "password" });
 
       expect(res.statusCode).toEqual(200);
       expect(res.body).toHaveProperty("token");
-      expect(res.body).toHaveProperty("using_darkmode");
     });
 
     it("should return 401 when the user is not authenticated", async () => {
-      User.findOne.mockImplementation(() => Promise.resolve(null));
-
       const res = await request(app)
-        .post("/login")
-        .send({ email: "test@example.com", password: "password" });
+        .post("/api/v1/login")
+        .send({ email: "wrong@test.test", password: "password" });
 
       expect(res.statusCode).toEqual(401);
     });
+  });
+});
+
+describe("logout", () => {
+  it("should return 200 and a success message when the token is valid", async () => {
+    const res = await request(app)
+      .post("/api/v1/login/logout")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("message", "Logged out successfully");
+  });
+
+  it("should return 401 and an error message when no token is provided", async () => {
+    const res = await request(app).post("/api/v1/login/logout");
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toHaveProperty("message", "No token provided");
+  });
+
+  it("should return 401 and an error message when the token is invalid", async () => {
+    const res = await request(app)
+      .post("/api/v1/login/logout")
+      .set("Authorization", "Bearer invalidtoken");
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toHaveProperty("message", "Invalid token");
   });
 });
