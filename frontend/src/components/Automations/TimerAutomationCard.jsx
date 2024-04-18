@@ -52,7 +52,7 @@ export const TimerAutomationCard = ({ automation }) => {
         <p data-testid="automation-status">
           {automation.disabled
             ? t("disabled")
-            : `${numDevices} ${t("accessory", { count: numDevices })}`}
+            : `${numDevices} ${t("device", { count: numDevices })}`}
         </p>
         {(role === "admin" || role === "owner") && (
           <a
