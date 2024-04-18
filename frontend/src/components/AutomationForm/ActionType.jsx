@@ -6,7 +6,7 @@ const ActionType = ({ action, setAction }) => {
   const { t } = useLanguage();
   return (
     <div className={styles.action}>
-      <p>{t("devices")}</p>
+      <p>{t("actions")}</p>
       <select value={action} onChange={(e) => setAction(e.target.value)}>
         <option value="">{t("select an action")}</option>
         <option value="Turn On">{t("turn on")}</option>
