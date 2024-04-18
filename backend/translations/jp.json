@@ -94,6 +94,7 @@
     "hour_one": "時間",
     "minute_one": "分",
     "hour_other": "時間",
-    "minute_other": "分"
+    "minute_other": "分",
+    "user": "ユーザー"
   }
 }

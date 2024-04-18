@@ -94,6 +94,7 @@
     "hour_one": " tunti",
     "minute_one": " minuutti",
     "hour_other": " tuntia",
-    "minute_other": " minuuttia"
+    "minute_other": " minuuttia",
+    "user": "Käyttäjä"
   }
 }
