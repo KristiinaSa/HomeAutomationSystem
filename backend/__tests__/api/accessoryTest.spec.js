@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../../app.js");
+const UsageHistory = require("../../models/usageHistoryModel.js");
 
 const getSequelize = require("../../db/db.js");
 const sequelize = getSequelize();
@@ -99,6 +100,10 @@ beforeEach(async () => {
   expect(typeof token).toBe("string");
 });
 
+afterAll(async () => {
+  await sequelize.close();
+});
+
 describe("getAllDevices", () => {
   it("should return all devices for the logged in user", async () => {
     const response = await request(app)
@@ -180,7 +185,7 @@ describe("toggleOnOff", () => {
     const device = await createDevice(room, system);
 
     const response = await request(app)
-      .put(`/api/v1/accessories/toggle/${device.id}`)
+      .post(`/api/v1/accessories/toggle/${device.id}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(200);
@@ -192,10 +197,43 @@ describe("toggleOnOff", () => {
 
   it("should return an error when the device does not exist", async () => {
     const response = await request(app)
-      .put("/api/v1/accessories/toggle/9999")
+      .post("/api/v1/accessories/toggle/9999")
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe("Device not found");
+  });
+});
+
+describe("getDeviceAnalytics", () => {
+  it("should return device analytics data", async () => {
+    const device = await createDevice(room, system);
+    await request(app)
+      .post(`/api/v1/accessories/toggle/${device.id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    await request(app)
+      .post(`/api/v1/accessories/toggle/${device.id}`)
+      .set("Authorization", `Bearer ${token}`);
+
+    const response = await request(app)
+      .get("/api/v1/accessories/analytics")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body[1]).toHaveProperty("id");
+    expect(response.body[1]).toHaveProperty("name");
+    expect(response.body[1]).toHaveProperty("type");
+    expect(response.body[1]).toHaveProperty("room_name");
+    expect(response.body[1]).toHaveProperty("active_time");
+    expect(response.body[1]).toHaveProperty("last_interaction");
+
+    const usageHistory = await UsageHistory.findAll({
+      where: {
+        device_id: device.id,
+      },
+    });
+    expect(usageHistory.length).toBeGreaterThan(0);
   });
 });

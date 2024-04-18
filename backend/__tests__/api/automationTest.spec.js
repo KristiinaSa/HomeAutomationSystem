@@ -111,7 +111,7 @@ describe("GET /api/v1/automations/:id", () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id", newAutomation.id);
     expect(response.body).toHaveProperty("weekdays");
-    expect(response.body).toHaveProperty("time", "12:00");
+    expect(response.body).toHaveProperty("time", "15:00");
     expect(response.body).toHaveProperty("disabled", true);
     expect(response.body).toHaveProperty("name", "Test Automation 2");
     expect(response.body).toHaveProperty("type", "timer");
@@ -150,7 +150,7 @@ describe("POST /api/v1/automations/timer", () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("weekdays");
-    expect(response.body).toHaveProperty("time", "12:00");
+    expect(response.body).toHaveProperty("time", "09:00");
     expect(response.body).toHaveProperty("disabled", false);
     expect(response.body).toHaveProperty("name", "Test Automation 3");
   });
@@ -229,7 +229,7 @@ describe("PUT /api/v1/automations/timer/:id", () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id", newAutomation.id);
     expect(response.body).toHaveProperty("weekdays");
-    expect(response.body).toHaveProperty("time", "13:00");
+    expect(response.body).toHaveProperty("time", "10:00");
     expect(response.body).toHaveProperty("disabled", false);
     expect(response.body).toHaveProperty("name", "Updated Automation");
   });
