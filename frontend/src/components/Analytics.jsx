@@ -62,23 +62,23 @@ const Analytics = () => {
                 <h4>{device.name} </h4>
                 <p className="secondary-text">{device.room_name}</p>
                 <div className="data-box">
-                  <FontAwesomeIcon icon={faClock} size="2x"/>
+                  <FontAwesomeIcon icon={faClock} size="2x" />
                   <div>
                     <p className="secondary-text">{t("active time today")}:</p>
                     <span>{formattedActiveTime}</span>
                   </div>
                 </div>
                 <div className="data-box">
-                  <FontAwesomeIcon icon={faHand} size="2x"/>
+                  <FontAwesomeIcon icon={faHand} size="2x" />
                   <div>
                     <p className="secondary-text">{t("last interaction")}:</p>
                     <span>{formattedLastInteraction}</span>
                   </div>
                 </div>
                 <div className="data-box">
-                  <FontAwesomeIcon icon={faUser} size="2x"/>
+                  <FontAwesomeIcon icon={faUser} size="2x" />
                   <div>
-                    <p className="secondary-text">{t("User")}:</p>
+                    <p className="secondary-text">{t("user")}:</p>
                     <span>{lastInteractionUser}</span>
                   </div>
                 </div>
