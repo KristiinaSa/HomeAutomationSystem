@@ -41,6 +41,7 @@
     "time": "時間",
     "last interaction": "最終インタラクション",
     "no devices available": "使用可能なデバイスがありません",
+    "no devices selected": "デバイスが選択されていません",
     "actions": "アクション",
     "select an action": "アクションを選ぶ",
     "select devices": "デバイスを選ぶ",

@@ -41,6 +41,7 @@
     "time": "Aika",
     "last interaction": "Viimeksi käytetty",
     "no devices available": "Ei laitteita saatavilla",
+    "no devices selected": "Ei valittuja laitteita",
     "actions": "Toiminnot",
     "select an action": "Valitse toiminto",
     "select devices": "Valitse laitteet",
