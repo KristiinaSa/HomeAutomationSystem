@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=test RUN_CRON_JOB=false jest",
+    "test": "cross-env NODE_ENV=test RUN_CRON_JOB=false jest --runInBand",
     "coverage": "cross-env NODE_ENV=test RUN_CRON_JOB=false jest --coverage"
   },
   "author": "",
