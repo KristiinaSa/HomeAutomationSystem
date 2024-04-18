@@ -74,6 +74,7 @@ const Accessories = () => {
             <div key={device.id} className="device-card">
               <div>
                 <p>{device.name}</p>
+                <p className="secondary-text">{device.room.name}</p>
                 <p className="secondary-text">{t(device.type)}</p>
               </div>
               {(role === "admin" || role === 'owner') && (
