@@ -7,35 +7,42 @@ const Language = require("../models/languageModel.js");
 const files = fs.readdirSync("./translations");
 
 const populateTranslations = async () => {
-  for (const file of files) {
-    const languageCode = path.basename(file, path.extname(file));
-    const modelName =
-      languageCode.charAt(0) + languageCode.slice(1) + "_translation";
+  try {
+    for (const file of files) {
+      const languageCode = path.basename(file, path.extname(file));
+      const modelName =
+        languageCode.charAt(0) + languageCode.slice(1) + "_translation";
 
-    const Translation = models[modelName];
-    const data = JSON.parse(fs.readFileSync(`./translations/${file}`, "utf8"));
+      const Translation = models[modelName];
+      const data = JSON.parse(
+        fs.readFileSync(`./translations/${file}`, "utf8")
+      );
 
-    const { languageName } = data.info;
-    const translations = data.translations;
+      const { languageName } = data.info;
+      const translations = data.translations;
 
-    await Language.findOrCreate({
-      where: { code: languageCode },
-      defaults: { code: languageCode, name: languageName },
-    });
-
-    for (const key in translations) {
-      const [instance, created] = await Translation.findOrCreate({
-        where: { key, language: languageCode },
-        defaults: { value: translations[key] },
+      await Language.findOrCreate({
+        where: { code: languageCode },
+        defaults: { code: languageCode, name: languageName },
       });
 
-      if (!created) {
-        await instance.update({ value: translations[key] });
+      for (const key in translations) {
+        const [instance, created] = await Translation.findOrCreate({
+          where: { key, language: languageCode },
+          defaults: { value: translations[key] },
+        });
+
+        if (!created) {
+          await instance.update({ value: translations[key] });
+        }
       }
     }
+  } catch (err) {
+  } finally {
+    await sequelize.close();
   }
-
-  await sequelize.close();
 };
 
 populateTranslations();
+
+module.exports = populateTranslations;

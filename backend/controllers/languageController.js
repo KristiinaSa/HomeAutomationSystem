@@ -16,6 +16,10 @@ const getTranslations = async (req, res, next) => {
     const modelName = lng + "_translation";
     const Translation = models[modelName];
 
+    if (!Translation) {
+      return res.status(400).json({ error: "Unsupported language" });
+    }
+
     const translations = await Translation.findAll({
       where: { language: lng },
     });
