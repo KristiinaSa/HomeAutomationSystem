@@ -49,19 +49,25 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
+  const authHeader = req.headers.authorization;
 
-  if (token) {
-    try {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-          res.status(401).json({ message: "Invalid token" });
-        } else {
-          res.status(200).json({ message: "Logged out successfully" });
-        }
-      });
-    } catch (error) {
-      res.status(500).json({ message: "Error logging out" });
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+
+    if (token) {
+      try {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+          if (err) {
+            res.status(401).json({ message: "Invalid token" });
+          } else {
+            res.status(200).json({ message: "Logged out successfully" });
+          }
+        });
+      } catch (error) {
+        res.status(500).json({ message: "Error logging out" });
+      }
+    } else {
+      res.status(401).json({ message: "No token provided" });
     }
   } else {
     res.status(401).json({ message: "No token provided" });
