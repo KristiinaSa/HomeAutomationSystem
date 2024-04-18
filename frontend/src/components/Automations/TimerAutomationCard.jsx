@@ -15,7 +15,7 @@ import styles from "./Automations.module.css";
 export const TimerAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
-  const { t } = useLanguage();
+  const { t, formatDateTime } = useLanguage();
   const { role } = useContext(AuthContext);
 
   const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
@@ -44,7 +44,7 @@ export const TimerAutomationCard = ({ automation }) => {
           />
         </div>
         <div className={styles.automationDate}>
-          <p data-testid="automation-time">{automation.time}</p>
+          <p data-testid="automation-time">{formatDateTime(automation.time)}</p>
           <p data-testid="automation-active-days">{activeDays.join(", ")}</p>
         </div>
       </div>
@@ -54,7 +54,7 @@ export const TimerAutomationCard = ({ automation }) => {
             ? t("disabled")
             : `${numDevices} ${t("accessory", { count: numDevices })}`}
         </p>
-        {(role === "admin" || role === 'owner') && (
+        {(role === "admin" || role === "owner") && (
           <a
             onClick={handleEdit}
             aria-label="Edit"
