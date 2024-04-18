@@ -37,6 +37,13 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.room-name {
-    color: var(--secondary-text-color-mobile);  
+.data-box {
+    display: flex;
+    align-items: center;
+    gap: 0 15px;
+    padding-bottom: 15px;  
+}
+
+.data-box svg {
+    color: var(--secondary-text-color-mobile);
 }

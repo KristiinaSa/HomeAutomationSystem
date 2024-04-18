@@ -3,6 +3,8 @@ import { getAllAnalytics } from "../services/accessoryServices";
 import { useEffect, useState } from "react";
 import { Duration } from "luxon";
 import { useLanguage } from "../context/LanguageContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faHand, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
@@ -59,17 +61,26 @@ const Analytics = () => {
               <div key={device.id} className="device-box">
                 <h4>{device.name} </h4>
                 <p className="secondary-text">{device.room_name}</p>
-                <div>
-                  <p className="secondary-text">{t("active time today")}:</p>
-                  <span>{formattedActiveTime}</span>
+                <div className="data-box">
+                  <FontAwesomeIcon icon={faClock} size="2x"/>
+                  <div>
+                    <p className="secondary-text">{t("active time today")}:</p>
+                    <span>{formattedActiveTime}</span>
+                  </div>
                 </div>
-                <div>
-                  <p className="secondary-text">{t("last interaction")}:</p>
-                  <span>{formattedLastInteraction}</span>
+                <div className="data-box">
+                  <FontAwesomeIcon icon={faHand} size="2x"/>
+                  <div>
+                    <p className="secondary-text">{t("last interaction")}:</p>
+                    <span>{formattedLastInteraction}</span>
+                  </div>
                 </div>
-                <div>
-                  <p className="secondary-text">{t("User")}:</p>
-                  <span>{lastInteractionUser}</span>
+                <div className="data-box">
+                  <FontAwesomeIcon icon={faUser} size="2x"/>
+                  <div>
+                    <p className="secondary-text">{t("User")}:</p>
+                    <span>{lastInteractionUser}</span>
+                  </div>
                 </div>
               </div>
             );
