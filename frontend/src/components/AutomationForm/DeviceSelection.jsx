@@ -66,7 +66,7 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
           ))}
         </ul>
       ) : (
-        <p>No devices selected</p>
+        <p>{t("no devices selected")}</p>
       )}
     </div>
   );
