@@ -46,23 +46,31 @@ const Analytics = () => {
             const formattedActiveTime = formatDuration(activeTimeDuration);
 
             let formattedLastInteraction = "-";
+            let lastInteractionUser = "-";
             if (device.last_interaction && device.last_interaction.date) {
               const formattedLastInteractionDate = formatDateTime(
                 device.last_interaction.date
               );
-              formattedLastInteraction = `${formattedLastInteractionDate} by ${device.last_interaction.user}`;
+              formattedLastInteraction = `${formattedLastInteractionDate}`;
+              lastInteractionUser = `${device.last_interaction.user}`;
             }
 
             return (
               <div key={device.id} className="device-box">
                 <h4>{device.name} </h4>
-                <p className="room-name">{device.room_name}</p>
-                <p>
-                  {t("active time today")}: {formattedActiveTime}
-                </p>
-                <p>
-                  {t("last interaction")}: {formattedLastInteraction}
-                </p>
+                <p className="secondary-text">{device.room_name}</p>
+                <div>
+                  <p className="secondary-text">{t("active time today")}:</p>
+                  <span>{formattedActiveTime}</span>
+                </div>
+                <div>
+                  <p className="secondary-text">{t("last interaction")}:</p>
+                  <span>{formattedLastInteraction}</span>
+                </div>
+                <div>
+                  <p className="secondary-text">{t("User")}:</p>
+                  <span>{lastInteractionUser}</span>
+                </div>
               </div>
             );
           })}

@@ -6,7 +6,7 @@ const checkRole = async (req, res, next) => {
       where: { id: req.user.id },
       attributes: ["role"],
     });
-    if (userData.role !== "admin" || userData.role !== "owner") {
+    if (userData.role !== "admin" && userData.role !== "owner") {
       return res.status(403).json({ message: "Buuuueeee" });
     }
     next();
