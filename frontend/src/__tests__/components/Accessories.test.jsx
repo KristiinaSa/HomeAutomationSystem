@@ -17,7 +17,7 @@ const languageContextValue = {
 const authContextValue = {
   role: "admin",
   isLoggedIn: true,
-}
+};
 
 vi.mock("../../services/accessoryServices", () => ({
   deleteDevice: vi.fn(),
@@ -26,8 +26,8 @@ vi.mock("../../services/accessoryServices", () => ({
 const navigate = vi.fn();
 
 const mockDevices = [
-  { id: 1, name: "Device 1", type: "Type A" },
-  { id: 2, name: "Device 2", type: "Type B" },
+  { id: 1, name: "Device 1", type: "Type A", room: { name: "Bobo" } },
+  { id: 2, name: "Device 2", type: "Type B", room: { name: "Bobo" } },
 ];
 
 vi.mock("react-router-dom", async () => {
@@ -66,14 +66,14 @@ describe("Accessories", () => {
   it("navigates to add device page on button click", async () => {
     render(
       <I18nextProvider i18n={i18n}>
-      <AuthContext.Provider value={authContextValue}>
-        <LanguageContext.Provider value={languageContextValue}>
-          <DeviceContext.Provider value={{ devices: mockDevices }}>
-            <Accessories />
-          </DeviceContext.Provider>
-        </LanguageContext.Provider>
-      </AuthContext.Provider>
-    </I18nextProvider>,
+        <AuthContext.Provider value={authContextValue}>
+          <LanguageContext.Provider value={languageContextValue}>
+            <DeviceContext.Provider value={{ devices: mockDevices }}>
+              <Accessories />
+            </DeviceContext.Provider>
+          </LanguageContext.Provider>
+        </AuthContext.Provider>
+      </I18nextProvider>,
       { wrapper: MemoryRouter }
     );
 
@@ -84,14 +84,14 @@ describe("Accessories", () => {
   it("navigates to analytics page on button click", async () => {
     render(
       <I18nextProvider i18n={i18n}>
-      <AuthContext.Provider value={authContextValue}>
-        <LanguageContext.Provider value={languageContextValue}>
-          <DeviceContext.Provider value={{ devices: mockDevices }}>
-            <Accessories />
-          </DeviceContext.Provider>
-        </LanguageContext.Provider>
-      </AuthContext.Provider>
-    </I18nextProvider>,
+        <AuthContext.Provider value={authContextValue}>
+          <LanguageContext.Provider value={languageContextValue}>
+            <DeviceContext.Provider value={{ devices: mockDevices }}>
+              <Accessories />
+            </DeviceContext.Provider>
+          </LanguageContext.Provider>
+        </AuthContext.Provider>
+      </I18nextProvider>,
       { wrapper: MemoryRouter }
     );
 
@@ -106,14 +106,14 @@ describe("Accessories", () => {
 
     const { findByTestId } = render(
       <I18nextProvider i18n={i18n}>
-      <AuthContext.Provider value={authContextValue}>
-        <LanguageContext.Provider value={languageContextValue}>
-          <DeviceContext.Provider value={{ devices: mockDevices, setUpdate }}>
-            <Accessories />
-          </DeviceContext.Provider>
-        </LanguageContext.Provider>
-      </AuthContext.Provider>
-    </I18nextProvider>,
+        <AuthContext.Provider value={authContextValue}>
+          <LanguageContext.Provider value={languageContextValue}>
+            <DeviceContext.Provider value={{ devices: mockDevices, setUpdate }}>
+              <Accessories />
+            </DeviceContext.Provider>
+          </LanguageContext.Provider>
+        </AuthContext.Provider>
+      </I18nextProvider>,
       { wrapper: MemoryRouter }
     );
 
@@ -136,8 +136,8 @@ describe("Accessories", () => {
   });
 });
 
-it('renders the correct text in the japanese', async () => {
-  const {rerender } = render(
+it("renders the correct text in the japanese", async () => {
+  const { rerender } = render(
     <I18nextProvider i18n={i18n}>
       <AuthContext.Provider value={authContextValue}>
         <LanguageContext.Provider value={languageContextValue}>
@@ -165,12 +165,12 @@ it('renders the correct text in the japanese', async () => {
     { wrapper: MemoryRouter }
   );
 
-  const titleElement = await screen.getByText('アクセサリ')
+  const titleElement = await screen.getByText("アクセサリ");
   expect(titleElement).toBeInTheDocument();
 });
 
-it('renders the correct text in the finnish', async () => {
-  const {rerender } = render(
+it("renders the correct text in the finnish", async () => {
+  const { rerender } = render(
     <I18nextProvider i18n={i18n}>
       <AuthContext.Provider value={authContextValue}>
         <LanguageContext.Provider value={languageContextValue}>
