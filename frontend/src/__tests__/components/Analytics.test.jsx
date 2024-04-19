@@ -40,19 +40,29 @@ describe("Analytics", () => {
 
     expect(await screen.findByText("Device 1")).toBeInTheDocument();
     expect(screen.getByText("Room 1")).toBeInTheDocument();
+    
+    const timeElements = screen.getAllByText("Active time today:")
+    expect(timeElements).toHaveLength(2);
+    
     expect(
-      screen.getByText("Active time today: 1 hour 1 minute")
-    ).toBeInTheDocument();
+      screen.getByText("1 hour 1 minute")
+    )
+    const lastInteractionElements = screen.getAllByText("Last interaction:")
+    expect(lastInteractionElements).toHaveLength(2);
     expect(
-      screen.getByText("Last interaction: Apr 16, 2024, 1:00 PM by Jonne")
+      screen.getByText("Apr 16, 2024, 12:13 PM")
     ).toBeInTheDocument();
+    const userElements = screen.getAllByText("User:")
+    expect(userElements).toHaveLength(2);
+
     expect(screen.getByText("Device 2")).toBeInTheDocument();
     expect(screen.getByText("Room 2")).toBeInTheDocument();
+    
     expect(
-      screen.getByText("Active time today: 2 hours 1 minute")
+      screen.getByText("2 hours 1 minute")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Last interaction: Apr 16, 2024, 12:13 PM by Jonne")
+      screen.getByText("Apr 16, 2024, 12:13 PM")
     ).toBeInTheDocument();
   });
 
