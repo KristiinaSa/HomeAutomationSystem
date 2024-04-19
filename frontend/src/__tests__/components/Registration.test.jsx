@@ -6,15 +6,20 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../../context/AuthContext";
 import { LanguageContext } from "../../context/LanguageContext";
 import {
-  languages,
   languageContextValue,
 } from "../../utils/languageTestSetup.js";
+import { I18nextProvider } from "react-i18next";
+import i18n from "../../i18n-test.js";
+import { createSystem } from "../../services/authService.js";
 
-//Some errors shown in terminal, but the tests pass
+vi.mock("../../services/authService.js", () => ({
+    createSystem: vi.fn(),
+}));
 
 describe("Registration component", () => {
   beforeEach(() => {
     render(
+        <I18nextProvider i18n={i18n}>
       <Router>
         <AuthProvider>
           <LanguageContext.Provider value={languageContextValue}>
@@ -23,6 +28,7 @@ describe("Registration component", () => {
           </LanguageContext.Provider>
         </AuthProvider>
       </Router>
+      </I18nextProvider>
     );
   });
 
@@ -105,6 +111,7 @@ describe("Registration component", () => {
 
     const fiOption = screen.getByText("Suomi");
     fireEvent.click(fiOption);
+    await i18n.changeLanguage("fi")
 
     render(
           <Router>
