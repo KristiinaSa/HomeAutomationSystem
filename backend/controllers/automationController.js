@@ -173,11 +173,19 @@ const addTimerAutomation = async (req, res, next) => {
       }
     });
 
+    if (!automationData.name.trim()) {
+      const err = new Error("Name cannot be empty or contain only whitespace");
+      err.status = 400;
+      throw err;
+    }
+
     if (!weekdays) {
       const err = new Error("Missing required field: weekdays");
       err.status = 400;
       throw err;
     }
+
+    console.log("Action:", automationData);
 
     automationData.action =
       STRING_TO_ACTION[automationData.action.toLowerCase()];
@@ -247,6 +255,7 @@ const editTimerAutomation = async (req, res, next) => {
 
     if (
       !automationData.name ||
+      !automationData.name.trim() ||
       !weekdays ||
       !automationData.time ||
       automationData.action === undefined
