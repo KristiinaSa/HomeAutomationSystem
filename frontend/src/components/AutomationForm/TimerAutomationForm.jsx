@@ -74,8 +74,11 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const isButtonDisabled = () => {
     const noDaysSelected = !Object.values(selectedDays).some(Boolean);
     const noDevicesSelected = automationDevices.length === 0;
+    const nameIsEmpty = !name.trim();
 
-    return !time || noDaysSelected || noDevicesSelected || !name || !actionType;
+    return (
+      !time || noDaysSelected || noDevicesSelected || nameIsEmpty || !actionType
+    );
   };
 
   return (
