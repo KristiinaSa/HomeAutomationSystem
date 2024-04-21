@@ -6,23 +6,10 @@ import { I18nextProvider } from "react-i18next";
 import { AuthProvider } from "../../context/AuthContext.jsx";
 import i18n from "../../i18n-test.js";
 import { LanguageContext } from "../../context/LanguageContext.jsx";
-
-const languages = [
-  { id: 1, code: "en", name: "English" },
-  { id: 2, code: "jp", name: "日本語" },
-  { id: 3, code: "fi", name: "Suomi" },
-];
-
-const languageContextValue = {
+import {
   languages,
-  selectedLanguage: "en",
-  handleLanguageChange: (newLanguage) => {
-    languageContextValue.selectedLanguage = newLanguage;
-    i18n.changeLanguage(newLanguage);
-  },
-  updateLanguage: vi.fn(),
-  t: i18n.t,
-};
+  languageContextValue,
+} from "../../utils/languageTestSetup.js";
 
 test("TimerAutomationCard renders correctly", () => {
   const mockAutomation = {
@@ -75,7 +62,7 @@ test("TimerAutomationCard renders correctly", () => {
   expect(statusElement.textContent).toBe("Disabled");
 
   const timeElement = screen.getByTestId("automation-time");
-  expect(timeElement.textContent).toBe("22:00");
+  expect(timeElement.textContent).toBe("Apr 19, 2024, 10:00 PM");
 
   const activeDaysElement = screen.getByTestId("automation-active-days");
   expect(activeDaysElement.textContent).toBe("Everyday");
