@@ -109,6 +109,13 @@ const register = async (req, res) => {
 const createSystem = async (req, res) => {
   const { name, email, password, timeZone } = req.body;
 
+  const existingUser = await User.findOne({ where: { email } });
+
+  if (existingUser) {
+    res.status(400).json({ message: "This user has already been registered." });
+    return;
+  }
+
   const system = await System.create();
 
   const hashedPassword = bcrypt.hashSync(password, 10);
@@ -117,7 +124,7 @@ const createSystem = async (req, res) => {
     email,
     password: hashedPassword,
     system_id: system.id,
-    role: "admin",
+    role: "owner",
     time_zone: timeZone,
     is_registered: 1,
   });
