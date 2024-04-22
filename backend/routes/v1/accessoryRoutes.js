@@ -11,10 +11,9 @@ const {
   getRoomDevices,
   getDeviceAnalytics,
   updateDeviceStatus,
+  getDeviceTypes,
 } = require("../../controllers/accessoryController.js");
 
-const authenticateToken = require("../../middleware/authToken.js");
-const getUserData = require("../../middleware/getUserData.js");
 const checkRole = require("../../middleware/checkRole.js");
 
 router.get("/", getAllAccessories);
@@ -34,5 +33,7 @@ router.get("/room-devices/:id", getRoomDevices);
 router.get("/analytics/", getDeviceAnalytics);
 
 router.get("/status/", updateDeviceStatus);
+
+router.get("/device-types", getDeviceTypes);
 
 module.exports = router;

@@ -1,18 +1,25 @@
-import { createContext, useState, useEffect } from 'react';
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { createContext, useState, useEffect } from "react";
+import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { getDeviceTypes } from "../services/accessoryServices";
 
 export const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
-    const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-        setCategories([{ id: 1, title: "Lights", icon: faLightbulb, count: 2 }]);
-    }, []);
+  useEffect(() => {
+    getDeviceTypes().then((deviceTypes) => {
+      const categories = deviceTypes.map((deviceType) => ({
+        id: deviceType.id,
+        title: deviceType.name,
+      }));
+      setCategories(categories);
+    });
+  }, []);
 
-    return (
-        <CategoriesContext.Provider value={{ categories }}>
-            {children}
-        </CategoriesContext.Provider>
-    );
-}
+  return (
+    <CategoriesContext.Provider value={{ categories }}>
+      {children}
+    </CategoriesContext.Provider>
+  );
+};

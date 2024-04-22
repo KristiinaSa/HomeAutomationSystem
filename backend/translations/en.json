@@ -98,6 +98,8 @@
     "minute_one": " minute",
     "hour_other": " hours",
     "minute_other": " minutes",
-    "user": "User"
+    "user": "User",
+    "tv": "TV",
+    "fan": "Fan"
   }
 }

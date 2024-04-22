@@ -9,7 +9,6 @@ Device.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: DataTypes.STRING,
-    type: DataTypes.STRING,
     value: { type: DataTypes.STRING, defaultValue: "off" },
     data_type: DataTypes.STRING,
     role_access: {

@@ -98,6 +98,8 @@
     "minute_one": " minuutti",
     "hour_other": " tuntia",
     "minute_other": " minuuttia",
-    "user": "Käyttäjä"
+    "user": "Käyttäjä",
+    "tv": "TV",
+    "fan": "Tuuletin"
   }
 }

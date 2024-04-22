@@ -11,12 +11,16 @@ const UsageHistory = require("../models/usageHistoryModel.js");
 const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
 const Language = require("../models/languageModel.js");
+const DeviceType = require("../models/deviceTypeModel.js");
 
 Device.belongsTo(System, { foreignKey: "system_id" });
 Device.belongsTo(Room, { foreignKey: "room_id" });
 Device.hasMany(UsageHistory, { foreignKey: "device_id" });
 Device.belongsToMany(TimeAutomation, { through: "timer_controls" });
 Device.belongsToMany(SensorAutomation, { through: "sensor_controls" });
+Device.belongsTo(DeviceType, { foreignKey: "device_type_id" });
+
+DeviceType.hasMany(Device, { foreignKey: "device_type_id" });
 
 Room.belongsTo(System, { foreignKey: "system_id" });
 Room.hasMany(Sensor, { foreignKey: "room_id" });

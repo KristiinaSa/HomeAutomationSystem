@@ -8,7 +8,6 @@ import "./HomeMobile.css";
 import TestCard from "./TestCard";
 import Room from "./Room";
 import useToggle from "../hooks/useToggle";
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
 
 const HomeMobile = () => {
@@ -45,7 +44,7 @@ const HomeMobile = () => {
       <div className="rooms-container">
         <div className="rooms-title">
           <h2>{t("rooms")}</h2>
-          {(role === "admin" || role === 'owner') && (
+          {(role === "admin" || role === "owner") && (
             <button
               type="button"
               className="primary-btn"
@@ -68,11 +67,7 @@ const HomeMobile = () => {
                     <TestCard
                       key={device.id}
                       title={device.name}
-                      icon={
-                        (device.type === "light") | (device.type === "Light")
-                          ? faLightbulb
-                          : ""
-                      }
+                      type={device.device_type.name}
                       status={device.value}
                       onClick={() => handleToggle(device.id)}
                     />

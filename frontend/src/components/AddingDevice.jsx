@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { addDevice } from "../services/accessoryServices";
+import { addDevice, getDeviceTypes } from "../services/accessoryServices";
 import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
@@ -7,7 +7,8 @@ import { RoomContext } from "../context/RoomContext";
 import { useLanguage } from "../context/LanguageContext";
 
 const AddingDevice = () => {
-  const [device, setDevice] = useState({ name: "", type: "light" });
+  const [device, setDevice] = useState([]);
+  const [deviceTypes, setDeviceTypes] = useState([]);
   const { rooms, errorMessage } = useContext(RoomContext);
   const [chosenRoom, setChosenRoom] = useState(1);
   const [message, setMessage] = useState("");
@@ -15,6 +16,24 @@ const AddingDevice = () => {
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    const fetchDeviceTypes = async () => {
+      try {
+        const deviceTypes = await getDeviceTypes();
+        setDeviceTypes(deviceTypes);
+        if (deviceTypes.length > 0) {
+          setDevice((prevDevice) => ({
+            ...prevDevice,
+            type: deviceTypes[0].name,
+          }));
+        }
+      } catch (error) {
+        console.error("Error getting device types:", error.message);
+      }
+    };
+    fetchDeviceTypes();
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,7 +82,7 @@ const AddingDevice = () => {
         <label htmlFor="roomName">{t("choose a room") + ":"}</label>
         <select
           id="roomName"
-          value={chosenRoom} // To ensure the select shows the current state
+          value={chosenRoom}
           onChange={(e) => {
             setChosenRoom(Number(e.target.value));
           }}
@@ -82,11 +101,15 @@ const AddingDevice = () => {
         </label>
         <select
           id="deviceType"
-          value={device.type} // To ensure the select shows the current state
+          value={device.type}
           onChange={(e) => setDevice({ ...device, type: e.target.value })}
           className="choose-box"
         >
-          <option value="light">{t("light")}</option>
+          {deviceTypes.map((deviceType) => (
+            <option key={deviceType.id} value={deviceType.name}>
+              {t(deviceType.name)}
+            </option>
+          ))}
         </select>
       </div>
       <form onSubmit={handleSubmit} className="choose-section">
@@ -100,7 +123,11 @@ const AddingDevice = () => {
           className="choose-box"
         />
         <div className="btn-container">
-          <button type="submit" className="primary-btn add-btn" data-testid="add-button">
+          <button
+            type="submit"
+            className="primary-btn add-btn"
+            data-testid="add-button"
+          >
             {t("add") + " " + t("device")}
           </button>
           <button

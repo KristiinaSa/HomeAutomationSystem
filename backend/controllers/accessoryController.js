@@ -1,5 +1,6 @@
 require("../db/associations.js");
 const { eventEmitter } = require("../services/automationChecker.js");
+const sequelize = require("../db/sequelizeConnector.js");
 
 const Device = require("../models/deviceModel.js");
 const User = require("../models/userModel.js");
@@ -7,6 +8,7 @@ const Sensor = require("../models/sensorModel.js");
 const Room = require("../models/roomModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
 const System = require("../models/systemModel.js");
+const DeviceType = require("../models/deviceTypeModel.js");
 const { Op } = require("sequelize");
 
 const clients = new Map();
@@ -39,11 +41,18 @@ const getAllDevices = async (req, res, next) => {
   try {
     let devices = await Device.findAll({
       where: { system_id },
-      attributes: ["id", "name", "type", "room_id", "value"],
-      include: {
-        model: Room,
-        attributes: ["name"],
-      },
+      attributes: ["id", "name", "room_id", "value"],
+      include: [
+        {
+          model: Room,
+          attributes: ["name"],
+        },
+        {
+          model: DeviceType,
+          attributes: ["name"],
+          as: "device_type",
+        },
+      ],
     });
 
     console.log("devices:", devices);
@@ -66,23 +75,29 @@ const getAllSensors = async (req, res, next) => {
 };
 
 const addDevice = async (req, res, next) => {
+  console.log("Adding device:", req.body);
   try {
     const room = await Room.findByPk(req.body.room_id);
-    console.log("Room:", room);
-    console.log("Request body:", req.body);
     if (!room) {
       return res.status(404).json({ error: "Room not found" });
     }
 
-    req.body.data_type = TYPE_TO_DATA_TYPE[req.body.type];
+    const deviceType = await DeviceType.findOne({
+      where: { name: req.body.type },
+    });
+    if (!deviceType) {
+      return res.status(404).json({ error: "Device type not found" });
+    }
 
-    const device = await Device.create({
+    const device = await room.createDevice({
       ...req.body,
       system_id: room.system_id,
     });
-    console.log("Added device:", device);
+
+    await device.setDevice_type(deviceType);
     res.send(device);
   } catch (err) {
+    console.log("Error adding device:", err);
     next(err);
   }
 };
@@ -208,6 +223,23 @@ const getDeviceAnalytics = async (req, res, next) => {
       ],
     });
 
+    const lastInteractions = await Promise.all(
+      devices.map((device) =>
+        UsageHistory.findOne({
+          where: {
+            device_id: device.id,
+          },
+          include: [
+            {
+              model: User,
+              attributes: ["name"],
+            },
+          ],
+          order: [["timestamp", "DESC"]],
+        })
+      )
+    );
+
     const activePeriodsByDevice = activePeriodsToday.reduce((groups, entry) => {
       if (!groups[entry.device_id]) {
         groups[entry.device_id] = [];
@@ -235,11 +267,11 @@ const getDeviceAnalytics = async (req, res, next) => {
         totalActiveTime += new Date() - periodStart;
       }
 
-      const totalActiveHours = Math.floor(totalActiveTime / 1000 / 60 / 60);
-      const totalActiveMinutes = Math.floor((totalActiveTime / 1000 / 60) % 60);
       const totalActiveTimeInMinutes = Math.floor(totalActiveTime / 1000 / 60);
 
-      const lastInteractionEntry = activePeriods[activePeriods.length - 1];
+      const lastInteractionEntry = lastInteractions.find(
+        (interaction) => interaction && interaction.device_id === device.id
+      );
       const lastInteractionDate = lastInteractionEntry
         ? dayjs.utc(lastInteractionEntry.timestamp).tz(systemTimezone)
         : undefined;
@@ -299,6 +331,35 @@ const updateDeviceStatus = async (req, res, next) => {
   });
 };
 
+const getDeviceTypes = async (req, res, next) => {
+  try {
+    const deviceTypes = await DeviceType.findAll({
+      attributes: [
+        "id",
+        "name",
+        [
+          sequelize.fn("COUNT", sequelize.col("devices.device_type_id")),
+          "deviceCount",
+        ],
+      ],
+      include: [
+        {
+          model: Device,
+          attributes: [],
+        },
+      ],
+      group: ["device_type.id", "device_type.name"],
+      raw: true,
+    });
+
+    console.log("Device types:", deviceTypes);
+    res.send(deviceTypes);
+  } catch (err) {
+    console.log("Error getting device types:", err);
+    next(err);
+  }
+};
+
 module.exports = {
   getAllAccessories,
   getAllDevices,
@@ -309,4 +370,5 @@ module.exports = {
   getRoomDevices,
   getDeviceAnalytics,
   updateDeviceStatus,
+  getDeviceTypes,
 };
