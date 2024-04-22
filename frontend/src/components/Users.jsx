@@ -178,7 +178,7 @@ const Users = () => {
                   <p>{user.email}</p>
                 </div>
               </div>
-              {(role === "admin" || role === 'owner') && (
+              {(role === "admin" || role === 'owner') && user.role !== "owner" && (
                 <div className="user-actions">
                   <FontAwesomeIcon
                     icon={faEdit}
