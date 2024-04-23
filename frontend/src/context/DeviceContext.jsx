@@ -30,7 +30,7 @@ export const DeviceProvider = ({ children }) => {
     if (isLoggedIn) {
       fetchDevices();
     }
-  }, [update, isLoggedIn]);
+  }, [update, isLoggedIn, t]);
 
   useEffect(() => {
     if (isLoggedIn) {

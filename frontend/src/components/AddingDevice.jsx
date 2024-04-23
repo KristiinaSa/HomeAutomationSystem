@@ -1,16 +1,18 @@
-import { useState, useContext, useEffect } from "react";
-import { addDevice, getDeviceTypes } from "../services/accessoryServices";
 import "./AddingDevice.css";
+
+import { useState, useContext, useEffect } from "react";
+import { addDevice } from "../services/accessoryServices";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
 import { RoomContext } from "../context/RoomContext";
+import { CategoriesContext } from "../context/CategoriesContext";
 import { useLanguage } from "../context/LanguageContext";
 
 const AddingDevice = () => {
-  const [device, setDevice] = useState([]);
-  const [deviceTypes, setDeviceTypes] = useState([]);
+  const [device, setDevice] = useState({ name: "", type: "" });
+  const { categories } = useContext(CategoriesContext);
   const { rooms, errorMessage } = useContext(RoomContext);
-  const [chosenRoom, setChosenRoom] = useState(null);
+  const [chosenRoom, setChosenRoom] = useState("");
   const [message, setMessage] = useState("");
   const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
@@ -18,25 +20,16 @@ const AddingDevice = () => {
   const { t } = useLanguage();
 
   useEffect(() => {
-    const fetchDeviceTypes = async () => {
-      try {
-        const deviceTypes = await getDeviceTypes();
-        setDeviceTypes(deviceTypes);
-        if (deviceTypes.length > 0) {
-          setDevice((prevDevice) => ({
-            ...prevDevice,
-            type: deviceTypes[0].name,
-          }));
-        }
-        if (rooms.length > 0) {
-          setChosenRoom(rooms[0].id);
-        }
-      } catch (error) {
-        console.error("Error getting device types:", error.message);
-      }
-    };
-    fetchDeviceTypes();
-  }, [rooms, chosenRoom]);
+    if (categories.length > 0) {
+      setDevice((prevDevice) => ({
+        ...prevDevice,
+        type: categories[0].title,
+      }));
+    }
+    if (rooms.length > 0) {
+      setChosenRoom(rooms[0].id);
+    }
+  }, [rooms, chosenRoom, categories]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -113,9 +106,9 @@ const AddingDevice = () => {
           onChange={(e) => setDevice({ ...device, type: e.target.value })}
           className="choose-box"
         >
-          {deviceTypes.map((deviceType) => (
-            <option key={deviceType.id} value={deviceType.name}>
-              {t(deviceType.name)}
+          {categories.map((category) => (
+            <option key={category.id} value={category.title}>
+              {t(category.title)}
             </option>
           ))}
         </select>

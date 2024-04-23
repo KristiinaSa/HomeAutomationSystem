@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { getDeviceTypes } from "../services/accessoryServices";
 
 export const CategoriesContext = createContext();
