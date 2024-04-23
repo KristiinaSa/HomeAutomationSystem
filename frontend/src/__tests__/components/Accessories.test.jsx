@@ -26,8 +26,18 @@ vi.mock("../../services/accessoryServices", () => ({
 const navigate = vi.fn();
 
 const mockDevices = [
-  { id: 1, name: "Device 1", type: "Type A", room: { name: "Bobo" } },
-  { id: 2, name: "Device 2", type: "Type B", room: { name: "Bobo" } },
+  {
+    id: 1,
+    name: "Device 1",
+    room: { name: "Bobo" },
+    device_type: { name: "Type A" },
+  },
+  {
+    id: 2,
+    name: "Device 2",
+    room: { name: "Bobo" },
+    device_type: { name: "Type B" },
+  },
 ];
 
 vi.mock("react-router-dom", async () => {

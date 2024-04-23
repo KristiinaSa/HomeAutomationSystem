@@ -32,4 +32,9 @@ export const languageContextValue = {
     const date = DateTime.fromISO(dateString).setLocale(locale);
     return date.toLocaleString(DateTime.DATETIME_MED);
   },
+  formatTime: (timeString) => {
+    const locale = getLocaleForDate(languageContextValue.selectedLanguage);
+    const time = DateTime.fromISO(timeString).setLocale(locale);
+    return time.toLocaleString(DateTime.TIME_SIMPLE);
+  },
 };

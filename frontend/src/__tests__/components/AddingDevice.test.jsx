@@ -7,6 +7,7 @@ import { RoomContext } from "../../context/RoomContext";
 import { LanguageContext } from "../../context/LanguageContext";
 import { AuthContext } from "../../context/AuthContext";
 import { I18nextProvider } from "react-i18next";
+import { CategoriesContext } from "../../context/CategoriesContext";
 import i18n from "../../i18n-test";
 import { languageContextValue } from "../../utils/languageTestSetup";
 
@@ -18,13 +19,19 @@ const authContextValue = {
 const navigate = vi.fn();
 
 const mockRooms = [{ id: 1, name: "Room 1" }];
+const mockDeviceTypes = [
+  { id: 1, title: "light" },
+  { id: 2, title: "tv" },
+  { id: 3, title: "fan" },
+];
+
 const setUpdate = vi.fn();
 
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom"); // Import actual implementations
+  const actual = await vi.importActual("react-router-dom");
   return {
-    ...actual, // Spread actual implementations
-    useNavigate: () => navigate, // Mock useNavigate with a spy function
+    ...actual,
+    useNavigate: () => navigate,
   };
 });
 
@@ -67,9 +74,13 @@ describe("AddingDevice", () => {
         <LanguageContext.Provider value={languageContextValue}>
           <AuthContext.Provider value={authContextValue}>
             <RoomContext.Provider value={{ rooms: mockRooms }}>
-              <DeviceContext.Provider value={{ setUpdate }}>
-                <AddingDevice />
-              </DeviceContext.Provider>
+              <CategoriesContext.Provider
+                value={{ categories: mockDeviceTypes }}
+              >
+                <DeviceContext.Provider value={{ setUpdate }}>
+                  <AddingDevice />
+                </DeviceContext.Provider>
+              </CategoriesContext.Provider>
             </RoomContext.Provider>
           </AuthContext.Provider>
         </LanguageContext.Provider>
@@ -79,13 +90,15 @@ describe("AddingDevice", () => {
     fireEvent.change(screen.getByLabelText("Choose a room:"), {
       target: { value: "1" },
     });
+
     fireEvent.change(screen.getByLabelText("Choose a device category:"), {
       target: { value: "light" },
     });
+
     fireEvent.change(screen.getByLabelText("Device name:"), {
       target: { value: "Light 1" },
     });
-    
+
     fireEvent.click(screen.getByTestId("add-button"));
 
     await waitFor(() =>
@@ -107,16 +120,16 @@ describe("AddingDevice", () => {
   it("cancels the form", async () => {
     render(
       <I18nextProvider i18n={i18n}>
-      <LanguageContext.Provider value={languageContextValue}>
-        <AuthContext.Provider value={authContextValue}>
-          <RoomContext.Provider value={{ rooms: mockRooms }}>
-            <DeviceContext.Provider value={{ setUpdate }}>
-              <AddingDevice />
-            </DeviceContext.Provider>
-          </RoomContext.Provider>
-        </AuthContext.Provider>
-      </LanguageContext.Provider>
-    </I18nextProvider>
+        <LanguageContext.Provider value={languageContextValue}>
+          <AuthContext.Provider value={authContextValue}>
+            <RoomContext.Provider value={{ rooms: mockRooms }}>
+              <DeviceContext.Provider value={{ setUpdate }}>
+                <AddingDevice />
+              </DeviceContext.Provider>
+            </RoomContext.Provider>
+          </AuthContext.Provider>
+        </LanguageContext.Provider>
+      </I18nextProvider>
     );
 
     fireEvent.click(screen.getByText("Cancel"));
@@ -159,6 +172,5 @@ describe("AddingDevice", () => {
     addElements.forEach((element) => {
       expect(element).toBeInTheDocument();
     });
-  
   });
 });
