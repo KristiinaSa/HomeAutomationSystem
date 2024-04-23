@@ -10,7 +10,7 @@ const AddingDevice = () => {
   const [device, setDevice] = useState([]);
   const [deviceTypes, setDeviceTypes] = useState([]);
   const { rooms, errorMessage } = useContext(RoomContext);
-  const [chosenRoom, setChosenRoom] = useState(1);
+  const [chosenRoom, setChosenRoom] = useState(null);
   const [message, setMessage] = useState("");
   const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
@@ -28,12 +28,15 @@ const AddingDevice = () => {
             type: deviceTypes[0].name,
           }));
         }
+        if (rooms.length > 0) {
+          setChosenRoom(rooms[0].id);
+        }
       } catch (error) {
         console.error("Error getting device types:", error.message);
       }
     };
     fetchDeviceTypes();
-  }, []);
+  }, [rooms, chosenRoom]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -87,12 +90,17 @@ const AddingDevice = () => {
             setChosenRoom(Number(e.target.value));
           }}
           className="choose-box"
+          disabled={rooms.length === 0}
         >
-          {rooms.map((room) => (
-            <option key={room.id} value={room.id}>
-              {room.name}
-            </option>
-          ))}
+          {rooms.length > 0 ? (
+            rooms.map((room) => (
+              <option key={room.id} value={room.id}>
+                {room.name}
+              </option>
+            ))
+          ) : (
+            <option>No rooms available</option>
+          )}
         </select>
       </div>
       <div className="choose-section">
