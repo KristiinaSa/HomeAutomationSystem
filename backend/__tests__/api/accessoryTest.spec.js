@@ -10,6 +10,7 @@ const System = require("../../models/systemModel.js");
 const TimeAutomation = require("../../models/timeAutomationModel.js");
 const Language = require("../../models/languageModel.js");
 const Device = require("../../models/deviceModel.js");
+const DeviceType = require("../../models/deviceTypeModel.js");
 
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
@@ -51,11 +52,11 @@ async function createSensor(room, system) {
 async function createDevice(room, system) {
   return await room.createDevice({
     name: "Table Lamp",
-    type: "Light",
     value: "on",
     data_type: "boolean",
     role_access: "resident",
     system_id: system.id,
+    device_type_id: 1,
   });
 }
 
@@ -77,12 +78,26 @@ async function createLanguage() {
   });
 }
 
+async function createDeviceType() {
+  await DeviceType.create({
+    name: "light",
+  });
+  await DeviceType.create({
+    name: "fan",
+  });
+  await DeviceType.create({
+    name: "tv",
+  });
+}
+
 beforeEach(async () => {
   await sequelize.sync({ force: true });
 
   system = await System.create({
     name: "Test System",
   });
+
+  await createDeviceType();
 
   const language = await createLanguage();
   const user = await createUser(system);
@@ -123,6 +138,7 @@ describe("addDevice", () => {
       value: "on",
       room_id: 1,
       system_id: 1,
+      device_type_id: 1,
     };
 
     const response = await request(app)
@@ -132,7 +148,7 @@ describe("addDevice", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.name).toBe(deviceData.name);
-    expect(response.body.type).toBe(deviceData.type);
+    expect(response.body.device_type_id).toBe(deviceData.device_type_id);
     expect(response.body.value).toBe(deviceData.value);
     expect(response.body.system_id).toBe(deviceData.system_id);
   });
@@ -224,7 +240,6 @@ describe("getDeviceAnalytics", () => {
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body[1]).toHaveProperty("id");
     expect(response.body[1]).toHaveProperty("name");
-    expect(response.body[1]).toHaveProperty("type");
     expect(response.body[1]).toHaveProperty("room_name");
     expect(response.body[1]).toHaveProperty("active_time");
     expect(response.body[1]).toHaveProperty("last_interaction");

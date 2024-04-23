@@ -99,8 +99,12 @@
     "hour_other": " hours",
     "minute_other": " minutes",
     "user": "User",
+    "tv": "TV",
+    "fan": "Fan",
+    "No rooms available": "No rooms available"
     "Are you sure you want to delete this device?" : "Are you sure you want to delete this device?",
     "Done! Your device has been removed.": "Done! Your device has been removed.",
     "Could not delete device this time. Please try again later": "Could not delete device this time. Please try again later"
+
   }
 }

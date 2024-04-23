@@ -6,6 +6,8 @@
   "room name": "部屋名",
   "settings": "設定",
   "categories": "カテゴリー",
+  "device_other": "デバイス",
+  "device_one": "デバイス",
   "devices": "デバイス",
   "device": "デバイス",
   "device name": "デバイス名",
@@ -13,7 +15,6 @@
   "accessory_one": "アクセサリ",
   "accessories": "アクセサリ",
   "users": "ユーザー",
-  "user": "ユーザー",
   "lights": "照明",
   "light": "照明",
   "automations": "オ－トメ－ション",
@@ -37,6 +38,7 @@
   "time": "時間",
   "last interaction": "最終インタラクション",
   "no devices available": "使用可能なデバイスがありません",
+  "no devices selected": "デバイスが選択されていません",
   "actions": "アクション",
   "select an action": "アクションを選ぶ",
   "select devices": "デバイスを選ぶ",
@@ -90,5 +92,9 @@
   "hour_one": "時間",
   "minute_one": "分",
   "hour_other": "時間",
-  "minute_other": "分"
+  "minute_other": "分",
+  "user": "ユーザー",
+  "tv": "テレビ",
+  "fan": "扇風機",
+  "No rooms available": "利用可能な部屋がありません"
 }

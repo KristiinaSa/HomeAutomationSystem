@@ -1,15 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { vi, test, expect } from "vitest";
+import { test, expect } from "vitest";
 import { TimerAutomationCard } from "../../components/Automations/TimerAutomationCard.jsx";
 import { I18nextProvider } from "react-i18next";
 import { AuthProvider } from "../../context/AuthContext.jsx";
 import i18n from "../../i18n-test.js";
 import { LanguageContext } from "../../context/LanguageContext.jsx";
-import {
-  languages,
-  languageContextValue,
-} from "../../utils/languageTestSetup.js";
+import { languageContextValue } from "../../utils/languageTestSetup.js";
 
 test("TimerAutomationCard renders correctly", () => {
   const mockAutomation = {
@@ -62,7 +59,7 @@ test("TimerAutomationCard renders correctly", () => {
   expect(statusElement.textContent).toBe("Disabled");
 
   const timeElement = screen.getByTestId("automation-time");
-  expect(timeElement.textContent).toBe("Apr 19, 2024, 10:00 PM");
+  expect(timeElement.textContent).toBe("10:00 PM");
 
   const activeDaysElement = screen.getByTestId("automation-active-days");
   expect(activeDaysElement.textContent).toBe("Everyday");

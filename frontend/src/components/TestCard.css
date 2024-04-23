@@ -33,12 +33,32 @@
     padding: 0.5rem;
 }
 
-.icon-on {
+.icon-on.light {
     color: var(--light-bulb-on-color);
     transition: color 0.5s ease;
 }
 
-.icon-off {
+.icon-off.light {
+    color: var(--light-bulb-off-color);
+    transition: color 0.5s ease;
+}
+
+.icon-on.fan {
+    color: var(--light-bulb-on-color);
+    transition: color 0.5s ease;
+}
+
+.icon-off.fan {
+    color: var(--light-bulb-off-color);
+    transition: color 0.5s ease;
+}
+
+.icon-on.tv {
+    color: var(--light-bulb-on-color);
+    transition: color 0.5s ease;
+}
+
+.icon-off.tv {
     color: var(--light-bulb-off-color);
     transition: color 0.5s ease;
 }

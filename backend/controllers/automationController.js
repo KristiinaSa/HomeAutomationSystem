@@ -40,7 +40,7 @@ const getAutomations = async (req, res, next) => {
       ],
       include: {
         model: Device,
-        attributes: ["id", "name", "type"],
+        attributes: ["id", "name"],
         through: { attributes: [] },
       },
     });
@@ -52,7 +52,7 @@ const getAutomations = async (req, res, next) => {
       attributes: ["id", "active"],
       include: {
         model: Device,
-        attributes: ["id", "name", "type"],
+        attributes: ["id", "name"],
         through: { attributes: [] },
       },
     });
@@ -109,7 +109,7 @@ const getTimerAutomation = async (req, res, next) => {
       },
       include: {
         model: Device,
-        attributes: ["id", "name", "type"],
+        attributes: ["id", "name"],
         through: { attributes: [] },
         include: {
           model: Room,
@@ -210,6 +210,7 @@ const addTimerAutomation = async (req, res, next) => {
 
     res.send(newAutomation);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };

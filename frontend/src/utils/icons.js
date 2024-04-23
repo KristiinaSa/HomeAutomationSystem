@@ -21,6 +21,8 @@ import {
   faEdit,
   faTrash,
   faXmark,
+  faFan,
+  faTv,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -39,5 +41,7 @@ library.add(
   faMoon,
   faEdit,
   faTrash,
-  faXmark
+  faXmark,
+  faFan,
+  faTv
 );

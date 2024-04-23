@@ -1,20 +1,35 @@
+import "./AddingDevice.css";
+
 import { useState, useContext, useEffect } from "react";
 import { addDevice } from "../services/accessoryServices";
-import "./AddingDevice.css";
 import { useNavigate } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
 import { RoomContext } from "../context/RoomContext";
+import { CategoriesContext } from "../context/CategoriesContext";
 import { useLanguage } from "../context/LanguageContext";
 
 const AddingDevice = () => {
-  const [device, setDevice] = useState({ name: "", type: "light" });
+  const [device, setDevice] = useState({ name: "", type: "" });
+  const { categories } = useContext(CategoriesContext);
   const { rooms, errorMessage } = useContext(RoomContext);
-  const [chosenRoom, setChosenRoom] = useState(1);
+  const [chosenRoom, setChosenRoom] = useState("");
   const [message, setMessage] = useState("");
   const { setUpdate } = useContext(DeviceContext);
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setDevice((prevDevice) => ({
+        ...prevDevice,
+        type: categories[0].title,
+      }));
+    }
+    if (rooms.length > 0) {
+      setChosenRoom(rooms[0].id);
+    }
+  }, [rooms, chosenRoom, categories]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,17 +78,22 @@ const AddingDevice = () => {
         <label htmlFor="roomName">{t("choose a room") + ":"}</label>
         <select
           id="roomName"
-          value={chosenRoom} // To ensure the select shows the current state
+          value={chosenRoom}
           onChange={(e) => {
             setChosenRoom(Number(e.target.value));
           }}
           className="choose-box"
+          disabled={rooms.length === 0}
         >
-          {rooms.map((room) => (
-            <option key={room.id} value={room.id}>
-              {room.name}
-            </option>
-          ))}
+          {rooms.length > 0 ? (
+            rooms.map((room) => (
+              <option key={room.id} value={room.id}>
+                {room.name}
+              </option>
+            ))
+          ) : (
+            <option>{t("No rooms available")}</option>
+          )}
         </select>
       </div>
       <div className="choose-section">
@@ -82,11 +102,15 @@ const AddingDevice = () => {
         </label>
         <select
           id="deviceType"
-          value={device.type} // To ensure the select shows the current state
+          value={device.type}
           onChange={(e) => setDevice({ ...device, type: e.target.value })}
           className="choose-box"
         >
-          <option value="light">{t("light")}</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.title}>
+              {t(category.title)}
+            </option>
+          ))}
         </select>
       </div>
       <form onSubmit={handleSubmit} className="choose-section">
@@ -100,7 +124,11 @@ const AddingDevice = () => {
           className="choose-box"
         />
         <div className="btn-container">
-          <button type="submit" className="primary-btn add-btn" data-testid="add-button">
+          <button
+            type="submit"
+            className="primary-btn add-btn"
+            data-testid="add-button"
+          >
             {t("add") + " " + t("device")}
           </button>
           <button

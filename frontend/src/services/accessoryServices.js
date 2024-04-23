@@ -73,6 +73,16 @@ export const toggleOnOff = async (id) => {
   }
 };
 
+export const getDeviceTypes = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/device-types`);
+    return response.data;
+  } catch (err) {
+    console.log("Error getting device types: " + err);
+    throw new Error(err.response.data);
+  }
+};
+
 export default {
   toggleOnOff,
   getAccessories,

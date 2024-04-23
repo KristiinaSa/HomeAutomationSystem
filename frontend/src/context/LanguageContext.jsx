@@ -70,6 +70,12 @@ export const LanguageProvider = ({ children }) => {
     return date.toLocaleString(DateTime.DATETIME_MED);
   };
 
+  const formatTime = (timeString) => {
+    const locale = getLocaleForDate(selectedLanguage);
+    const time = DateTime.fromFormat(timeString, "HH:mm").setLocale(locale);
+    return time.toLocaleString(DateTime.TIME_SIMPLE);
+  };
+
   return (
     <LanguageContext.Provider
       value={{
@@ -79,6 +85,7 @@ export const LanguageProvider = ({ children }) => {
         updateLanguage,
         t,
         formatDateTime,
+        formatTime,
       }}
     >
       {children}

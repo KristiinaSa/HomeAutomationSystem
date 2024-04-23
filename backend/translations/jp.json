@@ -99,6 +99,9 @@
     "hour_other": "時間",
     "minute_other": "分",
     "user": "ユーザー",
+    "tv": "テレビ",
+    "fan": "扇風機",
+    "No rooms available": "利用可能な部屋がありません"
     "Are you sure you want to delete this device?": "本当にこのデバイスを削除しますか？",
     "Done! Your device has been removed.": "完了！デバイスが削除されました。",
     "Could not delete device this time. Please try again later": "この時点ではデバイスを削除できませんでした。後で再試行してください。"
