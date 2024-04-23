@@ -6,6 +6,8 @@
   "room name": "Huoneen nimi",
   "settings": "Asetukset",
   "categories": "Kategoriat",
+  "device_other": "Laitetta",
+  "device_one": "Laite",
   "devices": "Laitteet",
   "device": "Laite",
   "device name": "Laitteen nimi",
@@ -13,7 +15,6 @@
   "accessory_other": "Lisävarustetta",
   "accessories": "Lisävarusteet",
   "users": "Käyttäjät",
-  "user": "Käyttäjä",
   "lights": "Valot",
   "light": "Valo",
   "automations": "Automaatiot",
@@ -37,6 +38,7 @@
   "time": "Aika",
   "last interaction": "Viimeksi käytetty",
   "no devices available": "Ei laitteita saatavilla",
+  "no devices selected": "Ei valittuja laitteita",
   "actions": "Toiminnot",
   "select an action": "Valitse toiminto",
   "select devices": "Valitse laitteet",
@@ -90,5 +92,9 @@
   "hour_one": " tunti",
   "minute_one": " minuutti",
   "hour_other": " tuntia",
-  "minute_other": " minuuttia"
+  "minute_other": " minuuttia",
+  "user": "Käyttäjä",
+  "tv": "TV",
+  "fan": "Tuuletin",
+  "No rooms available": "Huoneita ei saatavilla"
 }

@@ -100,6 +100,7 @@
     "minute_other": "分",
     "user": "ユーザー",
     "tv": "テレビ",
-    "fan": "扇風機"
+    "fan": "扇風機",
+    "No rooms available": "利用可能な部屋がありません"
   }
 }

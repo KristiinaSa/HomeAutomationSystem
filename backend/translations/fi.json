@@ -100,6 +100,7 @@
     "minute_other": " minuuttia",
     "user": "Käyttäjä",
     "tv": "TV",
-    "fan": "Tuuletin"
+    "fan": "Tuuletin",
+    "No rooms available": "Huoneita ei saatavilla"
   }
 }

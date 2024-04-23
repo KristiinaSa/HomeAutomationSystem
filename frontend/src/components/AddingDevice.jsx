@@ -99,7 +99,7 @@ const AddingDevice = () => {
               </option>
             ))
           ) : (
-            <option>No rooms available</option>
+            <option>{t("No rooms available")}</option>
           )}
         </select>
       </div>
