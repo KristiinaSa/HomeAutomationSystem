@@ -33,6 +33,8 @@ function bitmaskToWeekdays(bitmask) {
 
 const TYPE_TO_DATA_TYPE = {
   light: "boolean",
+  tv: "boolean",
+  fan: "boolean",
 };
 
 const ACTION_TO_STRING = {

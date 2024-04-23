@@ -89,9 +89,12 @@ const addDevice = async (req, res, next) => {
       return res.status(404).json({ error: "Device type not found" });
     }
 
+    const dataType = TYPE_TO_DATA_TYPE[req.body.type];
+
     const device = await room.createDevice({
       ...req.body,
       system_id: room.system_id,
+      data_type: dataType,
     });
 
     await device.setDevice_type(deviceType);

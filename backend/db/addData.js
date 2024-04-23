@@ -11,11 +11,18 @@ const ValueType = require("../models/valueTypeModel.js");
 const CurrentValue = require("../models/currentValueModel.js");
 const SensorHistory = require("../models/sensorHistoryModel.js");
 const UsageHistory = require("../models/usageHistoryModel.js");
+const DeviceType = require("../models/deviceTypeModel.js");
 
 const sequelize = require("./sequelizeConnector.js");
 
 async function addTestData() {
   await sequelize.sync();
+
+  await DeviceType.bulkCreate([
+    { name: "light" },
+    { name: "tv" },
+    { name: "fan" },
+  ]);
 
   const system = await System.create({
     name: "Test System",
@@ -79,15 +86,27 @@ async function addTestData() {
   const devices = await Promise.all([
     room.createDevice({
       name: "Table Lamp",
-      type: "light",
       data_type: "boolean",
       system_id: system.id,
+      device_type_id: 1,
     }),
     room.createDevice({
       name: "Ceiling Lamp",
-      type: "light",
       data_type: "boolean",
       system_id: system.id,
+      device_type_id: 1,
+    }),
+    room.createDevice({
+      name: "Table Fan",
+      data_type: "boolean",
+      system_id: system.id,
+      device_type_id: 3,
+    }),
+    room.createDevice({
+      name: "Bathroom TV",
+      data_type: "boolean",
+      system_id: system.id,
+      device_type_id: 2,
     }),
   ]);
 
