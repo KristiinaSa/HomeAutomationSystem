@@ -27,16 +27,16 @@ const Accessories = () => {
   };
 
   const deletionDevice = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this device?")) return;
+    if (!window.confirm(t("Are you sure you want to delete this device?"))) return;
     else {
       try {
         console.log("Deleting device with id:", id);
         await deleteDevice(id);
         setUpdate(true);
-        setMessage("Done! Your device has been removed.");
+        setMessage(t("Done! Your device has been removed."));
       } catch (error) {
         console.log("Error delete device", error.message);
-        setMessage("Could not delete device this time. Please try again later");
+        setMessage(t("Could not delete device this time. Please try again later"));
       }
       setTimeout(() => {
         setMessage("");
