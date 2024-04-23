@@ -13,6 +13,7 @@ import { useContext } from "react";
 import styles from "./Automations.module.css";
 
 export const TimerAutomationCard = ({ automation }) => {
+  console.log("Automation:", automation);
   const navigate = useNavigate();
   const numDevices = automation.devices ? automation.devices.length : 0;
   const { t, formatTime } = useLanguage();
@@ -40,7 +41,11 @@ export const TimerAutomationCard = ({ automation }) => {
           <FontAwesomeIcon
             icon={faLightbulb}
             size="2xl"
-            className={automation.action === "Turn On" ? "icon-on" : "icon-off"}
+            className={
+              automation.action === "Turn On"
+                ? styles["icon-on"]
+                : styles["icon-off"]
+            }
           />
         </div>
         <div className={styles.automationDate}>
