@@ -44,7 +44,7 @@
 }
 
 .icon-on.fan {
-    color: var(--light-bulb-on-color);
+    color: var(--fan-on-color);
     transition: color 0.5s ease;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .icon-on.tv {
-    color: var(--light-bulb-on-color);
+    color: var(--tv-on-color);
     transition: color 0.5s ease;
 }
 
