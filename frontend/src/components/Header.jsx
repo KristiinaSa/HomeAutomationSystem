@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
-// import { LanguageContext } from "../context/LanguageContext";
 
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,13 +14,10 @@ import {
   faArrowCircleRight,
   faUser,
   faSignIn,
-  faSignOut,
   faAddressBook,
-  faHouseLaptop,
-  faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-// import { use } from "i18next";
 import LanguageOverflow from "./LanguageOverflow";
+import ProfileOverflow from "./ProfileOverflow";
 
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   const handleClick = (e) => {
@@ -53,23 +49,16 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
   const { isLoggedIn } = useContext(AuthContext);
-  const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+  // const { logout } = useContext(AuthContext);
+  // const navigate = useNavigate();
   const { t } = useLanguage();
-  // const { languages, selectedLanguage, handleLanguageChange } =
-  //   useContext(LanguageContext);
-  // const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-  // const languageMenuRef = useRef();
-  // const selectedLanguageName = languages.find(
-  //   (lang) => lang.code === selectedLanguage
-  // )?.name;
   const { user } = useContext(AuthContext);
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    logout();
-    navigate("/login");
-  };
+  // const handleLogout = async (e) => {
+  //   e.preventDefault();
+  //   logout();
+  //   navigate("/login");
+  // };
 
   const handleClick = (e) => {
     if (!isLoggedIn) {
@@ -84,7 +73,7 @@ const Header = () => {
           text: `${t("add")} ${t("device")}`,
           path: "/add-device",
         },
-        { icon: faHouseLaptop, text: t("accessories"), path: "/accessories" },
+        // { icon: faHouseLaptop, text: t("accessories"), path: "/accessories" },
         {
           icon: faTachometerAlt,
           text: `${t("add")} ${t("automation")}`,
@@ -100,7 +89,7 @@ const Header = () => {
           text: `${t("add")} ${t("users")}`,
           path: "/settings",
         },
-        { icon: faSignOut, text: t("logout"), onClick: handleLogout },
+        // { icon: faSignOut, text: t("logout"), onClick: handleLogout },
       ]
     : [
         { icon: faSignIn, text: t("login"), path: "/login" },
@@ -129,10 +118,7 @@ const Header = () => {
   return (
     <div className="header" ref={node}>
       {isLoggedIn && user && (
-        <div className="welcome-user">
-          <FontAwesomeIcon icon={faUserCircle} className="header-icon" />
-          <span>{user}</span>
-        </div>
+        <ProfileOverflow user={user} />
       )}
       <LanguageOverflow />
       <NavLink
