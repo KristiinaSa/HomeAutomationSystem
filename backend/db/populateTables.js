@@ -38,6 +38,7 @@ const populateTranslations = async () => {
       }
     }
   } catch (err) {
+    console.error(err);
   } finally {
     await sequelize.close();
   }
