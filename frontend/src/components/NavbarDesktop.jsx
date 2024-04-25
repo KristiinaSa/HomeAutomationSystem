@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import { RoomContext } from "../context/RoomContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { faHouseLaptop } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowAltCircleRight,
+  faDiagramProject,
+  faHome,
+  faTachometerAlt,
+  faCog,
+  faHouseLaptop,
+} from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
@@ -26,59 +29,32 @@ const NavbarDesktop = () => {
   if (!isLoggedIn) {
     return null;
   }
-  
+
+  const navItems = [
+    { to: "/", icon: faHome, label: "home" },
+    { to: "/automations", icon: faTachometerAlt, label: "automation" },
+    { to: "/settings", icon: faCog, label: "settings" },
+    { to: "/accessories", icon: faHouseLaptop, label: "accessories" },
+    { to: "/analytics", icon: faDiagramProject, label: "analytics" },
+  ];
+
   return (
-    <div className="navbar-desktop" >
+    <div className="navbar-desktop">
       <h2 className="logo">Smart Home Mate</h2>
       <div className="navbar-main">
-        <NavLink
-          to="/"
-          className={({ isActive }) => (isActive ? "active" : "navbar-link")}
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faHome} />
-            <p>{t("home")}</p>
-          </div>
-        </NavLink>
-        <NavLink
-          to="/automations"
-          className={({ isActive }) => (isActive ? "active" : "navbar-link")}
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faTachometerAlt} />
-            <p>{t("automation")}</p>
-          </div>
-        </NavLink>
-        <NavLink
-          to="/settings"
-          className={({ isActive }) => (isActive ? "active" : "navbar-link")}
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faCog} />
-            <p>{t("settings")}</p>
-          </div>
-        </NavLink>
-        <NavLink
-          to="/accessories"
-          className={({ isActive }) => (isActive ? "active" : "navbar-link")}
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          <div className="navbar-main_item">
-            <FontAwesomeIcon icon={faHouseLaptop} />
-            <p>{t("accessories")}</p>
-          </div>
-        </NavLink>
+      {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) => (isActive ? "active" : "navbar-link")}
+            onClick={handleClick}
+          >
+            <div className="navbar-main_item">
+              <FontAwesomeIcon icon={item.icon} />
+              <p>{t(item.label)}</p>
+            </div>
+          </NavLink>
+        ))}
       </div>
       {isLoggedIn && (
         <>
