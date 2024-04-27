@@ -72,6 +72,7 @@
     "Send": "Send",
     "Invitation sent": "Invitation sent!",
     "Invalid email or password.": "Invalid email or password",
+    "Email not found. Please ask your admin to add you to the users.": "Email not found. Please ask your admin to add you to the users.",
     "No response from server. Please try again later.": "No response from server. Please try again later.",
     "Please fill in all the fields.": "Please fill in all the fields.",
     "Choose a language": "Choose a language",
