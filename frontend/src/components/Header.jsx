@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 
 import "./Header.css";
@@ -48,11 +48,11 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const node = useRef();
-  const { isLoggedIn } = useContext(AuthContext);
+  const { user, isLoggedIn } = useContext(AuthContext);
+  const { role } = useContext(AuthContext);
   // const { logout } = useContext(AuthContext);
   // const navigate = useNavigate();
   const { t } = useLanguage();
-  const { user } = useContext(AuthContext);
 
   // const handleLogout = async (e) => {
   //   e.preventDefault();
@@ -117,9 +117,7 @@ const Header = () => {
 
   return (
     <div className="header" ref={node}>
-      {isLoggedIn && user && (
-        <ProfileOverflow user={user} />
-      )}
+      {isLoggedIn && user && <ProfileOverflow user={user} />}
       <LanguageOverflow />
       <NavLink
         to="/"
@@ -130,25 +128,31 @@ const Header = () => {
       >
         <FontAwesomeIcon icon={faHome} className="header-icon" />
       </NavLink>
-      <div className="header-item">
-        <div
-          className="plus-icon"
-          onClick={() => {
-            // setIsLanguageMenuOpen(false);
-            setIsOpen(!isOpen);
-          }}
-        >
-          <FontAwesomeIcon
-            icon={isOpen ? faTimes : faPlus}
-            className="header-icon"
-          />
+      {(role === "admin" || role === "owner") && (
+        <div className="header-item">
+          <div
+            className="plus-icon"
+            onClick={() => {
+              // setIsLanguageMenuOpen(false);
+              setIsOpen(!isOpen);
+            }}
+          >
+            <FontAwesomeIcon
+              icon={isOpen ? faTimes : faPlus}
+              className="header-icon"
+            />
+          </div>
+          <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
+            {menuItems.map((item, index) => (
+              <MenuItem
+                key={index}
+                {...item}
+                onClose={() => setIsOpen(false)}
+              />
+            ))}
+          </div>
         </div>
-        <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
-          {menuItems.map((item, index) => (
-            <MenuItem key={index} {...item} onClose={() => setIsOpen(false)} />
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
