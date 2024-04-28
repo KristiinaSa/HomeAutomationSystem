@@ -86,7 +86,7 @@ const register = async (req, res) => {
     return;
   }
 
-  if (existingUser && existingUser.password) {
+  if (existingUser?.password) {
     res.status(400).json({ message: "This user has already been registered." });
     return;
   }
@@ -116,7 +116,7 @@ const createSystem = async (req, res) => {
     return;
   }
 
-  const system = await System.create();
+  const system = await System.create({ time_zone: timeZone });
 
   const hashedPassword = bcrypt.hashSync(password, 10);
   const user = await User.create({
@@ -125,7 +125,6 @@ const createSystem = async (req, res) => {
     password: hashedPassword,
     system_id: system.id,
     role: "owner",
-    time_zone: timeZone,
     is_registered: 1,
   });
 
