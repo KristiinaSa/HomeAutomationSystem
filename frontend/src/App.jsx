@@ -83,7 +83,7 @@ function App() {
                           <Route element={<PublicRoute />}>
                             <Route path="/login" element={<LoginPage />} />
                             <Route
-                              path="/register"
+                              path="/register/:newSystem?"
                               element={<RegistrationPage />}
                             />
                           </Route>
