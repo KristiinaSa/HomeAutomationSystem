@@ -9,14 +9,27 @@ const useRegister = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
 
-  const register = async (name, email, password, isNewSystem, timeZone) => {
+  const register = async (
+    name,
+    email,
+    password,
+    isNewSystem,
+    timeZone,
+    systemName
+  ) => {
     if (!email || !password || !name) {
       setErrorMessage(t("Please fill in all the fields."));
       return;
     }
     try {
       if (isNewSystem) {
-        await authService.createSystem(name, email, password, timeZone);
+        await authService.createSystem(
+          name,
+          email,
+          password,
+          timeZone,
+          systemName
+        );
       } else {
         await authService.joinSystem(name, email, password);
       }

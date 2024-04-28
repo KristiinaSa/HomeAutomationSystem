@@ -33,6 +33,7 @@ async function addTestData() {
     email: "test@example.com",
     password: bcrypt.hashSync("password", 10),
     role: "owner",
+    is_registered: 1,
   });
 
   const room = await system.createRoom({

@@ -11,15 +11,23 @@ const Registration = () => {
   const { t } = useLanguage();
   const [timeZone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
   const isNewSystem = Boolean(!useParams().newSystem);
-  console.log("isNewSystem", isNewSystem);
+  const [systemName, setSystemName] = useState("");
 
   const errorRef = useRef();
   const { register, registerSuccess, errorMessage } = useRegister();
 
   const handleSubmit = (e) => {
-    console.log("newSystem", isNewSystem);
     e.preventDefault();
-    register(name, email, password, isNewSystem, timeZone);
+    console.log(
+      "register",
+      name,
+      email,
+      password,
+      isNewSystem,
+      timeZone,
+      systemName
+    );
+    register(name, email, password, isNewSystem, timeZone, systemName);
   };
 
   return (
@@ -62,6 +70,22 @@ const Registration = () => {
           name="password"
           required
         />
+        {isNewSystem && (
+          <>
+            <label htmlFor="systemName">{t("System Name")}</label>
+            <input
+              className="registration-input"
+              type="text"
+              placeholder={t("Name your system")}
+              value={systemName}
+              onChange={(e) => setSystemName(e.target.value)}
+              autoComplete="off"
+              id="systemName"
+              name="systemName"
+              required
+            />
+          </>
+        )}
         <button
           className="registration-submit-button"
           type="submit"

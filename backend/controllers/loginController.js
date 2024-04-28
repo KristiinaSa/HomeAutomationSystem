@@ -29,7 +29,7 @@ const login = async (req, res) => {
     ],
   });
 
-  if (user && bcrypt.compareSync(password, user.password)) {
+  if (user?.is_registered && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
       { id: user.id, name: user.name, role: user.role },
       process.env.JWT_SECRET,

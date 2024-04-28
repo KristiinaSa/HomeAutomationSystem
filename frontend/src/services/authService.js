@@ -49,12 +49,14 @@ const joinSystem = async (name, email, password) => {
   }
 };
 
-const createSystem = async (name, email, password) => {
+const createSystem = async (name, email, password, timeZone, systemName) => {
   try {
     const response = await axios.post(`${baseUrl}/create-system`, {
       name,
       email,
       password,
+      timeZone,
+      systemName,
     });
     if (response.status === 200 || response.status === 201) {
       return response.data;
