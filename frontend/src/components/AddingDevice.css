@@ -58,3 +58,13 @@
 .cancel-btn {
     width: 45%;
 }
+
+.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    color: var(--secondary-text-color-mobile);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+}
