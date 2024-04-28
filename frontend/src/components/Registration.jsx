@@ -10,7 +10,7 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const { t } = useLanguage();
   const [timeZone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
-  const isNewSystem = Boolean(useParams().newSystem);
+  const isNewSystem = Boolean(!useParams().newSystem);
   console.log("isNewSystem", isNewSystem);
 
   const errorRef = useRef();
