@@ -2,16 +2,18 @@ import { useState, useRef } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import "./Registration.css";
 import useRegister from "../hooks/useRegister";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const Registration = () => {
+  const [searchParams] = useSearchParams();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { t } = useLanguage();
   const [timeZone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
-  const isNewSystem = Boolean(!useParams().newSystem);
+  const invite = searchParams.get("invite");
+  const isNewSystem = Boolean(!invite);
   const [systemName, setSystemName] = useState("");
+  const [email, setEmail] = useState(invite || "");
 
   const errorRef = useRef();
   const { register, registerSuccess, errorMessage } = useRegister();
