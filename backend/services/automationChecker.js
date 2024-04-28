@@ -35,19 +35,24 @@ const checkAutomations = async () => {
   automations.forEach((automation) => {
     automation.devices.forEach(async (device) => {
       try {
-        await Device.update(
-          { value: automation.action },
-          { where: { id: device.id } }
-        );
-        const updatedDevice = await Device.findByPk(device.id);
-        await UsageHistory.create({
-          device_id: updatedDevice.id,
-          user_id: 1,
-          sensor_value: automation.action,
-          data_type: updatedDevice.data_type,
-          timestamp: new Date(),
-        });
-        eventEmitter.emit("devicesUpdated", device.system_id);
+        const currentDevice = await Device.findByPk(device.id);
+
+        if (currentDevice.value !== automation.action) {
+          await Device.update(
+            { value: automation.action },
+            { where: { id: device.id } }
+          );
+
+          await UsageHistory.create({
+            device_id: currentDevice.id,
+            user_id: 1,
+            sensor_value: automation.action,
+            data_type: currentDevice.data_type,
+            timestamp: new Date(),
+          });
+
+          eventEmitter.emit("devicesUpdated", device.system_id);
+        }
       } catch (error) {
         console.error(`Failed to update device ${device.id}: ${error}`);
       }
