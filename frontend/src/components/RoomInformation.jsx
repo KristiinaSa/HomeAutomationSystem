@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { RoomContext } from "../context/RoomContext";
 import TestCard from "./TestCard";
 import { useParams } from "react-router-dom";
-import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import "./RoomInformation.css";
 import useToggle from "../hooks/useToggle";
 import { DeviceContext } from "../context/DeviceContext";
@@ -22,7 +21,7 @@ const RoomInformation = () => {
 
   const handleClick = () => {
     navigate("/add-device", { state: { room_name: room.name } });
-  }
+  };
 
   const roomDevices = room
     ? devices.filter((device) => device.room_id === room.id)
@@ -35,14 +34,14 @@ const RoomInformation = () => {
           <div key={room.id}>
             <h2>{room.name}</h2>
             {(role === "admin" || role === "owner") && (
-            <button
-              type="button"
-              className="primary-btn"
-              onClick={() => handleClick()}
-            >
-              {t("add")} {t("device")}
-            </button>
-          )}
+              <button
+                type="button"
+                className="primary-btn"
+                onClick={() => handleClick()}
+              >
+                {t("add")} {t("device")}
+              </button>
+            )}
             <div className="room-cards-container">
               <div className="cards">
                 {roomDevices.map((card) => (
@@ -58,7 +57,7 @@ const RoomInformation = () => {
             </div>
           </div>
         ) : (
-          <p>Loading room information...</p>
+          <p>t({"Loading room information..."})</p>
         )}
         {errorMsg && <p>{errorMsg}</p>}
       </div>
