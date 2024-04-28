@@ -30,11 +30,7 @@ const RoomInformation = () => {
                   <TestCard
                     key={card.id}
                     title={card.name}
-                    icon={
-                      (card.type === "light") | (card.type === "Light")
-                        ? faLightbulb
-                        : ""
-                    }
+                    type={card.device_type.name}
                     status={card.value}
                     onClick={() => handleToggle(card.id)}
                   />
