@@ -20,15 +20,6 @@ const Registration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      "register",
-      name,
-      email,
-      password,
-      isNewSystem,
-      timeZone,
-      systemName
-    );
     register(name, email, password, isNewSystem, timeZone, systemName);
   };
 
@@ -59,6 +50,7 @@ const Registration = () => {
           id="email"
           name="email"
           required
+          disabled={!isNewSystem}
         />
         <label htmlFor="password">{t("password")}</label>
         <input
