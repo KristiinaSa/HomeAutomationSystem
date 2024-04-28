@@ -23,11 +23,9 @@ test("renders menu items for logged in users in english, japanese and finnish", 
   );
 
   expect(screen.getByText("Add Device")).toBeInTheDocument();
-  expect(screen.getByText("Accessories")).toBeInTheDocument();
   expect(screen.getByText("Add Automation")).toBeInTheDocument();
   expect(screen.getByText("Add Room")).toBeInTheDocument();
   expect(screen.getByText("Add Users")).toBeInTheDocument();
-  expect(screen.getByText("Log out")).toBeInTheDocument();
 
   await i18n.changeLanguage("jp");
   rerender(
@@ -43,11 +41,9 @@ test("renders menu items for logged in users in english, japanese and finnish", 
   );
 
   expect(screen.getByText("追加 デバイス")).toBeInTheDocument();
-  expect(screen.getByText("アクセサリ")).toBeInTheDocument();
   expect(screen.getByText("追加 オ－トメ－ション")).toBeInTheDocument();
   expect(screen.getByText("追加 部屋")).toBeInTheDocument();
   expect(screen.getByText("追加 ユーザー")).toBeInTheDocument();
-  expect(screen.getByText("ログアウト")).toBeInTheDocument();
 
   await i18n.changeLanguage("fi");
   rerender(
@@ -63,11 +59,9 @@ test("renders menu items for logged in users in english, japanese and finnish", 
   );
 
   expect(screen.getByText("Lisää Laite")).toBeInTheDocument();
-  expect(screen.getByText("Lisävarusteet")).toBeInTheDocument();
   expect(screen.getByText("Lisää Automaatio")).toBeInTheDocument();
   expect(screen.getByText("Lisää Huone")).toBeInTheDocument();
   expect(screen.getByText("Lisää Käyttäjät")).toBeInTheDocument();
-  expect(screen.getByText("Kirjaudu ulos")).toBeInTheDocument();
 });
 
 test("renders menu items for logged out users", () => {

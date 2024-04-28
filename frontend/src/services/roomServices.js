@@ -3,6 +3,9 @@ const baseUrl = "/api/v1/rooms";
 
 export const addRoom = async (data) => {
   try {
+    if (!data.name) {
+      throw new Error("Please fill in all the fields.");
+    }
     const response = await axios.post(baseUrl, data);
     return response.data;
   } catch (err) {

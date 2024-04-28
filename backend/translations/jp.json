@@ -72,6 +72,7 @@
     "Send": "送信",
     "Invitation sent": "招待状を送信しました",
     "Invalid email or password.": "メールアドレスまたはパスワードが違います。",
+    "Email not found. Please ask your admin to add you to the users.": "メールアドレスが見つかりません。管理者にユーザーに追加してもらってください。",
     "No response from server. Please try again later.": "サーバーからの応答がありません。再試行してください。",
     "Please fill in all the fields.": "すべてのフィールドに入力してください。",
     "Choose a language": "言語を選択",

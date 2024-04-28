@@ -15,6 +15,13 @@ const AddingRoom = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!newRoom.name) {
+      setMessage(t("Please fill in all the fields."));
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
     console.log("New room:", newRoom);
     const result = await addRoom(newRoom);
     if (result) {

@@ -1,15 +1,17 @@
 import authService from "../services/authService";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 
 const useRegister = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const register = async (name, email, password, isNewSystem, timeZone) => {
     if (!email || !password || !name) {
-      setErrorMessage("Please fill in all the fields");
+      setErrorMessage(t("Please fill in all the fields."));
       return;
     }
     try {
@@ -21,9 +23,9 @@ const useRegister = () => {
       setRegisterSuccess(true);
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(t(error.response.data.message));
       } else if (error.request) {
-        setErrorMessage("No response from server. Please try again later.");
+        setErrorMessage(t("No response from server. Please try again later."));
       } else {
         setErrorMessage(error.message);
       }

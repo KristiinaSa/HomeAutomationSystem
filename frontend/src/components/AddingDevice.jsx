@@ -18,6 +18,7 @@ const AddingDevice = () => {
   const navigate = useNavigate();
   const [timeoutId, setTimeoutId] = useState(null);
   const { t } = useLanguage();
+  const isNameBlank = device.name.trim() === '';
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -33,6 +34,7 @@ const AddingDevice = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
 
     const deviceInfo = {
       name: device.name,
@@ -126,8 +128,9 @@ const AddingDevice = () => {
         <div className="btn-container">
           <button
             type="submit"
-            className="primary-btn add-btn"
+            className={isNameBlank ? "disabled add-btn" : "primary-btn add-btn"}
             data-testid="add-button"
+            disabled={isNameBlank}
           >
             {t("add") + " " + t("device")}
           </button>
