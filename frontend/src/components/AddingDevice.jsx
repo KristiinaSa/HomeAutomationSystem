@@ -2,7 +2,7 @@ import "./AddingDevice.css";
 
 import { useState, useContext, useEffect } from "react";
 import { addDevice } from "../services/accessoryServices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { DeviceContext } from "../context/DeviceContext";
 import { RoomContext } from "../context/RoomContext";
 import { CategoriesContext } from "../context/CategoriesContext";
@@ -19,6 +19,8 @@ const AddingDevice = () => {
   const [timeoutId, setTimeoutId] = useState(null);
   const { t } = useLanguage();
   const isNameBlank = device.name.trim() === '';
+  const location = useLocation();
+  const room_name = location.state ? location.state.room_name : "";
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -28,9 +30,14 @@ const AddingDevice = () => {
       }));
     }
     if (rooms.length > 0) {
-      setChosenRoom(rooms[0].id);
+      const selectedRoom = rooms.find(room => room.name === room_name);
+      if (selectedRoom) {
+        setChosenRoom(selectedRoom.id);
+      } else {
+        setChosenRoom(rooms[0].id);
+      }
     }
-  }, [rooms, chosenRoom, categories]);
+  }, [rooms, chosenRoom, categories, room_name]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
