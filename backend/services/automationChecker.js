@@ -25,7 +25,7 @@ const checkAutomations = async () => {
     },
     include: {
       model: Device,
-      attributes: ["id", "system_id"],
+      attributes: ["id", "system_id", "value", "data_type"],
       through: { attributes: [] },
     },
   });
@@ -35,19 +35,17 @@ const checkAutomations = async () => {
   automations.forEach((automation) => {
     automation.devices.forEach(async (device) => {
       try {
-        const currentDevice = await Device.findByPk(device.id);
-
-        if (currentDevice.value !== automation.action) {
+        if (device.value !== automation.action) {
           await Device.update(
             { value: automation.action },
             { where: { id: device.id } }
           );
 
           await UsageHistory.create({
-            device_id: currentDevice.id,
+            device_id: device.id,
             user_id: 1,
             sensor_value: automation.action,
-            data_type: currentDevice.data_type,
+            data_type: device.data_type,
             timestamp: new Date(),
           });
 
