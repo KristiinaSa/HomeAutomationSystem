@@ -116,6 +116,27 @@ const Users = () => {
     }
   };
 
+  const renderInvite = () => {
+    if (inviteSent) {
+      return <p className="invite-sent">{t("Invitation sent")}</p>;
+    } else {
+      return (
+        <button
+          className="invite"
+          onClick={() => setShowInvite(true)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              setShowInvite(true);
+            }
+          }}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          {t("Invite people")}
+        </button>
+      );
+    }
+  };
+
   useEffect(() => {
     if (inviteSent) {
       setTimeout(() => {
@@ -232,14 +253,7 @@ const Users = () => {
                 {t("cancel")}
               </button>
             </form>
-          ) : inviteSent ? (
-            <p className="invite-sent">{t("Invitation sent")}</p>
-          ) : (
-            <div className="invite" onClick={() => setShowInvite(true)}>
-              <FontAwesomeIcon icon={faPlus} />
-              {t("Invite people")}
-            </div>
-          ))}
+          ) : renderInvite())}
       </div>
       {message && <p className="message">{message}</p>}
     </div>
