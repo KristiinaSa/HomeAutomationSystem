@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./CreateAutomation.module.css";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -32,6 +33,11 @@ const DaySelection = ({ selectedDays, setSelectedDays }) => {
       ))}
     </div>
   );
+};
+
+DaySelection.propTypes = {
+  selectedDays: PropTypes.object.isRequired,
+  setSelectedDays: PropTypes.func.isRequired,
 };
 
 export default DaySelection;

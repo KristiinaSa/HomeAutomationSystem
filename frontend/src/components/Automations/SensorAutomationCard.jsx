@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Automations.module.css";
 import { useLanguage } from "../../context/LanguageContext";
+import PropTypes from "prop-types";
 
 export const SensorAutomationCard = ({ automation }) => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const SensorAutomationCard = ({ automation }) => {
       <button
         onClick={handleEdit}
         onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
+          if (event.key === "Enter" || event.key === " ") {
             handleEdit();
           }
         }}
@@ -37,4 +38,17 @@ export const SensorAutomationCard = ({ automation }) => {
       </button>
     </div>
   );
+};
+
+SensorAutomationCard.propTypes = {
+  automation: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    sensor: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    devices: PropTypes.array,
+    disabled: PropTypes.bool.isRequired,
+    action: PropTypes.string.isRequired,
+  }).isRequired,
 };

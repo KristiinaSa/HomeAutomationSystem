@@ -19,6 +19,8 @@ import {
 import LanguageOverflow from "./LanguageOverflow";
 import ProfileOverflow from "./ProfileOverflow";
 
+import PropTypes from "prop-types";
+
 const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   const handleClick = (e) => {
     if (onClick) {
@@ -43,6 +45,14 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
       )}
     </button>
   );
+};
+
+MenuItem.propTypes = {
+  icon: PropTypes.object.isRequired,
+  text: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  onClick: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 const Header = () => {

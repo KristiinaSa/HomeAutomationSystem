@@ -12,6 +12,8 @@ import { useContext } from "react";
 
 import styles from "./Automations.module.css";
 
+import PropTypes from "prop-types";
+
 export const TimerAutomationCard = ({ automation }) => {
   console.log("Automation:", automation);
   const navigate = useNavigate();
@@ -109,4 +111,16 @@ const getActiveDays = (automation, weekdays, weekends, allDays, t) => {
   }
 
   return activeDays;
+};
+
+TimerAutomationCard.propTypes = {
+  automation: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    devices: PropTypes.array,
+    disabled: PropTypes.bool.isRequired,
+    action: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    weekdays: PropTypes.object,
+  }).isRequired,
 };

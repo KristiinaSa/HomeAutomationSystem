@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -70,6 +71,28 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
       )}
     </div>
   );
+};
+
+DeviceSelection.propTypes = {
+  devices: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      room: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+    })
+  ).isRequired,
+  selectedDevices: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      room: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+    })
+  ).isRequired,
+  setSelectedDevices: PropTypes.func.isRequired,
 };
 
 export default DeviceSelection;

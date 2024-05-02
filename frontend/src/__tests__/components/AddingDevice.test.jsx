@@ -10,7 +10,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../../i18n-test";
 import { languageContextValue } from "../../utils/languageTestSetup";
-import { Router } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 
 const authContextValue = {
@@ -199,7 +198,7 @@ describe("AddingDevice", () => {
       </I18nextProvider>
     );
 
-    const addElements = await screen.getAllByText("追加 デバイス");
+    const addElements = screen.getAllByText("追加 デバイス");
     addElements.forEach((element) => {
       expect(element).toBeInTheDocument();
     });

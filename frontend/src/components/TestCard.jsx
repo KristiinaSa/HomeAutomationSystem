@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./TestCard.css";
 import { useLanguage } from "../context/LanguageContext";
@@ -40,6 +41,13 @@ const TestCard = ({ title, type, status, onClick }) => {
       </div>
     </button>
   );
+};
+
+TestCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  status: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default TestCard;

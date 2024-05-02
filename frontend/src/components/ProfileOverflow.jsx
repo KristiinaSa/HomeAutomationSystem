@@ -10,6 +10,8 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
+import PropTypes from "prop-types";
+
 const ProfileOverflow = ({ user }) => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef();
@@ -50,10 +52,10 @@ const ProfileOverflow = ({ user }) => {
         <FontAwesomeIcon icon={faUserCircle} className="header-icon" />
         <span>{user}</span>
         <FontAwesomeIcon
-            icon={faChevronDown}
-            className="header-icon"
-            style={{ fontSize: "10px" }}
-          />
+          icon={faChevronDown}
+          className="header-icon"
+          style={{ fontSize: "10px" }}
+        />
       </button>
 
       <div
@@ -63,11 +65,14 @@ const ProfileOverflow = ({ user }) => {
         <div className="menu-item" onClick={handleLogout}>
           <FontAwesomeIcon icon={faSignOut} className="header-icon" />
           <span className="hover-underline-animation">{t("logout")}</span>
-          
         </div>
       </div>
     </div>
   );
+};
+
+ProfileOverflow.propTypes = {
+  user: PropTypes.string.isRequired,
 };
 
 export default ProfileOverflow;

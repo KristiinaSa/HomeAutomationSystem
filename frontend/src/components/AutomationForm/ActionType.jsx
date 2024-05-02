@@ -1,5 +1,5 @@
+import PropTypes from "prop-types";
 import styles from "./CreateAutomation.module.css";
-
 import { useLanguage } from "../../context/LanguageContext";
 
 const ActionType = ({ action, setAction }) => {
@@ -14,6 +14,11 @@ const ActionType = ({ action, setAction }) => {
       </select>
     </div>
   );
+};
+
+ActionType.propTypes = {
+  action: PropTypes.string.isRequired,
+  setAction: PropTypes.func.isRequired,
 };
 
 export default ActionType;

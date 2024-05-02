@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import styles from "./CreateAutomation.module.css";
 
+import PropTypes from "prop-types";
+
 const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [name, setName] = useState("");
@@ -74,7 +76,8 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </label>
 
       <label className={styles.sensorLabel}>
-        Sensor: <select value={sensorId} onChange={(e) => setSensorId(e.target.value)}>
+        Sensor:{" "}
+        <select value={sensorId} onChange={(e) => setSensorId(e.target.value)}>
           <option value="">Select a sensor</option>
           {dummySensors.map((sensor) => (
             <option key={sensor.id} value={sensor.id}>
@@ -85,7 +88,8 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </label>
 
       <label className={styles.sensorLabel}>
-        Value: <input
+        Value:{" "}
+        <input
           type="range"
           min="0"
           max="100"
@@ -102,7 +106,8 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       />
 
       <label className={styles.sensorLabel}>
-        Action: <select value={action} onChange={(e) => setAction(e.target.value)}>
+        Action:{" "}
+        <select value={action} onChange={(e) => setAction(e.target.value)}>
           <option value="">Select an action</option>
           <option value="Turn on">Turn on</option>
           <option value="Turn off">Turn off</option>
@@ -142,6 +147,22 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </div>
     </form>
   );
+};
+
+SensorAutomationForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  automation: PropTypes.shape({
+    name: PropTypes.string,
+    sensor: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+    value: PropTypes.number,
+    devices: PropTypes.array,
+    type: PropTypes.string,
+    isDisabled: PropTypes.bool,
+    id: PropTypes.string,
+  }),
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default SensorAutomationForm;

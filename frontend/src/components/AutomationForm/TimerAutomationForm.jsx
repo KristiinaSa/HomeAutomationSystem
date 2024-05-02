@@ -16,6 +16,8 @@ import ActionType from "./ActionType";
 
 import styles from "./CreateAutomation.module.css";
 
+import PropTypes from "prop-types";
+
 const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [name, setName] = useState("");
@@ -147,6 +149,21 @@ const TimerAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </div>
     </form>
   );
+};
+
+TimerAutomationForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  automation: PropTypes.shape({
+    name: PropTypes.string,
+    time: PropTypes.string,
+    weekdays: PropTypes.object,
+    devices: PropTypes.array,
+    disabled: PropTypes.bool,
+    type: PropTypes.string,
+    action: PropTypes.string,
+    id: PropTypes.string,
+  }),
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default TimerAutomationForm;

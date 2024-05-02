@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./CreateAutomation.module.css";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -22,4 +23,10 @@ export const DisableCheckbox = ({
       </div>
     )
   );
+};
+
+DisableCheckbox.propTypes = {
+  automation: PropTypes.object,
+  isDisabled: PropTypes.bool.isRequired,
+  handleCheckboxChange: PropTypes.func.isRequired,
 };
