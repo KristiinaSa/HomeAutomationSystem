@@ -57,7 +57,7 @@ const RoomInformation = () => {
             </div>
           </div>
         ) : (
-          <p>t({"Loading room information..."})</p>
+          <p>{t("Loading room information...")}</p>
         )}
         {errorMsg && <p>{errorMsg}</p>}
       </div>
