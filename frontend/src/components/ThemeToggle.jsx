@@ -15,6 +15,7 @@ const ThemeToggle = () => {
         checked={theme === "dark"}
         onChange={toggleTheme}
         data-testid="theme-toggle"
+        aria-labelledby="themeToggleLabel"
       />
       <div className={styles.slider} data-testid="slider">
         <div
@@ -33,6 +34,9 @@ const ThemeToggle = () => {
           />
         </div>
       </div>
+      <span id="themeToggleLabel" style={{ display: "none" }}>
+        Theme Toggle
+      </span>
     </label>
   );
 };
