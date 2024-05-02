@@ -1,14 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getByTestId, render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import RoomInformation from "../../components/RoomInformation";
 import { RoomContext } from "../../context/RoomContext";
 import { DeviceProvider } from "../../context/DeviceContext.jsx";
 import { AuthProvider } from "../../context/AuthContext.jsx";
 import { LanguageContext } from "../../context/LanguageContext.jsx";
-import {
-  languages,
-  languageContextValue,
-} from "../../utils/languageTestSetup.js";
+import { languageContextValue } from "../../utils/languageTestSetup.js";
+import { MemoryRouter } from "react-router-dom";
 
 describe("renders RoomInformation component", () => {
   // Hardcoded room data
@@ -31,7 +29,9 @@ describe("renders RoomInformation component", () => {
         <LanguageContext.Provider value={languageContextValue}>
           <DeviceProvider>
             <RoomContext.Provider value={{ rooms }}>
-              <RoomInformation />
+              <MemoryRouter>
+                <RoomInformation />
+              </MemoryRouter>
             </RoomContext.Provider>
           </DeviceProvider>
         </LanguageContext.Provider>

@@ -1,4 +1,4 @@
-import { vi, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { AuthContext } from "../../context/AuthContext";
 import { LanguageContext } from "../../context/LanguageContext.jsx";
 import Header from "../../components/Header";
@@ -9,7 +9,7 @@ import i18n from "../../i18n-test.js";
 import { languageContextValue } from "../../utils/languageTestSetup.js";
 
 test("renders menu items for logged in users in english, japanese and finnish", async () => {
-  const authContextValue = { isLoggedIn: true };
+  const authContextValue = { isLoggedIn: true, role: "owner" };
   const { rerender } = render(
     <I18nextProvider i18n={i18n}>
       <AuthContext.Provider value={authContextValue}>
