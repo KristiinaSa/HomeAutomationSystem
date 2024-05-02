@@ -41,17 +41,13 @@ export const AutomationForm = () => {
   }, [id, automationType]);
 
   const handleSubmit = async (data, id) => {
-    if (id) {
-      if (data.type === "timer") {
-        console.log("Updating automation", id, data);
-        await updateTimerAutomation(id, data);
-      }
-    } else {
-      if (data.type === "timer") {
-        console.log("Creating new automation");
-        console.log(data);
-        await addTimerAutomation(data);
-      }
+    if (id && data.type === "timer") {
+      console.log("Updating automation", id, data);
+      await updateTimerAutomation(id, data);
+    } else if (!id && data.type === "timer") {
+      console.log("Creating new automation");
+      console.log(data);
+      await addTimerAutomation(data);
     }
     console.log(data);
     navigate("/automations");
