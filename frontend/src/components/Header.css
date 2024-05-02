@@ -21,6 +21,11 @@
   justify-content: center;
   margin-right: 20px;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: var(--primary-text-color-mobile);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
 }
 
 .welcome-user span {
@@ -104,17 +109,21 @@
 .language-menu-item {
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 
-.language-menu-item li {
-  list-style-type: none;
-  padding: 5px 0;
+.language-menu-button {
+  padding: 5px 10px;
   cursor: pointer;
-
+  border: none;
+  background-color: transparent;
+  color: var(--primary-text-color-mobile);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  text-align: left;
 }
 
-.language-menu-item li svg {
+.language-menu-button svg {
   margin-right: 10px;
 }
 

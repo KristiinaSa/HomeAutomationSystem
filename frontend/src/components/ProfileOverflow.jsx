@@ -41,7 +41,7 @@ const ProfileOverflow = ({ user }) => {
 
   return (
     <div>
-      <div
+      <button
         className="welcome-user"
         onClick={() => {
           setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -54,7 +54,7 @@ const ProfileOverflow = ({ user }) => {
             className="header-icon"
             style={{ fontSize: "10px" }}
           />
-      </div>
+      </button>
 
       <div
         className={`overflow-menu ${isProfileMenuOpen ? "show" : ""}`}
