@@ -73,7 +73,7 @@ const themeToggler = async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.user.id } });
     const settings = await user.getSetting();
-    const newTheme = settings.using_darkmode ? false : true;
+    const newTheme = !settings.using_darkmode;
     await settings.update({ using_darkmode: newTheme });
     res.status(200).json({ using_darkmode: newTheme });
   } catch (error) {

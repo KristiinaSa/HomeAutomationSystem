@@ -11,8 +11,6 @@ const {
   changeLanguage,
 } = userController;
 
-const authenticateToken = require("../../middleware/authToken.js");
-const getUserData = require("../../middleware/getUserData.js");
 const checkRole = require("../../middleware/checkRole.js");
 
 router.get("/", getAllUsers);

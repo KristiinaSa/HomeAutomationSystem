@@ -190,112 +190,19 @@ const getDeviceAnalytics = async (req, res, next) => {
     });
     const systemTimezone = system.time_zone;
 
-    const devices = await Device.findAll({
-      where: {
-        system_id: system_id,
-      },
-      include: [
-        {
-          model: Room,
-          attributes: ["name"],
-        },
-      ],
-    });
+    const devices = await getDevices(system_id);
+    const activePeriodsToday = await getActivePeriodsToday(devices);
+    const lastInteractions = await getLastInteractions(devices);
 
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
+    const activePeriodsByDevice =
+      groupActivePeriodsByDevice(activePeriodsToday);
 
-    const activePeriodsToday = await UsageHistory.findAll({
-      where: {
-        device_id: {
-          [Op.in]: devices.map((device) => device.id),
-        },
-        timestamp: {
-          [Op.gte]: startOfToday,
-        },
-      },
-      include: [
-        {
-          model: User,
-          attributes: ["name"],
-        },
-      ],
-      order: [
-        ["device_id", "ASC"],
-        ["timestamp", "ASC"],
-      ],
-    });
-
-    const lastInteractions = await Promise.all(
-      devices.map((device) =>
-        UsageHistory.findOne({
-          where: {
-            device_id: device.id,
-          },
-          include: [
-            {
-              model: User,
-              attributes: ["name"],
-            },
-          ],
-          order: [["timestamp", "DESC"]],
-        })
-      )
+    const result = await generateResult(
+      devices,
+      activePeriodsByDevice,
+      lastInteractions,
+      systemTimezone
     );
-
-    const activePeriodsByDevice = activePeriodsToday.reduce((groups, entry) => {
-      if (!groups[entry.device_id]) {
-        groups[entry.device_id] = [];
-      }
-      groups[entry.device_id].push(entry);
-      return groups;
-    }, {});
-
-    const result = [];
-    for (const device of devices) {
-      let totalActiveTime = 0;
-      const activePeriods = activePeriodsByDevice[device.id] || [];
-      let periodStart;
-      for (const period of activePeriods) {
-        if (period.sensor_value === "on" && !periodStart) {
-          periodStart = new Date(period.timestamp);
-        } else if (period.sensor_value === "off" && periodStart) {
-          const periodEnd = new Date(period.timestamp);
-          totalActiveTime += periodEnd - periodStart;
-          periodStart = null;
-        }
-      }
-
-      if (periodStart) {
-        totalActiveTime += new Date() - periodStart;
-      }
-
-      const totalActiveTimeInMinutes = Math.floor(totalActiveTime / 1000 / 60);
-
-      const lastInteractionEntry = lastInteractions.find(
-        (interaction) => interaction && interaction.device_id === device.id
-      );
-      const lastInteractionDate = lastInteractionEntry
-        ? dayjs.utc(lastInteractionEntry.timestamp).tz(systemTimezone)
-        : undefined;
-      const lastInteractionUser = lastInteractionEntry
-        ? lastInteractionEntry.user.name
-        : undefined;
-      const lastInteractionTime = lastInteractionEntry
-        ? {
-            date: lastInteractionDate.toISOString(),
-            user: lastInteractionUser,
-          }
-        : undefined;
-      result.push({
-        id: device.id,
-        name: device.name,
-        type: device.type,
-        room_name: device.room.name,
-        active_time: totalActiveTimeInMinutes,
-        last_interaction: lastInteractionTime,
-      });
-    }
 
     console.log("Device analytics:", result);
 
@@ -303,6 +210,151 @@ const getDeviceAnalytics = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+const getDevices = async (system_id) => {
+  return await Device.findAll({
+    where: {
+      system_id: system_id,
+    },
+    include: [
+      {
+        model: Room,
+        attributes: ["name"],
+      },
+    ],
+  });
+};
+
+const getActivePeriodsToday = async (devices) => {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  return await UsageHistory.findAll({
+    where: {
+      device_id: {
+        [Op.in]: devices.map((device) => device.id),
+      },
+      timestamp: {
+        [Op.gte]: startOfToday,
+      },
+    },
+    include: [
+      {
+        model: User,
+        attributes: ["name"],
+      },
+    ],
+    order: [
+      ["device_id", "ASC"],
+      ["timestamp", "ASC"],
+    ],
+  });
+};
+
+const getLastInteractions = async (devices) => {
+  return await Promise.all(
+    devices.map((device) =>
+      UsageHistory.findOne({
+        where: {
+          device_id: device.id,
+        },
+        include: [
+          {
+            model: User,
+            attributes: ["name"],
+          },
+        ],
+        order: [["timestamp", "DESC"]],
+      })
+    )
+  );
+};
+
+const groupActivePeriodsByDevice = (activePeriodsToday) => {
+  return activePeriodsToday.reduce((groups, entry) => {
+    if (!groups[entry.device_id]) {
+      groups[entry.device_id] = [];
+    }
+    groups[entry.device_id].push(entry);
+    return groups;
+  }, {});
+};
+
+const generateResult = async (
+  devices,
+  activePeriodsByDevice,
+  lastInteractions,
+  systemTimezone
+) => {
+  const result = [];
+  for (const device of devices) {
+    const { totalActiveTimeInMinutes, periodStart } = calculateTotalActiveTime(
+      device,
+      activePeriodsByDevice
+    );
+    const lastInteractionTime = getLastInteractionTime(
+      device,
+      lastInteractions,
+      systemTimezone,
+      periodStart
+    );
+
+    result.push({
+      id: device.id,
+      name: device.name,
+      type: device.type,
+      room_name: device.room.name,
+      active_time: totalActiveTimeInMinutes,
+      last_interaction: lastInteractionTime,
+    });
+  }
+  return result;
+};
+
+const calculateTotalActiveTime = (device, activePeriodsByDevice) => {
+  let totalActiveTime = 0;
+  const activePeriods = activePeriodsByDevice[device.id] || [];
+  let periodStart;
+  for (const period of activePeriods) {
+    if (period.sensor_value === "on" && !periodStart) {
+      periodStart = new Date(period.timestamp);
+    } else if (period.sensor_value === "off" && periodStart) {
+      const periodEnd = new Date(period.timestamp);
+      totalActiveTime += periodEnd - periodStart;
+      periodStart = null;
+    }
+  }
+
+  if (periodStart) {
+    totalActiveTime += new Date() - periodStart;
+  }
+
+  const totalActiveTimeInMinutes = Math.floor(totalActiveTime / 1000 / 60);
+  return { totalActiveTimeInMinutes, periodStart };
+};
+
+const getLastInteractionTime = (
+  device,
+  lastInteractions,
+  systemTimezone,
+  periodStart
+) => {
+  const lastInteractionEntry = lastInteractions.find(
+    (interaction) => interaction && interaction.device_id === device.id
+  );
+  const lastInteractionDate = lastInteractionEntry
+    ? dayjs.utc(lastInteractionEntry.timestamp).tz(systemTimezone)
+    : undefined;
+  const lastInteractionUser = lastInteractionEntry
+    ? lastInteractionEntry.user.name
+    : undefined;
+  return lastInteractionEntry
+    ? {
+        date: lastInteractionDate.toISOString(),
+        user: lastInteractionUser,
+      }
+    : undefined;
 };
 
 const updateDeviceStatus = async (req, res, next) => {

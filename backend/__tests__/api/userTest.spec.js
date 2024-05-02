@@ -16,10 +16,10 @@ const Language = require("../../models/languageModel.js");
 let token;
 let system;
 
-async function createUser(system, email) {
+async function createUser(system, email, role = "owner") {
   return await User.create({
     name: "Test User",
-    role: "owner",
+    role: role,
     password: bcrypt.hashSync("password", 10),
     email: email,
     is_registered: true,
@@ -80,7 +80,7 @@ describe("inviteUser", () => {
 
 describe("deleteUser", () => {
   it("should delete a user", async () => {
-    const user = await createUser(system, "deleteuser@example.com");
+    const user = await createUser(system, "deleteuser@example.com", "resident");
 
     const response = await request(app)
       .delete(`/api/v1/users/delete-user/${user.id}`)
@@ -93,7 +93,7 @@ describe("deleteUser", () => {
 
 describe("changeRole", () => {
   it("should change the role of a user", async () => {
-    const user = await createUser(system, "changerole@example.com");
+    const user = await createUser(system, "deleteuser@example.com", "resident");
 
     const response = await request(app)
       .patch(`/api/v1/users/change-role/${user.id}`)

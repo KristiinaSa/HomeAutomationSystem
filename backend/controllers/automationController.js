@@ -255,8 +255,7 @@ const editTimerAutomation = async (req, res, next) => {
     }
 
     if (
-      !automationData.name ||
-      !automationData.name.trim() ||
+      !automationData.name?.trim() ||
       !weekdays ||
       !automationData.time ||
       automationData.action === undefined

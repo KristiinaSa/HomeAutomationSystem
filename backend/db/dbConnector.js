@@ -17,8 +17,6 @@ async function sqlQuery(sql, params) {
     const results = await conn.query(sql, params);
     console.log(results);
     return results;
-  } catch (err) {
-    throw err;
   } finally {
     if (conn) conn.release();
   }
