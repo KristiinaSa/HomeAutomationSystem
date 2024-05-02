@@ -30,17 +30,7 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   };
 
   return (
-    <div
-      className="menu-item"
-      onClick={handleClick}
-      onKeyDown={(event) => {
-        if (event.key === "Enter") {
-          handleClick();
-        }
-      }}
-      tabIndex="0" // Makes the div focusable
-      role="button" // Indicates that the div is a button
-    >
+    <button className="menu-item" onClick={handleClick}>
       <div className="icon-container">
         <FontAwesomeIcon icon={icon} />
       </div>
@@ -51,7 +41,7 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
       ) : (
         <span className="hover-underline-animation">{text}</span>
       )}
-    </div>
+    </button>
   );
 };
 
@@ -132,7 +122,7 @@ const Header = () => {
       </NavLink>
       {(role === "admin" || role === "owner") && (
         <div className="header-item">
-          <div
+          <button
             className="plus-icon"
             onClick={() => {
               setIsOpen(!isOpen);
@@ -142,7 +132,7 @@ const Header = () => {
               icon={isOpen ? faTimes : faPlus}
               className="header-icon"
             />
-          </div>
+          </button>
           <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
             {menuItems.map((item) => (
               <MenuItem
