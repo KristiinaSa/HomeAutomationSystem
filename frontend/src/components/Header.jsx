@@ -30,7 +30,17 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   };
 
   return (
-    <div className="menu-item" onClick={handleClick}>
+    <div
+      className="menu-item"
+      onClick={handleClick}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          handleClick();
+        }
+      }}
+      tabIndex="0" // Makes the div focusable
+      role="button" // Indicates that the div is a button
+    >
       <div className="icon-container">
         <FontAwesomeIcon icon={icon} />
       </div>
@@ -50,15 +60,7 @@ const Header = () => {
   const node = useRef();
   const { user, isLoggedIn } = useContext(AuthContext);
   const { role } = useContext(AuthContext);
-  // const { logout } = useContext(AuthContext);
-  // const navigate = useNavigate();
   const { t } = useLanguage();
-
-  // const handleLogout = async (e) => {
-  //   e.preventDefault();
-  //   logout();
-  //   navigate("/login");
-  // };
 
   const handleClick = (e) => {
     if (!isLoggedIn) {
@@ -133,7 +135,6 @@ const Header = () => {
           <div
             className="plus-icon"
             onClick={() => {
-              // setIsLanguageMenuOpen(false);
               setIsOpen(!isOpen);
             }}
           >
@@ -143,9 +144,9 @@ const Header = () => {
             />
           </div>
           <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
-            {menuItems.map((item, index) => (
+            {menuItems.map((item) => (
               <MenuItem
-                key={index}
+                key={item.id}
                 {...item}
                 onClose={() => setIsOpen(false)}
               />
