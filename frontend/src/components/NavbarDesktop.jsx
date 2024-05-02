@@ -57,7 +57,6 @@ const NavbarDesktop = () => {
         ))}
       </div>
       {isLoggedIn && (
-        <>
           <div className="navbar-rooms-container">
             <h3>{t("rooms")}</h3>
             <div className="navbar-rooms">
@@ -78,7 +77,6 @@ const NavbarDesktop = () => {
               ))}
             </div>
           </div>
-        </>
       )}
     </div>
   );
