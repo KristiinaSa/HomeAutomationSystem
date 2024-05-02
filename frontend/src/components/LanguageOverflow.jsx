@@ -13,7 +13,6 @@ const LanguageOverflow = () => {
     useContext(LanguageContext);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const languageMenuRef = useRef();
-  //   const [isOpen, setIsOpen] = useState(false);
   const selectedLanguageName = languages.find(
     (lang) => lang.code === selectedLanguage
   )?.name;
@@ -38,13 +37,15 @@ const LanguageOverflow = () => {
 
   return (
     <div className="header-language">
-      <div
+      <button
         className="lang-icon"
         onClick={() => {
-          //   if (!isLanguageMenuOpen) {
-          //     setIsOpen(false);
-          //   }
           setIsLanguageMenuOpen(!isLanguageMenuOpen);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            setIsLanguageMenuOpen(!isLanguageMenuOpen);
+          }
         }}
       >
         <FontAwesomeIcon icon={faGlobe} className="header-icon" />
@@ -54,20 +55,20 @@ const LanguageOverflow = () => {
           className="header-icon"
           style={{ fontSize: "10px" }}
         />
-      </div>
+      </button>
       <div
-        
         className={`overflow-menu ${isLanguageMenuOpen ? "show" : ""}`}
         ref={languageMenuRef}
       >
-        <ul data-testid="language-overflow" className="language-menu-item">
+        <div data-testid="language-overflow" className="language-menu-item">
           {languages.map((language) => (
-            <li
+            <button
               key={language.id}
               onClick={() => {
                 handleLanguageChange(language.code);
                 setIsLanguageMenuOpen(false);
               }}
+              className="language-menu-button"
             >
               <FontAwesomeIcon
                 icon={faCheckCircle}
@@ -78,9 +79,9 @@ const LanguageOverflow = () => {
                 }`}
               />
               <span className="hover-underline-animation">{language.name}</span>
-            </li>
+            </button>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
