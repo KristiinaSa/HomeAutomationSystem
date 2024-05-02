@@ -115,7 +115,7 @@ const getActiveDays = (automation, weekdays, weekends, allDays, t) => {
 
 TimerAutomationCard.propTypes = {
   automation: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     devices: PropTypes.array,
     disabled: PropTypes.bool.isRequired,

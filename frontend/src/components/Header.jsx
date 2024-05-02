@@ -71,31 +71,38 @@ const Header = () => {
   const menuItems = isLoggedIn
     ? [
         {
+          id: "add-device",
           icon: faLightbulb,
           text: `${t("add")} ${t("device")}`,
           path: "/add-device",
         },
-        // { icon: faHouseLaptop, text: t("accessories"), path: "/accessories" },
         {
+          id: "add-automation",
           icon: faTachometerAlt,
           text: `${t("add")} ${t("automation")}`,
           path: "/automations/new",
         },
         {
+          id: "add-room",
           icon: faArrowCircleRight,
           text: `${t("add")} ${t("room")}`,
           path: "/add-room",
         },
         {
+          id: "add-users",
           icon: faUser,
           text: `${t("add")} ${t("users")}`,
           path: "/settings",
         },
-        // { icon: faSignOut, text: t("logout"), onClick: handleLogout },
       ]
     : [
-        { icon: faSignIn, text: t("login"), path: "/login" },
-        { icon: faAddressBook, text: t("register"), path: "/register" },
+        { id: "login", icon: faSignIn, text: t("login"), path: "/login" },
+        {
+          id: "register",
+          icon: faAddressBook,
+          text: t("register"),
+          path: "/register",
+        },
       ];
 
   useEffect(() => {
