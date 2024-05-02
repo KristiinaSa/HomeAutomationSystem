@@ -28,25 +28,24 @@ const Users = () => {
   const { t } = useLanguage();
   const { role } = useContext(AuthContext);
 
-  const fetchUsers = async () => {
-    try {
-      const users = await getAllUsers();
-      setPersons(users);
-      setUpdate(false);
-      console.log(users);
-    } catch (error) {
-      console.log(error);
-      setMessage(
-        t(
-          "Oops! There was a hiccup fetching user details. Please refresh and try once more."
-        )
-      );
-    }
-  };
-
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const users = await getAllUsers();
+        setPersons(users);
+        setUpdate(false);
+        console.log(users);
+      } catch (error) {
+        console.log(error);
+        setMessage(
+          t(
+            "Oops! There was a hiccup fetching user details. Please refresh and try once more."
+          )
+        );
+      }
+    };
     fetchUsers();
-  }, [update]);
+  }, [update, t]);
 
   const deletePerson = async (id) => {
     if (!window.confirm(t("Are you sure you want to delete this user?")))

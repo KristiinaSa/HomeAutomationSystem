@@ -49,7 +49,7 @@ const Analytics = () => {
 
             let formattedLastInteraction = "-";
             let lastInteractionUser = "-";
-            if (device.last_interaction && device.last_interaction.date) {
+            if (device.last_interaction?.date) {
               const formattedLastInteractionDate = formatDateTime(
                 device.last_interaction.date
               );

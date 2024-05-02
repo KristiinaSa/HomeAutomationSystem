@@ -52,8 +52,8 @@ const DeviceSelection = ({ devices, selectedDevices, setSelectedDevices }) => {
       )}
       {selectedDevices.length > 0 ? (
         <ul className={styles.deviceList}>
-          {selectedDevices.map((device, index) => (
-            <li key={index} className={styles.centerContent}>
+          {selectedDevices.map((device) => (
+            <li key={device.id} className={styles.centerContent}>
               {`${device.name} (${device.room.name})`}
               <button
                 type="button"

@@ -30,7 +30,7 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
   };
 
   return (
-    <div className="menu-item" onClick={handleClick}>
+    <button className="menu-item" onClick={handleClick}>
       <div className="icon-container">
         <FontAwesomeIcon icon={icon} />
       </div>
@@ -41,7 +41,7 @@ const MenuItem = ({ icon, text, path, onClick, onClose }) => {
       ) : (
         <span className="hover-underline-animation">{text}</span>
       )}
-    </div>
+    </button>
   );
 };
 
@@ -50,15 +50,7 @@ const Header = () => {
   const node = useRef();
   const { user, isLoggedIn } = useContext(AuthContext);
   const { role } = useContext(AuthContext);
-  // const { logout } = useContext(AuthContext);
-  // const navigate = useNavigate();
   const { t } = useLanguage();
-
-  // const handleLogout = async (e) => {
-  //   e.preventDefault();
-  //   logout();
-  //   navigate("/login");
-  // };
 
   const handleClick = (e) => {
     if (!isLoggedIn) {
@@ -130,10 +122,9 @@ const Header = () => {
       </NavLink>
       {(role === "admin" || role === "owner") && (
         <div className="header-item">
-          <div
+          <button
             className="plus-icon"
             onClick={() => {
-              // setIsLanguageMenuOpen(false);
               setIsOpen(!isOpen);
             }}
           >
@@ -141,11 +132,11 @@ const Header = () => {
               icon={isOpen ? faTimes : faPlus}
               className="header-icon"
             />
-          </div>
+          </button>
           <div className={`overflow-menu ${isOpen ? "show" : ""}`}>
-            {menuItems.map((item, index) => (
+            {menuItems.map((item) => (
               <MenuItem
-                key={index}
+                key={item.id}
                 {...item}
                 onClose={() => setIsOpen(false)}
               />

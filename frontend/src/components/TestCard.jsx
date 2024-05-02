@@ -22,7 +22,7 @@ const TestCard = ({ title, type, status, onClick }) => {
   const { t } = useLanguage();
 
   return (
-    <div className="card" onClick={onClick}>
+    <button className="card" onClick={onClick}>
       <div className="card-body">
         {icon && (
           <FontAwesomeIcon
@@ -38,7 +38,7 @@ const TestCard = ({ title, type, status, onClick }) => {
           <p>{t(status)}</p>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

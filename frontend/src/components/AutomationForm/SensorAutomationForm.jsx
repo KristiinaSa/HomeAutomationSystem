@@ -65,7 +65,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
   return (
     <form onSubmit={onSubmit} className={styles.verticalLayout}>
       <label className={styles.sensorLabel}>
-        Name:
+        Name:{" "}
         <input
           type="text"
           value={name}
@@ -74,8 +74,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </label>
 
       <label className={styles.sensorLabel}>
-        Sensor:
-        <select value={sensorId} onChange={(e) => setSensorId(e.target.value)}>
+        Sensor: <select value={sensorId} onChange={(e) => setSensorId(e.target.value)}>
           <option value="">Select a sensor</option>
           {dummySensors.map((sensor) => (
             <option key={sensor.id} value={sensor.id}>
@@ -86,8 +85,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       </label>
 
       <label className={styles.sensorLabel}>
-        Value:
-        <input
+        Value: <input
           type="range"
           min="0"
           max="100"
@@ -104,8 +102,7 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
       />
 
       <label className={styles.sensorLabel}>
-        Action:
-        <select value={action} onChange={(e) => setAction(e.target.value)}>
+        Action: <select value={action} onChange={(e) => setAction(e.target.value)}>
           <option value="">Select an action</option>
           <option value="Turn on">Turn on</option>
           <option value="Turn off">Turn off</option>
@@ -117,31 +114,31 @@ const SensorAutomationForm = ({ handleSubmit, automation, handleDelete }) => {
         isDisabled={isDisabled}
         handleCheckboxChange={(event) => setIsDisabled(event.target.checked)}
       />
-      <div className={styles.buttonsArea}> 
-      <button
-        type="submit"
-        disabled={isButtonDisabled()}
-        className={isButtonDisabled() ? styles.disabledButton : "primary-btn"}
-      >
-        {automation ? "Update Automation" : "Create New Automation"}
-      </button>
+      <div className={styles.buttonsArea}>
+        <button
+          type="submit"
+          disabled={isButtonDisabled()}
+          className={isButtonDisabled() ? styles.disabledButton : "primary-btn"}
+        >
+          {automation ? "Update Automation" : "Create New Automation"}
+        </button>
 
-      {automation && (
-        <FontAwesomeIcon
-          icon={"fa-solid fa-trash"}
-          onClick={() => handleDelete(automation.id)}
-          role="button"
-          aria-label="Delete"
-          style={{ cursor: "pointer" }}
-        />
-      )}
-      <button
-      type="button"
-      onClick={() => navigate(-1)}
-      className="secondary-btn"
-      >
-        Cancel
-      </button>
+        {automation && (
+          <button
+            onClick={() => handleDelete(automation.id)}
+            className={styles.deleteButton}
+            aria-label="Delete"
+          >
+            <FontAwesomeIcon icon={"fa-solid fa-trash"} />
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="secondary-btn"
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

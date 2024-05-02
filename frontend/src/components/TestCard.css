@@ -4,7 +4,6 @@
     justify-content: flex-start;
     margin: 0.5rem 1rem 0.5rem 0;
     padding: 0.5rem;
-    /* height: 100%; */
     background-color: var(--component-box-color);
     border-radius: 10px;
     box-sizing: border-box;
@@ -12,6 +11,12 @@
     width: 30%;
     min-width: 200px;
     cursor: pointer;
+}
+
+button.card {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 .card-body {

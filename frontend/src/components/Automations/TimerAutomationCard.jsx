@@ -60,14 +60,14 @@ export const TimerAutomationCard = ({ automation }) => {
             : `${numDevices} ${t("device", { count: numDevices })}`}
         </p>
         {(role === "admin" || role === "owner") && (
-          <a
+          <button
             onClick={handleEdit}
             aria-label="Edit"
             className={styles["edit-button"]}
             data-testid="edit-button"
           >
             <FontAwesomeIcon icon={faChevronRight} size="xl" />
-          </a>
+          </button>
         )}
       </div>
     </div>
