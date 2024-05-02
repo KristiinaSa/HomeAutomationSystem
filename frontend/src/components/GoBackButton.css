@@ -13,7 +13,7 @@
 
   .go-back-icon {
     font-size: 2rem;
-    color: var(--primary-text-color);
+    color: var(--primary-text-color-mobile);
   }
 }
 
