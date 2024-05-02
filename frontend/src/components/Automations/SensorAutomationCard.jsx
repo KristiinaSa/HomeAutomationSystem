@@ -22,14 +22,19 @@ export const SensorAutomationCard = ({ automation }) => {
       <p data-testid="automation-action">
         {t("action")}: {automation.action}
       </p>
-      <a
+      <button
         onClick={handleEdit}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            handleEdit();
+          }
+        }}
         aria-label="Edit"
         className={styles["edit-button"]}
         data-testid="edit-button"
       >
         <FontAwesomeIcon icon="fa-solid fa-chevron-right" size="xl" />
-      </a>
+      </button>
     </div>
   );
 };
