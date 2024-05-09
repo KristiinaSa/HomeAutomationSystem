@@ -61,14 +61,16 @@ const changeRole = async (req, res) => {
   console.log("in changeRole");
   const { id } = req.params;
   const { role } = req.body;
-
   try {
-    const user = await User.findOne({ where: { id } });
-    await user.update({ role });
-    if (!user) {
+    const targetUserData = await User.findOne({ where: { id } });
+    if (targetUserData && targetUserData.role === "owner") {
+      return res.status(403).json({ message: "Cannot modify the owner!" });
+    }
+    if (!targetUserData) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.status(200).json(user);
+    await targetUserData.update({ role });
+    res.status(200).json(targetUserData);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ error: "Error updating user" });
