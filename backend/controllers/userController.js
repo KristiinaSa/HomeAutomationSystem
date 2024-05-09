@@ -38,12 +38,18 @@ const inviteUser = async (req, res) => {
   const admin = req.user.name;
   try {
     const user = await User.create({ email, system_id: system.id });
-    sendEmail(email, "You're invited!", "inviteUser", {
-      name: "User",
-      link: "http://localhost:5173/register",
-      systemName,
-      admin,
-    });
+    const inviteLink = `http://localhost:5173/register?invite=${email}`;
+    sendEmail(
+      email,
+      "You're invited!",
+      ["inviteUser", "inviteUserFinnish", "inviteUserJapanese"],
+      {
+        name: "User",
+        link: inviteLink,
+        systemName,
+        admin,
+      }
+    );
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: "Error inviting user" });

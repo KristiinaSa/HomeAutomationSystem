@@ -1,8 +1,12 @@
 const transporter = require("../config/mailer");
 const loadTemplate = require("./loadTemplate");
 
-const sendEmail = (to, subject, templateName, data) => {
-  const html = loadTemplate(templateName, data);
+const sendEmail = (to, subject, templateNames, data) => {
+  let html = "";
+  templateNames.forEach((templateName) => {
+    html += loadTemplate(templateName, data);
+  });
+
   const mailOptions = {
     from: process.env.MAILER_USER,
     to,
